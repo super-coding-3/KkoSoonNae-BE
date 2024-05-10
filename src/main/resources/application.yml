@@ -20,4 +20,4 @@ spring:
 
 security:
   jwt:
-    secret-key: KkoSoonNae
+    secret-key: KkoSoonNaeFinalProJectKkoSoonNaeFinalProJect
