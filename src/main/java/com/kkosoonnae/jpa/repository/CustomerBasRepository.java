@@ -4,6 +4,8 @@ import com.kkosoonnae.jpa.entity.CustomerBas;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * packageName    : com.kkosoonnae.jpa.repository
  * fileName       : CustomerRepository
@@ -17,4 +19,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CustomerBasRepository extends JpaRepository<CustomerBas,Integer> {
+    Optional<CustomerBas> findByLoginId(String loginId);
 }

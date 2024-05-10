@@ -23,6 +23,7 @@ import lombok.*;
 public class CustomerDtl {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CSTMR_NO")
     private Integer cstmrNo;
 
