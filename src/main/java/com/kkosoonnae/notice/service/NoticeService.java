@@ -1,5 +1,8 @@
 package com.kkosoonnae.notice.service;
 
+import com.kkosoonnae.jpa.repository.NoticeRepository;
+import com.kkosoonnae.notice.dto.NoticeDto;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +19,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class NoticeService {
+    private final NoticeRepository noticeRepository;
+
+
+    public NoticeDto findNoticeById(int id) {
+
+        NoticeDto noticeDto = new NoticeDto();
+
+        return noticeDto;
+    }
 }
