@@ -1,10 +1,15 @@
 package com.kkosoonnae.notice.service;
 
+import com.kkosoonnae.jpa.entity.Notice;
 import com.kkosoonnae.jpa.repository.NoticeRepository;
 import com.kkosoonnae.notice.dto.NoticeDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * packageName    : com.kkosoonnae.notice.service
@@ -24,10 +29,7 @@ public class NoticeService {
     private final NoticeRepository noticeRepository;
 
 
-    public NoticeDto findNoticeById(int id) {
-
-        NoticeDto noticeDto = new NoticeDto();
-
-        return noticeDto;
+    public Optional<Notice> getNoticeById(Integer id) {
+        return noticeRepository.findById(id);
     }
 }

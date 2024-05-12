@@ -1,14 +1,16 @@
 package com.kkosoonnae.notice.controller;
 
 import com.kkosoonnae.jpa.entity.Notice;
-import com.kkosoonnae.notice.dto.NoticeDto;
 import com.kkosoonnae.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * packageName    : com.kkosoonnae.notice.controller
@@ -30,7 +32,9 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @GetMapping("/{id}")
-    public Notice notice(@PathVariable("id") int id) {
-        NoticeDto noticeDto = noticeService.findNoticeById(id);
+    public ResponseEntity<Notice> getNoticeById(@PathVariable Integer id) {
+        return noticeService.getNoticeById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
