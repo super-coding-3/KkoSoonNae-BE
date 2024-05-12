@@ -5,6 +5,8 @@ import com.kkosoonnae.jpa.entity.CustomerDtl;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * packageName    : com.kkosoonnae.jpa.repository
  * fileName       : CustomerDtlRepository
@@ -18,4 +20,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CustomerDtlRepository extends JpaRepository<CustomerDtl, Integer> {
+    Optional<CustomerDtl> findByCustomerBas(CustomerBas customerBas);
 }

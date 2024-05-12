@@ -1,7 +1,9 @@
 package com.kkosoonnae.customer.controller;
 
+import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.config.jwt.JwtProperties;
 import com.kkosoonnae.config.security.CustomLogoutHandler;
+import com.kkosoonnae.customer.dto.InfoDto;
 import com.kkosoonnae.customer.dto.LoginDto;
 import com.kkosoonnae.customer.dto.SignUpDto;
 import com.kkosoonnae.customer.service.CustomerService;
@@ -14,10 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -92,4 +93,24 @@ public class CustomerController {
         customLogoutHandler.logout(request,response,null);
         log.info("로그아웃 완료");
     }
+
+    @GetMapping("/profile")
+        public ResponseEntity<?> getUserProFile(@RequestParam("loginId") String loginId) {
+        try {
+            InfoDto userProfile = service.getUserProfile(loginId);
+            log.info("userProFile : {} ", userProfile);
+            return ResponseEntity.ok(userProfile);
+        } catch (UsernameNotFoundException e) {
+            // 사용자를 찾을 수 없는 경우 예외 처리
+            Map<String, String> errorBody = new HashMap<>();
+            errorBody.put("error", "사용자를 찾을 수 없습니다.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
+        } catch (Exception e) {
+            // 그 외의 예외 처리
+            Map<String, String> errorBody = new HashMap<>();
+            errorBody.put("error", "프로필을 가져오는 중 문제가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorBody);
+        }
+    }
+
 }

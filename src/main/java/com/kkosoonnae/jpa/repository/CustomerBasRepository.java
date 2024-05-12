@@ -20,4 +20,6 @@ import java.util.Optional;
 @Repository
 public interface CustomerBasRepository extends JpaRepository<CustomerBas,Integer> {
     Optional<CustomerBas> findByLoginId(String loginId);
+
+    void findByCstmrNo(Integer cstmrNo);
 }

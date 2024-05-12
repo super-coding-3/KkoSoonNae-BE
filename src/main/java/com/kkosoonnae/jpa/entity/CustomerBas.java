@@ -46,5 +46,8 @@ public class CustomerBas {
     @Enumerated(EnumType.STRING)
     private RoleType cstmrDivCd;
 
+    @OneToOne
+    @JoinColumn(name = "CSTMR_NO")
+    private CustomerDtl customerDtl;
 
 }

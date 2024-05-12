@@ -1,6 +1,9 @@
 package com.kkosoonnae.customer.service;
 
+import com.kkosoonnae.config.auth.PrincipalDetailService;
+import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.config.jwt.JwtTokenProvider;
+import com.kkosoonnae.customer.dto.InfoDto;
 import com.kkosoonnae.customer.dto.LoginDto;
 import com.kkosoonnae.customer.dto.SignUpDto;
 import com.kkosoonnae.jpa.entity.CustomerBas;
@@ -15,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +43,8 @@ public class CustomerService {
     private final CustomerBasRepository customerBasRepository;
 
     private final CustomerDtlRepository customerDtlRepository;
+
+    private final PrincipalDetailService principalDetailService;
 
     private final AuthenticationManager authenticationManager;
 
@@ -85,4 +91,25 @@ public class CustomerService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return jwtTokenProvider.createToken(loginId);
     }
+
+    public InfoDto getUserProfile(String loginId){
+        //PrincipalDetails를 이용해 로그인한 사용자 기본 정보 조회
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomerBas customerBas = principalDetails.getCustomerBas();
+
+        CustomerDtl customerDtl = customerDtlRepository.findByCustomerBas(customerBas)
+                .orElseThrow(() -> new IllegalStateException("사용자의 상세 정보를 찾을 수 없습니다."));
+
+        InfoDto infoDto = new InfoDto();
+        infoDto.setCstmrNo(customerBas.getCstmrNo());
+        infoDto.setNickName(customerDtl.getNickName());
+        infoDto.setPhone(customerDtl.getPhone());
+        infoDto.setZipCode(customerDtl.getZipCode());
+        infoDto.setAddress(customerDtl.getAddress());
+        infoDto.setAddressDtl(customerDtl.getAddressDtl());
+
+        return infoDto;
+    }
+
+
 }
