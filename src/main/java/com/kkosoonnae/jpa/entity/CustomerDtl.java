@@ -41,4 +41,8 @@ public class CustomerDtl {
 
     @Column(name = "ADDRESS_DTL")
     private String addressDtl;
+
+    @OneToOne(mappedBy = "customerDtl")
+    private CustomerBas customerBas;
+
 }
