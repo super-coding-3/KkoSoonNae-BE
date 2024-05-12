@@ -111,5 +111,17 @@ public class CustomerService {
         return infoDto;
     }
 
+    public String getUserNickname() {
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomerBas customerBas = principalDetails.getCustomerBas();
+
+        CustomerDtl customerDtl = customerBas.getCustomerDtl();
+        if (customerDtl == null) {
+            throw new IllegalStateException("사용자의 상세 정보를 찾을 수 없습니다.");
+        }
+
+        return customerDtl.getNickName();
+    }
+
 
 }

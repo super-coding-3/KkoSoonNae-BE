@@ -94,6 +94,7 @@ public class CustomerController {
         log.info("로그아웃 완료");
     }
 
+    @Operation(summary = "회원 정보 조회")
     @GetMapping("/profile")
         public ResponseEntity<?> getUserProFile(@RequestParam("loginId") String loginId) {
         try {
@@ -113,4 +114,20 @@ public class CustomerController {
         }
     }
 
+    @Operation(summary = "로그인한 회원 닉네임")
+    @GetMapping("/nickname")
+    public ResponseEntity<?> getUserNickname() {
+        try {
+            String nickname = service.getUserNickname();
+            return ResponseEntity.ok(nickname);
+        } catch (IllegalStateException e) {
+            // 사용자의 상세 정보를 찾을 수 없는 경우
+            log.error("사용자 정보 찾을 수 없는 경우 : {} ",e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("사용자의 상세 정보를 찾을 수 없습니다.");
+        } catch (Exception e) {
+            // 그 외 예외 처리
+            log.error("그 외 예외 발생 했을 경우 : {}",e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다.");
+        }
+    }
 }
