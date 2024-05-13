@@ -1,5 +1,6 @@
 package com.kkosoonnae.reservation.service;
 
+import com.kkosoonnae.jpa.repository.AvailTimeRepository;
 import com.kkosoonnae.jpa.repository.CustomerBasRepository;
 import com.kkosoonnae.reservation.dto.ReservationRequest;
 import com.kkosoonnae.reservation.dto.ReservationResponse;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 public class ReservationService {
 
     private final CustomerBasRepository customerBasRepository;
+    private final AvailTimeRepository availTimeRepository;
 
     public ReservationResponse makeReservation(ReservationRequest reservationRequest) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -35,6 +37,7 @@ public class ReservationService {
         if ( cstmrNo == null) {
             throw new IllegalArgumentException("로그인이 필요합니다.");
         } else  {
+
             return null;
         }
     }
