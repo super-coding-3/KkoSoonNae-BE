@@ -23,9 +23,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class InfoDto {
 
-    @Schema(description = "회원일련번호")
-    private Integer cstmrNo;
-
     @Schema(description = "닉네임")
     private String nickName;
 
