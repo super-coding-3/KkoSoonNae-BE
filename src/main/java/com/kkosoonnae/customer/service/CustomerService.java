@@ -19,9 +19,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.time.LocalDateTime;
 
 /**
@@ -101,7 +104,6 @@ public class CustomerService {
                 .orElseThrow(() -> new IllegalStateException("사용자의 상세 정보를 찾을 수 없습니다."));
 
         InfoDto infoDto = new InfoDto();
-        infoDto.setCstmrNo(customerBas.getCstmrNo());
         infoDto.setNickName(customerDtl.getNickName());
         infoDto.setPhone(customerDtl.getPhone());
         infoDto.setZipCode(customerDtl.getZipCode());
@@ -109,6 +111,21 @@ public class CustomerService {
         infoDto.setAddressDtl(customerDtl.getAddressDtl());
 
         return infoDto;
+    }
+
+    public void updateUserProfile(InfoDto infoDto){
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomerBas customerBas = principalDetails.getCustomerBas();
+
+        CustomerDtl customerDtl = customerDtlRepository.findByCustomerBas(customerBas)
+                .orElseThrow(() -> new IllegalStateException("사용자의 상세 정보를 찾을 수 없습니다."));
+
+        // InfoDto에서 받은 정보로 사용자 정보 업데이트
+        customerDtl.updateFromDto(infoDto);
+
+        // 변경된 정보 저장
+        customerDtlRepository.save(customerDtl);
+
     }
 
     public String getUserNickname() {

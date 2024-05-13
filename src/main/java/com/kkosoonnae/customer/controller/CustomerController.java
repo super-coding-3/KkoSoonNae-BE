@@ -95,8 +95,8 @@ public class CustomerController {
     }
 
     @Operation(summary = "회원 정보 조회")
-    @GetMapping("/profile")
-        public ResponseEntity<?> getUserProFile(@RequestParam("loginId") String loginId) {
+    @GetMapping("/profile/{loginId}")
+        public ResponseEntity<?> getUserProFile(@PathVariable("loginId") String loginId) {
         try {
             InfoDto userProfile = service.getUserProfile(loginId);
             log.info("userProFile : {} ", userProfile);
@@ -111,6 +111,20 @@ public class CustomerController {
             Map<String, String> errorBody = new HashMap<>();
             errorBody.put("error", "프로필을 가져오는 중 문제가 발생했습니다.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorBody);
+        }
+    }
+
+    @Operation(summary = "회원 정보 수정")
+    @PutMapping("/profile/update")
+    public ResponseEntity<?> updateUserProfile(@RequestBody InfoDto infoDto){
+        try{
+            Map<String,String> response = new HashMap<>();
+            service.updateUserProfile(infoDto);
+            response.put("messgae","회원 정보 수정에 성공 하였습니다.");
+            return ResponseEntity.ok(response);
+        }catch (IllegalStateException e){
+            log.error("사용자 정보를 찾을 수 없습니다.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("사용자의 정보를 찾을 수 없습니다.");
         }
     }
 
