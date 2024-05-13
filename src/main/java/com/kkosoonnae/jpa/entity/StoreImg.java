@@ -1,0 +1,28 @@
+package com.kkosoonnae.jpa.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Table(name = "STORE_IMG")
+public class StoreImg {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "STORE_IMG_NO")
+    private Integer storeImgNo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "STORE_NO")
+    private Store store;
+
+    @Column(name = "IMG")
+    private String img;
+
+}
