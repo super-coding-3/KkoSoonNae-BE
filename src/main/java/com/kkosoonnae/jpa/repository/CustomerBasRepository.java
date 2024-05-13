@@ -2,6 +2,7 @@ package com.kkosoonnae.jpa.repository;
 
 import com.kkosoonnae.jpa.entity.CustomerBas;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -22,4 +23,7 @@ public interface CustomerBasRepository extends JpaRepository<CustomerBas,Integer
     Optional<CustomerBas> findByLoginId(String loginId);
 
     void findByCstmrNo(Integer cstmrNo);
+
+    @Query("SELECT c.cstmrNo FROM CustomerBas c WHERE c.email = :currentEmail")
+    Integer findCstmrNoByEmail(String currentEmail);
 }
