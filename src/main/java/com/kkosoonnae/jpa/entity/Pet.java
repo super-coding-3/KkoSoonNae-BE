@@ -47,4 +47,10 @@ public class Pet {
 
     @Column(name = "WEIGHT")
     private String weight;
+
+    public Pet(Integer cstmrNo, String type, String weight) {
+        this.cstmrNo = cstmrNo;
+        this.type = type;
+        this.weight = weight;
+    }
 }

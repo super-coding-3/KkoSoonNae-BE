@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Optional;
 
 /**
@@ -26,4 +28,6 @@ public interface CustomerBasRepository extends JpaRepository<CustomerBas,Integer
 
     @Query("SELECT c.cstmrNo FROM CustomerBas c WHERE c.email = :currentEmail")
     Integer findCstmrNoByEmail(String currentEmail);
+
+
 }

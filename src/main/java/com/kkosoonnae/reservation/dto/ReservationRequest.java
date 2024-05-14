@@ -18,7 +18,7 @@ import java.time.LocalTime;
 public class ReservationRequest {
 
     @Schema(description = "매장 일련번호")
-    private int storeNo;
+    private Integer storeNo;
 
     @Schema(description = "예약 날짜")
     private LocalDate reservationDate;
@@ -27,12 +27,18 @@ public class ReservationRequest {
     private LocalTime reservationTime;
 
     @Schema(description = "스타일 일련번호")
-    private String styleNo;
+    private Integer styleNo;
 
-    @Schema(description = "반려동물 종류")
-    private String type;
+//    @Schema(description = "반려동물 종류")
+//    private String type;
+//
+//    @Schema(description = "반려동물 몸무게")
+//    private String weight;
 
-    @Schema(description = "반려동물 몸무게")
-    private String weight;
+    @Schema(description = "펫 일련번호")
+    private Integer petNo;
+
+    @Schema(description = "특징")
+    private String feature;
 
 }
