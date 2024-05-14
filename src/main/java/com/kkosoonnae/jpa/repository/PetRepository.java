@@ -2,7 +2,10 @@ package com.kkosoonnae.jpa.repository;
 
 import com.kkosoonnae.jpa.entity.Pet;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * packageName    : com.kkosoonnae.jpa.repository
@@ -17,4 +20,10 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PetRepository extends JpaRepository<Pet,Integer> {
+
+    @Query("SELECT p.type, p.weight FROM Pet p WHERE p.cstmrNo = :cstmrNo")
+    List<Pet> findByCustomerNo(Integer cstmrNo);
+
+    @Query("SELECT p.type, p.weight FROM Pet p WHERE p.cstmrNo = :cstmrNo AND p.petNo = :petNo")
+    Pet findByCustomerNoAndPetNo(Integer cstmrNo, Integer petNo);
 }

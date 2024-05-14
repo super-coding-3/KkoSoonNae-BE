@@ -14,19 +14,19 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "avail_time")
+@Table(name = "AVAIL_TIME")
 public class AvailTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "avail_no")
+    @Column(name = "AVAIL_NO")
     private Integer availNo;
 
-    @Column(name = "stroe_no")
+    @Column(name = "STORE_NO")
     private Integer storeNo;
 
-    @Column(name = "avail_date")
+    @Column(name = "AVAIL_DATE")
     private LocalDate availDate;
 
-    @Column(name = "avail_time")
+    @Column(name = "AVAIL_TIME")
     private LocalTime availTime;
 }
