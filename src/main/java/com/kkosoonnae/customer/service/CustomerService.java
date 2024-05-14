@@ -5,12 +5,15 @@ import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.config.jwt.JwtTokenProvider;
 import com.kkosoonnae.customer.dto.InfoDto;
 import com.kkosoonnae.customer.dto.LoginDto;
+import com.kkosoonnae.customer.dto.PetInfoDto;
 import com.kkosoonnae.customer.dto.SignUpDto;
 import com.kkosoonnae.jpa.entity.CustomerBas;
 import com.kkosoonnae.jpa.entity.CustomerDtl;
+import com.kkosoonnae.jpa.entity.Pet;
 import com.kkosoonnae.jpa.entity.RoleType;
 import com.kkosoonnae.jpa.repository.CustomerBasRepository;
 import com.kkosoonnae.jpa.repository.CustomerDtlRepository;
+import com.kkosoonnae.jpa.repository.PetRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +50,7 @@ public class CustomerService {
 
     private final CustomerDtlRepository customerDtlRepository;
 
-    private final PrincipalDetailService principalDetailService;
+    private final PetRepository petRepository;
 
     private final AuthenticationManager authenticationManager;
 
@@ -138,6 +141,22 @@ public class CustomerService {
         }
 
         return customerDtl.getNickName();
+    }
+
+    public void petAdd(Integer cstmrNo,PetInfoDto petInfoDto){
+        CustomerBas customerBas = customerBasRepository.findById(cstmrNo)
+                .orElseThrow(()-> new NotFoundException("Customer not found with cstmrNo : " + cstmrNo));
+
+        Pet pet = Pet.builder().cstmrNo(customerBas.getCstmrNo())
+                .img(petInfoDto.getImg())
+                .name(petInfoDto.getName())
+                .type(petInfoDto.getType())
+                .birthDt(petInfoDto.getBirthDt())
+                .gender(petInfoDto.getGender())
+                .weight(petInfoDto.getWeight())
+                .build();
+
+        petRepository.save(pet);
     }
 
 

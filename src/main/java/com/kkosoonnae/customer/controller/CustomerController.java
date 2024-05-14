@@ -5,6 +5,7 @@ import com.kkosoonnae.config.jwt.JwtProperties;
 import com.kkosoonnae.config.security.CustomLogoutHandler;
 import com.kkosoonnae.customer.dto.InfoDto;
 import com.kkosoonnae.customer.dto.LoginDto;
+import com.kkosoonnae.customer.dto.PetInfoDto;
 import com.kkosoonnae.customer.dto.SignUpDto;
 import com.kkosoonnae.customer.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,6 +20,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+import org.webjars.NotFoundException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -142,6 +144,27 @@ public class CustomerController {
             // 그 외 예외 처리
             log.error("그 외 예외 발생 했을 경우 : {}",e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다.");
+        }
+    }
+
+    @Operation(summary = "반려동물 추가")
+    @PostMapping("/{cstmrNo}/addPet")
+    public ResponseEntity<?> addPet(@PathVariable Integer cstmrNo, @RequestBody PetInfoDto petInfoDto){
+        try{
+            Map<String, String> rs = new HashMap<>();
+            rs.put("message","반려동물 추가에 성공 하였습니다.");
+            service.petAdd(cstmrNo,petInfoDto);
+            return ResponseEntity.ok(rs);
+        }catch (NotFoundException e){
+            Map<String,String> rs = new HashMap<>();
+            rs.put("message","정보를 찾을 수 없습니다.");
+            rs.put("message : {} ", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(rs);
+        }catch (Exception e){
+            Map<String, String> rs = new HashMap<>();
+            rs.put("message" , "반려동물 추가에 실패 하였습니다.");
+            rs.put("message : {} ",e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(rs);
         }
     }
 }
