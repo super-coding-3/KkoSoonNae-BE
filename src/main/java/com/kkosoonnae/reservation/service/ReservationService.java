@@ -4,6 +4,7 @@ import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.repository.*;
 import com.kkosoonnae.reservation.dto.ReservationRequest;
 import com.kkosoonnae.reservation.dto.ReservationResponse;
+import com.kkosoonnae.reservation.service.exceptions.InvalidValueException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -74,7 +75,7 @@ public class ReservationService {
                 return reservationResponse;
 
             } else {
-                throw new RuntimeException("해당 날짜와 시간에는 이미 예약이 있습니다.");
+                throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
             }
         }
     }
