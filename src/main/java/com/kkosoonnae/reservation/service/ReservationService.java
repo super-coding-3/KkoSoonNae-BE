@@ -52,7 +52,7 @@ public class ReservationService {
             Integer storeNo = reservationRequest.getStoreNo();
             LocalDate reservationDate = reservationRequest.getReservationDate();
             LocalTime reservationTime = reservationRequest.getReservationTime();
-            boolean isAvailable = reservationRepository.existsByIdAndDateAndTime(storeNo, reservationDate, reservationTime);
+            boolean isAvailable = reservationRepository.existsByStoreNoAndDateAndTime(storeNo, reservationDate, reservationTime);
 
             if (!isAvailable) {
                 Integer availNo = availTimeRepository.findByStoreNo(storeNo);
@@ -79,4 +79,7 @@ public class ReservationService {
             }
         }
     }
+
+
+
 }
