@@ -1,20 +1,19 @@
 package com.kkosoonnae.store.service;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import com.kkosoonnae.jpa.entity.StoreImg;
+import com.kkosoonnae.jpa.entity.Style;
+import com.kkosoonnae.store.dto.StoreDetailViewResponseDto;
+import com.kkosoonnae.store.dto.StoreDetailWithImageResponseDto;
+import com.kkosoonnae.store.dto.StoreDto;
+import com.kkosoonnae.store.dto.StyleDto;
 
-/**
- * packageName    : com.kkosoonnae.store.service
- * fileName       : StoreService
- * author         : hagjoon
- * date           : 2024-05-10
- * description    :
- * ===========================================================
- * DATE              AUTHOR             NOTE
- * -----------------------------------------------------------
- * 2024-05-10        hagjoon       최초 생성
- */
-@Service
-@Slf4j
-public class StoreService {
+import java.util.List;
+import java.util.Optional;
+
+public interface StoreService  {
+    StoreDetailWithImageResponseDto findStoreDetailWithImage (Integer storeNo);
+
+    List<StyleDto> findStyles (Integer storeNo);
+
+
 }

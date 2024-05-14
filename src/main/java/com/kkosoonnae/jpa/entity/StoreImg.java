@@ -6,12 +6,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "STORE_IMG")
+@Entity
+@Table(name = "sotre_img")
 public class StoreImg {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class StoreImg {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "STORE_NO")
-    private Store store;
+    private Store storeNo;
 
     @Column(name = "IMG")
     private String img;
