@@ -28,7 +28,7 @@ public class Qna {
     private Integer qnaNo;
 
     @Column(name = "CSTMR_NO")
-    private Integer cstmrNO;
+    private Integer cstmrNo;
 
     @Column(name = "TITLE")
     private String title;

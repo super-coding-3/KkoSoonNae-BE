@@ -3,10 +3,7 @@ package com.kkosoonnae.customer.controller;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.config.jwt.JwtProperties;
 import com.kkosoonnae.config.security.CustomLogoutHandler;
-import com.kkosoonnae.customer.dto.InfoDto;
-import com.kkosoonnae.customer.dto.LoginDto;
-import com.kkosoonnae.customer.dto.PetInfoDto;
-import com.kkosoonnae.customer.dto.SignUpDto;
+import com.kkosoonnae.customer.dto.*;
 import com.kkosoonnae.customer.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -186,6 +183,22 @@ public class CustomerController {
             rs.put("message" , "반려동물 정보 수정에 실패 하였습니다.");
             rs.put("message : {} ",e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(rs);
+        }
+    }
+
+    @Operation(summary = "문의사항 등록")
+    @PostMapping("/qna")
+    public ResponseEntity<?> addQna(@AuthenticationPrincipal PrincipalDetails principalDetails, QnaDto qnaDto){
+        boolean Success = service.createQna(qnaDto,principalDetails);
+
+        if(Success) {
+            Map<String, String> rs = new HashMap<>();
+            rs.put("message","문의사항 등록에 성공하였습니다.");
+            return ResponseEntity.ok(rs);
+        }else {
+            Map<String,String> rs = new HashMap<>();
+            rs.put("message","문의사항 등록에 실패하였습니다.");
+            return ResponseEntity.badRequest().body(rs);
         }
     }
 }

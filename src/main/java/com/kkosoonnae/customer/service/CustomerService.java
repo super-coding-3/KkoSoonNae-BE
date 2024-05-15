@@ -3,17 +3,12 @@ package com.kkosoonnae.customer.service;
 import com.kkosoonnae.config.auth.PrincipalDetailService;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.config.jwt.JwtTokenProvider;
-import com.kkosoonnae.customer.dto.InfoDto;
-import com.kkosoonnae.customer.dto.LoginDto;
-import com.kkosoonnae.customer.dto.PetInfoDto;
-import com.kkosoonnae.customer.dto.SignUpDto;
-import com.kkosoonnae.jpa.entity.CustomerBas;
-import com.kkosoonnae.jpa.entity.CustomerDtl;
-import com.kkosoonnae.jpa.entity.Pet;
-import com.kkosoonnae.jpa.entity.RoleType;
+import com.kkosoonnae.customer.dto.*;
+import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.repository.CustomerBasRepository;
 import com.kkosoonnae.jpa.repository.CustomerDtlRepository;
 import com.kkosoonnae.jpa.repository.PetRepository;
+import com.kkosoonnae.jpa.repository.QnaRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +44,8 @@ public class CustomerService {
     private final CustomerBasRepository customerBasRepository;
 
     private final CustomerDtlRepository customerDtlRepository;
+
+    private final QnaRepository qnaRepository;
 
     private final PetRepository petRepository;
 
@@ -122,10 +119,15 @@ public class CustomerService {
         CustomerDtl customerDtl = customerDtlRepository.findByCustomerBas(customerBas)
                 .orElseThrow(() -> new IllegalStateException("사용자의 상세 정보를 찾을 수 없습니다."));
 
-        // InfoDto에서 받은 정보로 사용자 정보 업데이트
-        customerDtl.updateFromDto(infoDto);
-
-        // 변경된 정보 저장
+        if(customerDtl != null){
+            customerDtl = CustomerDtl.builder()
+                    .nickName(infoDto.getNickName())
+                    .phone(infoDto.getPhone())
+                    .zipCode(infoDto.getZipCode())
+                    .address(infoDto.getAddress())
+                    .addressDtl(infoDto.getAddressDtl())
+                    .build();
+        }
         customerDtlRepository.save(customerDtl);
 
     }
@@ -173,6 +175,23 @@ public class CustomerService {
                 .build();
 
         petRepository.save(pet);
+
+    }
+
+    public boolean createQna(QnaDto qnaDto,PrincipalDetails principalDetails){
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        try{
+            Qna qna = Qna.builder()
+                    .cstmrNo(cstmrNo)
+                    .title(qnaDto.getTitle())
+                    .content(qnaDto.getContent())
+                    .build();
+            qnaRepository.save(qna);
+            return true;
+        }catch (Exception e){
+            log.error("문의 사항 등록에 실패하였습니다. {}",e);
+            return false;
+        }
 
     }
 
