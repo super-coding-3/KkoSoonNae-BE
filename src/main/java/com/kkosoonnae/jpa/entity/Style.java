@@ -18,8 +18,9 @@ public class Style {
     @Column(name = "STYLE_NO")
     private Integer styleNo;
 
-    @Column(name = "STORE_NO")
-    private Integer storeNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "STORE_NO")
+    private Store store;
 
     @Column(name = "STYLE_NAME")
     private String styleName;

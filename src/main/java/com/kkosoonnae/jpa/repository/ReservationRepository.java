@@ -10,9 +10,9 @@ import java.time.LocalTime;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
-    @Query("SELECT r.reservationNo FROM Reservation r WHERE r.cstmerNo = :cstmrNo")
+    @Query("SELECT r.reservationNo FROM Reservation r WHERE r.cstmrBas.cstmrNo = :cstmrNo")
     Reservation findByCstmrNo(Integer cstmrNo);
 
-    @Query("SELECT r.reservationNo FROM Reservation r WHERE r.storeNo = :storeNo AND r.reservationDate = :reservationDate AND r.reservationTime = :reservationTime")
+    @Query("SELECT r.reservationNo FROM Reservation r WHERE r.store.storeNo = :storeNo AND r.reservationDate = :reservationDate AND r.reservationTime = :reservationTime")
     boolean existsByStoreNoAndDateAndTime(Integer storeNo, LocalDate reservationDate, LocalTime reservationTime);
 }

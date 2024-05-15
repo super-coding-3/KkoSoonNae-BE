@@ -21,8 +21,9 @@ public class AvailTime {
     @Column(name = "AVAIL_NO")
     private Integer availNo;
 
-    @Column(name = "STORE_NO")
-    private Integer storeNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "STORE_NO")
+    private Store store;
 
     @Column(name = "AVAIL_DATE")
     private LocalDate availDate;
