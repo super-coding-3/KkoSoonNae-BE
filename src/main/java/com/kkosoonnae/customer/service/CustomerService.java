@@ -143,8 +143,7 @@ public class CustomerService {
         return customerDtl.getNickName();
     }
 
-    public void petAdd(PetInfoDto petInfoDto){
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public void petAdd(PetInfoDto petInfoDto, PrincipalDetails principalDetails){
         Integer customerBas = principalDetails.getCustomerBas().getCstmrNo();
 
 //        CustomerBas customerBas = customerBasRepository.findById(cstmrNo)
