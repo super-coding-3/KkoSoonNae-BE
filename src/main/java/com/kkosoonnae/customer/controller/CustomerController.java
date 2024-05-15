@@ -148,12 +148,12 @@ public class CustomerController {
     }
 
     @Operation(summary = "반려동물 추가")
-    @PostMapping("/{cstmrNo}/addPet")
-    public ResponseEntity<?> addPet(@PathVariable Integer cstmrNo, @RequestBody PetInfoDto petInfoDto){
+    @PostMapping("/addPet")
+    public ResponseEntity<?> addPet(@RequestBody PetInfoDto petInfoDto){
         try{
             Map<String, String> rs = new HashMap<>();
             rs.put("message","반려동물 추가에 성공 하였습니다.");
-            service.petAdd(cstmrNo,petInfoDto);
+            service.petAdd(petInfoDto);
             return ResponseEntity.ok(rs);
         }catch (NotFoundException e){
             Map<String,String> rs = new HashMap<>();

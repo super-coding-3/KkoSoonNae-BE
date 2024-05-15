@@ -143,11 +143,14 @@ public class CustomerService {
         return customerDtl.getNickName();
     }
 
-    public void petAdd(Integer cstmrNo,PetInfoDto petInfoDto){
-        CustomerBas customerBas = customerBasRepository.findById(cstmrNo)
-                .orElseThrow(()-> new NotFoundException("Customer not found with cstmrNo : " + cstmrNo));
+    public void petAdd(PetInfoDto petInfoDto){
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Integer customerBas = principalDetails.getCustomerBas().getCstmrNo();
 
-        Pet pet = Pet.builder().cstmrNo(customerBas.getCstmrNo())
+//        CustomerBas customerBas = customerBasRepository.findById(cstmrNo)
+//                .orElseThrow(()-> new NotFoundException("Customer not found with cstmrNo : " + cstmrNo));
+
+        Pet pet = Pet.builder().cstmrNo(customerBas)
                 .img(petInfoDto.getImg())
                 .name(petInfoDto.getName())
                 .type(petInfoDto.getType())
