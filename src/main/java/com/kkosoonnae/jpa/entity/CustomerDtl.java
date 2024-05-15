@@ -46,12 +46,6 @@ public class CustomerDtl {
     @OneToOne(mappedBy = "customerDtl")
     private CustomerBas customerBas;
 
-    public void updateFromDto(InfoDto infoDto) {
-        this.nickName = infoDto.getNickName();
-        this.phone = infoDto.getPhone();
-        this.zipCode = infoDto.getZipCode();
-        this.address = infoDto.getAddress();
-        this.addressDtl = infoDto.getAddressDtl();
-    }
+
 
 }

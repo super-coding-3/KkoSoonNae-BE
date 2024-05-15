@@ -3,10 +3,7 @@ package com.kkosoonnae.customer.controller;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.config.jwt.JwtProperties;
 import com.kkosoonnae.config.security.CustomLogoutHandler;
-import com.kkosoonnae.customer.dto.InfoDto;
-import com.kkosoonnae.customer.dto.LoginDto;
-import com.kkosoonnae.customer.dto.PetInfoDto;
-import com.kkosoonnae.customer.dto.SignUpDto;
+import com.kkosoonnae.customer.dto.*;
 import com.kkosoonnae.customer.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -97,10 +94,10 @@ public class CustomerController {
     }
 
     @Operation(summary = "회원 정보 조회")
-    @GetMapping("/profile/{loginId}")
-        public ResponseEntity<?> getUserProFile(@PathVariable("loginId") String loginId) {
+    @GetMapping("/profile")
+        public ResponseEntity<?> getUserProFile(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         try {
-            InfoDto userProfile = service.getUserProfile(loginId);
+            InfoDto userProfile = service.getUserProfile(principalDetails);
             log.info("userProFile : {} ", userProfile);
             return ResponseEntity.ok(userProfile);
         } catch (UsernameNotFoundException e) {
@@ -149,11 +146,11 @@ public class CustomerController {
 
     @Operation(summary = "반려동물 추가")
     @PostMapping("/addPet")
-    public ResponseEntity<?> addPet(@RequestBody PetInfoDto petInfoDto, @AuthenticationPrincipal PrincipalDetails principalDetails){
+    public ResponseEntity<?> addPet(@AuthenticationPrincipal PrincipalDetails principalDetails,@RequestBody PetInfoDto petInfoDto){
         try{
             Map<String, String> rs = new HashMap<>();
             rs.put("message","반려동물 추가에 성공 하였습니다.");
-            service.petAdd(petInfoDto,principalDetails);
+            service.petAdd(principalDetails,petInfoDto);
             return ResponseEntity.ok(rs);
         }catch (NotFoundException e){
             Map<String,String> rs = new HashMap<>();
@@ -165,6 +162,43 @@ public class CustomerController {
             rs.put("message" , "반려동물 추가에 실패 하였습니다.");
             rs.put("message : {} ",e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(rs);
+        }
+    }
+
+    @Operation(summary = "반려동물 정보 수정")
+    @PutMapping("/petUpdate")
+    public ResponseEntity<?> updatePet(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody PetInfoDto petInfoDto){
+        try {
+            Map<String, String> rs = new HashMap<>();
+            rs.put("message","반려동물 정보 수정에 성공 하였습니다.");
+            service.petUpdate(principalDetails,petInfoDto);
+            return ResponseEntity.ok(rs);
+        }catch (NotFoundException e){
+            Map<String,String> rs = new HashMap<>();
+            rs.put("message","반려동물 정보를 찾을 수 없습니다.");
+            rs.put("message : {}",e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(rs);
+        }catch (Exception e){
+            Map<String, String> rs = new HashMap<>();
+            rs.put("message" , "반려동물 정보 수정에 실패 하였습니다.");
+            rs.put("message : {} ",e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(rs);
+        }
+    }
+
+    @Operation(summary = "문의사항 등록")
+    @PostMapping("/qna")
+    public ResponseEntity<?> addQna(@AuthenticationPrincipal PrincipalDetails principalDetails, QnaDto qnaDto){
+        boolean Success = service.createQna(qnaDto,principalDetails);
+
+        if(Success) {
+            Map<String, String> rs = new HashMap<>();
+            rs.put("message","문의사항 등록에 성공하였습니다.");
+            return ResponseEntity.ok(rs);
+        }else {
+            Map<String,String> rs = new HashMap<>();
+            rs.put("message","문의사항 등록에 실패하였습니다.");
+            return ResponseEntity.badRequest().body(rs);
         }
     }
 }
