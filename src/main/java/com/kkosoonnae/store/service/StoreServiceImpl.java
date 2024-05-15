@@ -35,12 +35,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class StoreServiceImpl implements StoreService {
-    @Autowired
-    private StoreRepository storeRepository;
-    @Autowired
-    private StoreImgRepository storeImgRepository;
-    @Autowired
-    private StyleRepository styleRepository;
+
+    private final StoreRepository storeRepository;
+
+    private final StoreImgRepository storeImgRepository;
+
+    private final StyleRepository styleRepository;
 
     @Override
     public StoreDetailWithImageResponseDto findStoreDetailWithImage(Integer storeNo) {
