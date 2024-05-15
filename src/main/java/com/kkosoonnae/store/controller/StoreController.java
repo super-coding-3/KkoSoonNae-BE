@@ -30,8 +30,8 @@ import java.util.List;
 @RequestMapping("/KkoSoonNae/store")
 public class StoreController {
 
-    @Autowired
-    private StoreService storeService;
+
+    private final StoreService storeService;
 
     @GetMapping("/{storeNo}")
     public ResponseEntity<StoreDetailWithImageResponseDto> StoreDetailWithImage(@PathVariable Integer storeNo) {
