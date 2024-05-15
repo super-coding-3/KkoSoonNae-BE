@@ -24,14 +24,17 @@ public class Reservation {
     @Column(name = "RESERVATION_NO")
     private Integer reservationNo;
 
-    @Column(name = "AVAIL_NO")
-    private Integer availNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "AVAIL_NO")
+    private AvailTime avail;
 
-    @Column(name = "STORE_NO")
-    private Integer storeNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "STORE_NO")
+    private Store store;
 
-    @Column(name = "CSTMER_NO")
-    private Integer cstmerNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CSTMR_NO")
+    private CustomerBas cstmrBas;
 
     @Column(name = "RESERVATION_STATUS")
     private String reservationStatus;
@@ -45,10 +48,10 @@ public class Reservation {
     @Column(name = "FEATURE")
     private String feature;
 
-    public Reservation(Integer availNo, Integer cstmerNo, ReservationRequest reservationRequest) {
-        this.availNo = availNo;
-        this.cstmerNo = cstmerNo;
-        this.storeNo = reservationRequest.getStoreNo();
+    public Reservation(Store store, AvailTime avail, CustomerBas cstmrBas, ReservationRequest reservationRequest) {
+        this.avail = avail;
+        this.cstmrBas = cstmrBas;
+        this.store = store;
         this.reservationStatus = "확정";
         this.reservationDate = reservationRequest.getReservationDate();
         this.reservationTime = reservationRequest.getReservationTime();

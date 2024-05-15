@@ -46,6 +46,8 @@ public class ReservationService {
         String currentEmail = authentication.getName();
         Integer cstmrNo = customerBasRepository.findCstmrNoByEmail(currentEmail);
 
+        CustomerBas customrBas = customerBasRepository.findCstmrByEmail(currentEmail);
+
         if ( cstmrNo == null) {
             throw new IllegalArgumentException("로그인이 필요합니다.");
         } else  {
@@ -56,18 +58,18 @@ public class ReservationService {
 
             if (!isAvailable) {
                 Integer availNo = availTimeRepository.findByStoreNo(storeNo);
-                Reservation reservation = new Reservation(availNo, cstmrNo, reservationRequest);
-                reservationRepository.save(reservation);
-
+                AvailTime availTime = availTimeRepository.findAvailTimeByStoreNoAndReservationDateReservationTime(storeNo, reservationDate, reservationTime);
+//                AvailTime availTime = availTimeRepository.find
                 Reservation reservationByCstmrNo = reservationRepository.findByCstmrNo(cstmrNo);
-
                 Store store = storeRepository.findById(reservationRequest.getStoreNo()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
-
-                Style style = styleRepository.findById(reservationRequest.getStyleNo()).orElseThrow(() -> new NotFoundException("요청하신 스타일이 없습니다."));
-
+//                Style style = styleRepository.findById(reservationRequest.getStyleNo()).orElseThrow(() -> new NotFoundException("요청하신 스타일이 없습니다."));
+                Style style = styleRepository.findStylNameByStoreNo(storeNo, reservationRequest.getStyleNo());
                 Pet pet = petRepository.findByCustomerNoAndPetNo(cstmrNo, reservationRequest.getPetNo());
 
-                ReservedPets reservedPets = new ReservedPets(reservationByCstmrNo.getReservationNo(), reservationRequest.getPetNo(), availNo);
+                Reservation reservation = new Reservation(store, availTime, customrBas, reservationRequest);
+                reservationRepository.save(reservation);
+
+                ReservedPets reservedPets = new ReservedPets(reservationByCstmrNo.getReservationNo(), pet, availTime);
                 reservedPetsRepository.save(reservedPets);
 
                 ReservationResponse reservationResponse = new ReservationResponse(store.getStoreName(), reservation, style.getStyleName(), pet);

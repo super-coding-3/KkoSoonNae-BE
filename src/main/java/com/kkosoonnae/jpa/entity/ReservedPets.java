@@ -19,9 +19,11 @@ public class ReservedPets {
     @Column(name = "RESERVATION_NO")
     private Integer reservationNo;
 
-    @Column(name = "PET_NO")
-    private Integer petNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PET_NO")
+    private Pet pet;
 
-    @Column(name = "AVAIL_NO")
-    private Integer availNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "AVAIL_NO")
+    private AvailTime avail;
 }
