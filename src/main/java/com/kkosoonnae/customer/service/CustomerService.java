@@ -98,9 +98,8 @@ public class CustomerService {
         return jwtTokenProvider.createToken(loginId);
     }
 
-    public InfoDto getUserProfile(String loginId){
+    public InfoDto getUserProfile(PrincipalDetails principalDetails){
         //PrincipalDetails를 이용해 로그인한 사용자 기본 정보 조회
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomerBas customerBas = principalDetails.getCustomerBas();
 
         CustomerDtl customerDtl = customerDtlRepository.findByCustomerBas(customerBas)
@@ -143,8 +142,7 @@ public class CustomerService {
         return customerDtl.getNickName();
     }
 
-    public void petAdd(PetInfoDto petInfoDto){
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public void petAdd(PrincipalDetails principalDetails,PetInfoDto petInfoDto){
         Integer customerBas = principalDetails.getCustomerBas().getCstmrNo();
 
 //        CustomerBas customerBas = customerBasRepository.findById(cstmrNo)
@@ -160,6 +158,22 @@ public class CustomerService {
                 .build();
 
         petRepository.save(pet);
+    }
+
+    public void petUpdate(PrincipalDetails principalDetails, PetInfoDto petInfoDto){
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+
+        Pet pet = Pet.builder().cstmrNo(cstmrNo)
+                .img(petInfoDto.getImg())
+                .name(petInfoDto.getName())
+                .type(petInfoDto.getType())
+                .birthDt(petInfoDto.getBirthDt())
+                .gender(petInfoDto.getGender())
+                .weight(petInfoDto.getWeight())
+                .build();
+
+        petRepository.save(pet);
+
     }
 
 
