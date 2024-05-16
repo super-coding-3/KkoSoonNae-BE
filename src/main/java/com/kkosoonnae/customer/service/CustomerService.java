@@ -144,40 +144,6 @@ public class CustomerService {
         return customerDtl.getNickName();
     }
 
-    public void petAdd(PrincipalDetails principalDetails,PetInfoDto petInfoDto){
-        Integer customerBas = principalDetails.getCustomerBas().getCstmrNo();
-
-//        CustomerBas customerBas = customerBasRepository.findById(cstmrNo)
-//                .orElseThrow(()-> new NotFoundException("Customer not found with cstmrNo : " + cstmrNo));
-
-        Pet pet = Pet.builder().cstmrNo(customerBas)
-                .img(petInfoDto.getImg())
-                .name(petInfoDto.getName())
-                .type(petInfoDto.getType())
-                .birthDt(petInfoDto.getBirthDt())
-                .gender(petInfoDto.getGender())
-                .weight(petInfoDto.getWeight())
-                .build();
-
-        petRepository.save(pet);
-    }
-
-    public void petUpdate(PrincipalDetails principalDetails, PetInfoDto petInfoDto){
-        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
-
-        Pet pet = Pet.builder().cstmrNo(cstmrNo)
-                .img(petInfoDto.getImg())
-                .name(petInfoDto.getName())
-                .type(petInfoDto.getType())
-                .birthDt(petInfoDto.getBirthDt())
-                .gender(petInfoDto.getGender())
-                .weight(petInfoDto.getWeight())
-                .build();
-
-        petRepository.save(pet);
-
-    }
-
     public boolean createQna(QnaDto qnaDto,PrincipalDetails principalDetails){
         Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
         try{
