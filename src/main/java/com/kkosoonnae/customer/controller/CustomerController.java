@@ -144,48 +144,6 @@ public class CustomerController {
         }
     }
 
-    @Operation(summary = "반려동물 추가")
-    @PostMapping("/addPet")
-    public ResponseEntity<?> addPet(@AuthenticationPrincipal PrincipalDetails principalDetails,@RequestBody PetInfoDto petInfoDto){
-        try{
-            Map<String, String> rs = new HashMap<>();
-            rs.put("message","반려동물 추가에 성공 하였습니다.");
-            service.petAdd(principalDetails,petInfoDto);
-            return ResponseEntity.ok(rs);
-        }catch (NotFoundException e){
-            Map<String,String> rs = new HashMap<>();
-            rs.put("message","정보를 찾을 수 없습니다.");
-            rs.put("message : {} ", e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(rs);
-        }catch (Exception e){
-            Map<String, String> rs = new HashMap<>();
-            rs.put("message" , "반려동물 추가에 실패 하였습니다.");
-            rs.put("message : {} ",e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(rs);
-        }
-    }
-
-    @Operation(summary = "반려동물 정보 수정")
-    @PutMapping("/petUpdate")
-    public ResponseEntity<?> updatePet(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody PetInfoDto petInfoDto){
-        try {
-            Map<String, String> rs = new HashMap<>();
-            rs.put("message","반려동물 정보 수정에 성공 하였습니다.");
-            service.petUpdate(principalDetails,petInfoDto);
-            return ResponseEntity.ok(rs);
-        }catch (NotFoundException e){
-            Map<String,String> rs = new HashMap<>();
-            rs.put("message","반려동물 정보를 찾을 수 없습니다.");
-            rs.put("message : {}",e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(rs);
-        }catch (Exception e){
-            Map<String, String> rs = new HashMap<>();
-            rs.put("message" , "반려동물 정보 수정에 실패 하였습니다.");
-            rs.put("message : {} ",e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(rs);
-        }
-    }
-
     @Operation(summary = "문의사항 등록")
     @PostMapping("/qna")
     public ResponseEntity<?> addQna(@AuthenticationPrincipal PrincipalDetails principalDetails, QnaDto qnaDto){
