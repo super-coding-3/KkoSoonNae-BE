@@ -21,8 +21,9 @@ public class Review {
     @Column(name = "REVIEW_NO")
     private Integer reviewNo;
 
-    @Column(name = "STORE_NO")
-    private Integer storeNo;
+    @ManyToOne
+    @JoinColumn(name = "STORE_NO")
+    private Store store;
 
     @Column(name = "CSTMR_NO")
     private Integer cstmrNo;
@@ -38,5 +39,8 @@ public class Review {
 
     @Column(name = "SCOPE")
     private String scope;
+
+    @Column(name = "AVERAGE_SCOPE")
+    private Integer averageScope;
 
 }

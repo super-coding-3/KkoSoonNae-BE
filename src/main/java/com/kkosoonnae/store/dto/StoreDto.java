@@ -42,59 +42,5 @@ public class StoreDto {
 }
 
 
-    //    @Builder
-//    public StoreDto(
-//            Integer storeNo,
-//            String storeName,
-//            String content,
-//            String zipcode,
-//            String address,
-//            String addressDtl,
-//            String phone,
-//            LocalDateTime storeOperDt,
-//            String roadAddress
-//) {
-//        this.storeNo = storeNo;
-//        this.storeName = storeName;
-//        this.content = content;
-//        this.zipCode = zipcode;
-//        this.address = address;
-//        this.addressDtl = addressDtl;
-//        this.phone = phone;
-//        this.storeOperDt = storeOperDt;
-//        this.roadAddress = roadAddress;
-//}
-//public Store toEntity(Instant storeOperDt) {
-//    LocalDateTime convertedCreateAt = LocalDateTime.ofInstant(
-//            storeOperDt,
-//            ZoneId.of("/Asia/seoul")
-//    );
-//
-//    return Store.builder()
-//            .storeName(getStoreName())
-//            .content(getContent())
-//            .zipCode(getZipCode())
-//            .address(getAddress())
-//            .addressDtl(getAddressDtl())
-//            .phone(getPhone())
-//            .storeOperDt(convertedCreateAt)
-//            .roadAddress(getRoadAddress())
-//            .build();
-//    }
-//    public static StoreDto StoreEntity(Store store) {
-//        return StoreDto.builder()
-//                .storeNo(store.getStoreNo())
-//                .storeName(store.getStoreName())
-//                .content(store.getContent())
-//                .zipCode(store.getZipCode())
-//                .address(store.getAddress())
-//                .addressDtl(store.getAddressDtl())
-//                .phone(store.getPhone())
-//                .storeOperDt(store.getStoreOperDt())
-//                .roadAddress(store.getRoadAddress())
-//                .build();
-//    }
-//}
-
 
 
