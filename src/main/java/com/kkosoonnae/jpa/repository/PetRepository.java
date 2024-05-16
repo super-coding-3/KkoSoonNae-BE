@@ -21,9 +21,9 @@ import java.util.List;
 @Repository
 public interface PetRepository extends JpaRepository<Pet,Integer> {
 
-    @Query("SELECT p.type, p.weight FROM Pet p WHERE p.cstmrNo = :cstmrNo")
+    @Query("SELECT p.type, p.weight FROM Pet p WHERE p.customerBas = :cstmrNo")
     List<Pet> findByCustomerNo(Integer cstmrNo);
 
-    @Query("SELECT p.type, p.weight FROM Pet p WHERE p.cstmrNo = :cstmrNo AND p.petNo = :petNo")
+    @Query("SELECT p.type, p.weight FROM Pet p WHERE p.customerBas = :cstmrNo AND p.petNo = :petNo")
     Pet findByCustomerNoAndPetNo(Integer cstmrNo, Integer petNo);
 }

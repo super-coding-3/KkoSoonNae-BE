@@ -28,12 +28,13 @@ public class PetService {
     private final PetRepository petRepository;
 
     public void petAdd(PrincipalDetails principalDetails, PetInfoDto petInfoDto){
-        Integer customerBas = principalDetails.getCustomerBas().getCstmrNo();
+        CustomerBas customerBas = principalDetails.getCustomerBas();
 
 //        CustomerBas customerBas = customerBasRepository.findById(cstmrNo)
 //                .orElseThrow(()-> new NotFoundException("Customer not found with cstmrNo : " + cstmrNo));
 
-        Pet pet = Pet.builder().cstmrNo(customerBas)
+        Pet pet = Pet.builder()
+                .customerBas(customerBas)
                 .img(petInfoDto.getImg())
                 .name(petInfoDto.getName())
                 .type(petInfoDto.getType())
@@ -46,9 +47,9 @@ public class PetService {
     }
 
     public void petUpdate(PrincipalDetails principalDetails, PetInfoDto petInfoDto){
-        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        CustomerBas cstmrNo = principalDetails.getCustomerBas();
 
-        Pet pet = Pet.builder().cstmrNo(cstmrNo)
+        Pet pet = Pet.builder().customerBas(cstmrNo)
                 .img(petInfoDto.getImg())
                 .name(petInfoDto.getName())
                 .type(petInfoDto.getType())
