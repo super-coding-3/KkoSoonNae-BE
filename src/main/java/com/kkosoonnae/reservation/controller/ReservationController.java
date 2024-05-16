@@ -43,6 +43,8 @@ public class ReservationController {
             return new ResponseEntity<>(storeNameResponse, HttpStatus.OK);
         } catch (NotFoundException nfe) {
             return new ResponseEntity<>(nfe.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException iae) {
+            return new ResponseEntity<>(iae.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -55,6 +57,8 @@ public class ReservationController {
             return new ResponseEntity<>(styleResponses, HttpStatus.OK);
         } catch (NotFoundException nfe) {
             return new ResponseEntity<>(nfe.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException iae) {
+            return new ResponseEntity<>(iae.getMessage(), HttpStatus.UNAUTHORIZED);
         }
 
     }
@@ -67,6 +71,8 @@ public class ReservationController {
             return new ResponseEntity<>(petResponses, HttpStatus.OK);
         } catch (NotFoundException nfe) {
             return new ResponseEntity<>(nfe.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException iae) {
+            return new ResponseEntity<>(iae.getMessage(), HttpStatus.UNAUTHORIZED);
         }
 
     }
@@ -82,6 +88,8 @@ public class ReservationController {
             return new ResponseEntity<>(nfe.getMessage(), HttpStatus.NOT_FOUND);
         } catch (NotAcceptException nae) {
             return new ResponseEntity<>(nae.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        } catch (IllegalArgumentException iae) {
+            return new ResponseEntity<>(iae.getMessage(), HttpStatus.UNAUTHORIZED);
         }
 
     }
