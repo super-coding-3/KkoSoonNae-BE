@@ -19,11 +19,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class MapController {
-    private final MapService mapService;
-    @PostMapping("/near")
-    @Operation(summary = "내 근처 매장 정보 저장")
-    public ResponseEntity<List<NearByStore>> saveStore(@RequestBody List<GetNearByStore> requestBody){
-        List<NearByStore> nearByStores= mapService.saveNearByStore(requestBody);
-        return ResponseEntity.ok(nearByStores);
-    }
+//    private final MapService mapService;
+//    @PostMapping("/near")
+//    @Operation(summary = "내 근처 매장 정보 저장")
+//    public ResponseEntity<List<NearByStore>> saveStore(@RequestBody List<GetNearByStore> requestBody){
+//        List<NearByStore> nearByStores= mapService.saveNearByStore(requestBody);
+//        return ResponseEntity.ok(nearByStores);
+//    }
 }
