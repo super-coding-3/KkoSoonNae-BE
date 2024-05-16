@@ -1,4 +1,4 @@
-package com.kkosoonnae.customer.dto;
+package com.kkosoonnae.pet.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
