@@ -56,8 +56,8 @@ public class Reservation {
         this.cstmrBas = cstmrBas;
         this.store = store;
         this.reservationStatus = "확정";
-        this.reservationDate = reservationRequest.getReservationDate();
-        this.reservationTime = reservationRequest.getReservationTime();
+        this.reservationDate = LocalDate.parse(reservationRequest.getReservationDate());
+        this.reservationTime = LocalTime.parse(reservationRequest.getReservationTime());
         this.feature = reservationRequest.getFeature();
         this.styleName = reservationRequest.getStyleName();
     }
