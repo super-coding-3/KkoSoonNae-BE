@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -44,16 +45,7 @@ public class Store {
     @Column(name = "ROAD_ADDRESS")
     private String roadAddress;
 
-    public Store(String storeName, String content, String zipCode, String address, String addressDtl, String phone, LocalDateTime storeOperDt,String roadAddress){
-        this.storeName=storeName;
-        this.content=content;
-        this.zipCode=zipCode;
-        this.address=address;
-        this.addressDtl=addressDtl;
-        this.phone=phone;
-        this.storeOperDt=storeOperDt;
-        this.roadAddress=roadAddress;
-
-    }
+    @OneToMany(mappedBy = "storeNo" , fetch = FetchType.LAZY)
+    private List<StoreImg> storeImg;
 
 }
