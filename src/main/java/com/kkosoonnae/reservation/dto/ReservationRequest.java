@@ -21,10 +21,10 @@ public class ReservationRequest {
     private Integer storeNo;
 
     @Schema(description = "예약 날짜")
-    private LocalDate reservationDate;
+    private String reservationDate;
 
     @Schema(description = "예약 시간")
-    private LocalTime reservationTime;
+    private String reservationTime;
 
     @Schema(description = "스타일 이름")
     private String styleName;

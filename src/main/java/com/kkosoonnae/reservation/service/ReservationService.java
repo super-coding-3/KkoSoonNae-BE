@@ -59,8 +59,8 @@ public class ReservationService {
             throw new IllegalArgumentException("로그인이 필요합니다.");
         } else  {
             Integer storeNo = reservationRequest.getStoreNo();
-            LocalDate reservationDate = reservationRequest.getReservationDate();
-            LocalTime reservationTime = reservationRequest.getReservationTime();
+            LocalDate reservationDate = LocalDate.parse(reservationRequest.getReservationDate());
+            LocalTime reservationTime = LocalTime.parse(reservationRequest.getReservationTime());
             boolean isAvailable = reservationRepository.existsByStoreNoAndDateAndTime(storeNo, reservationDate, reservationTime);
 
             if (!isAvailable) {

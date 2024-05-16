@@ -24,10 +24,10 @@ public class ReservationResponse {
     private String storeName;
 
     @Schema(description = "예약 날짜")
-    private LocalDate reservationDate;
+    private String reservationDate;
 
     @Schema(description = "예약 시간")
-    private LocalTime reservationTime;
+    private String reservationTime;
 
     @Schema(description = "스타일 이름")
     private String styleName;
@@ -43,8 +43,8 @@ public class ReservationResponse {
 
     public ReservationResponse(String storeName, Reservation reservation, String styleName, Pet pet) {
         this.storeName = storeName;
-        this.reservationDate = reservation.getReservationDate();
-        this.reservationTime = reservation.getReservationTime();
+        this.reservationDate = reservation.getReservationDate().toString();
+        this.reservationTime = reservation.getReservationTime().toString();
         this.styleName = styleName;
         this.type = pet.getType();
         this.weight = pet.getWeight();
