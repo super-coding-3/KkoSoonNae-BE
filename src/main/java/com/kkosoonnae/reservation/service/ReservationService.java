@@ -3,9 +3,7 @@ package com.kkosoonnae.reservation.service;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.repository.*;
-import com.kkosoonnae.reservation.dto.ReservationRequest;
-import com.kkosoonnae.reservation.dto.ReservationResponse;
-import com.kkosoonnae.reservation.dto.StyleResponse;
+import com.kkosoonnae.reservation.dto.*;
 import com.kkosoonnae.reservation.service.exceptions.InvalidValueException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -66,12 +64,11 @@ public class ReservationService {
             if (!isAvailable) {
                 Integer availNo = availTimeRepository.findByStoreNo(storeNo);
                 AvailTime availTime = availTimeRepository.findAvailTimeByStoreNoAndReservationDateReservationTime(storeNo, reservationDate, reservationTime);
-//                AvailTime availTime = availTimeRepository.find
+
                 Reservation reservationByCstmrNo = reservationRepository.findByCstmrNo(cstmrNo);
                 Store store = storeRepository.findById(reservationRequest.getStoreNo()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
-//                Style style = styleRepository.findById(reservationRequest.getStyleNo()).orElseThrow(() -> new NotFoundException("요청하신 스타일이 없습니다."));
-//                Style style = styleRepository.findStylNameByStoreNo(storeNo, reservationRequest.getStyleNo());
-                Pet pet = petRepository.findByCustomerNoAndPetNo(cstmrNo, reservationRequest.getPetNo());
+
+                Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetNo());
 
                 Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
                 reservationRepository.save(reservation);
@@ -91,9 +88,60 @@ public class ReservationService {
 
 
     public List<StyleResponse> findStyleNameByStoreNo(Integer storeNo) {
-        List<Style> styles = styleRepository.findStylNameByStoreNo(storeNo);
-        return StyleResponse.stylesToStyleResponse(styles);
+
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomerBas customerBas = principalDetails.getCustomerBas();
+        String loginId = customerBas.getLoginId();
+
+        boolean isCustomerBas = customerBasRepository.existsByLoginId(loginId);
+
+        if (isCustomerBas) {
+            List<Style> styles = styleRepository.findStylNameByStoreNo(storeNo);
+            return StyleResponse.stylesToStyleResponse(styles);
+        } else {
+            throw new IllegalArgumentException("로그인이 필요합니다.");
+        }
+
     }
 
 
+    public StoreNameResponse findStoreNameByStoreNo(Integer storeNo) {
+
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomerBas customerBas = principalDetails.getCustomerBas();
+        String loginId = customerBas.getLoginId();
+
+        boolean isCustomerBas = customerBasRepository.existsByLoginId(loginId);
+
+        if (isCustomerBas) {
+           Store store = storeRepository.findStoreNameByStoreNo(storeNo);
+           StoreNameResponse storeNameResponse = new StoreNameResponse(store.getStoreName());
+           return storeNameResponse;
+        } else {
+            throw new IllegalArgumentException("로그인이 필요합니다.");
+        }
+
+    }
+
+    public List<PetResponse> findMyPet() {
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomerBas customerBas = principalDetails.getCustomerBas();
+        String loginId = customerBas.getLoginId();
+        boolean isCustomerBas = customerBasRepository.existsByLoginId(loginId);
+
+        if (isCustomerBas) {
+            Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
+            List<Pet> pets = petRepository.findByCstmrNo(cstmrNo);
+
+            if (pets != null) {
+                return PetResponse.petsToPetResponse(pets);
+            } else {
+                throw new NotFoundException("등록된 펫 정보가 없습니다.");
+            }
+        } else {
+            throw new IllegalArgumentException("로그인이 필요합니다.");
+        }
+
+
+    }
 }
