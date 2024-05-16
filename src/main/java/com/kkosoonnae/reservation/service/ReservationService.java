@@ -1,5 +1,6 @@
 package com.kkosoonnae.reservation.service;
 
+import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.repository.*;
 import com.kkosoonnae.reservation.dto.ReservationRequest;
@@ -43,11 +44,16 @@ public class ReservationService {
     private final ReservedPetsRepository reservedPetsRepository;
 
     public ReservationResponse makeReservation(ReservationRequest reservationRequest) {
-        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        String currentEmail = authentication.getName();
-        Integer cstmrNo = customerBasRepository.findCstmrNoByEmail(currentEmail);
+//        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        CustomerBas customrBas = customerBasRepository.findCstmrBasByEmail(currentEmail);
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomerBas customerBas = principalDetails.getCustomerBas();
+
+        String loginId = customerBas.getLoginId();
+        Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
+
+        CustomerBas cstmrBas = customerBasRepository.findCstmrBasByLoginId(loginId);
 
         if ( cstmrNo == null) {
             throw new IllegalArgumentException("로그인이 필요합니다.");
@@ -67,7 +73,7 @@ public class ReservationService {
 //                Style style = styleRepository.findStylNameByStoreNo(storeNo, reservationRequest.getStyleNo());
                 Pet pet = petRepository.findByCustomerNoAndPetNo(cstmrNo, reservationRequest.getPetNo());
 
-                Reservation reservation = new Reservation(store, availTime, customrBas, reservationRequest);
+                Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
                 reservationRepository.save(reservation);
 
                 ReservedPets reservedPets = new ReservedPets(reservationByCstmrNo.getReservationNo(), pet, availTime);

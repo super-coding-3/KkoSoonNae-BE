@@ -26,10 +26,10 @@ public interface CustomerBasRepository extends JpaRepository<CustomerBas,Integer
 
     void findByCstmrNo(Integer cstmrNo);
 
-    @Query("SELECT c.cstmrNo FROM CustomerBas c WHERE c.email = :currentEmail")
-    Integer findCstmrNoByEmail(String currentEmail);
+    @Query("SELECT c.cstmrNo FROM CustomerBas c WHERE c.loginId = :loginId")
+    Integer findCstmrNoByLoginId(String loginId);
 
 
-    @Query("SELECT c FROM CustomerBas  c WHERE  c.email = :currentEmail")
-    CustomerBas findCstmrBasByEmail(String currentEmail);
+    @Query("SELECT c FROM CustomerBas  c WHERE  c.loginId = :loginId")
+    CustomerBas findCstmrBasByLoginId(String loginId);
 }
