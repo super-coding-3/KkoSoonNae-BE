@@ -4,6 +4,7 @@ import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.repository.*;
 import com.kkosoonnae.reservation.dto.ReservationRequest;
 import com.kkosoonnae.reservation.dto.ReservationResponse;
+import com.kkosoonnae.reservation.dto.StyleResponse;
 import com.kkosoonnae.reservation.service.exceptions.InvalidValueException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -82,6 +83,11 @@ public class ReservationService {
         }
     }
 
+
+    public List<StyleResponse> findStyleNameByStoreNo(Integer storeNo) {
+        List<Style> styles = styleRepository.findStylNameByStoreNo(storeNo);
+        return StyleResponse.stylesToStyleResponse(styles);
+    }
 
 
 }
