@@ -2,11 +2,16 @@ package com.kkosoonnae.reservation.controller;
 
 import com.kkosoonnae.reservation.dto.*;
 import com.kkosoonnae.reservation.service.ReservationService;
+import com.kkosoonnae.reservation.service.exceptions.NotAcceptException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.webjars.NotFoundException;
 
 import java.util.List;
 
@@ -32,28 +37,53 @@ public class ReservationController {
 
     @Operation(summary = "매장 일련번호로 매장 이름 가져오기")
     @GetMapping("/store-name/{storeNo}")
-    public StoreNameResponse findStoreName(@PathVariable Integer storeNo) {
-        return reservationService.findStoreNameByStoreNo(storeNo);
+    public ResponseEntity<?> findStoreName(@PathVariable Integer storeNo) {
+        try {
+            StoreNameResponse storeNameResponse = reservationService.findStoreNameByStoreNo(storeNo);
+            return new ResponseEntity<>(storeNameResponse, HttpStatus.OK);
+        } catch (NotFoundException nfe) {
+            return new ResponseEntity<>(nfe.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
 
     @Operation(summary = "매장 일련번호로 스타일 이름 가져오기")
     @GetMapping("/style-list/{storeNo}")
-    public List<StyleResponse> findStyleName(@PathVariable Integer storeNo) {
-        return reservationService.findStyleNameByStoreNo(storeNo);
+    public ResponseEntity<?> findStyleName(@PathVariable Integer storeNo) {
+        try {
+            List<StyleResponse> styleResponses = reservationService.findStyleNameByStoreNo(storeNo);
+            return new ResponseEntity<>(styleResponses, HttpStatus.OK);
+        } catch (NotFoundException nfe) {
+            return new ResponseEntity<>(nfe.getMessage(), HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @Operation(summary = "로그인한 정보로 펫 정보 가져오기")
     @GetMapping("/my-pet")
-    public List<PetResponse> findMyPet() {
-        return reservationService.findMyPet();
+    public ResponseEntity<?> findMyPet() {
+        try {
+            List<PetResponse> petResponses = reservationService.findMyPet();
+            return new ResponseEntity<>(petResponses, HttpStatus.OK);
+        } catch (NotFoundException nfe) {
+            return new ResponseEntity<>(nfe.getMessage(), HttpStatus.NOT_FOUND);
+        }
+
     }
 
 
     @Operation(summary = "에약 하기")
     @PostMapping("/make-reservation")
-    public ReservationResponse makeReservation(@RequestBody ReservationRequest reservationRequest) {
-        return reservationService.makeReservation(reservationRequest);
+    public ResponseEntity<?> makeReservation(@RequestBody ReservationRequest reservationRequest) {
+        try {
+            ReservationResponse reservationResponse = reservationService.makeReservation(reservationRequest);
+            return new ResponseEntity<>(reservationResponse, HttpStatus.CREATED);
+        } catch (NotFoundException nfe) {
+            return new ResponseEntity<>(nfe.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (NotAcceptException nae) {
+            return new ResponseEntity<>(nae.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
+
     }
     
 }
