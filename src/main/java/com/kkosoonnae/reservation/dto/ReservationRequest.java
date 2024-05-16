@@ -26,8 +26,8 @@ public class ReservationRequest {
     @Schema(description = "예약 시간")
     private LocalTime reservationTime;
 
-    @Schema(description = "스타일 일련번호")
-    private Integer styleNo;
+    @Schema(description = "스타일 이름")
+    private String styleName;
 
 //    @Schema(description = "반려동물 종류")
 //    private String type;

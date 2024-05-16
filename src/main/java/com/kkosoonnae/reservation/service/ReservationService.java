@@ -63,7 +63,7 @@ public class ReservationService {
                 Reservation reservationByCstmrNo = reservationRepository.findByCstmrNo(cstmrNo);
                 Store store = storeRepository.findById(reservationRequest.getStoreNo()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
 //                Style style = styleRepository.findById(reservationRequest.getStyleNo()).orElseThrow(() -> new NotFoundException("요청하신 스타일이 없습니다."));
-                Style style = styleRepository.findStylNameByStoreNo(storeNo, reservationRequest.getStyleNo());
+//                Style style = styleRepository.findStylNameByStoreNo(storeNo, reservationRequest.getStyleNo());
                 Pet pet = petRepository.findByCustomerNoAndPetNo(cstmrNo, reservationRequest.getPetNo());
 
                 Reservation reservation = new Reservation(store, availTime, customrBas, reservationRequest);
@@ -72,7 +72,7 @@ public class ReservationService {
                 ReservedPets reservedPets = new ReservedPets(reservationByCstmrNo.getReservationNo(), pet, availTime);
                 reservedPetsRepository.save(reservedPets);
 
-                ReservationResponse reservationResponse = new ReservationResponse(store.getStoreName(), reservation, style.getStyleName(), pet);
+                ReservationResponse reservationResponse = new ReservationResponse(store.getStoreName(), reservation, reservationRequest.getStyleName(), pet);
 
                 return reservationResponse;
 

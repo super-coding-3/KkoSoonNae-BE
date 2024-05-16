@@ -48,6 +48,9 @@ public class Reservation {
     @Column(name = "FEATURE")
     private String feature;
 
+    @Column(name = "STYLE_NAME")
+    private String styleName;
+
     public Reservation(Store store, AvailTime avail, CustomerBas cstmrBas, ReservationRequest reservationRequest) {
         this.avail = avail;
         this.cstmrBas = cstmrBas;
@@ -56,5 +59,6 @@ public class Reservation {
         this.reservationDate = reservationRequest.getReservationDate();
         this.reservationTime = reservationRequest.getReservationTime();
         this.feature = reservationRequest.getFeature();
+        this.styleName = reservationRequest.getStyleName();
     }
 }
