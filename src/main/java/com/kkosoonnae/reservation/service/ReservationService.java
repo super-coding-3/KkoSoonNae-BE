@@ -47,7 +47,7 @@ public class ReservationService {
         String currentEmail = authentication.getName();
         Integer cstmrNo = customerBasRepository.findCstmrNoByEmail(currentEmail);
 
-        CustomerBas customrBas = customerBasRepository.findCstmrByEmail(currentEmail);
+        CustomerBas customrBas = customerBasRepository.findCstmrBasByEmail(currentEmail);
 
         if ( cstmrNo == null) {
             throw new IllegalArgumentException("로그인이 필요합니다.");

@@ -31,5 +31,5 @@ public interface CustomerBasRepository extends JpaRepository<CustomerBas,Integer
 
 
     @Query("SELECT c FROM CustomerBas  c WHERE  c.email = :currentEmail")
-    CustomerBas findCstmrByEmail(String currentEmail);
+    CustomerBas findCstmrBasByEmail(String currentEmail);
 }
