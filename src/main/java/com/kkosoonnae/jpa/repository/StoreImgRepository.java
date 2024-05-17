@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface StoreImgRepository extends JpaRepository<StoreImg, Integer> {
 
-    @Query("SELECT si FROM StoreImg si WHERE si.storeNo = :storeNo")
+    @Query("SELECT si FROM StoreImg si WHERE si.store.storeNo = :storeNo")
     Optional<StoreImg> findByStoreNo (Integer storeNo);
 }

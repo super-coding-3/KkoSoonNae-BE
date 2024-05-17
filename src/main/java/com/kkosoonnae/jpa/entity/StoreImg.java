@@ -20,7 +20,7 @@ public class StoreImg {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "STORE_NO")
-    private Store storeNo;
+    private Store store;
 
     @Column(name = "IMG")
     private String img;

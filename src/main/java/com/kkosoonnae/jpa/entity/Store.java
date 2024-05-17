@@ -45,7 +45,4 @@ public class Store {
     @Column(name = "ROAD_ADDRESS")
     private String roadAddress;
 
-    @OneToMany(mappedBy = "storeNo" , fetch = FetchType.LAZY)
-    private List<StoreImg> storeImg;
-
 }
