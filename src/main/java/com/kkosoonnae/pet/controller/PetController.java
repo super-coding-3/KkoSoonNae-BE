@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,6 +35,14 @@ import java.util.Map;
 public class PetController {
 
     private final PetService service;
+
+
+    @Operation(summary = "반려동물 전체 조회")
+    @GetMapping("/allPet-list")
+    public ResponseEntity<List<PetInfoDto>> allListPet(){
+        List<PetInfoDto> myPets = service.petList();
+        return ResponseEntity.ok().body(myPets);
+    }
 
 
     @Operation(summary = "반려동물 추가")

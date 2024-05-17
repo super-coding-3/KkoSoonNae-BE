@@ -7,21 +7,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * packageName    : com.kkosoonnae.customer.dto
- * fileName       : PetInfoDto
+ * packageName    : com.kkosoonnae.pet.dto
+ * fileName       : PetListRqDto
  * author         : hagjoon
- * date           : 2024-05-14
+ * date           : 2024-05-16
  * description    :
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2024-05-14        hagjoon       최초 생성
+ * 2024-05-16        hagjoon       최초 생성
  */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PetInfoDto {
+public class PetListRqDto {
 
     @Schema(description = "이미지")
     private String img;
@@ -34,10 +34,4 @@ public class PetInfoDto {
 
     @Schema(description = "생년월일")
     private String birthDt;
-
-    @Schema(description = "성별")
-    private String gender;
-
-    @Schema(description = "몸무게")
-    private String weight;
 }
