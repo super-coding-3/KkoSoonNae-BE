@@ -1,12 +1,10 @@
 package com.kkosoonnae.store.dto;
 
 import com.kkosoonnae.jpa.projection.StoreListViewProjection;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -17,13 +15,12 @@ public class StoreListViewResponseDto {
     private String img;
     private Integer averageScope;
 
-
     public static StoreListViewResponseDto ResponseToEntity(StoreListViewProjection projection) {
         return StoreListViewResponseDto.builder()
                 .storeNo(projection.storeNo())
                 .storeName(projection.storeName())
                 .img(projection.img())
-                .averageScope(projection.averageScope())
+                .averageScope(projection.scope())
                 .build();
     }
 }
