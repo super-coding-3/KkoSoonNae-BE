@@ -41,6 +41,9 @@ dependencies {
 
     // 매장 상세 정보를 저장하기 위한 Jsoup
     implementation 'org.jsoup:jsoup:1.14.3'
+
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+
 }
 
 tasks.named('test') {

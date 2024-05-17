@@ -75,6 +75,9 @@ public class StoreController {
     public Page<StoreListViewResponseDto> findStoresPagination(@RequestParam String storeKeyword,String addressKeyword,Pageable pageable) {
         return storeService.findAllWithPageable(storeKeyword,addressKeyword,pageable);
     }
+    
+
+
 }
 
 

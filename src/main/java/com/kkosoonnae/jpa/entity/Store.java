@@ -48,4 +48,18 @@ public class Store {
     @OneToMany(mappedBy = "storeNo" , fetch = FetchType.LAZY)
     private List<StoreImg> storeImg;
 
+
+    public Store(String placeName, Object o, String zipCode, String address, Object o1, String phone, Object o2, String roadAddress) {
+
+    }
+
+    public Store(String storeName, String address, String phone) {
+        this.storeName = storeName;
+        this.address = address;
+        this.phone = phone;
+    }
+
+    public static Store of(String name, String phone, String addr) {
+        return new Store(name, phone, addr);
+    }
 }

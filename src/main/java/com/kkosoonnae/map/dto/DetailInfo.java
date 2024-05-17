@@ -15,4 +15,5 @@ public class DetailInfo {
     private String time;
     private String phone;
     private String roadAddress;
+    private String zipCode;
 }

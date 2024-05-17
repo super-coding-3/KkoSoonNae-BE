@@ -18,6 +18,14 @@ spring:
         format_sql: true
         show_sql: true
 
+  batch:
+    jdbc:
+      initialize-schema: always
+
 security:
   jwt:
     secret-key: KkoSoonNaeFinalProJectKkoSoonNaeFinalProJect
+
+#csv:
+#  file:
+#    path:C:\SuperCoding\KkoSoonNae-BE\src\main\resources\영업장목록_20240516.csv
