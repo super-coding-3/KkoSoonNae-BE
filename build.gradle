@@ -48,6 +48,8 @@ dependencies {
     // 매장 상세 정보를 저장하기 위한 Jsoup
     implementation 'org.jsoup:jsoup:1.14.3'
 
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
@@ -61,7 +63,6 @@ def generated = 'src/main/generated'
 tasks.withType(JavaCompile) {
     options.getGeneratedSourceOutputDirectory().set(file(generated))
 
-    implementation 'org.springframework.boot:spring-boot-starter-batch'
 
 }
 
