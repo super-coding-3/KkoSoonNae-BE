@@ -144,19 +144,4 @@ public class CustomerController {
         }
     }
 
-    @Operation(summary = "문의사항 등록")
-    @PostMapping("/qna")
-    public ResponseEntity<?> addQna(@AuthenticationPrincipal PrincipalDetails principalDetails, QnaDto qnaDto){
-        boolean Success = service.createQna(qnaDto,principalDetails);
-
-        if(Success) {
-            Map<String, String> rs = new HashMap<>();
-            rs.put("message","문의사항 등록에 성공하였습니다.");
-            return ResponseEntity.ok(rs);
-        }else {
-            Map<String,String> rs = new HashMap<>();
-            rs.put("message","문의사항 등록에 실패하였습니다.");
-            return ResponseEntity.badRequest().body(rs);
-        }
-    }
 }
