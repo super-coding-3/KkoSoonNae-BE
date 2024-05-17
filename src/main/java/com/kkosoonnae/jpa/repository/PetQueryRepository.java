@@ -48,7 +48,7 @@ public class PetQueryRepository {
     public PetInfoDto findPetInfoById(Integer petNo) {
         QPet pet = QPet.pet;
 
-        return query.select(Projections.constructor(PetInfoDto.class,
+        return query.select(Projections.bean(PetInfoDto.class,
                         pet.img,
                         pet.name,
                         pet.type,
