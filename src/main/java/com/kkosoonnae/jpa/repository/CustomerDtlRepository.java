@@ -20,5 +20,6 @@ import java.util.Optional;
  */
 @Repository
 public interface CustomerDtlRepository extends JpaRepository<CustomerDtl, Integer> {
-    Optional<CustomerDtl> findByCustomerBas(CustomerBas customerBas);
+
+    CustomerDtl findByCstmrNo(Integer cstmrNo);
 }
