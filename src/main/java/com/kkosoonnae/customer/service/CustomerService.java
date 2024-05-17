@@ -66,8 +66,10 @@ public class CustomerService {
                     .createDt(LocalDateTime.now())
                     .build();
 
+            customerBasRepository.save(customerBas);
+
             CustomerDtl customerDtl = CustomerDtl.builder()
-                    .cstmrNo(customerBas.getCstmrNo())
+                    .customerBas(customerBas)
                     .nickName(signUpDto.getNickName())
                     .phone(signUpDto.getPhone())
                     .zipCode(signUpDto.getZipCode())
@@ -75,7 +77,6 @@ public class CustomerService {
                     .addressDtl(signUpDto.getAddressDtl())
                     .build();
 
-            customerBasRepository.save(customerBas);
             customerDtlRepository.save(customerDtl);
 
             return true;
@@ -99,8 +100,13 @@ public class CustomerService {
         //PrincipalDetails를 이용해 로그인한 사용자 기본 정보 조회
         CustomerBas customerBas = principalDetails.getCustomerBas();
 
-        CustomerDtl customerDtl = customerDtlRepository.findByCustomerBas(customerBas)
-                .orElseThrow(() -> new IllegalStateException("사용자의 상세 정보를 찾을 수 없습니다."));
+        Integer cstmrNo = customerBas.getCstmrNo();
+
+        CustomerDtl customerDtl = customerDtlRepository.findByCstmrNo(cstmrNo);
+
+        if (customerDtl == null) {
+            throw new IllegalStateException("사용자의 정보를 찾을 수 없습니다.");
+        }
 
         InfoDto infoDto = new InfoDto();
         infoDto.setNickName(customerDtl.getNickName());
@@ -116,8 +122,13 @@ public class CustomerService {
         PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomerBas customerBas = principalDetails.getCustomerBas();
 
-        CustomerDtl customerDtl = customerDtlRepository.findByCustomerBas(customerBas)
-                .orElseThrow(() -> new IllegalStateException("사용자의 상세 정보를 찾을 수 없습니다."));
+        Integer cstmrNo = customerBas.getCstmrNo();
+
+        CustomerDtl customerDtl = customerDtlRepository.findByCstmrNo(cstmrNo);
+
+        if (customerDtl == null) {
+            throw new IllegalStateException("사용자의 정보를 찾을 수 없습니다.");
+        }
 
         if(customerDtl != null){
             customerDtl = CustomerDtl.builder()
@@ -136,7 +147,10 @@ public class CustomerService {
         PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomerBas customerBas = principalDetails.getCustomerBas();
 
-        CustomerDtl customerDtl = customerBas.getCustomerDtl();
+        Integer cstmrNo = customerBas.getCstmrNo();
+
+        CustomerDtl customerDtl = customerDtlRepository.findByCstmrNo(cstmrNo);
+
         if (customerDtl == null) {
             throw new IllegalStateException("사용자의 상세 정보를 찾을 수 없습니다.");
         }
