@@ -2,11 +2,17 @@ package com.kkosoonnae.pet.service;
 
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.jpa.entity.*;
+import com.kkosoonnae.jpa.repository.PetQueryRepository;
 import com.kkosoonnae.jpa.repository.PetRepository;
 import com.kkosoonnae.pet.dto.PetInfoDto;
+import com.kkosoonnae.pet.dto.PetListRqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * packageName    : com.kkosoonnae.member.service
@@ -26,6 +32,21 @@ public class PetService {
 
 
     private final PetRepository petRepository;
+
+    private final PetQueryRepository query;
+
+    public List<PetInfoDto> petList(){
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+
+        List<PetInfoDto> petList = query.listPet(cstmrNo);
+
+        if (petList == null || petList.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return petList;
+    }
 
     public void petAdd(PrincipalDetails principalDetails, PetInfoDto petInfoDto){
         CustomerBas customerBas = principalDetails.getCustomerBas();
