@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * packageName    : com.kkosoonnae.member.service
@@ -46,6 +47,11 @@ public class PetService {
         }
 
         return petList;
+    }
+
+    public PetInfoDto detailPet(Integer petNo){
+        PetInfoDto result = query.findPetInfoById(petNo);
+        return result;
     }
 
     public void petAdd(PrincipalDetails principalDetails, PetInfoDto petInfoDto){
