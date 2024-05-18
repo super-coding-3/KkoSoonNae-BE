@@ -1,15 +1,10 @@
 package com.kkosoonnae.store.service;
 
-import com.kkosoonnae.jpa.entity.Review;
-import com.kkosoonnae.jpa.entity.Store;
-import com.kkosoonnae.jpa.entity.StoreImg;
-import com.kkosoonnae.jpa.entity.Style;
+import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.projection.StoreListViewProjection;
-import com.kkosoonnae.jpa.repository.ReviewRepository;
-import com.kkosoonnae.jpa.repository.StoreImgRepository;
-import com.kkosoonnae.jpa.repository.StoreRepository;
-import com.kkosoonnae.jpa.repository.StyleRepository;
+import com.kkosoonnae.jpa.repository.*;
+import com.kkosoonnae.store.dto.LikeStoreDto;
 import com.kkosoonnae.store.dto.StoreDetailWithImageResponseDto;
 import com.kkosoonnae.store.dto.StoreListViewResponseDto;
 import com.kkosoonnae.store.dto.StyleDto;
@@ -17,12 +12,11 @@ import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.sql.ast.tree.expression.Collation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,6 +45,10 @@ public class StoreServiceImpl implements StoreService {
 
     private final ReviewRepository reviewRepository;
 
+    private final LikeStoreRepository likeStoreRepository;
+
+    private final CustomerBasRepository customerBasRepository;
+
     @Override
     public StoreDetailWithImageResponseDto findStoreDetailWithImage(Integer storeNo) {
         Optional<StoreDetailViewProjection> storeDetailViewProjection = storeRepository.findStoreByStoreNo(storeNo);
@@ -58,10 +56,10 @@ public class StoreServiceImpl implements StoreService {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
         Optional<StoreImg> storeImg = storeImgRepository.findByStoreNo(storeNo);
-
         if (storeImg.isEmpty()) {
             throw new CustomException(ErrorCode.STORE_IMAGE_NOT_FOUND);
         }
+        likeStoreRepository.countLikeStoreByCustomerBas_CstmrNo(storeNo);
         return new StoreDetailWithImageResponseDto(storeDetailViewProjection.get(), storeImg.get());
     }
 
@@ -93,23 +91,52 @@ public class StoreServiceImpl implements StoreService {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
     }
-        private Integer calculateAverageScope () {
-            List<Review> reviews = reviewRepository.findAll();
-            if (reviews.isEmpty()) {
-                return 0;
-            }
-            int totalScope = reviews.stream().mapToInt(Review::getScope).sum();
-            return totalScope / reviews.size();
-        }
 
     @Override
     public Page<StoreListViewResponseDto> findAllWithPageable(String nameKeyword, String addressKeyword, Pageable pageable) {
-    Page<StoreListViewProjection> projections = storeRepository.findAllByStoreNameLikeOrAddressLike(nameKeyword,addressKeyword,pageable);
-     return  projections.map(StoreListViewResponseDto::ResponseToEntity);
+        Page<StoreListViewProjection> projections = storeRepository.findAllByStoreNameLikeOrAddressLike(nameKeyword, addressKeyword, pageable);
+        return projections.map(StoreListViewResponseDto::ResponseToEntity);
+    }
+
+    @Override
+    public LikeStoreDto saveLikeStore(Integer customerNo, Integer storeNo) {
+        CustomerBas customerBas = customerBasRepository.findById(customerNo)
+                .orElseThrow(() -> new CustomException(ErrorCode.CUSTOMER_NOT_FOUND));
+        Store store = storeRepository.findById(storeNo)
+                .orElseThrow(() -> new CustomException(ErrorCode.STORE_NOT_FOUND));
+        LikeStore likeStore = LikeStore.builder()
+                .customerBas(customerBas)
+                .store(store)
+                .createDt(LocalDateTime.now())
+                .build();
+        LikeStore saveLikeStore = likeStoreRepository.save(likeStore);
+        return LikeStoreDto.likeStoreDto(saveLikeStore);
+    }
+
+    @Override
+    public LikeStoreDto deleteSave(Integer customerNo, Integer storeNo) {
+        Optional<LikeStore> likeStore = likeStoreRepository.findLikeStoreByCustomerBas_CstmrNoAndStoreStoreNo(customerNo, storeNo);
+        if (likeStore.isPresent()) {
+            Optional<LikeStore> deleteLikeStore = likeStoreRepository.deleteLikeStoreByStoreStoreNo(storeNo);
+            return LikeStoreDto.likeToEntity(deleteLikeStore);
+        } else {
+            throw new CustomException(ErrorCode.LIKE_STORE_NOT_FOUND);
+        }
+    }
+
+    private Integer calculateAverageScope() {
+        List<Review> reviews = reviewRepository.findAll();
+        if (reviews.isEmpty()) {
+            return 0;
+        }
+        int totalScope = reviews.stream().mapToInt(Review::getScope).sum();
+        return totalScope / reviews.size();
+    }
+
+    private List<LikeStore> calculateTotalLikeStore(Integer customerId) {
+       return likeStoreRepository.countLikeStoreByCustomerBas_CstmrNo(customerId);
+
     }
 }
-
-
-
 
 

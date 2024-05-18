@@ -34,7 +34,7 @@ public class QReview extends EntityPathBase<Review> {
 
     public final NumberPath<Integer> reviewNo = createNumber("reviewNo", Integer.class);
 
-    public final StringPath scope = createString("scope");
+    public final NumberPath<Integer> scope = createNumber("scope", Integer.class);
 
     public final QStore store;
 

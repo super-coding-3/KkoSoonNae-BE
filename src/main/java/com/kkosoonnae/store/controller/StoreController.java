@@ -1,8 +1,11 @@
 package com.kkosoonnae.store.controller;
 
+import com.kkosoonnae.store.dto.LikeStoreDto;
 import com.kkosoonnae.store.dto.StoreDetailWithImageResponseDto;
 import com.kkosoonnae.store.dto.StoreListViewResponseDto;
 import com.kkosoonnae.store.dto.StyleDto;
+import com.kkosoonnae.store.exception.CustomException;
+import com.kkosoonnae.store.exception.ErrorCode;
 import com.kkosoonnae.store.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +49,6 @@ public class StoreController {
         } catch (NotFoundException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            // return ResponseEntity.status(HttpStatus.NOT_FOUND).body((StoreDetailWithImageResponseDto) Collections.emptyList());
         }
     }
 
@@ -64,18 +66,53 @@ public class StoreController {
 
         }
     }
+
     @GetMapping("/stores/search")
     @Operation(summary = "전체매장검색")
-    public ResponseEntity<List<StoreListViewResponseDto>> searchByStores (@RequestParam(required = false) String storeKeyword, @RequestParam(required = false) String addressKeyword) {
-        List<StoreListViewResponseDto> storeListViewResponseDto = storeService.findByStores(storeKeyword,addressKeyword);
+    public ResponseEntity<List<StoreListViewResponseDto>> searchByStores(@RequestParam(required = false) String storeKeyword, @RequestParam(required = false) String addressKeyword) {
+        try{
+            log.info("GET/storeKeyword 또는 addressKeyword 조회요청 들어왔습니다.:" +storeKeyword,addressKeyword);
+        List<StoreListViewResponseDto> storeListViewResponseDto = storeService.findByStores(storeKeyword, addressKeyword);
+            log.info("GET/storeKeyword 또는 addressKeyword 조회응답.:" + storeListViewResponseDto);
         return ResponseEntity.ok(storeListViewResponseDto);
+    }catch (NotFoundException e) {
+            log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/stores-page")
-    public Page<StoreListViewResponseDto> findStoresPagination(@RequestParam String storeKeyword,String addressKeyword,Pageable pageable) {
-        return storeService.findAllWithPageable(storeKeyword,addressKeyword,pageable);
+    public Page<StoreListViewResponseDto> findStoresPagination(@RequestParam(required = false) String storeKeyword, String addressKeyword, Pageable pageable) {
+        return storeService.findAllWithPageable(storeKeyword, addressKeyword, pageable);
+    }
+
+    @PostMapping("/likeStore")
+    @Operation(description = "관심매장등록")
+    public ResponseEntity<?> likeStore(@RequestParam Integer customerNo, Integer storeNo) {
+        try {
+            log.info("POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:");
+            LikeStoreDto likeStoreDto = storeService.saveLikeStore(customerNo, storeNo);
+            log.info("POST/LikeStore 응답조회:" + likeStoreDto);
+            return ResponseEntity.ok(likeStoreDto);
+        } catch (NotFoundException e) {
+            log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/deleteLikeStore")
+    @Operation(description = "관심매장삭제")
+    public ResponseEntity<?> deleteLikeStore(@RequestParam Integer customerNo, Integer storeNo) {
+        try {
+            log.info("POST/customerNo,storeNo 관심매장삭제 요청이 들어왔습니다.:");
+            LikeStoreDto likeStoreDto = storeService.deleteSave(customerNo, storeNo);
+            log.info("POST/관심매장삭제 응답조회:" + likeStoreDto);
+            return ResponseEntity.ok(likeStoreDto);
+        } catch (NotFoundException e) {
+            log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
-
 
 
