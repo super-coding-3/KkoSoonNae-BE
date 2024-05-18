@@ -1,5 +1,6 @@
 package com.kkosoonnae.jpa.entity;
 
+import com.kkosoonnae.customer.dto.InfoDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,9 +24,13 @@ import lombok.*;
 public class CustomerDtl {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CSTMR_NO")
     private Integer cstmrNo;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId // cstmrNo 필드를 매핑
+    @JoinColumn(name = "CSTMR_NO")
+    private CustomerBas customerBas;
 
     @Column(name = "NICKNAME")
     private String nickName;
@@ -41,4 +46,5 @@ public class CustomerDtl {
 
     @Column(name = "ADDRESS_DTL")
     private String addressDtl;
+
 }

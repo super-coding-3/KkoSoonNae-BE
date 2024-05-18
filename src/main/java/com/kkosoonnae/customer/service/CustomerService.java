@@ -1,14 +1,11 @@
 package com.kkosoonnae.customer.service;
 
+import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.config.jwt.JwtTokenProvider;
-import com.kkosoonnae.customer.dto.LoginDto;
-import com.kkosoonnae.customer.dto.SignUpDto;
-import com.kkosoonnae.jpa.entity.CustomerBas;
-import com.kkosoonnae.jpa.entity.CustomerDtl;
-import com.kkosoonnae.jpa.entity.RoleType;
+import com.kkosoonnae.customer.dto.*;
+import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.repository.CustomerBasRepository;
 import com.kkosoonnae.jpa.repository.CustomerDtlRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 
 /**
@@ -57,8 +53,10 @@ public class CustomerService {
                     .createDt(LocalDateTime.now())
                     .build();
 
+            customerBasRepository.save(customerBas);
+
             CustomerDtl customerDtl = CustomerDtl.builder()
-                    .cstmrNo(customerBas.getCstmrNo())
+                    .customerBas(customerBas)
                     .nickName(signUpDto.getNickName())
                     .phone(signUpDto.getPhone())
                     .zipCode(signUpDto.getZipCode())
@@ -66,7 +64,6 @@ public class CustomerService {
                     .addressDtl(signUpDto.getAddressDtl())
                     .build();
 
-            customerBasRepository.save(customerBas);
             customerDtlRepository.save(customerDtl);
 
             return true;
@@ -85,4 +82,67 @@ public class CustomerService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return jwtTokenProvider.createToken(loginId);
     }
+
+    public InfoDto getUserProfile(PrincipalDetails principalDetails){
+        //PrincipalDetails를 이용해 로그인한 사용자 기본 정보 조회
+        CustomerBas customerBas = principalDetails.getCustomerBas();
+
+        Integer cstmrNo = customerBas.getCstmrNo();
+
+        CustomerDtl customerDtl = customerDtlRepository.findByCstmrNo(cstmrNo);
+
+        if (customerDtl == null) {
+            throw new IllegalStateException("사용자의 정보를 찾을 수 없습니다.");
+        }
+
+        InfoDto infoDto = new InfoDto();
+        infoDto.setNickName(customerDtl.getNickName());
+        infoDto.setPhone(customerDtl.getPhone());
+        infoDto.setZipCode(customerDtl.getZipCode());
+        infoDto.setAddress(customerDtl.getAddress());
+        infoDto.setAddressDtl(customerDtl.getAddressDtl());
+
+        return infoDto;
+    }
+
+    public void updateUserProfile(InfoDto infoDto){
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomerBas customerBas = principalDetails.getCustomerBas();
+
+        Integer cstmrNo = customerBas.getCstmrNo();
+
+        CustomerDtl customerDtl = customerDtlRepository.findByCstmrNo(cstmrNo);
+
+        if (customerDtl == null) {
+            throw new IllegalStateException("사용자의 정보를 찾을 수 없습니다.");
+        }
+
+        if(customerDtl != null){
+            customerDtl = CustomerDtl.builder()
+                    .nickName(infoDto.getNickName())
+                    .phone(infoDto.getPhone())
+                    .zipCode(infoDto.getZipCode())
+                    .address(infoDto.getAddress())
+                    .addressDtl(infoDto.getAddressDtl())
+                    .build();
+        }
+        customerDtlRepository.save(customerDtl);
+
+    }
+
+    public String getUserNickname() {
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomerBas customerBas = principalDetails.getCustomerBas();
+
+        Integer cstmrNo = customerBas.getCstmrNo();
+
+        CustomerDtl customerDtl = customerDtlRepository.findByCstmrNo(cstmrNo);
+
+        if (customerDtl == null) {
+            throw new IllegalStateException("사용자의 상세 정보를 찾을 수 없습니다.");
+        }
+
+        return customerDtl.getNickName();
+    }
+
 }

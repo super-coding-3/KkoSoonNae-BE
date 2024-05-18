@@ -46,5 +46,4 @@ public class CustomerBas {
     @Enumerated(EnumType.STRING)
     private RoleType cstmrDivCd;
 
-
 }
