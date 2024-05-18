@@ -1,7 +1,12 @@
 package com.kkosoonnae.notice.service;
 
+import com.kkosoonnae.jpa.entity.Notice;
+import com.kkosoonnae.jpa.repository.NoticeRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * packageName    : com.kkosoonnae.notice.service
@@ -16,5 +21,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class NoticeService {
+    private final NoticeRepository noticeRepository;
+
+
+    public List<Notice> getNoticeAll() {
+        return noticeRepository.findAll();
+    }
 }
