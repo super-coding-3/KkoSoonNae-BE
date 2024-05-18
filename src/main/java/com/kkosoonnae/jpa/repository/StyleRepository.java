@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface StyleRepository extends JpaRepository<Style,Integer> {
 
-    @Query("SELECT s FROM Style s WHERE s.store.storeNo = :storeNo")
+    @Query("SELECT s FROM Style s LEFT JOIN FETCH s.store WHERE s.store.storeNo = :storeNo")
     List<Style> findByStoreNo (Integer storeNo);
 
     @Query("SELECT s.styleName FROM Style s WHERE s.store.storeNo = :storeNo AND s.styleNo = :styleNo")
