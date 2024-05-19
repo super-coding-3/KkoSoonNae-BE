@@ -38,7 +38,7 @@ public class Review {
     private LocalDateTime reviewDt;
 
     @Column(name = "SCOPE")
-    private String scope;
+    private Integer scope;
 
     @Column(name = "AVERAGE_SCOPE")
     private Integer averageScope;

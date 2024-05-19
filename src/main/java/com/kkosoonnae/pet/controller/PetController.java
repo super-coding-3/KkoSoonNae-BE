@@ -44,6 +44,14 @@ public class PetController {
         return ResponseEntity.ok().body(myPets);
     }
 
+    @Operation(summary = "반려동물 상세 조회")
+    @GetMapping("/pet-list/{petNo}")
+    public ResponseEntity<PetInfoDto>detailPet(@PathVariable Integer petNo){
+        PetInfoDto result = service.detailPet(petNo);
+        log.info("result : ",result);
+        return ResponseEntity.ok().body(result);
+    }
+
 
     @Operation(summary = "반려동물 추가")
     @PostMapping("/addPet")

@@ -16,10 +16,10 @@ import java.util.Optional;
 public interface StoreRepository extends JpaRepository<Store,Integer> {
     @Query("SELECT new com.kkosoonnae.jpa.projection.StoreListViewProjection(s.storeNo,s.storeName,si.img, r.averageScope) " +
             "FROM Store s " +
-            "LEFT JOIN s.storeImg si  " +
-            "LEFT JOIN Review r ON s.storeNo = r.store.storeNo " +
-            "WHERE s.storeName LIKE  :nameKeyword " +
-            "OR s.address LIKE  :addressKeyword ")
+            "LEFT JOIN FETCH StoreImg si ON s.storeNo = si.store.storeNo " +
+            "LEFT JOIN FETCH Review r ON s.storeNo = r.store.storeNo " +
+            "WHERE s.storeName LIKE :nameKeyword " +
+            "OR s.address LIKE :addressKeyword ")
     List<StoreListViewProjection> findStoresByStoreNameInAndAddressInOrderByAddressAsc(String nameKeyword,String addressKeyword);
 
     Page<StoreListViewProjection> findAllByStoreNameLikeOrAddressLike(String nameKeyword,String addressKeyword,Pageable pageable);

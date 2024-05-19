@@ -44,4 +44,19 @@ public class PetQueryRepository {
                 .where(pet.customerBas.cstmrNo.eq(cstmrNo))  // 해당 회원의 cstmrNo와 일치하는 반려동물 정보 조회
                 .fetch();
     }
+
+    public PetInfoDto findPetInfoById(Integer petNo) {
+        QPet pet = QPet.pet;
+
+        return query.select(Projections.bean(PetInfoDto.class,
+                        pet.img,
+                        pet.name,
+                        pet.type,
+                        pet.birthDt,
+                        pet.gender,
+                        pet.weight))
+                .from(pet)
+                .where(pet.petNo.eq(petNo))
+                .fetchOne();
+    }
 }

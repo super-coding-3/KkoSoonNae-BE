@@ -1,28 +1,19 @@
 package com.kkosoonnae.customer.service;
 
-import com.kkosoonnae.config.auth.PrincipalDetailService;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.config.jwt.JwtTokenProvider;
 import com.kkosoonnae.customer.dto.*;
 import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.repository.CustomerBasRepository;
 import com.kkosoonnae.jpa.repository.CustomerDtlRepository;
-import com.kkosoonnae.jpa.repository.PetRepository;
-import com.kkosoonnae.jpa.repository.QnaRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
-
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.time.LocalDateTime;
 
 /**
@@ -44,10 +35,6 @@ public class CustomerService {
     private final CustomerBasRepository customerBasRepository;
 
     private final CustomerDtlRepository customerDtlRepository;
-
-    private final QnaRepository qnaRepository;
-
-    private final PetRepository petRepository;
 
     private final AuthenticationManager authenticationManager;
 
@@ -157,23 +144,5 @@ public class CustomerService {
 
         return customerDtl.getNickName();
     }
-
-    public boolean createQna(QnaDto qnaDto,PrincipalDetails principalDetails){
-        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
-        try{
-            Qna qna = Qna.builder()
-                    .cstmrNo(cstmrNo)
-                    .title(qnaDto.getTitle())
-                    .content(qnaDto.getContent())
-                    .build();
-            qnaRepository.save(qna);
-            return true;
-        }catch (Exception e){
-            log.error("문의 사항 등록에 실패하였습니다. {}",e);
-            return false;
-        }
-
-    }
-
 
 }

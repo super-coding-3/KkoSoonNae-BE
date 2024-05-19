@@ -1,5 +1,7 @@
 package com.kkosoonnae.store.service;
 
+import com.kkosoonnae.jpa.entity.CustomerBas;
+import com.kkosoonnae.jpa.entity.Store;
 import com.kkosoonnae.store.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,4 +14,8 @@ public interface StoreService  {
     List<StoreListViewResponseDto> findByStores (String storeKeyword,String addressKeyword);
 
     Page<StoreListViewResponseDto> findAllWithPageable(String nameKeyword,String addressKeyword,Pageable pageable);
+
+    LikeStoreDto saveLikeStore(Integer customerNo,Integer storeNo);
+
+    LikeStoreDto deleteSave(Integer customerNo,Integer storeNo);
 }

@@ -24,9 +24,9 @@ public class QStoreImg extends EntityPathBase<StoreImg> {
 
     public final StringPath img = createString("img");
 
-    public final NumberPath<Integer> storeImgNo = createNumber("storeImgNo", Integer.class);
+    public final QStore store;
 
-    public final QStore storeNo;
+    public final NumberPath<Integer> storeImgNo = createNumber("storeImgNo", Integer.class);
 
     public QStoreImg(String variable) {
         this(StoreImg.class, forVariable(variable), INITS);
@@ -46,7 +46,7 @@ public class QStoreImg extends EntityPathBase<StoreImg> {
 
     public QStoreImg(Class<? extends StoreImg> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.storeNo = inits.isInitialized("storeNo") ? new QStore(forProperty("storeNo")) : null;
+        this.store = inits.isInitialized("store") ? new QStore(forProperty("store")) : null;
     }
 
 }
