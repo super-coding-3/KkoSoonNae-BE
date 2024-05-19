@@ -49,6 +49,7 @@ public class StoreServiceImpl implements StoreService {
 
     private final CustomerBasRepository customerBasRepository;
 
+    //매장상세조회
     @Override
     public StoreDetailWithImageResponseDto findStoreDetailWithImage(Integer storeNo) {
         Optional<StoreDetailViewProjection> storeDetailViewProjection = storeRepository.findStoreByStoreNo(storeNo);
@@ -59,10 +60,11 @@ public class StoreServiceImpl implements StoreService {
         if (storeImg.isEmpty()) {
             throw new CustomException(ErrorCode.STORE_IMAGE_NOT_FOUND);
         }
-        likeStoreRepository.countLikeStoreByCustomerBas_CstmrNo(storeNo);
-        return new StoreDetailWithImageResponseDto(storeDetailViewProjection.get(), storeImg.get());
+        int totalLikeStore = calculateTotalLikeStore(storeNo);
+        return new StoreDetailWithImageResponseDto(storeDetailViewProjection.get(), storeImg.get(),totalLikeStore);
     }
 
+    //매장스타일조회
     @Override
     public List<StyleDto> findStyles(Integer storeNo) {
         if (storeNo == null) {
@@ -75,6 +77,7 @@ public class StoreServiceImpl implements StoreService {
         return StyleDto.styleToEntity(styles);
     }
 
+    //매장전체조회
     @Override
     public List<StoreListViewResponseDto> findByStores(String storeKeyword, String addressKeyword) {
         try {
@@ -98,6 +101,7 @@ public class StoreServiceImpl implements StoreService {
         return projections.map(StoreListViewResponseDto::ResponseToEntity);
     }
 
+    //관심매장추가
     @Override
     public LikeStoreDto saveLikeStore(Integer customerNo, Integer storeNo) {
         CustomerBas customerBas = customerBasRepository.findById(customerNo)
@@ -113,16 +117,19 @@ public class StoreServiceImpl implements StoreService {
         return LikeStoreDto.likeStoreDto(saveLikeStore);
     }
 
+    //관심매장삭제
     @Override
-    public LikeStoreDto deleteSave(Integer customerNo, Integer storeNo) {
+    public void deleteLikeStore(Integer customerNo, Integer storeNo) {
+        boolean exists = likeStoreRepository.existsById(storeNo);
+        if (!exists)
+            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         Optional<LikeStore> likeStore = likeStoreRepository.findLikeStoreByCustomerBas_CstmrNoAndStoreStoreNo(customerNo, storeNo);
         if (likeStore.isPresent()) {
-            Optional<LikeStore> deleteLikeStore = likeStoreRepository.deleteLikeStoreByStoreStoreNo(storeNo);
-            return LikeStoreDto.likeToEntity(deleteLikeStore);
-        } else {
-            throw new CustomException(ErrorCode.LIKE_STORE_NOT_FOUND);
+            throw new CustomException(ErrorCode.DUPLICATE_LIKE_STORE);
         }
+        likeStoreRepository.deleteLikeStoreByStoreStoreNo(storeNo);
     }
+
 
     private Integer calculateAverageScope() {
         List<Review> reviews = reviewRepository.findAll();
@@ -133,9 +140,9 @@ public class StoreServiceImpl implements StoreService {
         return totalScope / reviews.size();
     }
 
-    private List<LikeStore> calculateTotalLikeStore(Integer customerId) {
-       return likeStoreRepository.countLikeStoreByCustomerBas_CstmrNo(customerId);
-
+    private int calculateTotalLikeStore(Integer storeNo) {
+       List<LikeStore> likeStores = likeStoreRepository.countLikeStoreByStoreStoreNo(storeNo);
+       return likeStores.size();
     }
 }
 
