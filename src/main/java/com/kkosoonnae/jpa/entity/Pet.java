@@ -16,7 +16,6 @@ import lombok.*;
  */
 @Entity
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -28,8 +27,9 @@ public class Pet {
     @Column(name = "PET_NO")
     private Integer petNo;
 
-    @Column(name = "CSTMR_NO")
-    private Integer cstmrNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CSTMR_NO")
+    private CustomerBas customerBas;
 
     @Column(name = "IMG")
     private String img;
@@ -48,4 +48,10 @@ public class Pet {
 
     @Column(name = "WEIGHT")
     private String weight;
+
+    public Pet(CustomerBas customerBas, String type, String weight) {
+        this.customerBas = customerBas;
+        this.type = type;
+        this.weight = weight;
+    }
 }

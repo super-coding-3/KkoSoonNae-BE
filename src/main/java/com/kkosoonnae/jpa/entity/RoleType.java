@@ -1,8 +1,8 @@
-package com.kkosoonnae.config;
+package com.kkosoonnae.jpa.entity;
 
 /**
- * packageName    : com.kkosoonnae.config
- * fileName       : SecurityConfig
+ * packageName    : com.kkosoonnae.jpa.entity
+ * fileName       : RoleType
  * author         : hagjoon
  * date           : 2024-05-10
  * description    :
@@ -11,5 +11,6 @@ package com.kkosoonnae.config;
  * -----------------------------------------------------------
  * 2024-05-10        hagjoon       최초 생성
  */
-public class SecurityConfig {
+public enum RoleType {
+    USER
 }

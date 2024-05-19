@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -44,7 +43,7 @@ public class CustomerBas {
     private LocalDateTime createDt;
 
     @Column(name = "CSTMR_DIV_CD")
-    private String cstmrDivCd;
-
+    @Enumerated(EnumType.STRING)
+    private RoleType cstmrDivCd;
 
 }

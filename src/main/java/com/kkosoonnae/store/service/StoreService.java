@@ -1,20 +1,21 @@
 package com.kkosoonnae.store.service;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import com.kkosoonnae.jpa.entity.CustomerBas;
+import com.kkosoonnae.jpa.entity.Store;
+import com.kkosoonnae.store.dto.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-/**
- * packageName    : com.kkosoonnae.store.service
- * fileName       : StoreService
- * author         : hagjoon
- * date           : 2024-05-10
- * description    :
- * ===========================================================
- * DATE              AUTHOR             NOTE
- * -----------------------------------------------------------
- * 2024-05-10        hagjoon       최초 생성
- */
-@Service
-@Slf4j
-public class StoreService {
+import java.util.List;
+
+public interface StoreService  {
+    StoreDetailWithImageResponseDto findStoreDetailWithImage (Integer storeNo);
+    List<StyleDto> findStyles (Integer storeNo);
+    List<StoreListViewResponseDto> findByStores (String storeKeyword,String addressKeyword);
+
+    Page<StoreListViewResponseDto> findAllWithPageable(String nameKeyword,String addressKeyword,Pageable pageable);
+
+    LikeStoreDto saveLikeStore(Integer customerNo,Integer storeNo);
+
+    LikeStoreDto deleteSave(Integer customerNo,Integer storeNo);
 }

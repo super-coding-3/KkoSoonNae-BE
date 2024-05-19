@@ -2,7 +2,12 @@ package com.kkosoonnae.jpa.repository;
 
 import com.kkosoonnae.jpa.entity.CustomerBas;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Optional;
 
 /**
  * packageName    : com.kkosoonnae.jpa.repository
@@ -17,4 +22,17 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CustomerBasRepository extends JpaRepository<CustomerBas,Integer> {
+    Optional<CustomerBas> findByLoginId(String loginId);
+
+    void findByCstmrNo(Integer cstmrNo);
+
+    @Query("SELECT c.cstmrNo FROM CustomerBas c WHERE c.loginId = :loginId")
+    Integer findCstmrNoByLoginId(String loginId);
+
+
+    @Query("SELECT c FROM CustomerBas  c WHERE  c.loginId = :loginId")
+    CustomerBas findCstmrBasByLoginId(String loginId);
+
+    @Query("SELECT c FROM CustomerBas c WHERE c.loginId = :loginId")
+    boolean existsByLoginId(String loginId);
 }

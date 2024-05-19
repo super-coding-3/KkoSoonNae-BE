@@ -3,6 +3,8 @@ package com.kkosoonnae.jpa.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 /**
  * packageName    : com.kkosoonnae.jpa.entity
  * fileName       : Qna
@@ -16,7 +18,6 @@ import lombok.*;
  */
 @Entity
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -28,13 +29,21 @@ public class Qna {
     @Column(name = "QNA_NO")
     private Integer qnaNo;
 
-    @Column(name = "CSTMR_NO")
-    private Integer cstmrNO;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CSTMR_NO")
+    private CustomerBas cstmrNo;
 
     @Column(name = "TITLE")
     private String title;
 
     @Column(name = "CONTENT")
     private String content;
+
+    @Column(name = "QNA_STATE")
+    private String qnaState;
+
+    @Column(name = "CREATE_DT")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime createDt;
 
 }
