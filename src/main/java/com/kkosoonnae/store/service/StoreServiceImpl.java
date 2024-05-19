@@ -4,10 +4,7 @@ import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.projection.StoreListViewProjection;
 import com.kkosoonnae.jpa.repository.*;
-import com.kkosoonnae.store.dto.LikeStoreDto;
-import com.kkosoonnae.store.dto.StoreDetailWithImageResponseDto;
-import com.kkosoonnae.store.dto.StoreListViewResponseDto;
-import com.kkosoonnae.store.dto.StyleDto;
+import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -124,6 +121,7 @@ public class StoreServiceImpl implements StoreService {
         }
     }
 
+
     private Integer calculateAverageScope() {
         List<Review> reviews = reviewRepository.findAll();
         if (reviews.isEmpty()) {
@@ -136,6 +134,32 @@ public class StoreServiceImpl implements StoreService {
     private List<LikeStore> calculateTotalLikeStore(Integer customerId) {
        return likeStoreRepository.countLikeStoreByCustomerBas_CstmrNo(customerId);
 
+    }
+
+    public ReviewResponseDto createReview(ReviewDto reviewDto) {
+        Review review = new Review(
+                reviewDto.getReviewNo(),
+                reviewDto.getStore(),
+                reviewDto.getCstmrNo(),
+                reviewDto.getImg(),
+                reviewDto.getContent(),
+                reviewDto.getReviewDt(),
+                reviewDto.getScope(),
+                reviewDto.getAverageScope()
+        );
+
+        Review savedReview = reviewRepository.save(review);
+
+        return new ReviewResponseDto(
+                savedReview.getReviewNo(),
+                savedReview.getStore(),
+                savedReview.getCstmrNo(),
+                savedReview.getImg(),
+                savedReview.getContent(),
+                savedReview.getReviewDt(),
+                savedReview.getScope(),
+                savedReview.getAverageScope()
+        );
     }
 }
 
