@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * packageName    : com.kkosoonnae.reservation.service
@@ -136,10 +137,10 @@ public class ReservationService {
 
         List<Pet> pets = petRepository.findByCstmrNo(cstmrNo);
 
-        if (pets != null) {
-            return PetResponse.petsToPetResponse(pets);
-        } else {
+        if (pets == null || pets.isEmpty()) {
             throw new NotFoundException("등록된 펫 정보가 없습니다.");
+        } else {
+            return PetResponse.petsToPetResponse(pets);
         }
 
     }
