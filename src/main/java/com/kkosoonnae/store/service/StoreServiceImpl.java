@@ -4,10 +4,7 @@ import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.projection.StoreListViewProjection;
 import com.kkosoonnae.jpa.repository.*;
-import com.kkosoonnae.store.dto.LikeStoreDto;
-import com.kkosoonnae.store.dto.StoreDetailWithImageResponseDto;
-import com.kkosoonnae.store.dto.StoreListViewResponseDto;
-import com.kkosoonnae.store.dto.StyleDto;
+import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -105,6 +102,7 @@ public class StoreServiceImpl implements StoreService {
         return LikeStoreDto.mapToListStoreDto(saveLikeStore);
     }
 
+
     //관심매장삭제
     @Override
     public void deleteLikeStore(Integer customerNo, Integer storeNo) {
@@ -131,6 +129,34 @@ public class StoreServiceImpl implements StoreService {
     private Long calculateTotalLikeStore(Integer storeNo) {
        List<LikeStore> likeStores = likeStoreRepository.countLikeStoreByStoreStoreNo(storeNo);
        return (long) likeStores.size();
+    }
+
+    //리뷰작성
+    @Override
+    public ReviewResponseDto createReview(ReviewDto reviewDto) {
+        Review review = new Review(
+                reviewDto.getReviewNo(),
+                reviewDto.getStore(),
+                reviewDto.getCstmrNo(),
+                reviewDto.getImg(),
+                reviewDto.getContent(),
+                reviewDto.getReviewDt(),
+                reviewDto.getScope(),
+                reviewDto.getAverageScope()
+        );
+
+        Review savedReview = reviewRepository.save(review);
+
+        return new ReviewResponseDto(
+                savedReview.getReviewNo(),
+                savedReview.getStore(),
+                savedReview.getCstmrNo(),
+                savedReview.getImg(),
+                savedReview.getContent(),
+                savedReview.getReviewDt(),
+                savedReview.getScope(),
+                savedReview.getAverageScope()
+        );
     }
 }
 

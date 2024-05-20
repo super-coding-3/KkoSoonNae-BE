@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "like_store")
+@Table(name = "LIKE_STORE")
 public class LikeStore {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

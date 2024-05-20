@@ -20,7 +20,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "customer_dtl")
+@Table(name = "CUSTOMER_DTL")
 public class CustomerDtl {
 
     @Id

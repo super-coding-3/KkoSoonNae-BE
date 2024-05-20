@@ -14,5 +14,10 @@ public interface StoreService  {
     List<StoreListViewResponseDto> findByStores (String storeKeyword,String addressKeyword);
     LikeStoreDto saveLikeStore(Integer customerNo,Integer storeNo);
 
-    void deleteLikeStore(Integer customerNo,Integer storeNo);
+//    LikeStoreDto deleteSave(Integer customerNo,Integer storeNo);
+
+    //관심매장삭제
+    void deleteLikeStore(Integer customerNo, Integer storeNo);
+
+    ReviewResponseDto createReview(ReviewDto reviewDto);
 }
