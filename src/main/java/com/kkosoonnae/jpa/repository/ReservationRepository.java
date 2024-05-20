@@ -13,6 +13,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     @Query("SELECT r.reservationNo FROM Reservation r WHERE r.cstmrBas.cstmrNo = :cstmrNo")
     Reservation findByCstmrNo(Integer cstmrNo);
 
-    @Query("SELECT r.reservationNo FROM Reservation r WHERE r.store.storeNo = :storeNo AND r.reservationDate = :reservationDate AND r.reservationTime = :reservationTime")
+    @Query("SELECT r FROM Reservation r WHERE r.store.storeNo = :storeNo AND r.reservationDate = :reservationDate AND r.reservationTime = :reservationTime")
     boolean existsByStoreNoAndDateAndTime(Integer storeNo, LocalDate reservationDate, LocalTime reservationTime);
+
+    @Query("SELECT r FROM Reservation r WHERE r.store.storeNo = :storeNo AND r.reservationDate = :reservationDate AND r.reservationTime = :reservationTime")
+    Reservation findByStoreNoAndReservationDateAndReservationTime(Integer storeNo, LocalDate reservationDate, LocalTime reservationTime);
 }

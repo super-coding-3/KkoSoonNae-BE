@@ -43,48 +43,81 @@ public class ReservationService {
     private final ReservedPetsRepository reservedPetsRepository;
 
     public ReservationResponse makeReservation(ReservationRequest reservationRequest) {
-//        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomerBas customerBas = principalDetails.getCustomerBas();
-
         String loginId = customerBas.getLoginId();
+
+        if (loginId == null) {
+            throw new IllegalArgumentException("로그인이 필요합니다.");
+        }
+
         Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
 
-        CustomerBas cstmrBas = customerBasRepository.findCstmrBasByLoginId(loginId);
+//        CustomerBas cstmrBas = customerBasRepository.findByCstmrNo(cstmrNo);
 
-        if ( cstmrNo == null) {
-            throw new IllegalArgumentException("로그인이 필요합니다.");
-        } else  {
-            Integer storeNo = reservationRequest.getStoreNo();
-            LocalDate reservationDate = LocalDate.parse(reservationRequest.getReservationDate());
-            LocalTime reservationTime = LocalTime.parse(reservationRequest.getReservationTime());
-            boolean isAvailable = reservationRepository.existsByStoreNoAndDateAndTime(storeNo, reservationDate, reservationTime);
+        Integer storeNo = reservationRequest.getStoreNo();
+        LocalDate reservationDate = LocalDate.parse(reservationRequest.getReservationDate());
+        LocalTime reservationTime = LocalTime.parse(reservationRequest.getReservationTime());
+//        boolean isAvailable = reservationRepository.existsByStoreNoAndDateAndTime(storeNo, reservationDate, reservationTime);
 
-            if (!isAvailable) {
-                Integer availNo = availTimeRepository.findByStoreNo(storeNo);
-                AvailTime availTime = availTimeRepository.findAvailTimeByStoreNoAndReservationDateReservationTime(storeNo, reservationDate, reservationTime);
+        Reservation isAvailable = reservationRepository.findByStoreNoAndReservationDateAndReservationTime(storeNo, reservationDate, reservationTime);
 
-                Reservation reservationByCstmrNo = reservationRepository.findByCstmrNo(cstmrNo);
-                Store store = storeRepository.findById(reservationRequest.getStoreNo()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
+        if (isAvailable == null) {
+            Integer availNo = availTimeRepository.findByStoreNo(storeNo);
+            AvailTime availTime = availTimeRepository.findAvailTimeByStoreNoAndReservationDateReservationTime(storeNo, reservationDate, reservationTime);
+            Reservation reservationByCstmrNo = reservationRepository.findByCstmrNo(cstmrNo);
+            Store store = storeRepository.findById(reservationRequest.getStoreNo()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
 
-                Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetNo());
+            Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetNo());
 
-                Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
-                reservationRepository.save(reservation);
+            Reservation reservation = new Reservation(store, availTime,reservationRequest);
+            reservationRepository.save(reservation);
 
-                ReservedPets reservedPets = new ReservedPets(reservationByCstmrNo.getReservationNo(), pet, availTime);
-                reservedPetsRepository.save(reservedPets);
+            ReservedPets reservedPets = new ReservedPets(reservationByCstmrNo.getReservationNo(), pet, availTime);
+            reservedPetsRepository.save(reservedPets);
 
-                ReservationResponse reservationResponse = new ReservationResponse(store.getStoreName(), reservation, reservationRequest.getStyleName(), pet);
+            ReservationResponse reservationResponse = new ReservationResponse(store.getStoreName(), reservation, reservationRequest.getStyleName(), pet);
 
-                return reservationResponse;
+            return reservationResponse;
 
             } else {
                 throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
             }
-        }
+
+//        CustomerBas cstmrBas = customerBasRepository.findCstmrBasByLoginId(loginId);
+
+//        if ( cstmrNo == null) {
+//            throw new IllegalArgumentException("로그인이 필요합니다.");
+//        } else  {
+//            Integer storeNo = reservationRequest.getStoreNo();
+//            LocalDate reservationDate = LocalDate.parse(reservationRequest.getReservationDate());
+//            LocalTime reservationTime = LocalTime.parse(reservationRequest.getReservationTime());
+//            boolean isAvailable = reservationRepository.existsByStoreNoAndDateAndTime(storeNo, reservationDate, reservationTime);
+//
+//            if (!isAvailable) {
+//                Integer availNo = availTimeRepository.findByStoreNo(storeNo);
+//                AvailTime availTime = availTimeRepository.findAvailTimeByStoreNoAndReservationDateReservationTime(storeNo, reservationDate, reservationTime);
+//
+//                Reservation reservationByCstmrNo = reservationRepository.findByCstmrNo(cstmrNo);
+//                Store store = storeRepository.findById(reservationRequest.getStoreNo()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
+//
+//                Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetNo());
+//
+//                Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
+//                reservationRepository.save(reservation);
+//
+//                ReservedPets reservedPets = new ReservedPets(reservationByCstmrNo.getReservationNo(), pet, availTime);
+//                reservedPetsRepository.save(reservedPets);
+//
+//                ReservationResponse reservationResponse = new ReservationResponse(store.getStoreName(), reservation, reservationRequest.getStyleName(), pet);
+//
+//                return reservationResponse;
+//
+//            } else {
+//                throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
+//            }
+//        }
     }
 
 
