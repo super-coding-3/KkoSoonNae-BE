@@ -106,16 +106,6 @@ public class ReservationService {
             return StyleResponse.stylesToStyleResponse(styles);
         }
 
-
-//        boolean isCustomerBas = customerBasRepository.existsByLoginId(loginId);
-
-//        if (isCustomerBas) {
-//            List<Style> styles = styleRepository.findStylNameByStoreNo(storeNo);
-//            return StyleResponse.stylesToStyleResponse(styles);
-//        } else {
-//            throw new IllegalArgumentException("로그인이 필요합니다.");
-//        }
-
     }
 
 
