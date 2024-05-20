@@ -1,9 +1,6 @@
 package com.kkosoonnae.store.controller;
 
-import com.kkosoonnae.store.dto.LikeStoreDto;
-import com.kkosoonnae.store.dto.StoreDetailWithImageResponseDto;
-import com.kkosoonnae.store.dto.StoreListViewResponseDto;
-import com.kkosoonnae.store.dto.StyleDto;
+import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.exception.ErrorCode;
 import com.kkosoonnae.store.service.StoreService;
@@ -114,7 +111,19 @@ public class StoreController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
+    @PostMapping("/review")
+    @Operation(summary = "리뷰 작성")
+    public ResponseEntity<ReviewResponseDto> createReview(@RequestBody ReviewDto reviewDto) {
+        try {
+            log.info("POST /review 리뷰 작성 요청이 들어왔습니다. ReviewDto: {}", reviewDto);
+            ReviewResponseDto reviewResponseDto = storeService.createReview(reviewDto);
+            log.info("POST /review 리뷰 작성 응답: {}", reviewResponseDto);
+            return ResponseEntity.ok(reviewResponseDto);
+        } catch (Exception e) {
+            log.error("리뷰 작성 중 오류가 발생했습니다: {}", e.getMessage());
+            return ResponseEntity.status(500).body(null);
+        }
+    }
 
 }
 
