@@ -94,14 +94,27 @@ public class ReservationService {
         CustomerBas customerBas = principalDetails.getCustomerBas();
         String loginId = customerBas.getLoginId();
 
-        boolean isCustomerBas = customerBasRepository.existsByLoginId(loginId);
-
-        if (isCustomerBas) {
-            List<Style> styles = styleRepository.findStylNameByStoreNo(storeNo);
-            return StyleResponse.stylesToStyleResponse(styles);
-        } else {
+        if (loginId == null) {
             throw new IllegalArgumentException("로그인이 필요합니다.");
         }
+
+        List<Style> styles = styleRepository.findStylNameByStoreNo(storeNo);
+
+        if (styles == null || styles.isEmpty()) {
+            throw new NotFoundException("스타일을 찾을 수 없습니다.");
+        } else {
+            return StyleResponse.stylesToStyleResponse(styles);
+        }
+
+
+//        boolean isCustomerBas = customerBasRepository.existsByLoginId(loginId);
+
+//        if (isCustomerBas) {
+//            List<Style> styles = styleRepository.findStylNameByStoreNo(storeNo);
+//            return StyleResponse.stylesToStyleResponse(styles);
+//        } else {
+//            throw new IllegalArgumentException("로그인이 필요합니다.");
+//        }
 
     }
 
@@ -112,14 +125,17 @@ public class ReservationService {
         CustomerBas customerBas = principalDetails.getCustomerBas();
         String loginId = customerBas.getLoginId();
 
-        boolean isCustomerBas = customerBasRepository.existsByLoginId(loginId);
-
-        if (isCustomerBas) {
-           Store store = storeRepository.findStoreNameByStoreNo(storeNo);
-           StoreNameResponse storeNameResponse = new StoreNameResponse(store.getStoreName());
-           return storeNameResponse;
-        } else {
+        if (loginId == null) {
             throw new IllegalArgumentException("로그인이 필요합니다.");
+        }
+
+        Store store = storeRepository.findStoreNameByStoreNo(storeNo);
+
+        if (store == null) {
+            throw new NotFoundException("매장 이름을 찾을 수 없습니다.");
+        } else {
+            StoreNameResponse storeNameResponse = new StoreNameResponse(store.getStoreName());
+            return storeNameResponse;
         }
 
     }
