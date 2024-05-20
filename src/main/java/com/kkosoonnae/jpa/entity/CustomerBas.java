@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "customer_bas")
+@Table(name = "CUSTOMER_BAS")
 public class CustomerBas {
 
     @Id
