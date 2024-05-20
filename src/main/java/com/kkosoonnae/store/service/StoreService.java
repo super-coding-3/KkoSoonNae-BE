@@ -12,9 +12,6 @@ public interface StoreService  {
     StoreDetailWithImageResponseDto findStoreDetailWithImage (Integer storeNo);
     List<StyleDto> findStyles (Integer storeNo);
     List<StoreListViewResponseDto> findByStores (String storeKeyword,String addressKeyword);
-
-    Page<StoreListViewResponseDto> findAllWithPageable(String nameKeyword,String addressKeyword,Pageable pageable);
-
     LikeStoreDto saveLikeStore(Integer customerNo,Integer storeNo);
 
     void deleteLikeStore(Integer customerNo,Integer storeNo);
