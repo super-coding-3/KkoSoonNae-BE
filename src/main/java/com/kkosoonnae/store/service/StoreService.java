@@ -17,7 +17,7 @@ public interface StoreService  {
 
     LikeStoreDto saveLikeStore(Integer customerNo,Integer storeNo);
 
-    LikeStoreDto deleteSave(Integer customerNo,Integer storeNo);
+//    LikeStoreDto deleteSave(Integer customerNo,Integer storeNo);
 
     //관심매장삭제
     void deleteLikeStore(Integer customerNo, Integer storeNo);

@@ -114,6 +114,7 @@ public class StoreServiceImpl implements StoreService {
         return LikeStoreDto.likeStoreDto(saveLikeStore);
     }
 
+
     //관심매장삭제
     @Override
     public void deleteLikeStore(Integer customerNo, Integer storeNo) {
