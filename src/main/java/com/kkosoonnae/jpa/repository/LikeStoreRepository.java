@@ -15,5 +15,5 @@ public interface LikeStoreRepository extends JpaRepository<LikeStore,Integer> {
 
     Optional<LikeStore> deleteLikeStoreByStoreStoreNo (Integer storeNo);
 
-    List<LikeStore> countLikeStoreByCustomerBas_CstmrNo (Integer customerId);
+    List<LikeStore> countLikeStoreByStoreStoreNo (Integer customerId);
 }
