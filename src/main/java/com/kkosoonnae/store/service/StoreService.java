@@ -19,5 +19,8 @@ public interface StoreService  {
 
     LikeStoreDto deleteSave(Integer customerNo,Integer storeNo);
 
+    //관심매장삭제
+    void deleteLikeStore(Integer customerNo, Integer storeNo);
+
     ReviewResponseDto createReview(ReviewDto reviewDto);
 }

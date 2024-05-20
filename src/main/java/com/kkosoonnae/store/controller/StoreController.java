@@ -97,14 +97,15 @@ public class StoreController {
         }
     }
 
-    @DeleteMapping("/deleteLikeStore")
+    @DeleteMapping("/deleteLikeStore/customer/{customerNo}/store/{storeNo}")
     @Operation(description = "관심매장삭제")
-    public ResponseEntity<?> deleteLikeStore(@RequestParam Integer customerNo, Integer storeNo) {
+    public ResponseEntity<?> removeLikeStore(@PathVariable Integer customerNo,
+                                             @PathVariable Integer storeNo) {
         try {
-            log.info("POST/customerNo,storeNo 관심매장삭제 요청이 들어왔습니다.:");
-            LikeStoreDto likeStoreDto = storeService.deleteSave(customerNo, storeNo);
-            log.info("POST/관심매장삭제 응답조회:" + likeStoreDto);
-            return ResponseEntity.ok(likeStoreDto);
+            log.info("POST/customerNo,storeNo 관심매장삭제 요청이 들어왔습니다.");
+            storeService.deleteLikeStore(customerNo, storeNo);
+            log.info("POST/관심매장삭제 응답" );
+            return ResponseEntity.ok().build();
         } catch (NotFoundException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
