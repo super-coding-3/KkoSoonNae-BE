@@ -33,6 +33,6 @@ public class ReviewResponseDto {
 
     private Integer averageScope;
 
-    public ReviewResponseDto(Integer reviewNo, Store store, Integer cstmrNo, String img, String content, LocalDateTime reviewDt, Integer scope, Integer averageScope) {
+    public ReviewResponseDto(Integer reviewNo, Store store, Integer cstmrNo, String img, String content, LocalDateTime reviewDt, Integer scope) {
     }
 }
