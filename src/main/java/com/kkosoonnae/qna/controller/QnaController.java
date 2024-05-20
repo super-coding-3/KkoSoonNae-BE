@@ -55,7 +55,7 @@ public class QnaController {
 
     @Operation(summary = "문의사항 전체 조회")
     @GetMapping("/all-list")
-    public ResponseEntity<List<QnaListDto>> getQnaAllList(){
+    public ResponseEntity<?> getQnaAllList(){
         try {
             List<QnaListDto> result = service.allList();
             return ResponseEntity.ok().body(result);
@@ -63,12 +63,12 @@ public class QnaController {
             Map<String,String> rs = new HashMap<>();
             rs.put("message","문의 사항 불러오는 과정에서 에러가 발생 하였습니다.");
             rs.put("e.message",e.getMessage());
-            return ResponseEntity.ok().body((List<QnaListDto>) rs);
+            return ResponseEntity.ok().body(rs);
         }catch (Exception e){
             Map<String,String> rs = new HashMap<>();
             rs.put("message","문의 사항 불러오는 과정에서 알수 없는 에러가 발생 하였습니다.");
             rs.put("e.message",e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body((List<QnaListDto>) rs);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(rs);
         }
     }
 
