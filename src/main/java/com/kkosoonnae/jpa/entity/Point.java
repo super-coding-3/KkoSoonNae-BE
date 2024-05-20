@@ -38,5 +38,5 @@ public class Point {
     private String title;
 
     @Column(name = "POINT_RM")
-    private Double pointRm;
+    private Integer pointRm;
 }

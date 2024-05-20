@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+
 /**
  * packageName    : com.kkosoonnae.point.service
  * fileName       : PointService
@@ -34,6 +36,12 @@ public class PointService {
         Integer customerBas = principalDetails.getCustomerBas().getCstmrNo();
 
            PointDto dto = query.getMyPoint(customerBas);
+
+           if(dto == null){
+               dto = new PointDto();
+               dto.setTitle("잔여 포인트");
+               dto.setPointRm(0);
+           }
 
        return dto;
     }

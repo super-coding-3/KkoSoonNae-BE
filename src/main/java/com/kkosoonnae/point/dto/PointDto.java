@@ -23,9 +23,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PointDto {
 
-    @Schema(description = "포인트 이름")
+    @Schema(description = "포인트 이름",defaultValue = "잔여 포인트")
     private String title;
 
     @Schema(description = "잔여 포인트")
-    private Double pointRm;
+    private Integer pointRm;
 }
