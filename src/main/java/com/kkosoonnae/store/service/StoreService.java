@@ -17,5 +17,5 @@ public interface StoreService  {
 
     LikeStoreDto saveLikeStore(Integer customerNo,Integer storeNo);
 
-    LikeStoreDto deleteSave(Integer customerNo,Integer storeNo);
+    void deleteLikeStore(Integer customerNo,Integer storeNo);
 }
