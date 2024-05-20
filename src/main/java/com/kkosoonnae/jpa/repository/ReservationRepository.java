@@ -10,7 +10,7 @@ import java.time.LocalTime;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
-    @Query("SELECT r.reservationNo FROM Reservation r WHERE r.cstmrBas.cstmrNo = :cstmrNo")
+    @Query("SELECT r FROM Reservation r WHERE r.cstmrBas.cstmrNo = :cstmrNo")
     Reservation findByCstmrNo(Integer cstmrNo);
 
     @Query("SELECT r FROM Reservation r WHERE r.store.storeNo = :storeNo AND r.reservationDate = :reservationDate AND r.reservationTime = :reservationTime")
