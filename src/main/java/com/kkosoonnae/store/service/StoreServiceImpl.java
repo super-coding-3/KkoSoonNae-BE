@@ -134,29 +134,30 @@ public class StoreServiceImpl implements StoreService {
     //리뷰작성
     @Override
     public ReviewResponseDto createReview(ReviewDto reviewDto) {
-        Review review = new Review(
-                reviewDto.getReviewNo(),
-                reviewDto.getStore(),
-                reviewDto.getCstmrNo(),
-                reviewDto.getImg(),
-                reviewDto.getContent(),
-                reviewDto.getReviewDt(),
-                reviewDto.getScope(),
-                reviewDto.getAverageScope()
-        );
+//        Review review = new Review(
+//                reviewDto.getReviewNo(),
+//                reviewDto.getStore(),
+//                reviewDto.getCstmrNo(),
+//                reviewDto.getImg(),
+//                reviewDto.getContent(),
+//                reviewDto.getReviewDt(),
+//                reviewDto.getScope(),
+//                reviewDto.getAverageScope()
+//        );
 
-        Review savedReview = reviewRepository.save(review);
-
-        return new ReviewResponseDto(
-                savedReview.getReviewNo(),
-                savedReview.getStore(),
-                savedReview.getCstmrNo(),
-                savedReview.getImg(),
-                savedReview.getContent(),
-                savedReview.getReviewDt(),
-                savedReview.getScope(),
-                savedReview.getAverageScope()
-        );
+//        Review savedReview = reviewRepository.save(review);
+//
+//        return new ReviewResponseDto(
+//                savedReview.getReviewNo(),
+//                savedReview.getStore(),
+//                savedReview.getCstmrNo(),
+//                savedReview.getImg(),
+//                savedReview.getContent(),
+//                savedReview.getReviewDt(),
+//                savedReview.getScope(),
+//                savedReview.getAverageScope()
+//        );
+        return null;
     }
 }
 

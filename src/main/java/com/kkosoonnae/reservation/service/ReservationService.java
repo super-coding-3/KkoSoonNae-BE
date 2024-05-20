@@ -127,21 +127,20 @@ public class ReservationService {
         PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomerBas customerBas = principalDetails.getCustomerBas();
         String loginId = customerBas.getLoginId();
-        boolean isCustomerBas = customerBasRepository.existsByLoginId(loginId);
 
-        if (isCustomerBas) {
-            Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
-            List<Pet> pets = petRepository.findByCstmrNo(cstmrNo);
-
-            if (pets != null) {
-                return PetResponse.petsToPetResponse(pets);
-            } else {
-                throw new NotFoundException("등록된 펫 정보가 없습니다.");
-            }
-        } else {
+        if (loginId == null) {
             throw new IllegalArgumentException("로그인이 필요합니다.");
         }
 
+        Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
+
+        List<Pet> pets = petRepository.findByCstmrNo(cstmrNo);
+
+        if (pets != null) {
+            return PetResponse.petsToPetResponse(pets);
+        } else {
+            throw new NotFoundException("등록된 펫 정보가 없습니다.");
+        }
 
     }
 }
