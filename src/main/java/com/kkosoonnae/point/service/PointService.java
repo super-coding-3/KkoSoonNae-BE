@@ -39,6 +39,7 @@ public class PointService {
 
            if(dto == null){
                dto = new PointDto();
+               dto.setTitle("잔여 포인트");
                dto.setPointRm(0);
            }
 
