@@ -1,5 +1,7 @@
 package com.kkosoonnae.jpa.entity;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.kkosoonnae.reservation.dto.ReservationRequest;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -11,6 +13,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Entity
 @Getter
 @AllArgsConstructor
@@ -51,9 +54,9 @@ public class Reservation {
     @Column(name = "STYLE_NAME")
     private String styleName;
 
-    public Reservation(Store store, AvailTime avail, /*CustomerBas cstmrBas,*/ ReservationRequest reservationRequest) {
+    public Reservation(Store store, AvailTime avail, CustomerBas cstmrBas, ReservationRequest reservationRequest) {
         this.avail = avail;
-//        this.cstmrBas = cstmrBas;
+        this.cstmrBas = cstmrBas;
         this.store = store;
         this.reservationStatus = "확정";
         this.reservationDate = LocalDate.parse(reservationRequest.getReservationDate());

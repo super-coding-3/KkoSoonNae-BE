@@ -2,6 +2,7 @@ package com.kkosoonnae.reservation.controller;
 
 import com.kkosoonnae.reservation.dto.*;
 import com.kkosoonnae.reservation.service.ReservationService;
+import com.kkosoonnae.reservation.service.exceptions.InvalidValueException;
 import com.kkosoonnae.reservation.service.exceptions.NotAcceptException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -88,8 +89,8 @@ public class ReservationController {
             return new ResponseEntity<>(nfe.getMessage(), HttpStatus.NOT_FOUND);
         } catch (NotAcceptException nae) {
             return new ResponseEntity<>(nae.getMessage(), HttpStatus.NOT_ACCEPTABLE);
-        } catch (IllegalArgumentException iae) {
-            return new ResponseEntity<>(iae.getMessage(), HttpStatus.UNAUTHORIZED);
+        } catch (InvalidValueException ive) {
+            return new ResponseEntity<>(ive.getMessage(), HttpStatus.UNAUTHORIZED);
         }
 
     }
