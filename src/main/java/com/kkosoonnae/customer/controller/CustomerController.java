@@ -57,6 +57,28 @@ public class CustomerController {
         }
     }
 
+    @GetMapping("/checkLoginId/{loginId}")
+    @Operation(summary = "로그인 아이디 중복체크")
+    public ResponseEntity<?> validationLoginId(@PathVariable String loginId) {
+        if (service.existsLoginId(loginId)) {
+            return ResponseEntity.ok(Collections.singletonMap("message", "중복된 아이디 입니다."));
+        } else {
+            return ResponseEntity.ok(Collections.singletonMap("message", "사용 가능한 아이디 입니다."));
+        }
+    }
+
+    @GetMapping("/checkNickName/{nickName}")
+    @Operation(summary = "닉네임 중복체크")
+    public ResponseEntity<?> validationNickName(@PathVariable String nickName) {
+        if (service.existsNickName(nickName)) {
+            return ResponseEntity.ok(Collections.singletonMap("message", "중복된 닉네임 입니다."));
+        } else {
+            return ResponseEntity.ok(Collections.singletonMap("message", "사용 가능한 닉네임 입니다."));
+        }
+    }
+
+
+
     @PostMapping("/login")
     @Operation(summary = "로그인")
     public ResponseEntity<?> logIn(@RequestBody LoginDto login, HttpServletResponse httpServletResponse){
@@ -119,7 +141,7 @@ public class CustomerController {
         try{
             Map<String,String> response = new HashMap<>();
             service.updateUserProfile(infoDto);
-            response.put("messgae","회원 정보 수정에 성공 하였습니다.");
+            response.put("message","회원 정보 수정에 성공 하였습니다.");
             return ResponseEntity.ok(response);
         }catch (IllegalStateException e){
             log.error("사용자 정보를 찾을 수 없습니다.");

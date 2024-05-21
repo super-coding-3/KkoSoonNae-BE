@@ -45,6 +45,8 @@ dependencies {
     // Swagger(Spring 3.x.x 이상부터 SpringFox 대신, SpringDoc)
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
     // 매장 상세 정보를 저장하기 위한 Jsoup
     implementation 'org.jsoup:jsoup:1.14.3'
 
