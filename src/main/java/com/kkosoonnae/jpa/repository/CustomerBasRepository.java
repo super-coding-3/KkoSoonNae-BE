@@ -5,8 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Optional;
 
 /**
@@ -24,7 +22,10 @@ import java.util.Optional;
 public interface CustomerBasRepository extends JpaRepository<CustomerBas,Integer> {
     Optional<CustomerBas> findByLoginId(String loginId);
 
-    void findByCstmrNo(Integer cstmrNo);
+    @Query("SELECT c FROM CustomerBas c WHERE c.cstmrNo = :cstmrNo")
+    CustomerBas findByCstmrNo(Integer cstmrNo);
+
+
 
     @Query("SELECT c.cstmrNo FROM CustomerBas c WHERE c.loginId = :loginId")
     Integer findCstmrNoByLoginId(String loginId);

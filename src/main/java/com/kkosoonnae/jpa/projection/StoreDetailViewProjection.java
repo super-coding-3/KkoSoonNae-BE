@@ -13,6 +13,9 @@ public record StoreDetailViewProjection(
         String addressDtl,
         String phone,
         LocalDateTime storeOperDt,
-        String roadAddress
+        String roadAddress,
+        String img,
+        Double scope,
+        Long totalLikeStore
 ) {
 }

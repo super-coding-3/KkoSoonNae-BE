@@ -19,7 +19,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "pet")
+@Table(name = "PET")
 public class Pet {
 
     @Id

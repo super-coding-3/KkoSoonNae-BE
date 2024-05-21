@@ -1,49 +1,42 @@
 package com.kkosoonnae.jpa.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * packageName    : com.kkosoonnae.jpa.entity
- * fileName       : Qna
+ * fileName       : Point
  * author         : hagjoon
- * date           : 2024-05-10
+ * date           : 2024-05-20
  * description    :
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2024-05-10        hagjoon       최초 생성
+ * 2024-05-20        hagjoon       최초 생성
  */
 @Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "QnA")
-public class Qna {
+@Table(name = "POINT")
+public class Point {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "QNA_NO")
-    private Integer qnaNo;
+    @Column(name = "POINT_NO")
+    private Integer pointNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CSTMR_NO")
-    private CustomerBas cstmrNo;
+    private CustomerBas customerBas;
 
     @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "CONTENT")
-    private String content;
-
-    @Column(name = "QNA_STATE")
-    private String qnaState;
-
-    @Column(name = "CREATE_DT")
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createDt;
-
+    @Column(name = "POINT_RM")
+    private Integer pointRm;
 }

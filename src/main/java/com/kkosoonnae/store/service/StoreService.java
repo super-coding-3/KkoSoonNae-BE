@@ -12,10 +12,12 @@ public interface StoreService  {
     StoreDetailWithImageResponseDto findStoreDetailWithImage (Integer storeNo);
     List<StyleDto> findStyles (Integer storeNo);
     List<StoreListViewResponseDto> findByStores (String storeKeyword,String addressKeyword);
-
-    Page<StoreListViewResponseDto> findAllWithPageable(String nameKeyword,String addressKeyword,Pageable pageable);
-
     LikeStoreDto saveLikeStore(Integer customerNo,Integer storeNo);
 
-    LikeStoreDto deleteSave(Integer customerNo,Integer storeNo);
+//    LikeStoreDto deleteSave(Integer customerNo,Integer storeNo);
+
+    //관심매장삭제
+    void deleteLikeStore(Integer customerNo, Integer storeNo);
+
+    ReviewResponseDto createReview(ReviewDto reviewDto);
 }

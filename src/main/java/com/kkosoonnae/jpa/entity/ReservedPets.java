@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "reserved_pets")
+@Table(name = "RESERVED_PETS")
 public class ReservedPets {
 
     @Id

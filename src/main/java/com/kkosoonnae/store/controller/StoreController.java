@@ -1,9 +1,6 @@
 package com.kkosoonnae.store.controller;
 
-import com.kkosoonnae.store.dto.LikeStoreDto;
-import com.kkosoonnae.store.dto.StoreDetailWithImageResponseDto;
-import com.kkosoonnae.store.dto.StoreListViewResponseDto;
-import com.kkosoonnae.store.dto.StyleDto;
+import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.exception.ErrorCode;
 import com.kkosoonnae.store.service.StoreService;
@@ -82,13 +79,8 @@ public class StoreController {
         }
     }
 
-    @GetMapping("/stores-page")
-    public Page<StoreListViewResponseDto> findStoresPagination(@RequestParam(required = false) String storeKeyword, String addressKeyword, Pageable pageable) {
-        return storeService.findAllWithPageable(storeKeyword, addressKeyword, pageable);
-    }
-
     @PostMapping("/likeStore")
-    @Operation(description = "관심매장등록")
+    @Operation( summary = "관심매장등록")
     public ResponseEntity<?> likeStore(@RequestParam Integer customerNo, Integer storeNo) {
         try {
             log.info("POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:");
@@ -101,21 +93,33 @@ public class StoreController {
         }
     }
 
-    @DeleteMapping("/deleteLikeStore")
-    @Operation(description = "관심매장삭제")
-    public ResponseEntity<?> deleteLikeStore(@RequestParam Integer customerNo, Integer storeNo) {
+    @DeleteMapping("/deleteLikeStore/customer/{customerNo}/store/{storeNo}")
+    @Operation(summary = "관심매장삭제")
+    public ResponseEntity<?> removeLikeStore(@PathVariable Integer customerNo,
+                                             @PathVariable Integer storeNo) {
         try {
-            log.info("POST/customerNo,storeNo 관심매장삭제 요청이 들어왔습니다.:");
-            LikeStoreDto likeStoreDto = storeService.deleteSave(customerNo, storeNo);
-            log.info("POST/관심매장삭제 응답조회:" + likeStoreDto);
-            return ResponseEntity.ok(likeStoreDto);
+            log.info("POST/customerNo,storeNo 관심매장삭제 요청이 들어왔습니다.");
+            storeService.deleteLikeStore(customerNo, storeNo);
+            log.info("POST/관심매장삭제 응답" );
+            return ResponseEntity.ok().build();
         } catch (NotFoundException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-
+    @PostMapping("/review")
+    @Operation(summary = "리뷰 작성")
+    public ResponseEntity<ReviewResponseDto> createReview(@RequestBody ReviewDto reviewDto) {
+        try {
+            log.info("POST /review 리뷰 작성 요청이 들어왔습니다. ReviewDto: {}", reviewDto);
+            ReviewResponseDto reviewResponseDto = storeService.createReview(reviewDto);
+            log.info("POST /review 리뷰 작성 응답: {}", reviewResponseDto);
+            return ResponseEntity.ok(reviewResponseDto);
+        } catch (Exception e) {
+            log.error("리뷰 작성 중 오류가 발생했습니다: {}", e.getMessage());
+            return ResponseEntity.status(500).body(null);
+        }
+    }
 }
 
 

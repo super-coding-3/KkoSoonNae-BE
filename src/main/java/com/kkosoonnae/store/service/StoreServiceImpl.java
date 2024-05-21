@@ -4,10 +4,7 @@ import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.projection.StoreListViewProjection;
 import com.kkosoonnae.jpa.repository.*;
-import com.kkosoonnae.store.dto.LikeStoreDto;
-import com.kkosoonnae.store.dto.StoreDetailWithImageResponseDto;
-import com.kkosoonnae.store.dto.StoreListViewResponseDto;
-import com.kkosoonnae.store.dto.StyleDto;
+import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +36,6 @@ public class StoreServiceImpl implements StoreService {
 
     private final StoreRepository storeRepository;
 
-    private final StoreImgRepository storeImgRepository;
-
     private final StyleRepository styleRepository;
 
     private final ReviewRepository reviewRepository;
@@ -49,20 +44,19 @@ public class StoreServiceImpl implements StoreService {
 
     private final CustomerBasRepository customerBasRepository;
 
+    //매장상세조회
     @Override
     public StoreDetailWithImageResponseDto findStoreDetailWithImage(Integer storeNo) {
         Optional<StoreDetailViewProjection> storeDetailViewProjection = storeRepository.findStoreByStoreNo(storeNo);
         if (storeDetailViewProjection.isEmpty()) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
-        Optional<StoreImg> storeImg = storeImgRepository.findByStoreNo(storeNo);
-        if (storeImg.isEmpty()) {
-            throw new CustomException(ErrorCode.STORE_IMAGE_NOT_FOUND);
-        }
-        likeStoreRepository.countLikeStoreByCustomerBas_CstmrNo(storeNo);
-        return new StoreDetailWithImageResponseDto(storeDetailViewProjection.get(), storeImg.get());
+        Double averageScope = calculateAverageScope();
+        Long totalLikeStore = calculateTotalLikeStore(storeNo);
+        return new StoreDetailWithImageResponseDto(storeDetailViewProjection.get(),averageScope,totalLikeStore);
     }
 
+    //매장스타일조회
     @Override
     public List<StyleDto> findStyles(Integer storeNo) {
         if (storeNo == null) {
@@ -75,11 +69,14 @@ public class StoreServiceImpl implements StoreService {
         return StyleDto.styleToEntity(styles);
     }
 
+    //매장전체조회
     @Override
     public List<StoreListViewResponseDto> findByStores(String storeKeyword, String addressKeyword) {
-        try {
             List<StoreListViewProjection> projection = storeRepository.findStoresByStoreNameInAndAddressInOrderByAddressAsc(storeKeyword, addressKeyword);
-            Integer averageScope = calculateAverageScope();
+            if (projection.isEmpty()) {
+                throw new CustomException(ErrorCode.STORE_NOT_FOUND);
+            }
+            Double averageScope = calculateAverageScope();
             return projection.stream()
                     .map(storeProjection -> {
                         StoreListViewResponseDto dto = StoreListViewResponseDto.ResponseToEntity(storeProjection);
@@ -87,17 +84,9 @@ public class StoreServiceImpl implements StoreService {
                         return dto;
                     })
                     .collect(Collectors.toList());
-        } catch (CustomException e) {
-            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
-    }
 
-    @Override
-    public Page<StoreListViewResponseDto> findAllWithPageable(String nameKeyword, String addressKeyword, Pageable pageable) {
-        Page<StoreListViewProjection> projections = storeRepository.findAllByStoreNameLikeOrAddressLike(nameKeyword, addressKeyword, pageable);
-        return projections.map(StoreListViewResponseDto::ResponseToEntity);
-    }
-
+    //관심매장추가
     @Override
     public LikeStoreDto saveLikeStore(Integer customerNo, Integer storeNo) {
         CustomerBas customerBas = customerBasRepository.findById(customerNo)
@@ -110,32 +99,62 @@ public class StoreServiceImpl implements StoreService {
                 .createDt(LocalDateTime.now())
                 .build();
         LikeStore saveLikeStore = likeStoreRepository.save(likeStore);
-        return LikeStoreDto.likeStoreDto(saveLikeStore);
+        return LikeStoreDto.mapToListStoreDto(saveLikeStore);
     }
 
+
+    //관심매장삭제
     @Override
-    public LikeStoreDto deleteSave(Integer customerNo, Integer storeNo) {
+    public void deleteLikeStore(Integer customerNo, Integer storeNo) {
+        boolean exists = likeStoreRepository.existsById(storeNo);
+        if (!exists)
+            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         Optional<LikeStore> likeStore = likeStoreRepository.findLikeStoreByCustomerBas_CstmrNoAndStoreStoreNo(customerNo, storeNo);
         if (likeStore.isPresent()) {
-            Optional<LikeStore> deleteLikeStore = likeStoreRepository.deleteLikeStoreByStoreStoreNo(storeNo);
-            return LikeStoreDto.likeToEntity(deleteLikeStore);
-        } else {
-            throw new CustomException(ErrorCode.LIKE_STORE_NOT_FOUND);
+            throw new CustomException(ErrorCode.DUPLICATE_LIKE_STORE);
         }
+        likeStoreRepository.deleteLikeStoreByStoreStoreNo(storeNo);
     }
 
-    private Integer calculateAverageScope() {
+
+    private Double calculateAverageScope() {
         List<Review> reviews = reviewRepository.findAll();
         if (reviews.isEmpty()) {
-            return 0;
+            return (double) 0;
         }
         int totalScope = reviews.stream().mapToInt(Review::getScope).sum();
-        return totalScope / reviews.size();
+        return (double) (totalScope / reviews.size());
     }
 
-    private List<LikeStore> calculateTotalLikeStore(Integer customerId) {
-       return likeStoreRepository.countLikeStoreByCustomerBas_CstmrNo(customerId);
+    private Long calculateTotalLikeStore(Integer storeNo) {
+       List<LikeStore> likeStores = likeStoreRepository.countLikeStoreByStoreStoreNo(storeNo);
+       return (long) likeStores.size();
+    }
 
+    //리뷰작성
+    @Override
+    public ReviewResponseDto createReview(ReviewDto reviewDto) {
+        Review review = new Review(
+                reviewDto.getReviewNo(),
+                reviewDto.getStore(),
+                reviewDto.getCstmrNo(),
+                reviewDto.getImg(),
+                reviewDto.getContent(),
+                reviewDto.getReviewDt(),
+                reviewDto.getScope()
+        );
+
+        Review savedReview = reviewRepository.save(review);
+
+        return new ReviewResponseDto(
+                savedReview.getReviewNo(),
+                savedReview.getStore(),
+                savedReview.getCstmrNo(),
+                savedReview.getImg(),
+                savedReview.getContent(),
+                savedReview.getReviewDt(),
+                savedReview.getScope()
+        );
     }
 }
 

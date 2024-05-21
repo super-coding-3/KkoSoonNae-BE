@@ -1,5 +1,6 @@
 package com.kkosoonnae.store.dto;
 
+import com.kkosoonnae.jpa.entity.LikeStore;
 import com.kkosoonnae.jpa.entity.StoreImg;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import lombok.AllArgsConstructor;
@@ -13,5 +14,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class StoreDetailWithImageResponseDto {
     private StoreDetailViewProjection storeDetail;
-    private StoreImg storeImg;
+    private Double scope;
+    private Long totalLikeStore;
+
 }
+
+
+
+
+

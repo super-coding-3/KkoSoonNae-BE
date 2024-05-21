@@ -17,22 +17,22 @@ public class LikeStoreDto {
     private Integer storeNo;
     private LocalDateTime createDt;
 
-    public static LikeStoreDto likeToEntity(Optional<LikeStore> likeStore) {
-        return likeStore.map( like-> LikeStoreDto.builder()
-                .likeNo(like.getLikeNo())
-                .cstmrNo(like.getCustomerBas().getCstmrNo())
-                .storeNo(like.getStore().getStoreNo())
-                .createDt(like.getCreateDt())
-                .build())
-                .orElseThrow(null);
-    }
-    public static LikeStoreDto likeStoreDto(LikeStore likeStore) {
+    public static LikeStoreDto mapToListStoreDto(LikeStore likeStore) {
         return LikeStoreDto.builder()
                 .likeNo(likeStore.getLikeNo())
                 .cstmrNo(likeStore.getCustomerBas().getCstmrNo())
                 .storeNo(likeStore.getStore().getStoreNo())
                 .createDt(likeStore.getCreateDt())
                 .build();
+    }
+    public static LikeStoreDto likeToEntity(Optional<LikeStore> likeStore) {
+        return likeStore.map( like-> LikeStoreDto.builder()
+                        .likeNo(like.getLikeNo())
+                        .cstmrNo(like.getCustomerBas().getCstmrNo())
+                        .storeNo(like.getStore().getStoreNo())
+                        .createDt(like.getCreateDt())
+                        .build())
+                .orElseThrow(null);
     }
 }
 

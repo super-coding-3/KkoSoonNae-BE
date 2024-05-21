@@ -13,6 +13,8 @@ public enum ErrorCode {
     CUSTOMER_NOT_FOUND("유저를 찾을 수 없습니다.",HttpStatus.NOT_FOUND),
 
     LIKE_STORE_NOT_FOUND("관심매장을 찾을 수 없습니다",HttpStatus.NOT_FOUND),
+
+    DUPLICATE_LIKE_STORE("관심매장이 중복입니다.",HttpStatus.BAD_REQUEST),
     //
     DEFAULT("처리 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 
