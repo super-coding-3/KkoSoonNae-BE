@@ -69,9 +69,9 @@ public class ReservationService {
         Reservation isAvailable = reservationRepository.findByStoreNoAndReservationDateAndReservationTime(storeNo, reservationDate, reservationTime);
 
         if (isAvailable == null) {
-            Integer availNo = availTimeRepository.findByStoreNo(storeNo);
+//            Integer availNo = availTimeRepository.findByStoreNo(storeNo);
             AvailTime availTime = availTimeRepository.findAvailTimeByStoreNo(storeNo);
-            Reservation reservationByCstmrNo = reservationRepository.findByCstmrNo(cstmrNo);
+//            Reservation reservationByCstmrNo = reservationRepository.findByCstmrNo(cstmrNo);
             Store store = storeRepository.findById(reservationRequest.getStoreNo()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
 
 
@@ -84,9 +84,7 @@ public class ReservationService {
             Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
             reservationRepository.save(reservation);
 
-            ReservationResponse reservationResponse = new ReservationResponse(store.getStoreName(), reservation, reservationRequest.getStyleName(), pet);
-
-            return reservationResponse;
+            return new ReservationResponse(store.getStoreName(), reservation, reservationRequest.getStyleName(), pet);
 
             } else {
                 throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
