@@ -41,7 +41,6 @@ public class ReservationService {
     private final AvailTimeRepository availTimeRepository;
     private final PetRepository petRepository;
     private final StyleRepository styleRepository;
-    private final ReservedPetsRepository reservedPetsRepository;
 
     public ReservationResponse makeReservation(ReservationRequest reservationRequest) {
 
@@ -54,9 +53,7 @@ public class ReservationService {
         }
 
         Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
-
         CustomerBas cstmrBas = customerBasRepository.findByCstmrNo(cstmrNo);
-
         Integer storeNo = reservationRequest.getStoreNo();
 
         DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -65,30 +62,24 @@ public class ReservationService {
         LocalDate reservationDate = LocalDate.parse(reservationRequest.getReservationDate(), formatDate);
         LocalTime reservationTime = LocalTime.parse(reservationRequest.getReservationTime(),formatTime);
 
-
         Reservation isAvailable = reservationRepository.findByStoreNoAndReservationDateAndReservationTime(storeNo, reservationDate, reservationTime);
 
-        if (isAvailable == null) {
-//            Integer availNo = availTimeRepository.findByStoreNo(storeNo);
-            AvailTime availTime = availTimeRepository.findAvailTimeByStoreNo(storeNo);
-//            Reservation reservationByCstmrNo = reservationRepository.findByCstmrNo(cstmrNo);
-            Store store = storeRepository.findById(reservationRequest.getStoreNo()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
+        if (isAvailable != null) {
+            throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
+        }
 
+        AvailTime availTime = availTimeRepository.findAvailTimeByStoreNo(storeNo);
+        Store store = storeRepository.findById(reservationRequest.getStoreNo()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
+        Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetNo());
 
-            Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetNo());
+        if (pet == null) {
+            throw new NotFoundException("해당 펫을 찾을 수 없습니다.");
+        }
 
-            if (pet == null) {
-                throw new NotFoundException("해당 펫을 찾을 수 없습니다.");
-            }
+        Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
+        reservationRepository.save(reservation);
 
-            Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
-            reservationRepository.save(reservation);
-
-            return new ReservationResponse(store.getStoreName(), reservation, reservationRequest.getStyleName(), pet);
-
-            } else {
-                throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
-            }
+        return new ReservationResponse(store.getStoreName(), reservation, reservationRequest.getStyleName(), pet);
 
     }
 
@@ -107,9 +98,9 @@ public class ReservationService {
 
         if (styles == null || styles.isEmpty()) {
             throw new NotFoundException("스타일을 찾을 수 없습니다.");
-        } else {
-            return StyleResponse.stylesToStyleResponse(styles);
         }
+
+        return StyleResponse.stylesToStyleResponse(styles);
 
     }
 
@@ -128,14 +119,14 @@ public class ReservationService {
 
         if (store == null) {
             throw new NotFoundException("매장 이름을 찾을 수 없습니다.");
-        } else {
-            StoreNameResponse storeNameResponse = new StoreNameResponse(store.getStoreName());
-            return storeNameResponse;
         }
+
+        return new StoreNameResponse(store.getStoreName());
 
     }
 
     public List<PetResponse> findMyPet() {
+
         PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomerBas customerBas = principalDetails.getCustomerBas();
         String loginId = customerBas.getLoginId();
@@ -145,14 +136,14 @@ public class ReservationService {
         }
 
         Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
-
         List<Pet> pets = petRepository.findByCstmrNo(cstmrNo);
 
         if (pets == null || pets.isEmpty()) {
             throw new NotFoundException("등록된 펫 정보가 없습니다.");
-        } else {
-            return PetResponse.petsToPetResponse(pets);
         }
 
+        return PetResponse.petsToPetResponse(pets);
+
     }
+
 }
