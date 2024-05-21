@@ -77,6 +77,10 @@ public class ReservationService {
 
             Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetNo());
 
+            if (pet == null) {
+                throw new NotFoundException("해당 펫을 찾을 수 없습니다.");
+            }
+
             Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
             reservationRepository.save(reservation);
 
