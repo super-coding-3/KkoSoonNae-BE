@@ -16,8 +16,12 @@ public class ReservedPets {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RESERVATION_NO")
-    private Integer reservationNo;
+    @Column(name = "RESERVED_PETS_NO")
+    private Integer reservedPetsNo;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RESERVATION_NO")
+    private Reservation reservation;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PET_NO")
@@ -26,4 +30,10 @@ public class ReservedPets {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AVAIL_NO")
     private AvailTime avail;
+
+    public ReservedPets(Reservation reservation, Pet pet, AvailTime avail) {
+        this.reservation = reservation;
+        this.pet = pet;
+        this.avail = avail;
+    }
 }
