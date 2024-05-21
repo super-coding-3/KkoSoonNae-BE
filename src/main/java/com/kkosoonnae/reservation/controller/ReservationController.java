@@ -87,12 +87,25 @@ public class ReservationController {
             return new ResponseEntity<>(reservationResponse, HttpStatus.CREATED);
         } catch (NotFoundException nfe) {
             return new ResponseEntity<>(nfe.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (NotAcceptException nae) {
-            return new ResponseEntity<>(nae.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        } catch (IllegalArgumentException iae) {
+            return new ResponseEntity<>(iae.getMessage(), HttpStatus.UNAUTHORIZED);
         } catch (InvalidValueException ive) {
-            return new ResponseEntity<>(ive.getMessage(), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(ive.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @Operation(summary = "예약 확인")
+    @GetMapping("/result-reservation")
+    public ResponseEntity<?> resultReservation() {
+        try {
+            ReservationResultResponse reservationResultResponse = reservationService.resultReservation();
+            return new ResponseEntity<>(reservationResultResponse, HttpStatus.OK);
+        } catch (NotFoundException nfe) {
+            return new ResponseEntity<>(nfe.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException iae) {
+            return new ResponseEntity<>(iae.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
     }
     
 }

@@ -153,4 +153,22 @@ public class ReservationService {
 
     }
 
+    public ReservationResultResponse resultReservation() {
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomerBas customerBas = principalDetails.getCustomerBas();
+        String loginId = customerBas.getLoginId();
+
+        if (loginId == null) {
+            throw new IllegalArgumentException("로그인이 필요합니다.");
+        }
+
+        Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
+        List<Reservation> reservation = reservationRepository.findTopByCstmrNoOrderByReservationNoDesc(cstmrNo);
+        Reservation reservationResult = reservation.get(0);
+        Store store = storeRepository.findByStoreNo(reservationResult.getStore().getStoreNo());
+        ReservedPets reservedPets = reservedPetsRepository.findByReservationNo(reservationResult.getReservationNo());
+        Pet pet = petRepository.findByPetNo(reservedPets.getPet().getPetNo());
+
+        return new ReservationResultResponse(reservationResult, store, pet);
+    }
 }
