@@ -36,4 +36,7 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
 
     @Query("SELECT s FROM Store s WHERE s.storeNo = :storeNo")
     Store findStoreNameByStoreNo(Integer storeNo);
+
+    @Query("SELECT s FROM Store s WHERE s.storeNo = :storeNo")
+    Store findByStoreNo(Integer storeNo);
 }

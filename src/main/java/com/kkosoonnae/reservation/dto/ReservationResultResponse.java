@@ -1,5 +1,8 @@
 package com.kkosoonnae.reservation.dto;
 
+import com.kkosoonnae.jpa.entity.Pet;
+import com.kkosoonnae.jpa.entity.Reservation;
+import com.kkosoonnae.jpa.entity.Store;
 import com.kkosoonnae.jpa.entity.Style;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -30,4 +33,14 @@ public class ReservationResultResponse {
 
     @Schema(description = "특징")
     private String feature;
+
+    public ReservationResultResponse(Reservation reservation, Store store, Pet pet) {
+        this.storeName = store.getStoreName();
+        this.reservationDate = String.valueOf(reservation.getReservationDate());
+        this.reservationTime = String.valueOf(reservation.getReservationTime());
+        this.styleName = reservation.getStyleName();
+        this.type = pet.getType();
+        this.weight = pet.getWeight();
+        this.feature = reservation.getFeature();
+    }
 }
