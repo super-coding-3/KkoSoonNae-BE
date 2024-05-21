@@ -26,7 +26,9 @@ public class QReservedPets extends EntityPathBase<ReservedPets> {
 
     public final QPet pet;
 
-    public final NumberPath<Integer> reservationNo = createNumber("reservationNo", Integer.class);
+    public final QReservation reservation;
+
+    public final NumberPath<Integer> reservedPetsNo = createNumber("reservedPetsNo", Integer.class);
 
     public QReservedPets(String variable) {
         this(ReservedPets.class, forVariable(variable), INITS);
@@ -48,6 +50,7 @@ public class QReservedPets extends EntityPathBase<ReservedPets> {
         super(type, metadata, inits);
         this.avail = inits.isInitialized("avail") ? new QAvailTime(forProperty("avail"), inits.get("avail")) : null;
         this.pet = inits.isInitialized("pet") ? new QPet(forProperty("pet"), inits.get("pet")) : null;
+        this.reservation = inits.isInitialized("reservation") ? new QReservation(forProperty("reservation"), inits.get("reservation")) : null;
     }
 
 }

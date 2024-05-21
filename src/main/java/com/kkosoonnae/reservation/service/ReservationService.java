@@ -40,7 +40,9 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final AvailTimeRepository availTimeRepository;
     private final PetRepository petRepository;
+    private final ReservedPetsRepository reservedPetsRepository;
     private final StyleRepository styleRepository;
+    private static Integer serialReservationNum;
 
     public ReservationResponse makeReservation(ReservationRequest reservationRequest) {
 
@@ -78,6 +80,11 @@ public class ReservationService {
 
         Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
         reservationRepository.save(reservation);
+
+        serialReservationNum = reservation.getReservationNo();
+
+        ReservedPets reservedPets = new ReservedPets(reservation, pet, availTime);
+        reservedPetsRepository.save(reservedPets);
 
         return new ReservationResponse(store.getStoreName(), reservation, reservationRequest.getStyleName(), pet);
 
