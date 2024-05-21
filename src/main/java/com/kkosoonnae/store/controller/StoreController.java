@@ -46,6 +46,7 @@ public class StoreController {
         } catch (NotFoundException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            // return ResponseEntity.status(HttpStatus.NOT_FOUND).body((StoreDetailWithImageResponseDto) Collections.emptyList());
         }
     }
 

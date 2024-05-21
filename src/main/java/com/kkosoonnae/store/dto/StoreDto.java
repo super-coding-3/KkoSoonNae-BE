@@ -1,5 +1,6 @@
 package com.kkosoonnae.store.dto;
 
+import com.kkosoonnae.jpa.entity.Store;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -38,7 +39,18 @@ public class StoreDto {
 
     private String roadAddress;
 
-
+    public Store toEntity(){
+        return Store.builder()
+                .storeName(this.storeName)
+                .content(this.content)
+                .zipCode(this.zipCode)
+                .address(this.address)
+                .addressDtl(this.addressDtl)
+                .phone(this.phone)
+                .storeOperDt(this.storeOperDt)
+                .roadAddress(this.roadAddress)
+                .build();
+    }
 }
 
 
