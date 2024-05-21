@@ -45,7 +45,7 @@ public class Store {
     @Column(name = "ROAD_ADDRESS")
     private String roadAddress;
 
-    @OneToMany(mappedBy = "storeNo" , fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "store")
     private List<StoreImg> storeImg;
 
 
@@ -60,6 +60,7 @@ public class Store {
     }
 
     public static Store of(String name, String phone, String addr) {
+
         return new Store(name, phone, addr);
     }
 }
