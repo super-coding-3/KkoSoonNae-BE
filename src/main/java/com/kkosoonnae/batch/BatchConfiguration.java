@@ -51,7 +51,8 @@ public class BatchConfiguration {
         System.out.println("writer 실행");
         return new JdbcBatchItemWriterBuilder<Store>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-                .sql("INSERT INTO store (STORE_NAME, ADDRESS, PHONE) VALUES (:storeName, :address, :phone)")
+                .sql("INSERT INTO store (STORE_NAME, CONTENT, ZIP_CODE, ADDRESS, ADDRESS_DTL, PHONE, STORE_OPER_DT, ROAD_ADDRESS) " +
+                        "VALUES (:storeName, :content, :zipCode, :address, :addressDtl, :phone, :storeOperDt, :roadAddress)")
                 .dataSource(dataSource)
                 .build();
     }
