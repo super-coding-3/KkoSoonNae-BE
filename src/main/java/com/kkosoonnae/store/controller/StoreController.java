@@ -119,6 +119,20 @@ public class StoreController {
             return ResponseEntity.status(500).body(null);
         }
     }
+
+    @PostMapping("/add")
+    @Operation(summary = "매장 등록")
+    public ResponseEntity<StoreDto> createStore(@RequestBody InputStoreInformation inputStoreInformation){
+        try{
+            log.info("Post /add 스토어 추가 요청이 들어왔습니다. InputStoreInformation:{}",inputStoreInformation);
+            StoreDto storeDto = storeService.createStore(inputStoreInformation);
+            log.info("Post /add 스토어 추가 응답: {}",storeDto);
+            return ResponseEntity.ok(storeDto);
+        }catch (Exception e){
+            log.info("스토어 등록중 오류 발생:{}", e.getMessage());
+            return ResponseEntity.status(500).body(null);
+        }
+    }
 }
 
 

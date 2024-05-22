@@ -19,19 +19,19 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
             "LEFT JOIN FETCH StoreImg si ON s.storeNo = si.store.storeNo " +
             "LEFT JOIN FETCH Review r ON s.storeNo = r.store.storeNo " +
             "WHERE s.storeName LIKE :nameKeyword " +
-            "OR s.address LIKE :addressKeyword " +
+            "OR s.roadAddress LIKE :addressKeyword " +
             "GROUP BY s.storeNo, si.img ")
     List<StoreListViewProjection> findStoresByStoreNameInAndAddressInOrderByAddressAsc(String nameKeyword,String addressKeyword);
 
     @Query("SELECT new com.kkosoonnae.jpa.projection.StoreDetailViewProjection(" +
             "s.storeNo, s.storeName, s.content, s.zipCode, s.address, " +
-            "s.addressDtl, s.phone, s.storeOperDt, s.roadAddress, si.img ,AVG(r.scope) ,COUNT(sl.likeNo)) " +
+            "s.addressDtl, s.phone, s.storeOperDt, s.roadAddress, si.img ,AVG(r.scope), COUNT(ls.likeNo)) " +
             "FROM Store s " +
-            "LEFT JOIN StoreImg si ON s.storeNo = si.store.storeNo " +
-            "LEFT JOIN Review  r ON s.storeNo = r.store.storeNo " +
-            "LEFT JOIN LikeStore  sl ON s.storeNo = sl.store.storeNo " +
+            "LEFT JOIN FETCH StoreImg si ON s.storeNo = si.store.storeNo " +
+            "LEFT JOIN FETCH  Review  r ON s.storeNo = r.store.storeNo " +
+            "LEFT JOIN FETCH LikeStore ls ON s.storeNo = ls.store.storeNo " +
             "WHERE s.storeNo = :storeNo " +
-            "GROUP BY s.storeNo,si.img " )
+            "GROUP BY s.storeNo,si.img ")
     Optional<StoreDetailViewProjection> findStoreByStoreNo(Integer storeNo);
 
     @Query("SELECT s FROM Store s WHERE s.storeNo = :storeNo")
