@@ -16,18 +16,18 @@ import java.util.stream.Collectors;
 @Builder
 public class PetResponse {
     @Schema(description = "견종/묘종")
-    private Integer petNo;
+    private Integer petNumber;
 
     @Schema(description = "견종/묘종")
-    private String type;
+    private String breed;
 
     @Schema(description = "몸무게")
     private String weight;
 
     public static PetResponse petToPetResponse(Pet pet) {
         return PetResponse.builder()
-                .petNo(pet.getPetNo())
-                .type(pet.getType())
+                .petNumber(pet.getPetNo())
+                .breed(pet.getType())
                 .weight(pet.getWeight())
                 .build();
     }
