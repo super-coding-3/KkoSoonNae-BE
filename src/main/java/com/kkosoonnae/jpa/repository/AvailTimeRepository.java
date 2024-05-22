@@ -14,9 +14,9 @@ public interface AvailTimeRepository extends JpaRepository<AvailTime, Integer> {
     @Query("SELECT at.availNo FROM AvailTime at WHERE at.store.storeNo = :storeNo")
     Integer findByStoreNo(Integer storeNo);
 
+//    @Query("SELECT at FROM AvailTime at WHERE at.store.storeNo = :storeNo")
+//    AvailTime findAvailTimeByStoreNo(Integer storeNo);
+
     @Query("SELECT at FROM AvailTime at WHERE at.store.storeNo = :storeNo")
     AvailTime findAvailTimeByStoreNo(Integer storeNo);
-
-    @Query("SELECT at FROM AvailTime at WHERE at.store.storeNo = :storeNo AND at.availDate = :reservationDate AND at.availTime = :reservationTime")
-    AvailTime findAvailTimeByStoreNoAndReservationDateReservationTime(Integer storeNo, LocalDate reservationDate, LocalTime reservationTime);
 }

@@ -47,4 +47,11 @@ public class CustomerDtl {
     @Column(name = "ADDRESS_DTL")
     private String addressDtl;
 
+    public void updateCustomer(InfoDto infoDto){
+        this.nickName = infoDto.getNickName();
+        this.phone = infoDto.getPhone();
+        this.zipCode = infoDto.getZipCode();
+        this.address = infoDto.getAddress();
+        this.addressDtl = infoDto.getAddressDtl();
+    }
 }

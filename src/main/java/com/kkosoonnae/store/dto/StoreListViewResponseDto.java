@@ -13,8 +13,8 @@ public class StoreListViewResponseDto {
     private Integer storeNo;
     private String storeName;
     private String img;
-    private Integer averageScope;
-    private Integer totalLikeStore;
+    private Double averageScope;
+    private Long totalLikeStore;
 
     public static StoreListViewResponseDto ResponseToEntity(StoreListViewProjection projection) {
         return StoreListViewResponseDto.builder()
@@ -22,7 +22,6 @@ public class StoreListViewResponseDto {
                 .storeName(projection.storeName())
                 .img(projection.img())
                 .averageScope(projection.scope())
-                .totalLikeStore(projection.likeStore())
                 .build();
     }
 }

@@ -36,8 +36,6 @@ public class StoreServiceImpl implements StoreService {
 
     private final StoreRepository storeRepository;
 
-    private final StoreImgRepository storeImgRepository;
-
     private final StyleRepository styleRepository;
 
     private final ReviewRepository reviewRepository;
@@ -53,12 +51,9 @@ public class StoreServiceImpl implements StoreService {
         if (storeDetailViewProjection.isEmpty()) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
-        Optional<StoreImg> storeImg = storeImgRepository.findByStoreNo(storeNo);
-        if (storeImg.isEmpty()) {
-            throw new CustomException(ErrorCode.STORE_IMAGE_NOT_FOUND);
-        }
-        int totalLikeStore = calculateTotalLikeStore(storeNo);
-        return new StoreDetailWithImageResponseDto(storeDetailViewProjection.get(), storeImg.get(),totalLikeStore);
+        Double averageScope = calculateAverageScope();
+        Long totalLikeStore = calculateTotalLikeStore(storeNo);
+        return new StoreDetailWithImageResponseDto(storeDetailViewProjection.get(),averageScope,totalLikeStore);
     }
 
     //매장스타일조회
@@ -77,9 +72,11 @@ public class StoreServiceImpl implements StoreService {
     //매장전체조회
     @Override
     public List<StoreListViewResponseDto> findByStores(String storeKeyword, String addressKeyword) {
-        try {
             List<StoreListViewProjection> projection = storeRepository.findStoresByStoreNameInAndAddressInOrderByAddressAsc(storeKeyword, addressKeyword);
-            Integer averageScope = calculateAverageScope();
+            if (projection.isEmpty()) {
+                throw new CustomException(ErrorCode.STORE_NOT_FOUND);
+            }
+            Double averageScope = calculateAverageScope();
             return projection.stream()
                     .map(storeProjection -> {
                         StoreListViewResponseDto dto = StoreListViewResponseDto.ResponseToEntity(storeProjection);
@@ -87,16 +84,7 @@ public class StoreServiceImpl implements StoreService {
                         return dto;
                     })
                     .collect(Collectors.toList());
-        } catch (CustomException e) {
-            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
-    }
-
-    @Override
-    public Page<StoreListViewResponseDto> findAllWithPageable(String nameKeyword, String addressKeyword, Pageable pageable) {
-        Page<StoreListViewProjection> projections = storeRepository.findAllByStoreNameLikeOrAddressLike(nameKeyword, addressKeyword, pageable);
-        return projections.map(StoreListViewResponseDto::ResponseToEntity);
-    }
 
     //관심매장추가
     @Override
@@ -111,7 +99,7 @@ public class StoreServiceImpl implements StoreService {
                 .createDt(LocalDateTime.now())
                 .build();
         LikeStore saveLikeStore = likeStoreRepository.save(likeStore);
-        return LikeStoreDto.likeStoreDto(saveLikeStore);
+        return LikeStoreDto.mapToListStoreDto(saveLikeStore);
     }
 
 
@@ -129,18 +117,18 @@ public class StoreServiceImpl implements StoreService {
     }
 
 
-    private Integer calculateAverageScope() {
+    private Double calculateAverageScope() {
         List<Review> reviews = reviewRepository.findAll();
         if (reviews.isEmpty()) {
-            return 0;
+            return (double) 0;
         }
         int totalScope = reviews.stream().mapToInt(Review::getScope).sum();
-        return totalScope / reviews.size();
+        return (double) (totalScope / reviews.size());
     }
 
-    private int calculateTotalLikeStore(Integer storeNo) {
+    private Long calculateTotalLikeStore(Integer storeNo) {
        List<LikeStore> likeStores = likeStoreRepository.countLikeStoreByStoreStoreNo(storeNo);
-       return likeStores.size();
+       return (long) likeStores.size();
     }
 
     //리뷰작성
@@ -153,8 +141,7 @@ public class StoreServiceImpl implements StoreService {
                 reviewDto.getImg(),
                 reviewDto.getContent(),
                 reviewDto.getReviewDt(),
-                reviewDto.getScope(),
-                reviewDto.getAverageScope()
+                reviewDto.getScope()
         );
 
         Review savedReview = reviewRepository.save(review);
@@ -166,8 +153,7 @@ public class StoreServiceImpl implements StoreService {
                 savedReview.getImg(),
                 savedReview.getContent(),
                 savedReview.getReviewDt(),
-                savedReview.getScope(),
-                savedReview.getAverageScope()
+                savedReview.getScope()
         );
     }
 }

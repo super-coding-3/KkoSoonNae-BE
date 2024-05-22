@@ -46,6 +46,7 @@ public class StoreController {
         } catch (NotFoundException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            // return ResponseEntity.status(HttpStatus.NOT_FOUND).body((StoreDetailWithImageResponseDto) Collections.emptyList());
         }
     }
 
@@ -78,13 +79,8 @@ public class StoreController {
         }
     }
 
-    @GetMapping("/stores-page")
-    public Page<StoreListViewResponseDto> findStoresPagination(@RequestParam(required = false) String storeKeyword, String addressKeyword, Pageable pageable) {
-        return storeService.findAllWithPageable(storeKeyword, addressKeyword, pageable);
-    }
-
     @PostMapping("/likeStore")
-    @Operation(description = "관심매장등록")
+    @Operation( summary = "관심매장등록")
     public ResponseEntity<?> likeStore(@RequestParam Integer customerNo, Integer storeNo) {
         try {
             log.info("POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:");
@@ -98,7 +94,7 @@ public class StoreController {
     }
 
     @DeleteMapping("/deleteLikeStore/customer/{customerNo}/store/{storeNo}")
-    @Operation(description = "관심매장삭제")
+    @Operation(summary = "관심매장삭제")
     public ResponseEntity<?> removeLikeStore(@PathVariable Integer customerNo,
                                              @PathVariable Integer storeNo) {
         try {
@@ -124,7 +120,6 @@ public class StoreController {
             return ResponseEntity.status(500).body(null);
         }
     }
-
 }
 
 

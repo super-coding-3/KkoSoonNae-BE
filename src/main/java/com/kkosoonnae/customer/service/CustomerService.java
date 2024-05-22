@@ -73,6 +73,14 @@ public class CustomerService {
         }
     }
 
+    public boolean existsLoginId(String loginId){
+        return customerBasRepository.existsByLoginId(loginId);
+    }
+
+    public boolean existsNickName(String nickName){
+        return customerDtlRepository.existsByNickName(nickName);
+    }
+
     public String login(LoginDto login){
         String loginId = login.getLoginId();
         String password = login.getPassword();
@@ -117,15 +125,8 @@ public class CustomerService {
             throw new IllegalStateException("사용자의 정보를 찾을 수 없습니다.");
         }
 
-        if(customerDtl != null){
-            customerDtl = CustomerDtl.builder()
-                    .nickName(infoDto.getNickName())
-                    .phone(infoDto.getPhone())
-                    .zipCode(infoDto.getZipCode())
-                    .address(infoDto.getAddress())
-                    .addressDtl(infoDto.getAddressDtl())
-                    .build();
-        }
+        customerDtl.updateCustomer(infoDto);
+
         customerDtlRepository.save(customerDtl);
 
     }

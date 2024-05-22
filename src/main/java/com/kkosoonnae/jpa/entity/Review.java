@@ -40,7 +40,4 @@ public class Review {
     @Column(name = "SCOPE")
     private Integer scope;
 
-    @Column(name = "AVERAGE_SCOPE")
-    private Integer averageScope;
-
 }

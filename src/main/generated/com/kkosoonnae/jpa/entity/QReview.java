@@ -22,8 +22,6 @@ public class QReview extends EntityPathBase<Review> {
 
     public static final QReview review = new QReview("review");
 
-    public final NumberPath<Integer> averageScope = createNumber("averageScope", Integer.class);
-
     public final StringPath content = createString("content");
 
     public final NumberPath<Integer> cstmrNo = createNumber("cstmrNo", Integer.class);
