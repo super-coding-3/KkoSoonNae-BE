@@ -1,13 +1,14 @@
 package com.kkosoonnae.store.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Builder
 public class InputStoreInformation {
     private String storeName;
@@ -19,5 +20,8 @@ public class InputStoreInformation {
     private Double lat;
 
     private Double lon;
+
+    private List<String> storeImgUrl;
+
 
 }

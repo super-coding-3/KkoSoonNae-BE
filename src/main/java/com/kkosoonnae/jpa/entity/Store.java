@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -46,7 +47,7 @@ public class Store {
     @Column(name = "CLOSING_TIME")
     private LocalTime closingTime;
 
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<StoreImg> storeImg;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
@@ -69,6 +70,13 @@ public class Store {
         this.style = styles;
     }
 
+    public void setStoreImages(List<StoreImg> storeImages) {
+        this.storeImg = storeImages;
+    }
+
+
+
+
     public Store(String placeName, Object o, String zipCode, String address, Object o1, String phone, Object o2, String roadAddress) {
 
     }
@@ -79,8 +87,6 @@ public class Store {
         this.phone = phone;
     }
 
-    public static Store of(String name, String phone, String addr) {
 
-        return new Store(name, phone, addr);
-    }
+
 }

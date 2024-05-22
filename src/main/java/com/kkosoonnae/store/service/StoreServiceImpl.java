@@ -159,6 +159,12 @@ public class StoreServiceImpl implements StoreService {
                 .collect(Collectors.toList());
 
         store.setStyles(styles);
+        List<StoreImg> storeImages = inputStoreInformation.getStoreImgUrl().stream()
+                .map(url -> new StoreImg(store, url))
+                .collect(Collectors.toList());
+
+        store.setStoreImages(storeImages);
+
         Store savedStore = storeRepository.save(store);
         return new StoreDto(savedStore);
     }
