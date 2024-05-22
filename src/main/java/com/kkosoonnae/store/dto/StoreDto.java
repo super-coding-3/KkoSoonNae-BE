@@ -1,10 +1,12 @@
 package com.kkosoonnae.store.dto;
 
 import com.kkosoonnae.jpa.entity.Store;
+import com.kkosoonnae.jpa.entity.StoreImg;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  * packageName    : com.kkosoonnae.store.dto
@@ -40,6 +42,7 @@ public class StoreDto {
 
     private LocalTime closingTime;
 
+
     public StoreDto(Store store) {
         this.storeNo=store.getStoreNo();
         this.storeName=store.getStoreName();
@@ -50,6 +53,7 @@ public class StoreDto {
         this.lon= store.getLon();
         this.openingTime=store.getOpeningTime();
         this.closingTime=store.getClosingTime();
+
     }
 }
 
