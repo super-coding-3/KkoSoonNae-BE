@@ -4,6 +4,7 @@ import com.kkosoonnae.jpa.entity.Store;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * packageName    : com.kkosoonnae.store.dto
@@ -35,9 +36,9 @@ public class StoreDto {
 
     private Double lon;
 
-    private LocalDateTime openingTime;
+    private LocalTime openingTime;
 
-    private LocalDateTime closingTime;
+    private LocalTime closingTime;
 
     public StoreDto(Store store) {
         this.storeNo=store.getStoreNo();
