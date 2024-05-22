@@ -20,4 +20,6 @@ public interface StoreService  {
     void deleteLikeStore(Integer customerNo, Integer storeNo);
 
     ReviewResponseDto createReview(ReviewDto reviewDto);
+
+    StoreDto createStore(InputStoreInformation inputStoreInformation);
 }
