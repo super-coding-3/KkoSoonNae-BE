@@ -16,7 +16,7 @@ public class StyleDto {
     private Integer price;
 
 
-    public static StyleDto styleToEntity(Style style) {
+    public static StyleDto styleToDto(Style style) {
     return StyleDto.builder()
             .styleName(style.getStyleName())
             .img(style.getImg())
@@ -24,9 +24,9 @@ public class StyleDto {
             .build();
     }
 
-    public static List<StyleDto> styleToEntity(List<Style> styles) {
+    public static List<StyleDto> styleToDto(List<Style> styles) {
         return styles.stream()
-                .map(StyleDto::styleToEntity)
+                .map(StyleDto::styleToDto)
                 .collect(Collectors.toList());
     }
 }

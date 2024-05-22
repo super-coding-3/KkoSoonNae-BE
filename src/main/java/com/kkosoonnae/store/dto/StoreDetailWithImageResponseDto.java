@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class StoreDetailWithImageResponseDto {
     private StoreDetailViewProjection storeDetail;
-    private Double scope;
-    private Long totalLikeStore;
 
 }
 

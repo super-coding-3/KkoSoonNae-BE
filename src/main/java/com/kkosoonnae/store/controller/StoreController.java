@@ -46,7 +46,6 @@ public class StoreController {
         } catch (NotFoundException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            // return ResponseEntity.status(HttpStatus.NOT_FOUND).body((StoreDetailWithImageResponseDto) Collections.emptyList());
         }
     }
 
@@ -79,8 +78,8 @@ public class StoreController {
         }
     }
 
-    @PostMapping("/likeStore")
-    @Operation( summary = "관심매장등록")
+    @PostMapping("/like-store")
+    @Operation(summary = "관심매장등록")
     public ResponseEntity<?> likeStore(@RequestParam Integer customerNo, Integer storeNo) {
         try {
             log.info("POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:");
@@ -93,15 +92,15 @@ public class StoreController {
         }
     }
 
-    @DeleteMapping("/deleteLikeStore/customer/{customerNo}/store/{storeNo}")
+    @DeleteMapping("/delete-likeStore")
     @Operation(summary = "관심매장삭제")
-    public ResponseEntity<?> removeLikeStore(@PathVariable Integer customerNo,
-                                             @PathVariable Integer storeNo) {
+    public ResponseEntity<?> removeLikeStore(@RequestParam Integer customerNo,
+                                             @RequestParam Integer storeNo) {
         try {
             log.info("POST/customerNo,storeNo 관심매장삭제 요청이 들어왔습니다.");
             storeService.deleteLikeStore(customerNo, storeNo);
             log.info("POST/관심매장삭제 응답" );
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         } catch (NotFoundException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

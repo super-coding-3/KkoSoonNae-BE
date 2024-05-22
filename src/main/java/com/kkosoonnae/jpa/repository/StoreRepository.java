@@ -25,13 +25,13 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
 
     @Query("SELECT new com.kkosoonnae.jpa.projection.StoreDetailViewProjection(" +
             "s.storeNo, s.storeName, s.content, s.zipCode, s.address, " +
-            "s.addressDtl, s.phone, s.storeOperDt, s.roadAddress, si.img ,AVG(r.scope), COUNT(ls.likeNo)) " +
+            "s.addressDtl, s.phone, s.storeOperDt, s.roadAddress, si.img ,AVG(r.scope) ,COUNT(sl.likeNo)) " +
             "FROM Store s " +
-            "LEFT JOIN FETCH StoreImg si ON s.storeNo = si.store.storeNo " +
-            "LEFT JOIN FETCH  Review  r ON s.storeNo = r.store.storeNo " +
-            "LEFT JOIN FETCH LikeStore ls ON s.storeNo = ls.store.storeNo " +
+            "LEFT JOIN StoreImg si ON s.storeNo = si.store.storeNo " +
+            "LEFT JOIN Review  r ON s.storeNo = r.store.storeNo " +
+            "LEFT JOIN LikeStore  sl ON s.storeNo = sl.store.storeNo " +
             "WHERE s.storeNo = :storeNo " +
-            "GROUP BY s.storeNo,si.img ")
+            "GROUP BY s.storeNo,si.img " )
     Optional<StoreDetailViewProjection> findStoreByStoreNo(Integer storeNo);
 
     @Query("SELECT s FROM Store s WHERE s.storeNo = :storeNo")

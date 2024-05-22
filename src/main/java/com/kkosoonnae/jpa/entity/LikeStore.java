@@ -1,5 +1,6 @@
 package com.kkosoonnae.jpa.entity;
 
+import com.kkosoonnae.store.dto.LikeStoreDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,4 +33,5 @@ public class LikeStore {
 
     @Column(name = "CREATE_DT")
     private LocalDateTime createDt;
+
 }
