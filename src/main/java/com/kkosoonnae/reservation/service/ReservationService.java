@@ -54,37 +54,44 @@ public class ReservationService {
             throw new IllegalArgumentException("로그인이 필요합니다.");
         }
 
+        System.out.println("11111111111111111111111111");
         Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
         CustomerBas cstmrBas = customerBasRepository.findByCstmrNo(cstmrNo);
-        Integer storeNo = reservationRequest.getStoreNo();
+        Integer storeNo = reservationRequest.getStoreNumber();
 
+        System.out.println("222222222222222222222222222222222222222");
         DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("HH:mm");
 
         LocalDate reservationDate = LocalDate.parse(reservationRequest.getReservationDate(), formatDate);
-        LocalTime reservationTime = LocalTime.parse(reservationRequest.getReservationTime(),formatTime);
+        LocalTime reservationTime = LocalTime.parse(reservationRequest.getReservationTime(), formatTime);
 
         Reservation isAvailable = reservationRepository.findByStoreNoAndReservationDateAndReservationTime(storeNo, reservationDate, reservationTime);
 
+        System.out.println("333333333333333333333333333333333333333333");
         if (isAvailable != null) {
             throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
         }
 
+        System.out.println("4444444444444444444444444444444444444444444");
         AvailTime availTime = availTimeRepository.findAvailTimeByStoreNo(storeNo);
-        Store store = storeRepository.findById(reservationRequest.getStoreNo()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
-        Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetNo());
+        Store store = storeRepository.findById(reservationRequest.getStoreNumber()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
+        Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetName());
 
+        System.out.println("5555555555555555555555555555555555555");
         if (pet == null) {
             throw new NotFoundException("해당 펫을 찾을 수 없습니다.");
         }
 
+        System.out.println("6666666666666666666666666666666666666666666666666666666");
         Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
         reservationRepository.save(reservation);
 
+        System.out.println("77777777777777777777777777777777777777777777");
         ReservedPets reservedPets = new ReservedPets(reservation, pet, availTime);
         reservedPetsRepository.save(reservedPets);
-
-        return new ReservationResponse(store.getStoreName(), reservation, reservationRequest.getStyleName(), pet);
+        System.out.println("888888888888888888888888888888888888888888");
+        return new ReservationResponse(store.getStoreName(), reservation, reservationRequest.getCutStyle(), pet, reservation.getReservationNo());
     }
 
     public List<StyleResponse> findStyleNameByStoreNo(Integer storeNo) {
