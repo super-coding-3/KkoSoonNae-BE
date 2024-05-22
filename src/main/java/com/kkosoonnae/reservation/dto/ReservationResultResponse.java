@@ -34,9 +34,9 @@ public class ReservationResultResponse {
     @Schema(description = "특징")
     private String feature;
 
-    public ReservationResultResponse(Reservation reservation, Store store, Pet pet) {
+    public ReservationResultResponse(Reservation reservation, Store store, Pet pet, String responseDate) {
         this.storeName = store.getStoreName();
-        this.reservationDate = String.valueOf(reservation.getReservationDate());
+        this.reservationDate = responseDate;
         this.reservationTime = String.valueOf(reservation.getReservationTime());
         this.styleName = reservation.getStyleName();
         this.type = pet.getType();
