@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -40,10 +41,10 @@ public class Store {
     private String roadAddress;
 
     @Column(name = "OPENING_TIME")
-    private LocalDateTime openingTime;
+    private LocalTime openingTime;
 
     @Column(name = "CLOSING_TIME")
-    private LocalDateTime closingTime;
+    private LocalTime closingTime;
 
     @OneToMany(mappedBy = "store")
     private List<StoreImg> storeImg;
@@ -60,8 +61,8 @@ public class Store {
         this.lat = lat;
         this.lon = lon;
         this.roadAddress = roadAddress;
-        this.openingTime = LocalDateTime.parse("09:00");
-        this.closingTime = LocalDateTime.parse("18:00");
+        this.openingTime = LocalTime.parse("09:00");
+        this.closingTime = LocalTime.parse("18:00");
     }
 
     public void setStyles(List<Style> styles) {

@@ -20,7 +20,7 @@ public class QStore extends EntityPathBase<Store> {
 
     public static final QStore store = new QStore("store");
 
-    public final DateTimePath<java.time.LocalDateTime> closingTime = createDateTime("closingTime", java.time.LocalDateTime.class);
+    public final TimePath<java.time.LocalTime> closingTime = createTime("closingTime", java.time.LocalTime.class);
 
     public final StringPath content = createString("content");
 
@@ -28,7 +28,7 @@ public class QStore extends EntityPathBase<Store> {
 
     public final NumberPath<Double> lon = createNumber("lon", Double.class);
 
-    public final DateTimePath<java.time.LocalDateTime> openingTime = createDateTime("openingTime", java.time.LocalDateTime.class);
+    public final TimePath<java.time.LocalTime> openingTime = createTime("openingTime", java.time.LocalTime.class);
 
     public final StringPath phone = createString("phone");
 

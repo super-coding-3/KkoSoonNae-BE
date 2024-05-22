@@ -1,18 +1,17 @@
 package com.kkosoonnae.store.controller;
 
+import com.kkosoonnae.search.dto.StoreListViewResponseDto;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.exception.CustomException;
-import com.kkosoonnae.store.exception.ErrorCode;
 import com.kkosoonnae.store.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
+
 import java.util.List;
 
 /**
@@ -43,9 +42,9 @@ public class StoreController {
             StoreDetailWithImageResponseDto storeDetailWithImageResponseDto = storeService.findStoreDetailWithImage(storeNo);
             log.info("GET/Store 조회응답:" + storeDetailWithImageResponseDto);
             return ResponseEntity.ok().body(storeDetailWithImageResponseDto);
-        } catch (NotFoundException e) {
+        } catch (CustomException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
     }
 
@@ -61,20 +60,6 @@ public class StoreController {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        }
-    }
-
-    @GetMapping("/stores/search")
-    @Operation(summary = "전체매장검색")
-    public ResponseEntity<List<StoreListViewResponseDto>> searchByStores(@RequestParam(required = false) String storeKeyword, @RequestParam(required = false) String addressKeyword) {
-        try{
-            log.info("GET/storeKeyword 또는 addressKeyword 조회요청 들어왔습니다.:" +storeKeyword,addressKeyword);
-        List<StoreListViewResponseDto> storeListViewResponseDto = storeService.findByStores(storeKeyword, addressKeyword);
-            log.info("GET/storeKeyword 또는 addressKeyword 조회응답.:" + storeListViewResponseDto);
-        return ResponseEntity.ok(storeListViewResponseDto);
-    }catch (NotFoundException e) {
-            log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

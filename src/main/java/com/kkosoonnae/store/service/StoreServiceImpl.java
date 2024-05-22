@@ -5,14 +5,13 @@ import com.kkosoonnae.jpa.enu.StyleType;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.projection.StoreListViewProjection;
 import com.kkosoonnae.jpa.repository.*;
+import com.kkosoonnae.search.dto.StoreListViewResponseDto;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.exception.ErrorCode;
 import com.kkosoonnae.store.util.RandomStyleTypeUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,19 +72,8 @@ public class StoreServiceImpl implements StoreService {
         return StyleDto.styleToDto(styles);
     }
 
-    //매장전체조회
-    @Override
-    public List<StoreListViewResponseDto> findByStores(String storeKeyword, String addressKeyword) {
-        List<StoreListViewProjection> projection = storeRepository.findStoresByStoreNameInAndAddressInOrderByAddressAsc(storeKeyword, addressKeyword);
-        if (projection.isEmpty()) {
-            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
-        }
-        return projection.stream()
-                .map(StoreListViewResponseDto::projectToDto)
-                .collect(Collectors.toList());
-    }
-
     //관심매장추가
+    @Transactional
     @Override
     public LikeStoreDto saveLikeStore(Integer customerNo, Integer storeNo) {
         CustomerBas customerBas = customerBasRepository.findById(customerNo)
