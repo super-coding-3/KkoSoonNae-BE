@@ -1,22 +1,27 @@
 package com.kkosoonnae.store.service;
 
 import com.kkosoonnae.jpa.entity.*;
+import com.kkosoonnae.jpa.enu.StyleType;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.projection.StoreListViewProjection;
 import com.kkosoonnae.jpa.repository.*;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.exception.ErrorCode;
+import com.kkosoonnae.store.util.RandomStyleTypeUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * packageName    : com.kkosoonnae.store.service
@@ -43,6 +48,7 @@ public class StoreServiceImpl implements StoreService {
     private final LikeStoreRepository likeStoreRepository;
 
     private final CustomerBasRepository customerBasRepository;
+
 
     //매장상세조회
     @Override
@@ -155,6 +161,26 @@ public class StoreServiceImpl implements StoreService {
                 savedReview.getReviewDt(),
                 savedReview.getScope()
         );
+    }
+
+    @Transactional
+    @Override
+    public StoreDto createStore(InputStoreInformation inputStoreInformation) {
+
+        Store store =new Store(
+                inputStoreInformation.getStoreName(),
+                inputStoreInformation.getPhone(),
+                inputStoreInformation.getLat(),
+                inputStoreInformation.getLon(),
+                inputStoreInformation.getRoadAddress()
+        );
+        List<Style> styles = IntStream.range(0,3)
+                .mapToObj(i->new Style(store, RandomStyleTypeUtil.getRandomStyleType()))
+                .collect(Collectors.toList());
+
+        store.setStyles(styles);
+        Store savedStore = storeRepository.save(store);
+        return new StoreDto(savedStore);
     }
 }
 

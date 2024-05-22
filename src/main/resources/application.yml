@@ -23,4 +23,3 @@ spring:
 security:
   jwt:
     secret-key: KkoSoonNaeFinalProJectKkoSoonNaeFinalProJect
-
