@@ -38,4 +38,6 @@ public class InfoDto {
     @Schema(description = "상세주소")
     private String addressDtl;
 
+    private String error;
+
 }

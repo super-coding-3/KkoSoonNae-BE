@@ -117,21 +117,23 @@ public class CustomerController {
 
     @Operation(summary = "회원 정보 조회")
     @GetMapping("/profile")
-        public ResponseEntity<?> getUserProFile(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        public ResponseEntity<InfoDto> getUserProFile(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         try {
             InfoDto userProfile = service.getUserProfile(principalDetails);
             log.info("userProFile : {} ", userProfile);
             return ResponseEntity.ok(userProfile);
         } catch (UsernameNotFoundException e) {
             // 사용자를 찾을 수 없는 경우 예외 처리
-            Map<String, String> errorBody = new HashMap<>();
-            errorBody.put("error", "사용자를 찾을 수 없습니다.");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
+            log.error("사용자를 찾을 수 없습니다: ", e);
+            InfoDto errorResponse = new InfoDto();
+            errorResponse.setError("사용자를 찾을 수 없습니다.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         } catch (Exception e) {
             // 그 외의 예외 처리
-            Map<String, String> errorBody = new HashMap<>();
-            errorBody.put("error", "프로필을 가져오는 중 문제가 발생했습니다.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorBody);
+            log.error("프로필을 가져오는 중 문제가 발생했습니다: ", e);
+            InfoDto errorResponse = new InfoDto();
+            errorResponse.setError("프로필을 가져오는 중 문제가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 
