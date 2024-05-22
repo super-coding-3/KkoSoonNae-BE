@@ -3,7 +3,6 @@ package com.kkosoonnae.reservation.controller;
 import com.kkosoonnae.reservation.dto.*;
 import com.kkosoonnae.reservation.service.ReservationService;
 import com.kkosoonnae.reservation.service.exceptions.InvalidValueException;
-import com.kkosoonnae.reservation.service.exceptions.NotAcceptException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 import org.webjars.NotFoundException;
-
 import java.util.List;
 
 /**
@@ -49,7 +46,6 @@ public class ReservationController {
         }
     }
 
-
     @Operation(summary = "매장 일련번호로 스타일 이름 가져오기")
     @GetMapping("/style-list/{storeNo}")
     public ResponseEntity<?> findStyleName(@PathVariable Integer storeNo) {
@@ -61,7 +57,6 @@ public class ReservationController {
         } catch (IllegalArgumentException iae) {
             return new ResponseEntity<>(iae.getMessage(), HttpStatus.UNAUTHORIZED);
         }
-
     }
 
     @Operation(summary = "로그인한 정보로 펫 정보 가져오기")
@@ -75,9 +70,7 @@ public class ReservationController {
         } catch (IllegalArgumentException iae) {
             return new ResponseEntity<>(iae.getMessage(), HttpStatus.UNAUTHORIZED);
         }
-
     }
-
 
     @Operation(summary = "에약 하기")
     @PostMapping("/make-reservation")
@@ -92,7 +85,6 @@ public class ReservationController {
         } catch (InvalidValueException ive) {
             return new ResponseEntity<>(ive.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @Operation(summary = "예약 확인")

@@ -14,8 +14,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StoreNameResponse {
-
     @Schema(description = "매장 이름")
     private String storeName;
-
 }

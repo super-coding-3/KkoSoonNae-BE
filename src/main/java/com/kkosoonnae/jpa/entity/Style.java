@@ -1,5 +1,6 @@
 package com.kkosoonnae.jpa.entity;
 
+import com.kkosoonnae.jpa.enu.StyleType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,4 +32,10 @@ public class Style {
     @Column(name = "PRICE")
     private Integer price;
 
+    public Style(Store store, StyleType styleType) {
+        this.store = store;
+        this.styleName = styleType.getName();
+        this.img = styleType.getImageUrl();
+        this.price = styleType.getPrice();
+    }
 }

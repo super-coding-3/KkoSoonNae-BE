@@ -4,6 +4,7 @@ import com.kkosoonnae.jpa.entity.Store;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * packageName    : com.kkosoonnae.store.dto
@@ -27,29 +28,28 @@ public class StoreDto {
 
     private String content;
 
-    private String zipCode;
-
-    private String address;
-
-    private String addressDtl;
-
     private String phone;
-
-    private LocalDateTime storeOperDt;
 
     private String roadAddress;
 
-    public Store toEntity(){
-        return Store.builder()
-                .storeName(this.storeName)
-                .content(this.content)
-                .zipCode(this.zipCode)
-                .address(this.address)
-                .addressDtl(this.addressDtl)
-                .phone(this.phone)
-                .storeOperDt(this.storeOperDt)
-                .roadAddress(this.roadAddress)
-                .build();
+    private Double lat;
+
+    private Double lon;
+
+    private LocalTime openingTime;
+
+    private LocalTime closingTime;
+
+    public StoreDto(Store store) {
+        this.storeNo=store.getStoreNo();
+        this.storeName=store.getStoreName();
+        this.phone=store.getPhone();
+        this.content=store.getContent();
+        this.roadAddress=store.getRoadAddress();
+        this.lat= store.getLat();
+        this.lon= store.getLon();
+        this.openingTime=store.getOpeningTime();
+        this.closingTime=store.getClosingTime();
     }
 }
 

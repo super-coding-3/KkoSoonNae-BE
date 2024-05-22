@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -27,27 +28,46 @@ public class Store {
     @Column(name = "CONTENT")
     private String content;
 
-    @Column(name = "ZIP_CODE")
-    private String zipCode;
-
-    @Column(name = "ADDRESS")
-    private String address;
-
-    @Column(name = "ADDRESS_DTL")
-    private String addressDtl;
-
     @Column(name = "PHONE")
     private String phone;
 
-    @Column(name = "STORE_OPER_DT")
-    private LocalDateTime storeOperDt;
+    @Column(name = "LAT")
+    private Double lat;
+
+    @Column(name = "LON")
+    private Double lon;
 
     @Column(name = "ROAD_ADDRESS")
     private String roadAddress;
 
+    @Column(name = "OPENING_TIME")
+    private LocalTime openingTime;
+
+    @Column(name = "CLOSING_TIME")
+    private LocalTime closingTime;
+
     @OneToMany(mappedBy = "store")
     private List<StoreImg> storeImg;
 
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private List<Style> style;
+
+
+    public Store(String storeName, String phone, Double lat,
+                 Double lon, String roadAddress) {
+        this.storeName = storeName;
+        this.content = storeName+"매장 입니다. ";
+        this.phone = phone;
+        this.lat = lat;
+        this.lon = lon;
+        this.roadAddress = roadAddress;
+        this.openingTime = LocalTime.parse("09:00");
+        this.closingTime = LocalTime.parse("18:00");
+    }
+
+    public void setStyles(List<Style> styles) {
+        this.style = styles;
+    }
 
     public Store(String placeName, Object o, String zipCode, String address, Object o1, String phone, Object o2, String roadAddress) {
 
@@ -55,7 +75,7 @@ public class Store {
 
     public Store(String storeName, String address, String phone) {
         this.storeName = storeName;
-        this.address = address;
+        this.roadAddress = address;
         this.phone = phone;
     }
 

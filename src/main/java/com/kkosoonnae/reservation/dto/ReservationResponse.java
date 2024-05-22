@@ -10,16 +10,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class ReservationResponse {
-
     @Schema(description = "매장 이름")
     private String storeName;
 
@@ -50,5 +46,4 @@ public class ReservationResponse {
         this.weight = pet.getWeight();
         this.feature = reservation.getFeature();
     }
-
 }

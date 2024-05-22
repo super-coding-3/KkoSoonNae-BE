@@ -1,22 +1,26 @@
 package com.kkosoonnae.store.service;
 
 import com.kkosoonnae.jpa.entity.*;
+import com.kkosoonnae.jpa.enu.StyleType;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.projection.StoreListViewProjection;
 import com.kkosoonnae.jpa.repository.*;
+import com.kkosoonnae.search.dto.StoreListViewResponseDto;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.exception.ErrorCode;
+import com.kkosoonnae.store.util.RandomStyleTypeUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * packageName    : com.kkosoonnae.store.service
@@ -44,6 +48,7 @@ public class StoreServiceImpl implements StoreService {
 
     private final CustomerBasRepository customerBasRepository;
 
+
     //매장상세조회
     @Override
     public StoreDetailWithImageResponseDto findStoreDetailWithImage(Integer storeNo) {
@@ -51,9 +56,7 @@ public class StoreServiceImpl implements StoreService {
         if (storeDetailViewProjection.isEmpty()) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
-        Double averageScope = calculateAverageScope();
-        Long totalLikeStore = calculateTotalLikeStore(storeNo);
-        return new StoreDetailWithImageResponseDto(storeDetailViewProjection.get(),averageScope,totalLikeStore);
+        return new StoreDetailWithImageResponseDto(storeDetailViewProjection.get());
     }
 
     //매장스타일조회
@@ -66,25 +69,8 @@ public class StoreServiceImpl implements StoreService {
         if (styles.isEmpty()) {
             throw new CustomException(ErrorCode.STYLE_NOT_FOUND);
         }
-        return StyleDto.styleToEntity(styles);
+        return StyleDto.styleToDto(styles);
     }
-
-    //매장전체조회
-    @Override
-    public List<StoreListViewResponseDto> findByStores(String storeKeyword, String addressKeyword) {
-            List<StoreListViewProjection> projection = storeRepository.findStoresByStoreNameInAndAddressInOrderByAddressAsc(storeKeyword, addressKeyword);
-            if (projection.isEmpty()) {
-                throw new CustomException(ErrorCode.STORE_NOT_FOUND);
-            }
-            Double averageScope = calculateAverageScope();
-            return projection.stream()
-                    .map(storeProjection -> {
-                        StoreListViewResponseDto dto = StoreListViewResponseDto.ResponseToEntity(storeProjection);
-                        dto.setAverageScope(averageScope);
-                        return dto;
-                    })
-                    .collect(Collectors.toList());
-        }
 
     //관심매장추가
     @Override
@@ -93,6 +79,10 @@ public class StoreServiceImpl implements StoreService {
                 .orElseThrow(() -> new CustomException(ErrorCode.CUSTOMER_NOT_FOUND));
         Store store = storeRepository.findById(storeNo)
                 .orElseThrow(() -> new CustomException(ErrorCode.STORE_NOT_FOUND));
+        boolean likeStoreExists = likeStoreRepository.existsLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(customerNo,storeNo);
+        if(likeStoreExists)
+            throw new CustomException(ErrorCode.DUPLICATE_LIKE_STORE);
+
         LikeStore likeStore = LikeStore.builder()
                 .customerBas(customerBas)
                 .store(store)
@@ -102,18 +92,14 @@ public class StoreServiceImpl implements StoreService {
         return LikeStoreDto.mapToListStoreDto(saveLikeStore);
     }
 
-
     //관심매장삭제
     @Override
     public void deleteLikeStore(Integer customerNo, Integer storeNo) {
-        boolean exists = likeStoreRepository.existsById(storeNo);
-        if (!exists)
-            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
-        Optional<LikeStore> likeStore = likeStoreRepository.findLikeStoreByCustomerBas_CstmrNoAndStoreStoreNo(customerNo, storeNo);
-        if (likeStore.isPresent()) {
-            throw new CustomException(ErrorCode.DUPLICATE_LIKE_STORE);
-        }
-        likeStoreRepository.deleteLikeStoreByStoreStoreNo(storeNo);
+        boolean likeStoreExists = likeStoreRepository.existsLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(customerNo,storeNo);
+        if(!likeStoreExists)
+            throw new CustomException(ErrorCode.LIKE_STORE_NOT_FOUND);
+
+        likeStoreRepository.deleteLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(customerNo,storeNo);
     }
 
 
@@ -155,6 +141,26 @@ public class StoreServiceImpl implements StoreService {
                 savedReview.getReviewDt(),
                 savedReview.getScope()
         );
+    }
+
+    @Transactional
+    @Override
+    public StoreDto createStore(InputStoreInformation inputStoreInformation) {
+
+        Store store =new Store(
+                inputStoreInformation.getStoreName(),
+                inputStoreInformation.getPhone(),
+                inputStoreInformation.getLat(),
+                inputStoreInformation.getLon(),
+                inputStoreInformation.getRoadAddress()
+        );
+        List<Style> styles = IntStream.range(0,3)
+                .mapToObj(i->new Style(store, RandomStyleTypeUtil.getRandomStyleType()))
+                .collect(Collectors.toList());
+
+        store.setStyles(styles);
+        Store savedStore = storeRepository.save(store);
+        return new StoreDto(savedStore);
     }
 }
 

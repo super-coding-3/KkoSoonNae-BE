@@ -15,8 +15,10 @@ import org.webjars.NotFoundException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -42,10 +44,8 @@ public class ReservationService {
     private final PetRepository petRepository;
     private final ReservedPetsRepository reservedPetsRepository;
     private final StyleRepository styleRepository;
-    private static Integer serialReservationNum;
 
     public ReservationResponse makeReservation(ReservationRequest reservationRequest) {
-
         PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomerBas customerBas = principalDetails.getCustomerBas();
         String loginId = customerBas.getLoginId();
@@ -59,7 +59,7 @@ public class ReservationService {
         Integer storeNo = reservationRequest.getStoreNo();
 
         DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("HH:mm");
 
         LocalDate reservationDate = LocalDate.parse(reservationRequest.getReservationDate(), formatDate);
         LocalTime reservationTime = LocalTime.parse(reservationRequest.getReservationTime(),formatTime);
@@ -81,18 +81,13 @@ public class ReservationService {
         Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
         reservationRepository.save(reservation);
 
-        serialReservationNum = reservation.getReservationNo();
-
         ReservedPets reservedPets = new ReservedPets(reservation, pet, availTime);
         reservedPetsRepository.save(reservedPets);
 
         return new ReservationResponse(store.getStoreName(), reservation, reservationRequest.getStyleName(), pet);
-
     }
 
-
     public List<StyleResponse> findStyleNameByStoreNo(Integer storeNo) {
-
         PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomerBas customerBas = principalDetails.getCustomerBas();
         String loginId = customerBas.getLoginId();
@@ -108,12 +103,9 @@ public class ReservationService {
         }
 
         return StyleResponse.stylesToStyleResponse(styles);
-
     }
 
-
     public StoreNameResponse findStoreNameByStoreNo(Integer storeNo) {
-
         PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomerBas customerBas = principalDetails.getCustomerBas();
         String loginId = customerBas.getLoginId();
@@ -129,11 +121,9 @@ public class ReservationService {
         }
 
         return new StoreNameResponse(store.getStoreName());
-
     }
 
     public List<PetResponse> findMyPet() {
-
         PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomerBas customerBas = principalDetails.getCustomerBas();
         String loginId = customerBas.getLoginId();
@@ -150,7 +140,6 @@ public class ReservationService {
         }
 
         return PetResponse.petsToPetResponse(pets);
-
     }
 
     public ReservationResultResponse resultReservation() {
@@ -169,6 +158,17 @@ public class ReservationService {
         ReservedPets reservedPets = reservedPetsRepository.findByReservationNo(reservationResult.getReservationNo());
         Pet pet = petRepository.findByPetNo(reservedPets.getPet().getPetNo());
 
-        return new ReservationResultResponse(reservationResult, store, pet);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+        LocalDate date = reservationResult.getReservationDate();
+
+        String dayOfWeek = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN);
+
+        String fromatterDate = date.format(formatter);
+
+        String responseDate = fromatterDate + "(" + dayOfWeek + ")";
+
+        return new ReservationResultResponse(reservationResult, store, pet, responseDate);
     }
+
 }

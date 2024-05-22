@@ -1,18 +1,17 @@
 package com.kkosoonnae.store.controller;
 
+import com.kkosoonnae.search.dto.StoreListViewResponseDto;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.exception.CustomException;
-import com.kkosoonnae.store.exception.ErrorCode;
 import com.kkosoonnae.store.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
+
 import java.util.List;
 
 /**
@@ -46,7 +45,6 @@ public class StoreController {
         } catch (NotFoundException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            // return ResponseEntity.status(HttpStatus.NOT_FOUND).body((StoreDetailWithImageResponseDto) Collections.emptyList());
         }
     }
 
@@ -65,22 +63,8 @@ public class StoreController {
         }
     }
 
-    @GetMapping("/stores/search")
-    @Operation(summary = "전체매장검색")
-    public ResponseEntity<List<StoreListViewResponseDto>> searchByStores(@RequestParam(required = false) String storeKeyword, @RequestParam(required = false) String addressKeyword) {
-        try{
-            log.info("GET/storeKeyword 또는 addressKeyword 조회요청 들어왔습니다.:" +storeKeyword,addressKeyword);
-        List<StoreListViewResponseDto> storeListViewResponseDto = storeService.findByStores(storeKeyword, addressKeyword);
-            log.info("GET/storeKeyword 또는 addressKeyword 조회응답.:" + storeListViewResponseDto);
-        return ResponseEntity.ok(storeListViewResponseDto);
-    }catch (NotFoundException e) {
-            log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PostMapping("/likeStore")
-    @Operation( summary = "관심매장등록")
+    @PostMapping("/like-store")
+    @Operation(summary = "관심매장등록")
     public ResponseEntity<?> likeStore(@RequestParam Integer customerNo, Integer storeNo) {
         try {
             log.info("POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:");
@@ -93,15 +77,15 @@ public class StoreController {
         }
     }
 
-    @DeleteMapping("/deleteLikeStore/customer/{customerNo}/store/{storeNo}")
+    @DeleteMapping("/delete-likeStore")
     @Operation(summary = "관심매장삭제")
-    public ResponseEntity<?> removeLikeStore(@PathVariable Integer customerNo,
-                                             @PathVariable Integer storeNo) {
+    public ResponseEntity<?> removeLikeStore(@RequestParam Integer customerNo,
+                                             @RequestParam Integer storeNo) {
         try {
             log.info("POST/customerNo,storeNo 관심매장삭제 요청이 들어왔습니다.");
             storeService.deleteLikeStore(customerNo, storeNo);
             log.info("POST/관심매장삭제 응답" );
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         } catch (NotFoundException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -117,6 +101,20 @@ public class StoreController {
             return ResponseEntity.ok(reviewResponseDto);
         } catch (Exception e) {
             log.error("리뷰 작성 중 오류가 발생했습니다: {}", e.getMessage());
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    @PostMapping("/add")
+    @Operation(summary = "매장 등록")
+    public ResponseEntity<StoreDto> createStore(@RequestBody InputStoreInformation inputStoreInformation){
+        try{
+            log.info("Post /add 스토어 추가 요청이 들어왔습니다. InputStoreInformation:{}",inputStoreInformation);
+            StoreDto storeDto = storeService.createStore(inputStoreInformation);
+            log.info("Post /add 스토어 추가 응답: {}",storeDto);
+            return ResponseEntity.ok(storeDto);
+        }catch (Exception e){
+            log.info("스토어 등록중 오류 발생:{}", e.getMessage());
             return ResponseEntity.status(500).body(null);
         }
     }

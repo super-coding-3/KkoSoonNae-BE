@@ -7,6 +7,7 @@ import lombok.Builder;
 public record StoreListViewProjection(
         Integer storeNo,
         String storeName,
+        String roadAddress,
         String img,
         Double scope
 
