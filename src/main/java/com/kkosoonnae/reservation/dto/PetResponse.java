@@ -5,9 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.kkosoonnae.jpa.entity.Pet;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
