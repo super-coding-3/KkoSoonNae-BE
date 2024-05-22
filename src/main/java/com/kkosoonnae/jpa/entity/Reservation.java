@@ -61,7 +61,7 @@ public class Reservation {
         this.reservationStatus = "확정";
         this.reservationDate = LocalDate.parse(reservationRequest.getReservationDate());
         this.reservationTime = LocalTime.parse(reservationRequest.getReservationTime());
-        this.feature = reservationRequest.getFeature();
-        this.styleName = reservationRequest.getStyleName();
+        this.feature = reservationRequest.getCharacteristics();
+        this.styleName = reservationRequest.getCutStyle();
     }
 }
