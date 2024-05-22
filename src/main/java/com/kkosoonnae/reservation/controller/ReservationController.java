@@ -35,78 +35,32 @@ public class ReservationController {
 
     @Operation(summary = "매장 일련번호로 매장 이름 가져오기")
     @GetMapping("/store-name/{storeNo}")
-    public ResponseEntity<StoreNameResponse> findStoreName(@PathVariable Integer storeNo) {
-        try {
-            StoreNameResponse storeNameResponse = reservationService.findStoreNameByStoreNo(storeNo);
-            return new ResponseEntity<>(storeNameResponse, HttpStatus.OK);
-        } catch (NotFoundException nfe) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-//        catch (IllegalArgumentException iae) {
-//            return new ResponseEntity<>(iae.getMessage(), HttpStatus.UNAUTHORIZED);
-//        }
+    public StoreNameResponse findStoreName(@PathVariable Integer storeNo) {
+        return reservationService.findStoreNameByStoreNo(storeNo);
     }
 
     @Operation(summary = "매장 일련번호로 스타일 이름 가져오기")
     @GetMapping("/style-list/{storeNo}")
-    public ResponseEntity<List<StyleResponse>> findStyleName(@PathVariable Integer storeNo) {
-        try {
-            List<StyleResponse> styleResponses = reservationService.findStyleNameByStoreNo(storeNo);
-            return new ResponseEntity<>(styleResponses, HttpStatus.OK);
-        } catch (NotFoundException nfe) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-//        catch (IllegalArgumentException iae) {
-//            return new ResponseEntity<>(iae.getMessage(), HttpStatus.UNAUTHORIZED);
-//        }
+    public List<StyleResponse> findStyleName(@PathVariable Integer storeNo) {
+        return reservationService.findStyleNameByStoreNo(storeNo);
     }
 
     @Operation(summary = "로그인한 정보로 펫 정보 가져오기")
     @GetMapping("/my-pet")
-    public ResponseEntity<List<PetResponse>> findMyPet() {
-        try {
-            List<PetResponse> petResponses = reservationService.findMyPet();
-            return new ResponseEntity<>(petResponses, HttpStatus.OK);
-        } catch (NotFoundException nfe) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-//        catch (IllegalArgumentException iae) {
-//            return new ResponseEntity<>(iae.getMessage(), HttpStatus.UNAUTHORIZED);
-//        }
+    public List<PetResponse> findMyPet() {
+        return reservationService.findMyPet();
     }
 
     @Operation(summary = "에약 하기")
     @PostMapping("/make-reservation")
-    public ResponseEntity<ReservationResponse> makeReservation(@RequestBody ReservationRequest reservationRequest) {
-        try {
-            ReservationResponse reservationResponse = reservationService.makeReservation(reservationRequest);
-            return new ResponseEntity<>(reservationResponse, HttpStatus.CREATED);
-        } catch (NotFoundException nfe) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-//        catch (IllegalArgumentException iae) {
-//            return new ResponseEntity<>(iae.getMessage(), HttpStatus.UNAUTHORIZED);
-//        }
-//        catch (InvalidValueException ive) {
-//            return new ResponseEntity<>(ive.getMessage(), HttpStatus.BAD_REQUEST);
-//        }
-        catch (InvalidValueException ive) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+    public ReservationResponse makeReservation(@RequestBody ReservationRequest reservationRequest) {
+        return reservationService.makeReservation(reservationRequest);
     }
 
     @Operation(summary = "예약 확인")
-    @GetMapping("/result-reservation")
-    public ResponseEntity<ReservationResultResponse> resultReservation() {
-        try {
-            ReservationResultResponse reservationResultResponse = reservationService.resultReservation();
-            return new ResponseEntity<>(reservationResultResponse, HttpStatus.OK);
-        } catch (NotFoundException nfe) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-//        catch (IllegalArgumentException iae) {
-//            return new ResponseEntity<>(iae.getMessage(), HttpStatus.UNAUTHORIZED);
-//        }
+    @GetMapping("/result-reservation/{reservationNumber}")
+    public ReservationResultResponse resultReservation(@PathVariable Integer reservationNumber) {
+        return reservationService.resultReservation(reservationNumber);
     }
     
 }

@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReservedPetsRepository extends JpaRepository<ReservedPets, Integer> {
-
-    @Query("SELECT rp FROM ReservedPets rp WHERE rp.reservation.reservationNo = :reservationNo")
-    ReservedPets findByReservationNo(Integer reservationNo);
-
+    @Query("SELECT rp FROM ReservedPets rp WHERE rp.reservation.reservationNo = :reservationNumber")
+    ReservedPets findByReservationNo(Integer reservationNumber);
 }
