@@ -42,9 +42,9 @@ public class StoreController {
             StoreDetailWithImageResponseDto storeDetailWithImageResponseDto = storeService.findStoreDetailWithImage(storeNo);
             log.info("GET/Store 조회응답:" + storeDetailWithImageResponseDto);
             return ResponseEntity.ok().body(storeDetailWithImageResponseDto);
-        } catch (CustomException e) {
+        } catch (NotFoundException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 

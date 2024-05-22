@@ -73,7 +73,6 @@ public class StoreServiceImpl implements StoreService {
     }
 
     //관심매장추가
-    @Transactional
     @Override
     public LikeStoreDto saveLikeStore(Integer customerNo, Integer storeNo) {
         CustomerBas customerBas = customerBasRepository.findById(customerNo)
@@ -94,7 +93,6 @@ public class StoreServiceImpl implements StoreService {
     }
 
     //관심매장삭제
-    @Transactional
     @Override
     public void deleteLikeStore(Integer customerNo, Integer storeNo) {
         boolean likeStoreExists = likeStoreRepository.existsLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(customerNo,storeNo);
