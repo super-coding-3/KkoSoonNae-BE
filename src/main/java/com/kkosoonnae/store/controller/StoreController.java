@@ -1,5 +1,7 @@
 package com.kkosoonnae.store.controller;
 
+import com.kkosoonnae.config.auth.PrincipalDetails;
+import com.kkosoonnae.jpa.entity.LikeStore;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -7,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -68,10 +71,12 @@ public class StoreController {
 
     @PostMapping("/like-store")
     @Operation(summary = "관심매장등록")
-    public ResponseEntity<?> likeStore(@RequestParam Integer customerNo, Integer storeNo) {
-        try {
+    public ResponseEntity<?> likeStore(
+            @AuthenticationPrincipal PrincipalDetails principalDetails,
+            @RequestParam  Integer storeNo) {
+        try{
             log.info("POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:");
-            LikeStoreDto likeStoreDto = storeService.saveLikeStore(customerNo, storeNo);
+            LikeStoreDto likeStoreDto = storeService.saveLikeStore(principalDetails,storeNo);
             log.info("POST/LikeStore 응답조회:" + likeStoreDto);
             return ResponseEntity.ok(likeStoreDto);
         } catch (Exception e) {
@@ -84,18 +89,19 @@ public class StoreController {
 
     @DeleteMapping("/delete-likeStore")
     @Operation(summary = "관심매장삭제")
-    public ResponseEntity<?> removeLikeStore(@RequestParam Integer customerNo,
-                                             @RequestParam Integer storeNo) {
+    public ResponseEntity<?> removeLikeStore(
+            @AuthenticationPrincipal PrincipalDetails principalDetails,
+            @RequestParam Integer storeNo) {
         try {
             log.info("POST/customerNo,storeNo 관심매장삭제 요청이 들어왔습니다.");
-            storeService.deleteLikeStore(customerNo, storeNo);
+            storeService.deleteLikeStore(principalDetails, storeNo);
             log.info("POST/관심매장삭제 응답");
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             Map<String, String> errorBody = new HashMap<>();
             errorBody.put("error", "관심매장이 없습니다.");
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
         }
     }
 
