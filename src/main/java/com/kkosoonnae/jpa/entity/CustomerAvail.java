@@ -27,4 +27,10 @@ public class CustomerAvail {
 
     @Column(name = "AVAIL_NO")
     private Integer availNo;
+
+    public CustomerAvail(Integer cstmrNo, Integer reservationNo, Integer availNo) {
+        this.cstmrNo = cstmrNo;
+        this.reservationNo = reservationNo;
+        this.availNo = availNo;
+    }
 }
