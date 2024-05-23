@@ -1,7 +1,5 @@
 package com.kkosoonnae.reservation.dto;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.kkosoonnae.jpa.entity.Pet;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -17,6 +15,9 @@ public class PetResponse {
     @Schema(description = "견종/묘종")
     private Integer petNumber;
 
+    @Schema(description = "펫 이름")
+    private String petName;
+
     @Schema(description = "견종/묘종")
     private String breed;
 
@@ -26,6 +27,7 @@ public class PetResponse {
     public static PetResponse petToPetResponse(Pet pet) {
         return PetResponse.builder()
                 .petNumber(pet.getPetNo())
+                .petName(pet.getName())
                 .breed(pet.getType())
                 .weight(pet.getWeight())
                 .build();
