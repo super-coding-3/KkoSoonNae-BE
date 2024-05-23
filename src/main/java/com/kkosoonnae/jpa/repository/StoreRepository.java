@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,10 +19,10 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
             "FROM Store s " +
             "LEFT JOIN FETCH StoreImg si ON s.storeNo = si.store.storeNo " +
             "LEFT JOIN FETCH Review r ON s.storeNo = r.store.storeNo " +
-            "WHERE s.storeName LIKE %:nameKeyword " +
-            "OR s.roadAddress LIKE %:addressKeyword " +
+            "WHERE s.storeName LIKE %:nameAddressKeyword% " +
+            "OR s.roadAddress LIKE %:nameAddressKeyword% " +
             "GROUP BY s.storeNo, si.img ")
-    List<StoreListViewProjection> findStoresByStoreNameInAndAddressInOrderByAddressAsc(String nameKeyword,String addressKeyword);
+    List<StoreListViewProjection> findStoresByStoreNameInAndAddressInOrderByAddressAsc(String nameAddressKeyword);
 
     @Query("SELECT new com.kkosoonnae.jpa.projection.StoreDetailViewProjection(" +
             "s.storeNo, s.storeName, s.content, s.phone, s.roadAddress, " +

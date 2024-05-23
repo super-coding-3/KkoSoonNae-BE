@@ -37,10 +37,10 @@ public class SearchController {
     private final SearchService searchService;
     @GetMapping("/stores/")
     @Operation(summary = "전체매장검색")
-    public ResponseEntity<?> searchByStores(@RequestParam(required = false) String storeKeyword, @RequestParam(required = false) String addressKeyword) {
+    public ResponseEntity<?> searchByStores(@RequestParam String nameAddressKeyword) {
         try{
-            log.info("GET/storeKeyword 또는 addressKeyword 조회요청 들어왔습니다.:" +storeKeyword,addressKeyword);
-            List<StoreListViewResponseDto> storeListViewResponseDto = searchService.findByStores(storeKeyword, addressKeyword);
+            log.info("GET/storeKeyword 또는 addressKeyword 조회요청 들어왔습니다.:" +nameAddressKeyword);
+            List<StoreListViewResponseDto> storeListViewResponseDto = searchService.findByStores(nameAddressKeyword);
             log.info("GET/storeKeyword 또는 addressKeyword 조회응답.:" + storeListViewResponseDto);
             return ResponseEntity.ok(storeListViewResponseDto);
         }catch (Exception e) {
