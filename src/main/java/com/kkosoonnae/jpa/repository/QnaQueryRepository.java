@@ -36,6 +36,7 @@ public class QnaQueryRepository {
 
         return query
                 .select(Projections.bean(QnaListDto.class,
+                        qna.qnaNo,
                         qna.title,
                         qna.content,
                         qna.createDt
