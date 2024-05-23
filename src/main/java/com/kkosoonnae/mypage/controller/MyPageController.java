@@ -26,7 +26,7 @@ import java.util.List;
  * 2024-05-23        hagjoon       최초 생성
  */
 @RestController
-@RequestMapping("/avail")
+@RequestMapping("/my-page")
 @Tag(name = "MyPageController",description = "마이페이지 API 정보 컨트롤러")
 @Slf4j
 @RequiredArgsConstructor
@@ -35,14 +35,14 @@ public class MyPageController {
     private final MyPageService service;
 
     @Operation(summary = "예약 내역 리스트")
-    @GetMapping("/list")
+    @GetMapping("/avail-list")
     public ResponseEntity<List<AvailDto>> getAvailList(@AuthenticationPrincipal PrincipalDetails principalDetails){
         List<AvailDto> result = service.getMyAvailList(principalDetails);
         return ResponseEntity.ok().body(result);
     }
 
     @Operation(summary = "예약 취소")
-    @DeleteMapping("/cancel/{reservationNo}")
+    @DeleteMapping("/avail-cancel/{reservationNo}")
     public ResponseEntity<?> deleteAvail(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Integer reservationNo){
         Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
         service.deleteAvail(cstmrNo,reservationNo);
