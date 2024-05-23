@@ -36,4 +36,9 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
 
     @Query("SELECT s FROM Store s WHERE s.storeNo = :storeNo")
     Store findStoreNameByStoreNo(Integer storeNo);
+
+    @Query("SELECT s FROM Store s WHERE (6371 * acos(cos(radians(:lat)) * " +
+            "cos(radians(s.lat)) * cos(radians(s.lon)-radians(:lon))+sin(radians(:lat)) * " +
+            "sin(radians(s.lat))))< :distance")
+    List<Store> findStoresWithinDistance(double lat, double lon, double distance);
 }
