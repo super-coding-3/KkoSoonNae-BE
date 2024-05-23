@@ -187,6 +187,9 @@ public class ReservationService {
         String feature = reservation.getFeature();
 
         ReservedPets reservedPets = reservedPetsRepository.findByReservationNo(reservationNumber);
+        if (reservedPets == null) {
+            throw new NotFoundException("해당 펫은 예약에 등록되지 않았습니다.");
+        }
         Pet pet = petRepository.findByPetNo(reservedPets.getPet().getPetNo());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
