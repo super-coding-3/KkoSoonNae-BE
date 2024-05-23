@@ -44,4 +44,11 @@ public class ExceptionControllerAdvice {
         return ade.getMessage();
     }
 
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(IllegalArgumentException.class)
+//    public String handleException(IllegalArgumentException e){
+//        log.error("Server 문제가 있어 다음처럼 출력합니다. " + e.getMessage());
+//        return e.getMessage();
+//    }
+
 }

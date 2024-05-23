@@ -2,7 +2,6 @@ package com.kkosoonnae.reservation.dto;
 
 import com.kkosoonnae.jpa.entity.Pet;
 import com.kkosoonnae.jpa.entity.Reservation;
-import com.kkosoonnae.jpa.entity.Store;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 

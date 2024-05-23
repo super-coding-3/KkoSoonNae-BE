@@ -35,7 +35,7 @@ import java.util.Optional;
  * 2024-05-10        hagjoon       최초 생성
  */
 @Service
-//@Slf4j
+@Slf4j
 @RequiredArgsConstructor
 public class ReservationService {
 
@@ -48,12 +48,14 @@ public class ReservationService {
     private final StyleRepository styleRepository;
 
     public ReservationResponse makeReservation(ReservationRequest reservationRequest) {
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CustomerBas customerBas = principalDetails.getCustomerBas();
-        String loginId = customerBas.getLoginId();
+        String loginId = null;
 
-        if (loginId == null) {
-            throw new IllegalArgumentException("로그인이 필요합니다.");
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            CustomerBas customerBas = principalDetails.getCustomerBas();
+            loginId = customerBas.getLoginId();
+        } catch (Exception e) {
+            throw new AccessDeniedException("로그인이 필요합니다.");
         }
 
         Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
@@ -99,12 +101,14 @@ public class ReservationService {
     }
 
     public List<StyleResponse> findStyleNameByStoreNo(Integer storeNo) {
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CustomerBas customerBas = principalDetails.getCustomerBas();
-        String loginId = customerBas.getLoginId();
+        String loginId = null;
 
-        if (loginId == null) {
-            throw new IllegalArgumentException("로그인이 필요합니다.");
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            CustomerBas customerBas = principalDetails.getCustomerBas();
+            loginId = customerBas.getLoginId();
+        } catch (Exception e) {
+            throw new AccessDeniedException("로그인이 필요합니다.");
         }
 
         List<Style> styles = styleRepository.findStylNameByStoreNo(storeNo);
@@ -117,12 +121,14 @@ public class ReservationService {
     }
 
     public StoreNameResponse findStoreNameByStoreNo(Integer storeNo) {
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CustomerBas customerBas = principalDetails.getCustomerBas();
-        String loginId = customerBas.getLoginId();
+        String loginId = null;
 
-        if (loginId == null) {
-            throw new IllegalArgumentException("로그인이 필요합니다.");
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            CustomerBas customerBas = principalDetails.getCustomerBas();
+            loginId = customerBas.getLoginId();
+        } catch (Exception e) {
+            throw new AccessDeniedException("로그인이 필요합니다.");
         }
 
         Store store = storeRepository.findStoreNameByStoreNo(storeNo);
@@ -135,12 +141,14 @@ public class ReservationService {
     }
 
     public List<PetResponse> findMyPet() {
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CustomerBas customerBas = principalDetails.getCustomerBas();
-        String loginId = customerBas.getLoginId();
+        String loginId = null;
 
-        if (loginId == null) {
-            throw new IllegalArgumentException("로그인이 필요합니다.");
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            CustomerBas customerBas = principalDetails.getCustomerBas();
+            loginId = customerBas.getLoginId();
+        } catch (Exception e) {
+            throw new AccessDeniedException("로그인이 필요합니다.");
         }
 
         Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
@@ -154,12 +162,21 @@ public class ReservationService {
     }
 
     public ReservationResultResponse resultReservation(Integer reservationNumber) {
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CustomerBas customerBas = principalDetails.getCustomerBas();
-        String loginId = customerBas.getLoginId();
+//        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        CustomerBas customerBas = principalDetails.getCustomerBas();
+//        String loginId = customerBas.getLoginId();
+//
+//        if (loginId == null) {
+//            throw new IllegalArgumentException("로그인이 필요합니다.");
+//        }
+        String loginId = null;
 
-        if (loginId == null) {
-            throw new IllegalArgumentException("로그인이 필요합니다.");
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            CustomerBas customerBas = principalDetails.getCustomerBas();
+            loginId = customerBas.getLoginId();
+        } catch (Exception e) {
+            throw new AccessDeniedException("로그인이 필요합니다.");
         }
 
         Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
@@ -170,6 +187,9 @@ public class ReservationService {
         String feature = reservation.getFeature();
 
         ReservedPets reservedPets = reservedPetsRepository.findByReservationNo(reservationNumber);
+        if (reservedPets == null) {
+            throw new NotFoundException("해당 펫은 예약에 등록되지 않았습니다.");
+        }
         Pet pet = petRepository.findByPetNo(reservedPets.getPet().getPetNo());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
