@@ -35,7 +35,7 @@ import java.util.Optional;
  * 2024-05-10        hagjoon       최초 생성
  */
 @Service
-//@Slf4j
+@Slf4j
 @RequiredArgsConstructor
 public class ReservationService {
 
