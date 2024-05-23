@@ -48,12 +48,14 @@ public class ReservationService {
     private final StyleRepository styleRepository;
 
     public ReservationResponse makeReservation(ReservationRequest reservationRequest) {
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CustomerBas customerBas = principalDetails.getCustomerBas();
-        String loginId = customerBas.getLoginId();
+        String loginId = null;
 
-        if (loginId == null) {
-            throw new IllegalArgumentException("로그인이 필요합니다.");
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            CustomerBas customerBas = principalDetails.getCustomerBas();
+            loginId = customerBas.getLoginId();
+        } catch (Exception e) {
+            throw new AccessDeniedException("로그인이 필요합니다.");
         }
 
         Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
@@ -99,12 +101,14 @@ public class ReservationService {
     }
 
     public List<StyleResponse> findStyleNameByStoreNo(Integer storeNo) {
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CustomerBas customerBas = principalDetails.getCustomerBas();
-        String loginId = customerBas.getLoginId();
+        String loginId = null;
 
-        if (loginId == null) {
-            throw new IllegalArgumentException("로그인이 필요합니다.");
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            CustomerBas customerBas = principalDetails.getCustomerBas();
+            loginId = customerBas.getLoginId();
+        } catch (Exception e) {
+            throw new AccessDeniedException("로그인이 필요합니다.");
         }
 
         List<Style> styles = styleRepository.findStylNameByStoreNo(storeNo);
@@ -135,12 +139,14 @@ public class ReservationService {
     }
 
     public List<PetResponse> findMyPet() {
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CustomerBas customerBas = principalDetails.getCustomerBas();
-        String loginId = customerBas.getLoginId();
+        String loginId = null;
 
-        if (loginId == null) {
-            throw new IllegalArgumentException("로그인이 필요합니다.");
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            CustomerBas customerBas = principalDetails.getCustomerBas();
+            loginId = customerBas.getLoginId();
+        } catch (Exception e) {
+            throw new AccessDeniedException("로그인이 필요합니다.");
         }
 
         Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
@@ -154,12 +160,21 @@ public class ReservationService {
     }
 
     public ReservationResultResponse resultReservation(Integer reservationNumber) {
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CustomerBas customerBas = principalDetails.getCustomerBas();
-        String loginId = customerBas.getLoginId();
+//        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        CustomerBas customerBas = principalDetails.getCustomerBas();
+//        String loginId = customerBas.getLoginId();
+//
+//        if (loginId == null) {
+//            throw new IllegalArgumentException("로그인이 필요합니다.");
+//        }
+        String loginId = null;
 
-        if (loginId == null) {
-            throw new IllegalArgumentException("로그인이 필요합니다.");
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            CustomerBas customerBas = principalDetails.getCustomerBas();
+            loginId = customerBas.getLoginId();
+        } catch (Exception e) {
+            throw new AccessDeniedException("로그인이 필요합니다.");
         }
 
         Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
