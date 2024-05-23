@@ -30,7 +30,7 @@ public class CustomerAvail {
     @Column(name = "AVAIL_NO")
     private Integer availNo;
 
-    public CustomerAvail(Integer cstmrNo, Integer reservationNo, Integer availNo) {
+    public CustomerAvail(CustomerBas cstmrNo, Reservation reservationNo, Integer availNo) {
         this.cstmrNo = cstmrNo;
         this.reservationNo = reservationNo;
         this.availNo = availNo;
