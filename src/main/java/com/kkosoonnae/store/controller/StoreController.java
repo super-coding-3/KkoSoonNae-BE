@@ -129,6 +129,7 @@ public class StoreController {
     }
 
     @GetMapping("/nearby")
+    @Operation(summary = "내 주변 매장 정보 보기")
     public ResponseEntity<?> getNearByStores(@RequestParam double lat, @RequestParam double lon){
         List<StoreDto> stores = storeService.findStores(lat, lon);
         if (stores.isEmpty()){
