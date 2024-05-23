@@ -8,6 +8,7 @@ import com.kkosoonnae.reservation.service.exceptions.InvalidValueException;
 import com.kkosoonnae.reservation.service.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -100,7 +101,7 @@ public class ReservationService {
         List<Style> styles = styleRepository.findStylNameByStoreNo(storeNo);
 
         if (styles == null || styles.isEmpty()) {
-            throw new NotFoundException("스타일을 찾을 수 없습니다.");
+            throw new NotFoundException("해당 매장의 스타일을 찾을 수 없습니다.");
         }
 
         return StyleResponse.stylesToStyleResponse(styles);

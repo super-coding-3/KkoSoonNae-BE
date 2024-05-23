@@ -8,7 +8,6 @@ import lombok.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
