@@ -18,8 +18,8 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
             "FROM Store s " +
             "LEFT JOIN FETCH StoreImg si ON s.storeNo = si.store.storeNo " +
             "LEFT JOIN FETCH Review r ON s.storeNo = r.store.storeNo " +
-            "WHERE s.storeName LIKE :nameKeyword " +
-            "OR s.roadAddress LIKE :addressKeyword " +
+            "WHERE s.storeName LIKE %:nameKeyword " +
+            "OR s.roadAddress LIKE %:addressKeyword " +
             "GROUP BY s.storeNo, si.img ")
     List<StoreListViewProjection> findStoresByStoreNameInAndAddressInOrderByAddressAsc(String nameKeyword,String addressKeyword);
 
@@ -37,6 +37,8 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
     @Query("SELECT s FROM Store s WHERE s.storeNo = :storeNo")
     Store findStoreNameByStoreNo(Integer storeNo);
 
-    @Query("SELECT s FROM Store s WHERE s.storeNo = :storeNo")
-    Store findByStoreNo(Integer storeNo);
+    @Query("SELECT s FROM Store s WHERE (6371 * acos(cos(radians(:lat)) * " +
+            "cos(radians(s.lat)) * cos(radians(s.lon)-radians(:lon))+sin(radians(:lat)) * " +
+            "sin(radians(s.lat))))< :distance")
+    List<Store> findStoresWithinDistance(double lat, double lon, double distance);
 }

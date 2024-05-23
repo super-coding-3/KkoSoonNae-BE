@@ -25,4 +25,9 @@ public class StoreImg {
     @Column(name = "IMG")
     private String img;
 
+    public StoreImg(Store store, String imageUrl){
+        this.store=store;
+        this.img=imageUrl;
+    }
+
 }

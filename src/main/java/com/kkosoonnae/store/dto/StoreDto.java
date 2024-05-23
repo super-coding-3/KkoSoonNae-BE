@@ -1,10 +1,13 @@
 package com.kkosoonnae.store.dto;
 
 import com.kkosoonnae.jpa.entity.Store;
+import com.kkosoonnae.jpa.entity.StoreImg;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * packageName    : com.kkosoonnae.store.dto
@@ -40,6 +43,10 @@ public class StoreDto {
 
     private LocalTime closingTime;
 
+    private List<String> storeImg;
+
+    private List<StyleDto> style;
+
     public StoreDto(Store store) {
         this.storeNo=store.getStoreNo();
         this.storeName=store.getStoreName();
@@ -50,6 +57,10 @@ public class StoreDto {
         this.lon= store.getLon();
         this.openingTime=store.getOpeningTime();
         this.closingTime=store.getClosingTime();
+        this.storeImg=store.getStoreImg()
+                .stream()
+                .map(StoreImg::getImg).collect(Collectors.toList());
+        this.style=store.getStyle().stream().map(StyleDto::new).collect(Collectors.toList());
     }
 }
 

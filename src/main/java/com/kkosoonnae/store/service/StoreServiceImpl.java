@@ -159,8 +159,22 @@ public class StoreServiceImpl implements StoreService {
                 .collect(Collectors.toList());
 
         store.setStyles(styles);
+        List<StoreImg> storeImages = inputStoreInformation.getStoreImgUrl().stream()
+                .map(url -> new StoreImg(store, url))
+                .collect(Collectors.toList());
+
+        store.setStoreImages(storeImages);
+
         Store savedStore = storeRepository.save(store);
         return new StoreDto(savedStore);
+    }
+
+    @Override
+    public List<StoreDto> findStores(double lat, double lon) {
+        double distance = 5.0;
+        List<Store> stores = storeRepository.findStoresWithinDistance(lat,lon,distance);
+
+        return stores.stream().map(StoreDto::new).collect(Collectors.toList());
     }
 }
 

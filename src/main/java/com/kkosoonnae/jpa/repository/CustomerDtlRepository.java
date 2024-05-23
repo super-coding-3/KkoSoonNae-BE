@@ -20,7 +20,6 @@ import java.util.Optional;
  */
 @Repository
 public interface CustomerDtlRepository extends JpaRepository<CustomerDtl, Integer> {
-
     CustomerDtl findByCstmrNo(Integer cstmrNo);
 
     boolean existsByNickName(String nickName);

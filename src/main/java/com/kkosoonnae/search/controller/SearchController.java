@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.webjars.NotFoundException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * packageName    : com.kkosoonnae.store.service
@@ -35,15 +37,17 @@ public class SearchController {
     private final SearchService searchService;
     @GetMapping("/stores/")
     @Operation(summary = "전체매장검색")
-    public ResponseEntity<List<StoreListViewResponseDto>> searchByStores(@RequestParam(required = false) String storeKeyword, @RequestParam(required = false) String addressKeyword) {
+    public ResponseEntity<?> searchByStores(@RequestParam(required = false) String storeKeyword, @RequestParam(required = false) String addressKeyword) {
         try{
             log.info("GET/storeKeyword 또는 addressKeyword 조회요청 들어왔습니다.:" +storeKeyword,addressKeyword);
             List<StoreListViewResponseDto> storeListViewResponseDto = searchService.findByStores(storeKeyword, addressKeyword);
             log.info("GET/storeKeyword 또는 addressKeyword 조회응답.:" + storeListViewResponseDto);
             return ResponseEntity.ok(storeListViewResponseDto);
-        }catch (NotFoundException e) {
+        }catch (Exception e) {
+            Map<String, String> errorBody = new HashMap<>();
+            errorBody.put("error", "해당 매장이 없습니다.");
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
         }
     }
 }

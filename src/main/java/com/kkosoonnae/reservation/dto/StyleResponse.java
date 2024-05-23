@@ -8,7 +8,6 @@ import lombok.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -16,11 +15,11 @@ import java.util.stream.Collectors;
 @Builder
 public class StyleResponse {
     @Schema(description = "스타일 이름")
-    private String styleName;
+    private String cutStyle;
 
     public static StyleResponse styleToStyleResponse(Style style) {
         return StyleResponse.builder()
-                .styleName(style.getStyleName())
+                .cutStyle(style.getStyleName())
                 .build();
     }
 

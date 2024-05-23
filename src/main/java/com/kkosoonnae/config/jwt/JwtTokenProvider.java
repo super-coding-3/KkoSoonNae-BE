@@ -36,7 +36,6 @@ import java.util.Date;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@PropertySource("classpath:application.yml")
 public class JwtTokenProvider {
 
     @Value("${security.jwt.secret-key}")

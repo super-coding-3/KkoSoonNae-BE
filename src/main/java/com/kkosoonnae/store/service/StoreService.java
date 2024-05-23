@@ -16,4 +16,6 @@ public interface StoreService  {
     ReviewResponseDto createReview(ReviewDto reviewDto);
 
     StoreDto createStore(InputStoreInformation inputStoreInformation);
+
+    List<StoreDto> findStores(double lat, double lon);
 }
