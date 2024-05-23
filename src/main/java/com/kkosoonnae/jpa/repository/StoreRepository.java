@@ -1,6 +1,7 @@
 package com.kkosoonnae.jpa.repository;
 
 import com.kkosoonnae.jpa.entity.Store;
+import com.kkosoonnae.jpa.projection.MainStoresListviewProjection;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.projection.StoreListViewProjection;
 import org.springframework.data.domain.Page;
@@ -42,4 +43,11 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
             "cos(radians(s.lat)) * cos(radians(s.lon)-radians(:lon))+sin(radians(:lat)) * " +
             "sin(radians(s.lat))))< :distance")
     List<Store> findStoresWithinDistance(double lat, double lon, double distance);
+
+    @Query("SELECT new com.kkosoonnae.jpa.projection.MainStoresListviewProjection(s.storeNo,s.storeName,s.roadAddress, AVG(r.scope)) " +
+            "FROM Store s " +
+            "LEFT JOIN FETCH Review r ON s.storeNo = r.store.storeNo " +
+            "WHERE s.roadAddress Like %:addressKeyword% " +
+            "GROUP BY s.storeNo ")
+    List<MainStoresListviewProjection> findMainStores(String addressKeyword, Pageable pageable);
 }
