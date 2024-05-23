@@ -18,8 +18,8 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
             "FROM Store s " +
             "LEFT JOIN FETCH StoreImg si ON s.storeNo = si.store.storeNo " +
             "LEFT JOIN FETCH Review r ON s.storeNo = r.store.storeNo " +
-            "WHERE s.storeName LIKE :nameKeyword " +
-            "OR s.roadAddress LIKE :addressKeyword " +
+            "WHERE s.storeName LIKE %:nameKeyword " +
+            "OR s.roadAddress LIKE %:addressKeyword " +
             "GROUP BY s.storeNo, si.img ")
     List<StoreListViewProjection> findStoresByStoreNameInAndAddressInOrderByAddressAsc(String nameKeyword,String addressKeyword);
 
