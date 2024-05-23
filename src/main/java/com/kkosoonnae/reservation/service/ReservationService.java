@@ -72,7 +72,7 @@ public class ReservationService {
                 throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
             }
         } catch (Exception e) {
-            throw new InvalidValueException("요청하신 날짜와 시간 형식이 올바르지 않습니다.");
+            throw new InvalidValueException("요청하신 날짜 또는 시간 형식이 올바르지 않습니다.");
         }
 
         AvailTime availTime = availTimeRepository.findAvailTimeByStoreNo(storeNo);
