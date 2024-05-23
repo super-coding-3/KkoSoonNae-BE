@@ -121,12 +121,14 @@ public class ReservationService {
     }
 
     public StoreNameResponse findStoreNameByStoreNo(Integer storeNo) {
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CustomerBas customerBas = principalDetails.getCustomerBas();
-        String loginId = customerBas.getLoginId();
+        String loginId = null;
 
-        if (loginId == null) {
-            throw new IllegalArgumentException("로그인이 필요합니다.");
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            CustomerBas customerBas = principalDetails.getCustomerBas();
+            loginId = customerBas.getLoginId();
+        } catch (Exception e) {
+            throw new AccessDeniedException("로그인이 필요합니다.");
         }
 
         Store store = storeRepository.findStoreNameByStoreNo(storeNo);
