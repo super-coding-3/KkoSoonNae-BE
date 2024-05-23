@@ -49,7 +49,7 @@ public class StoreController {
         }
     }
 
-    @GetMapping("/{storeNo}/petHair")
+    @GetMapping("/{storeNo}/pethair")
     @Operation(summary = "펫스타일조회")
     public ResponseEntity<?> AllStyles(@PathVariable Integer storeNo) {
         try {
@@ -130,14 +130,15 @@ public class StoreController {
 
     @GetMapping("/nearby")
     @Operation(summary = "내 주변 매장 정보 보기")
-    public ResponseEntity<?> getNearByStores(@RequestParam double lat, @RequestParam double lon){
+    public ResponseEntity<?> getNearByStores(@RequestParam double lat, @RequestParam double lon) {
         List<StoreDto> stores = storeService.findStores(lat, lon);
-        if (stores.isEmpty()){
+        if (stores.isEmpty()) {
             return ResponseEntity.ok("내 주변 5KM 이내에 매장이 없습니다.");
-        }else {
+        } else {
             return ResponseEntity.ok(stores);
         }
     }
 }
+
 
 

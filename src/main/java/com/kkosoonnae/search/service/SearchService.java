@@ -1,15 +1,19 @@
 package com.kkosoonnae.search.service;
 
+import com.kkosoonnae.jpa.projection.MainStoresListviewProjection;
 import com.kkosoonnae.jpa.projection.StoreListViewProjection;
 import com.kkosoonnae.jpa.repository.StoreRepository;
+import com.kkosoonnae.search.dto.MainStoreListViewResponseDto;
 import com.kkosoonnae.search.dto.StoreListViewResponseDto;
 import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,5 +46,18 @@ public class SearchService {
                     .map(StoreListViewResponseDto::projectToDto)
                     .collect(Collectors.toList());
         }
-    }
+
+    public List<MainStoreListViewResponseDto> findByMainStores(String addressKeyword,Pageable pageable) {
+        List<MainStoresListviewProjection> projections = storeRepository.findMainStores(addressKeyword,pageable);
+        if (projections.isEmpty()) {
+            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
+        }
+        Collections.shuffle(projections);
+        return projections.stream()
+                .map(MainStoreListViewResponseDto::mainStoresDto)
+                .collect(Collectors.toList());
+
+     }
+}
+
 
