@@ -118,12 +118,14 @@ public class CustomerQueryRepository {
                         .where(subLikeStore.store.storeNo.eq(store.storeNo))
                         .groupBy(subLikeStore.store.storeNo));
 
+        NumberExpression<Double> scopeExpression = review.scope.avg().coalesce(0.0);
+
         return query.select(Projections.fields(LikeStoreDto.class,
                         likeStore.likeNo.as("likeNo"),
                         store.storeNo.as("storeNo"),
                         storeImg.img.as("storeImg"),
                         store.storeName.as("storeName"),
-                        review.scope.avg().as("scope"),
+                        scopeExpression.as("scope"),
                         likeCountExpression.coalesce(0).intValue().as("totalLikeCount"),
                         store.roadAddress.as("roadAddress"),
                         store.openingTime.as("openTime"),
