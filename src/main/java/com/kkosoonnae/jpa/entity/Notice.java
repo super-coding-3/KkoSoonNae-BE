@@ -31,4 +31,6 @@ public class Notice {
     @Column(name = "VIEW_CNT")
     private String noticeViewCount;
 
+    @Column(name = "IMG")
+    private String noticeImg;
 }

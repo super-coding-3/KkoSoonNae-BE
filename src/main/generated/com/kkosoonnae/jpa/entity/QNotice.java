@@ -23,6 +23,8 @@ public class QNotice extends EntityPathBase<Notice> {
 
     public final StringPath noticeDate = createString("noticeDate");
 
+    public final StringPath noticeImg = createString("noticeImg");
+
     public final NumberPath<Integer> noticeNo = createNumber("noticeNo", Integer.class);
 
     public final StringPath noticeTitle = createString("noticeTitle");

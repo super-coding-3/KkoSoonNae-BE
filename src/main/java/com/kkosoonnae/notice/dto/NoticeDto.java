@@ -36,4 +36,7 @@ public class NoticeDto {
 
     @Schema(description = "조회 수", example = "531")
     private String viewCount;
+
+    @Schema(description = "이미지", example = "null")
+    private String img;
 }
