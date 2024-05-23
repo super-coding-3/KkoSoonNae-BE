@@ -46,6 +46,7 @@ public class ReservationService {
     private final PetRepository petRepository;
     private final ReservedPetsRepository reservedPetsRepository;
     private final StyleRepository styleRepository;
+    private final CustomerAvailRepository customerAvailRepository;
 
     public ReservationResponse makeReservation(ReservationRequest reservationRequest) {
         String loginId = null;
@@ -65,17 +66,37 @@ public class ReservationService {
         DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("HH:mm");
 
-        try {
-            LocalDate reservationDate = LocalDate.parse(reservationRequest.getReservationDate(), formatDate);
-            LocalTime reservationTime = LocalTime.parse(reservationRequest.getReservationTime(), formatTime);
-            Reservation isAvailable = reservationRepository.findByStoreNoAndReservationDateAndReservationTime(storeNo, reservationDate, reservationTime);
+        LocalDate nowD = LocalDate.now();
+        LocalTime nowT = LocalTime.now();
 
-            if (isAvailable != null) {
-                throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
-            }
+        String nowDateString = nowD.format(formatDate);
+        String nowTimeString = nowT.format(formatTime);
+
+        //
+        LocalDate nowDate = LocalDate.parse(nowDateString, formatDate);
+        LocalTime nowTime = LocalTime.parse(nowTimeString, formatTime);
+
+        //
+        LocalDate reservationDate;
+        LocalTime reservationTime;
+
+        try {
+            reservationDate = LocalDate.parse(reservationRequest.getReservationDate(), formatDate);
+            reservationTime = LocalTime.parse(reservationRequest.getReservationTime(), formatTime);
         } catch (Exception e) {
             throw new InvalidValueException("요청하신 날짜 또는 시간 형식이 올바르지 않습니다.");
         }
+
+        if ((reservationDate.compareTo(nowDate) < 0) || (reservationDate.compareTo(nowDate) == 0) && reservationTime.compareTo(nowTime) <= 0) {
+            throw new InvalidValueException("현재 보다 이전 시간 또는 현재 시간에는 예약할 수 없습니다.");
+        }
+
+        Reservation isAvailable = reservationRepository.findByStoreNoAndReservationDateAndReservationTime(storeNo, reservationDate, reservationTime);
+
+        if (isAvailable != null) {
+            throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
+        }
+
 
         AvailTime availTime = availTimeRepository.findAvailTimeByStoreNo(storeNo);
         Store store = storeRepository.findById(reservationRequest.getStoreNumber()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
@@ -93,6 +114,9 @@ public class ReservationService {
 
         Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
         reservationRepository.save(reservation);
+
+        CustomerAvail customerAvail = new CustomerAvail(cstmrNo, reservation.getReservationNo(), reservation.getAvail().getAvailNo());
+        customerAvailRepository.save(customerAvail);
 
         ReservedPets reservedPets = new ReservedPets(reservation, pet, availTime);
         reservedPetsRepository.save(reservedPets);
