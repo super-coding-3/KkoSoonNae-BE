@@ -26,7 +26,7 @@ public class NoticeService {
     private final NoticeRepository noticeRepository;
 
 
-    public List<Notice> getNoticeAll() {
+    public List<Notice> getAllNotices() {
         return noticeRepository.findAll();
     }
 }
