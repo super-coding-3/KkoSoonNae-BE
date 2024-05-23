@@ -37,4 +37,7 @@ out/
 .vscode/
 
 application-prod.yml
+application-local.yml
 application.yml
+application-jwt.yml
+application-aws.yml
