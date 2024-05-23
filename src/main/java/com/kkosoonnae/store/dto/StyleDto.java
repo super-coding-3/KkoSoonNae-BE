@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class StyleDto {
+    private Integer styleId;
     private String styleName;
     private String img;
     private Integer price;
@@ -28,5 +29,12 @@ public class StyleDto {
         return styles.stream()
                 .map(StyleDto::styleToDto)
                 .collect(Collectors.toList());
+    }
+
+    public StyleDto(Style style){
+        this.styleId=style.getStyleNo();
+        this.styleName= style.getStyleName();
+        this.img=style.getImg();
+        this.price=style.getPrice();
     }
 }

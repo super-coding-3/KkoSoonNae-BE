@@ -168,6 +168,14 @@ public class StoreServiceImpl implements StoreService {
         Store savedStore = storeRepository.save(store);
         return new StoreDto(savedStore);
     }
+
+    @Override
+    public List<StoreDto> findStores(double lat, double lon) {
+        double distance = 5.0;
+        List<Store> stores = storeRepository.findStoresWithinDistance(lat,lon,distance);
+
+        return stores.stream().map(StoreDto::new).collect(Collectors.toList());
+    }
 }
 
 

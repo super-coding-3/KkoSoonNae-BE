@@ -118,6 +118,16 @@ public class StoreController {
             return ResponseEntity.status(500).body(null);
         }
     }
+
+    @GetMapping("/nearby")
+    public ResponseEntity<?> getNearByStores(@RequestParam double lat, @RequestParam double lon){
+        List<StoreDto> stores = storeService.findStores(lat, lon);
+        if (stores.isEmpty()){
+            return ResponseEntity.ok("내 주변 5KM 이내에 매장이 없습니다.");
+        }else {
+            return ResponseEntity.ok(stores);
+        }
+    }
 }
 
 
