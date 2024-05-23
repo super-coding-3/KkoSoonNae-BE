@@ -26,6 +26,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class QnaListDto {
 
+    @Schema(description = "문의사항 일련번호")
+    private Integer qnaNo;
+
     @Schema(description = "제목")
     private String title;
 
