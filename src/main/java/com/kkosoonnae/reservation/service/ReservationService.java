@@ -63,13 +63,16 @@ public class ReservationService {
         DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("HH:mm");
 
-        LocalDate reservationDate = LocalDate.parse(reservationRequest.getReservationDate(), formatDate);
-        LocalTime reservationTime = LocalTime.parse(reservationRequest.getReservationTime(), formatTime);
+        try {
+            LocalDate reservationDate = LocalDate.parse(reservationRequest.getReservationDate(), formatDate);
+            LocalTime reservationTime = LocalTime.parse(reservationRequest.getReservationTime(), formatTime);
+            Reservation isAvailable = reservationRepository.findByStoreNoAndReservationDateAndReservationTime(storeNo, reservationDate, reservationTime);
 
-        Reservation isAvailable = reservationRepository.findByStoreNoAndReservationDateAndReservationTime(storeNo, reservationDate, reservationTime);
-
-        if (isAvailable != null) {
-            throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
+            if (isAvailable != null) {
+                throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
+            }
+        } catch (Exception e) {
+            throw new InvalidValueException("요청하신 날짜와 시간 형식이 올바르지 않습니다.");
         }
 
         AvailTime availTime = availTimeRepository.findAvailTimeByStoreNo(storeNo);
