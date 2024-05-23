@@ -13,4 +13,7 @@ public interface StyleRepository extends JpaRepository<Style,Integer> {
 
     @Query("SELECT s FROM Style s WHERE s.store.storeNo = :storeNo")
     List<Style> findStylNameByStoreNo(Integer storeNo);
+
+    @Query("SELECT s FROM Style s WHERE s.store.storeNo = :storeNo AND s.styleName = :cutStyle")
+    Style findByStoreNoAndStyleName(Integer storeNo, String cutStyle);
 }

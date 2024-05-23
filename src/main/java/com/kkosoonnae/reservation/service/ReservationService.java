@@ -83,6 +83,12 @@ public class ReservationService {
             throw new NotFoundException("해당 펫을 찾을 수 없습니다.");
         }
 
+        Style style = styleRepository.findByStoreNoAndStyleName(storeNo, reservationRequest.getCutStyle());
+
+        if (style == null) {
+            throw new NotFoundException("해당 스타일을 찾을 수 없습니다.");
+        }
+
         Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
         reservationRepository.save(reservation);
 
