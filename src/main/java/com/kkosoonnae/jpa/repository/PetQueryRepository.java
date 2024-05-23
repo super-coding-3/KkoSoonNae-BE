@@ -50,6 +50,7 @@ public class PetQueryRepository {
         QPet pet = QPet.pet;
 
         return query.select(Projections.bean(PetInfoDto.class,
+                        pet.petNo,
                         pet.img,
                         pet.name,
                         pet.type,

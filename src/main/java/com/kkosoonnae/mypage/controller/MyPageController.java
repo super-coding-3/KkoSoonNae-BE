@@ -2,6 +2,7 @@ package com.kkosoonnae.mypage.controller;
 
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.mypage.dto.AvailDto;
+import com.kkosoonnae.mypage.dto.LikeStoreDto;
 import com.kkosoonnae.mypage.service.MyPageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,5 +48,12 @@ public class MyPageController {
         Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
         service.deleteAvail(cstmrNo,reservationNo);
         return ResponseEntity.ok(Collections.singletonMap("message","예약이 취소되었습니다."));
+    }
+
+    @Operation(summary = "관심매장 조회")
+    @GetMapping("/like-store")
+    public ResponseEntity<List<LikeStoreDto>> getLikeStore(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        List<LikeStoreDto> result = service.getMyLikeStore(principalDetails);
+        return ResponseEntity.ok().body(result);
     }
 }
