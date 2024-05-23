@@ -33,8 +33,7 @@ public class NoticeController {
 
     @Operation(summary = "공지사항 전체 조회")
     @GetMapping("/all")
-    public ResponseEntity<List<Notice>> getNoticeAll() {
-        List<Notice> noticeList = noticeService.getNoticeAll();
-        return ResponseEntity.ok().body(noticeList);
+    public List<Notice> getAllNotices() {
+        return noticeService.getAllNotices();
     }
 }
