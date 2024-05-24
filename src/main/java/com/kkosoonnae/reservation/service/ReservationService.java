@@ -12,6 +12,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDate;
@@ -48,6 +49,7 @@ public class ReservationService {
     private final StyleRepository styleRepository;
     private final CustomerAvailRepository customerAvailRepository;
 
+    @Transactional
     public ReservationResponse makeReservation(ReservationRequest reservationRequest) {
         String loginId = null;
 
@@ -87,8 +89,8 @@ public class ReservationService {
             throw new InvalidValueException("요청하신 날짜 또는 시간 형식이 올바르지 않습니다.");
         }
 
-        if ((reservationDate.compareTo(nowDate) < 0) || (reservationDate.compareTo(nowDate) == 0) && reservationTime.compareTo(nowTime) <= 0) {
-            throw new InvalidValueException("현재 보다 이전 시간 또는 현재 시간에는 예약할 수 없습니다.");
+        if ((reservationDate.isBefore(nowDate)) || (reservationDate.isEqual(nowDate)) && !reservationTime.isAfter(nowTime.plusHours(2))) {
+            throw new InvalidValueException("해당 시간은 예약이 불가합니다. 2시간 전에는 미리 예약해야 합니다.");
         }
 
         Reservation isAvailable = reservationRepository.findByStoreNoAndReservationDateAndReservationTime(storeNo, reservationDate, reservationTime);
