@@ -2,14 +2,26 @@ package com.kkosoonnae.jpa.repository;
 
 import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.mypage.dto.AvailDto;
+import com.kkosoonnae.mypage.dto.LikeStoreDto;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.NumberExpression;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
+import static com.querydsl.core.types.dsl.Expressions.numberTemplate;
+import static org.hibernate.internal.util.StringHelper.coalesce;
+import static org.hibernate.internal.util.StringHelper.count;
 
 /**
  * packageName    : com.kkosoonnae.jpa.repository
@@ -28,6 +40,8 @@ import java.util.List;
 public class CustomerQueryRepository {
 
     private final JPAQueryFactory query;
+
+    private final EntityManager entityManager;
 
     public List<AvailDto> availList(Integer cstmrNo){
         QCustomerAvail customerAvail = QCustomerAvail.customerAvail;
@@ -86,4 +100,51 @@ public class CustomerQueryRepository {
                         .and(customerAvail.reservationNo.reservationNo.eq(reservationNo)))
                 .fetch().size() > 0;
     }
+
+    public List<LikeStoreDto> likeList(Integer cstmrNo){
+        QLikeStore likeStore = QLikeStore.likeStore;
+        QStore store = QStore.store;
+        QStoreImg storeImg = QStoreImg.storeImg;
+        QReview review = QReview.review;
+
+        QLikeStore subLikeStore = new QLikeStore("subLikeStore");
+
+        NumberExpression<Integer> likeCountExpression = numberTemplate(
+                Integer.class,
+                "coalesce({0}, 0L)",
+                JPAExpressions
+                        .select(subLikeStore.store.storeNo.count())
+                        .from(subLikeStore)
+                        .where(subLikeStore.store.storeNo.eq(store.storeNo))
+                        .groupBy(subLikeStore.store.storeNo));
+
+        NumberExpression<Double> scopeExpression = review.scope.avg().coalesce(0.0);
+
+        return query.select(Projections.fields(LikeStoreDto.class,
+                        likeStore.likeNo.as("likeNo"),
+                        store.storeNo.as("storeNo"),
+                        storeImg.img.as("storeImg"),
+                        store.storeName.as("storeName"),
+                        scopeExpression.as("scope"),
+                        likeCountExpression.coalesce(0).intValue().as("totalLikeCount"),
+                        store.roadAddress.as("roadAddress"),
+                        store.openingTime.as("openTime"),
+                        store.closingTime.as("closeTime")
+                ))
+                .from(likeStore)
+                .leftJoin(store)
+                .on(likeStore.store.storeNo.eq(store.storeNo))
+                .leftJoin(storeImg)
+                .on(store.storeNo.eq(storeImg.store.storeNo))
+                .leftJoin(review)
+                .on(store.storeNo.eq(review.store.storeNo))
+                .where(likeStore.customerBas.cstmrNo.eq(cstmrNo))
+                .groupBy(likeStore.likeNo,
+                        likeStore.store.storeNo,
+                        storeImg.img)
+                .fetch();
+    }
+
+
+
 }

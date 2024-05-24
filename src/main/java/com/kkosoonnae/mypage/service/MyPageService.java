@@ -6,6 +6,7 @@ import com.kkosoonnae.jpa.repository.CustomerBasRepository;
 import com.kkosoonnae.jpa.repository.CustomerQueryRepository;
 import com.kkosoonnae.jpa.repository.ReservationRepository;
 import com.kkosoonnae.mypage.dto.AvailDto;
+import com.kkosoonnae.mypage.dto.LikeStoreDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,5 +54,19 @@ public class MyPageService {
             throw new IllegalArgumentException("해당 회원의 예약이 존재하지 않습니다.");
         }
         query.deleteAvail(reservationNo);
+    }
+
+    public List<LikeStoreDto> getMyLikeStore(PrincipalDetails principalDetails){
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+
+        List<LikeStoreDto> dto = query.likeList(cstmrNo);
+
+
+        if(dto == null || dto.isEmpty()){
+            return Collections.emptyList();
+        }
+
+
+        return dto;
     }
 }

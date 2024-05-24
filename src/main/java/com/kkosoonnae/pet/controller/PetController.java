@@ -1,7 +1,9 @@
 package com.kkosoonnae.pet.controller;
 
 import com.kkosoonnae.config.auth.PrincipalDetails;
+import com.kkosoonnae.jpa.entity.CustomerBas;
 import com.kkosoonnae.pet.dto.PetInfoDto;
+import com.kkosoonnae.pet.dto.PetUpdate;
 import com.kkosoonnae.pet.service.PetService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -75,12 +77,12 @@ public class PetController {
     }
 
     @Operation(summary = "반려동물 정보 수정")
-    @PutMapping("/petUpdate")
-    public ResponseEntity<?> updatePet(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody PetInfoDto petInfoDto){
+    @PutMapping("/update/{petNo}")
+    public ResponseEntity<?> updatePet(@AuthenticationPrincipal PrincipalDetails principalDetails,@PathVariable Integer petNo,@RequestBody PetUpdate petUpdate){
         try {
             Map<String, String> rs = new HashMap<>();
             rs.put("message","반려동물 정보 수정에 성공 하였습니다.");
-            service.petUpdate(principalDetails,petInfoDto);
+            service.petUpdate(principalDetails,petNo,petUpdate);
             return ResponseEntity.ok(rs);
         }catch (NotFoundException e){
             Map<String,String> rs = new HashMap<>();

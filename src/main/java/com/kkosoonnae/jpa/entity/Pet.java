@@ -1,5 +1,7 @@
 package com.kkosoonnae.jpa.entity;
 
+import com.kkosoonnae.pet.dto.PetInfoDto;
+import com.kkosoonnae.pet.dto.PetUpdate;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -53,5 +55,14 @@ public class Pet {
         this.customerBas = customerBas;
         this.type = type;
         this.weight = weight;
+    }
+
+    public void updatePet(PetUpdate petUpdate){
+        this.img = petUpdate.getImg();
+        this.name = petUpdate.getName();
+        this.type = petUpdate.getType();
+        this.birthDt = petUpdate.getBirthDt();
+        this.gender = petUpdate.getGender();
+        this.weight = petUpdate.getWeight();
     }
 }
