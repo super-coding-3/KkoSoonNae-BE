@@ -1,5 +1,6 @@
 package com.kkosoonnae.store.dto;
 
+import com.kkosoonnae.jpa.entity.Review;
 import com.kkosoonnae.jpa.entity.Store;
 import lombok.*;
 
@@ -27,4 +28,13 @@ public class ReviewDto {
     private Integer scope;
 
     private Integer averageScope;
+
+    public ReviewDto(Review review) {
+        this.reviewNo = review.getReviewNo();
+        this.cstmrNo = review.getCstmrNo();
+        this.img = review.getImg();
+        this.content = review.getContent();
+        this.reviewDt = review.getReviewDt();
+        this.scope = review.getScope();
+    }
 }
