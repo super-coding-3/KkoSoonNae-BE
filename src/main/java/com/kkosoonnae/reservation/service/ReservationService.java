@@ -63,7 +63,7 @@ public class ReservationService {
         Integer storeNo = reservationRequest.getStoreNumber();
 
         AvailTime availTime = availTimeRepository.findAvailTimeByStoreNo(storeNo);
-        Store store = storeRepository.findById(reservationRequest.getStoreNumber()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
+        Store store = storeRepository.findById(storeNo).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
 
         if (!Objects.equals(store.getStoreName(), reservationRequest.getStoreName())) {
             throw new NotFoundException("해당 매장 일련번호의 매장 이름이 아닙니다.");
@@ -103,16 +103,16 @@ public class ReservationService {
             throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
         }
 
-        Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetName());
-
-        if (pet == null) {
-            throw new NotFoundException("해당 펫을 찾을 수 없습니다.");
-        }
-
         Style style = styleRepository.findByStoreNoAndStyleName(storeNo, reservationRequest.getCutStyle());
 
         if (style == null) {
             throw new NotFoundException("해당 스타일을 찾을 수 없습니다.");
+        }
+
+        Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetName());
+
+        if (pet == null) {
+            throw new NotFoundException("해당 펫을 찾을 수 없습니다.");
         }
 
         Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
