@@ -27,10 +27,11 @@ public class CustomerAvail {
     @JoinColumn(name = "RESERVATION_NO")
     private Reservation reservationNo;
 
-    @Column(name = "AVAIL_NO")
-    private Integer availNo;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "AVAIL_NO")
+    private AvailTime availNo;
 
-    public CustomerAvail(CustomerBas cstmrNo, Reservation reservationNo, Integer availNo) {
+    public CustomerAvail(CustomerBas cstmrNo, Reservation reservationNo, AvailTime availNo) {
         this.cstmrNo = cstmrNo;
         this.reservationNo = reservationNo;
         this.availNo = availNo;

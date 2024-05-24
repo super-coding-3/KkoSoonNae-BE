@@ -118,7 +118,7 @@ public class ReservationService {
         Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
         reservationRepository.save(reservation);
 
-        CustomerAvail customerAvail = new CustomerAvail(cstmrBas, reservation, reservation.getAvail().getAvailNo());
+        CustomerAvail customerAvail = new CustomerAvail(cstmrBas, reservation, availTime);
         customerAvailRepository.save(customerAvail);
 
         ReservedPets reservedPets = new ReservedPets(reservation, pet, availTime);
