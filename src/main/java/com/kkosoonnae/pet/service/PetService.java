@@ -6,6 +6,8 @@ import com.kkosoonnae.jpa.repository.PetQueryRepository;
 import com.kkosoonnae.jpa.repository.PetRepository;
 import com.kkosoonnae.pet.dto.PetInfoDto;
 import com.kkosoonnae.pet.dto.PetListRqDto;
+import com.kkosoonnae.pet.dto.PetUpdate;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -73,21 +75,23 @@ public class PetService {
         petRepository.save(pet);
     }
 
-    public void petUpdate(PrincipalDetails principalDetails, PetInfoDto petInfoDto){
-        CustomerBas cstmrNo = principalDetails.getCustomerBas();
+    @Transactional
+    public void petUpdate(PrincipalDetails principalDetails,Integer petNo,PetUpdate petUpdate){
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+            Pet pet = petRepository.findById(petNo)
+                    .orElseThrow(()-> new IllegalStateException("반려동물에 대한 정보를 찾을 수 없습니다."));
 
-        Pet pet = Pet.builder().customerBas(cstmrNo)
-                .img(petInfoDto.getImg())
-                .name(petInfoDto.getName())
-                .type(petInfoDto.getType())
-                .birthDt(petInfoDto.getBirthDt())
-                .gender(petInfoDto.getGender())
-                .weight(petInfoDto.getWeight())
-                .build();
+            if(!pet.getCustomerBas().getCstmrNo().equals(cstmrNo)) {
+                throw new IllegalArgumentException("본인의 반려동물 정보만 수정 가능합니다.");
+            }
 
-        petRepository.save(pet);
+            pet.updatePet(petUpdate);
 
-    }
+
+            petRepository.save(pet);
+
+        }
+
     public void deletePet(Integer petNo){
         Pet pet = petRepository.findById(petNo).orElseThrow(()-> new IllegalStateException("반려동물에 대한 정보를 찾을 수 없습니다."));
 
