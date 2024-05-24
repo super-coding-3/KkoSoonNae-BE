@@ -1,5 +1,6 @@
 package com.kkosoonnae.store.service;
 
+import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.repository.*;
@@ -70,12 +71,14 @@ public class StoreService {
     }
 
     //관심매장추가
-    public LikeStoreDto saveLikeStore(Integer customerNo, Integer storeNo) {
-        CustomerBas customerBas = customerBasRepository.findById(customerNo)
+    @Transactional
+    public LikeStoreDto saveLikeStore(PrincipalDetails principalDetails,Integer storeNo) {
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        CustomerBas customerBas = customerBasRepository.findById(cstmrNo)
                 .orElseThrow(() -> new CustomException(ErrorCode.CUSTOMER_NOT_FOUND));
         Store store = storeRepository.findById(storeNo)
                 .orElseThrow(() -> new CustomException(ErrorCode.STORE_NOT_FOUND));
-        boolean likeStoreExists = likeStoreRepository.existsLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(customerNo,storeNo);
+        boolean likeStoreExists = likeStoreRepository.existsLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(cstmrNo,storeNo);
         if(likeStoreExists)
             throw new CustomException(ErrorCode.DUPLICATE_LIKE_STORE);
 
@@ -89,12 +92,14 @@ public class StoreService {
     }
 
     //관심매장삭제
-    public void deleteLikeStore(Integer customerNo, Integer storeNo) {
-        boolean likeStoreExists = likeStoreRepository.existsLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(customerNo,storeNo);
+    @Transactional
+    public void deleteLikeStore(PrincipalDetails principalDetails, Integer storeNo) {
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        boolean likeStoreExists = likeStoreRepository.existsLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(cstmrNo,storeNo);
         if(!likeStoreExists)
             throw new CustomException(ErrorCode.LIKE_STORE_NOT_FOUND);
 
-        likeStoreRepository.deleteLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(customerNo,storeNo);
+        likeStoreRepository.deleteLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(cstmrNo,storeNo);
     }
 
 

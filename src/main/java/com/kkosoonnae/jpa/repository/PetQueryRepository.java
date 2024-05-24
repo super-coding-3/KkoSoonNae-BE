@@ -2,9 +2,11 @@ package com.kkosoonnae.jpa.repository;
 
 import com.kkosoonnae.jpa.entity.QCustomerBas;
 import com.kkosoonnae.jpa.entity.QPet;
+import com.kkosoonnae.jpa.entity.QReservedPets;
 import com.kkosoonnae.pet.dto.PetInfoDto;
 import com.kkosoonnae.pet.dto.PetListRqDto;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,4 +63,31 @@ public class PetQueryRepository {
                 .where(pet.petNo.eq(petNo))
                 .fetchOne();
     }
+
+    // 회원 번호와 반려 동물 번호로 반려동물 조회
+    public boolean existsByCstmrNoAndPetNo(Integer cstmrNo, Integer petNo){
+        QPet pet = QPet.pet;
+
+        return query.selectFrom(pet)
+                .where(pet.customerBas.cstmrNo.eq(cstmrNo)
+                        .and(pet.petNo.eq(petNo)))
+                .fetch().size() > 0;
+    }
+
+    public void deletePet(Integer petNo) {
+        QPet pet = QPet.pet;
+        QReservedPets reservedPets = QReservedPets.reservedPets;
+        // RESERVED_PETS 테이블에서 해당하는 petNo가 'N'인 행 삭제
+        long deleteReservedPets = query.delete(reservedPets)
+                .where(reservedPets.pet.petNo.eq(petNo)
+                        .and(reservedPets.availStatus.eq("N")))
+                .execute();
+
+        // PET 테이블에서 해당하는 petNo 삭제
+        long deletePet = query.delete(pet)
+                .where(pet.petNo.eq(petNo))
+                .execute();
+
+    }
+
 }
