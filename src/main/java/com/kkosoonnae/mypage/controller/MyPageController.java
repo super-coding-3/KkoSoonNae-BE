@@ -3,6 +3,7 @@ package com.kkosoonnae.mypage.controller;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.mypage.dto.AvailDto;
 import com.kkosoonnae.mypage.dto.LikeStoreDto;
+import com.kkosoonnae.mypage.dto.MyReviewDto;
 import com.kkosoonnae.mypage.service.MyPageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -67,8 +68,16 @@ public class MyPageController {
 
     @Operation(summary = "내가 쓴 리뷰")
     @GetMapping("/my-review-list")
-    public ResponseEntity<?> getMyReview(){
+    public ResponseEntity<List<MyReviewDto>> getMyReview(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        List<MyReviewDto> result = service.getMyReview(principalDetails);
+        return ResponseEntity.ok().body(result);
+    }
 
-        return null;
+    @Operation(summary = "리뷰 삭제")
+    @DeleteMapping("/my-review/{reviewNo}")
+    public ResponseEntity<?> deleteReview(@AuthenticationPrincipal PrincipalDetails principalDetails,@PathVariable Integer reviewNo){
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        service.deleteReview(cstmrNo,reviewNo);
+        return ResponseEntity.ok(Collections.singletonMap("message","내 리뷰가 삭제 되었습니다."));
     }
 }

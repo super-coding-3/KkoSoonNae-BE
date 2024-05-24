@@ -7,6 +7,7 @@ import com.kkosoonnae.jpa.repository.CustomerQueryRepository;
 import com.kkosoonnae.jpa.repository.ReservationRepository;
 import com.kkosoonnae.mypage.dto.AvailDto;
 import com.kkosoonnae.mypage.dto.LikeStoreDto;
+import com.kkosoonnae.mypage.dto.MyReviewDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -76,5 +77,25 @@ public class MyPageService {
         }
         query.deleteLike(likeNo);
 
+    }
+
+    public List<MyReviewDto> getMyReview(PrincipalDetails principalDetails) {
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        List<MyReviewDto> dto = query.getMyReview(cstmrNo);
+
+        if(dto == null || dto.isEmpty()){
+            return Collections.emptyList();
+        }
+        return dto;
+    }
+
+    @Transactional
+    public void deleteReview(Integer cstmrNo, Integer reviewNo){
+        boolean exists = query.existByCstmrNoAndReviewNo(cstmrNo, reviewNo);
+
+        if(!exists){
+            throw new IllegalArgumentException("회원이 쓴 리뷰가 없습니다.");
+        }
+        query.deleteReview(reviewNo);
     }
 }

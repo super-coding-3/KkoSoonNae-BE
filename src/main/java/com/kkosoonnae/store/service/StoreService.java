@@ -118,29 +118,29 @@ public class StoreService {
     }
 
     //리뷰작성
-    public ReviewResponseDto createReview(ReviewDto reviewDto) {
-        Review review = new Review(
-                reviewDto.getReviewNo(),
-                reviewDto.getStore(),
-                reviewDto.getCstmrNo(),
-                reviewDto.getImg(),
-                reviewDto.getContent(),
-                reviewDto.getReviewDt(),
-                reviewDto.getScope()
-        );
-
-        Review savedReview = reviewRepository.save(review);
-
-        return new ReviewResponseDto(
-                savedReview.getReviewNo(),
-                savedReview.getStore(),
-                savedReview.getCstmrNo(),
-                savedReview.getImg(),
-                savedReview.getContent(),
-                savedReview.getReviewDt(),
-                savedReview.getScope()
-        );
-    }
+//    public ReviewResponseDto createReview(ReviewDto reviewDto) {
+//        Review review = new Review(
+//                reviewDto.getReviewNo(),
+//                reviewDto.getStore(),
+//                reviewDto.getCstmrNo(),
+//                reviewDto.getImg(),
+//                reviewDto.getContent(),
+//                reviewDto.getReviewDt(),
+//                reviewDto.getScope()
+//        );
+//
+//        Review savedReview = reviewRepository.save(review);
+//
+//        return new ReviewResponseDto(
+//                savedReview.getReviewNo(),
+//                savedReview.getStore(),
+//                savedReview.getCstmrNo(),
+//                savedReview.getImg(),
+//                savedReview.getContent(),
+//                savedReview.getReviewDt(),
+//                savedReview.getScope()
+//        );
+//    }
 
     @Transactional
     public StoreDto createStore(InputStoreInformation inputStoreInformation) {

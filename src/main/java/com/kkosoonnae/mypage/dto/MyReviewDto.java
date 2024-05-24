@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
@@ -38,11 +39,11 @@ public class MyReviewDto {
     private Integer scope;
 
     @Schema(description = "이미지")
-    private String reviewImg;
+    private String img;
 
     @Schema(description = "내용")
     private String content;
 
     @Schema(description = "생성 시간")
-    private LocalTime createTime;
+    private LocalDateTime reviewDt;
 }

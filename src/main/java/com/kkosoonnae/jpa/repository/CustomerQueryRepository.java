@@ -3,6 +3,7 @@ package com.kkosoonnae.jpa.repository;
 import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.mypage.dto.AvailDto;
 import com.kkosoonnae.mypage.dto.LikeStoreDto;
+import com.kkosoonnae.mypage.dto.MyReviewDto;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
@@ -154,6 +155,7 @@ public class CustomerQueryRepository {
                 .fetch().size() > 0;
     }
 
+
     public void deleteLike(Integer likeNo){
         QLikeStore likeStore = QLikeStore.likeStore;
 
@@ -162,7 +164,43 @@ public class CustomerQueryRepository {
                 .execute();
     }
 
+    public List<MyReviewDto> getMyReview(Integer cstmrNo){
+        QReview review = QReview.review;
+        QStore store = QStore.store;
 
+        return query.select(Projections.bean(MyReviewDto.class,
+                review.reviewNo,
+                store.storeNo,
+                store.storeName,
+                review.scope,
+                review.img,
+                review.content,
+                review.reviewDt
+                ))
+                .from(review)
+                .leftJoin(store)
+                .on(review.store.storeNo.eq(store.storeNo))
+                .where(review.cstmrNo.cstmrNo.eq(cstmrNo))
+                .fetch();
+    }
+
+
+    //회원 번호와 리뷰 번호로 내가 쓴 리뷰 확인
+    public boolean existByCstmrNoAndReviewNo(Integer cstmrNo, Integer reviewNo){
+        QReview review = QReview.review;
+        return query.selectFrom(review)
+                .where(review.cstmrNo.cstmrNo.eq(cstmrNo)
+                        .and(review.reviewNo.eq(reviewNo)))
+                .fetch().size() > 0;
+    }
+
+    public void deleteReview(Integer reviewNo){
+        QReview review = QReview.review;
+
+        long deleteReview = query.delete(review)
+                .where(review.reviewNo.eq(reviewNo))
+                .execute();
+    }
 
 
 }
