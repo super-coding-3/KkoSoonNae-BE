@@ -30,9 +30,9 @@ public class ReviewService {
         return latestReview.orElse(null);
     }
 
-    public List<ReviewDto> getReviewsByStoreNo(Integer storeNo) {
-        List<Review> reviews = reviewRepository.findByStoreStoreNo(storeNo);
-        return reviews.stream().map(ReviewDto::new).collect(Collectors.toList());
-    }
+//    public List<ReviewDto> getReviewsByStoreNo(Integer storeNo) {
+//        List<Review> reviews = reviewRepository.findByStoreStoreNo(storeNo);
+//        return reviews.stream().map(ReviewDto::new).collect(Collectors.toList());
+//    }
 
 }
