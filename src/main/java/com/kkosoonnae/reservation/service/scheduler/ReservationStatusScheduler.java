@@ -43,7 +43,7 @@ public class ReservationStatusScheduler {
                 continue;
             }
 
-            if (((reservationTime.plusHours(3)).isBefore(nowTime) && reservationDate.isEqual(nowDate)) || reservationDate.isBefore(nowDate)) {
+            if (((reservationTime.plusHours(1)).isBefore(nowTime) && reservationDate.isEqual(nowDate)) || reservationDate.isBefore(nowDate)) {
                 reservedPets.markAsNotAvailable();
                 reservedPetsRepository.save(reservedPets);
             }

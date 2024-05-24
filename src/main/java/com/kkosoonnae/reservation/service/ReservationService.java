@@ -12,16 +12,14 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * packageName    : com.kkosoonnae.reservation.service
@@ -48,6 +46,7 @@ public class ReservationService {
     private final StyleRepository styleRepository;
     private final CustomerAvailRepository customerAvailRepository;
 
+    @Transactional
     public ReservationResponse makeReservation(ReservationRequest reservationRequest) {
         String loginId = null;
 
@@ -62,6 +61,13 @@ public class ReservationService {
         Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
         CustomerBas cstmrBas = customerBasRepository.findByCstmrNo(cstmrNo);
         Integer storeNo = reservationRequest.getStoreNumber();
+
+        AvailTime availTime = availTimeRepository.findAvailTimeByStoreNo(storeNo);
+        Store store = storeRepository.findById(storeNo).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
+
+        if (!Objects.equals(store.getStoreName(), reservationRequest.getStoreName())) {
+            throw new NotFoundException("해당 매장 일련번호의 매장 이름이 아닙니다.");
+        }
 
         DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("HH:mm");
@@ -87,8 +93,8 @@ public class ReservationService {
             throw new InvalidValueException("요청하신 날짜 또는 시간 형식이 올바르지 않습니다.");
         }
 
-        if ((reservationDate.compareTo(nowDate) < 0) || (reservationDate.compareTo(nowDate) == 0) && reservationTime.compareTo(nowTime) <= 0) {
-            throw new InvalidValueException("현재 보다 이전 시간 또는 현재 시간에는 예약할 수 없습니다.");
+        if ((reservationDate.isBefore(nowDate)) || (reservationDate.isEqual(nowDate)) && !reservationTime.isAfter(nowTime.plusHours(2))) {
+            throw new InvalidValueException("해당 시간은 예약이 불가합니다. 2시간 전에는 미리 예약해야 합니다.");
         }
 
         Reservation isAvailable = reservationRepository.findByStoreNoAndReservationDateAndReservationTime(storeNo, reservationDate, reservationTime);
@@ -97,19 +103,16 @@ public class ReservationService {
             throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
         }
 
-
-        AvailTime availTime = availTimeRepository.findAvailTimeByStoreNo(storeNo);
-        Store store = storeRepository.findById(reservationRequest.getStoreNumber()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
-        Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetName());
-
-        if (pet == null) {
-            throw new NotFoundException("해당 펫을 찾을 수 없습니다.");
-        }
-
         Style style = styleRepository.findByStoreNoAndStyleName(storeNo, reservationRequest.getCutStyle());
 
         if (style == null) {
             throw new NotFoundException("해당 스타일을 찾을 수 없습니다.");
+        }
+
+        Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetName());
+
+        if (pet == null) {
+            throw new NotFoundException("해당 펫을 찾을 수 없습니다.");
         }
 
         Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
