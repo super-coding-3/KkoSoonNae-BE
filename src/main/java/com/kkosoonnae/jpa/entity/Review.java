@@ -25,8 +25,9 @@ public class Review {
     @JoinColumn(name = "STORE_NO")
     private Store store;
 
-    @Column(name = "CSTMR_NO")
-    private Integer cstmrNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CSTMR_NO")
+    private CustomerBas cstmrNo;
 
     @Column(name = "IMG")
     private String img;
