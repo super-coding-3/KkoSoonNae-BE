@@ -38,5 +38,11 @@ public class ReservedPets {
         this.reservation = reservation;
         this.pet = pet;
         this.avail = avail;
+        this.availStatus = "Y";
     }
+
+    public void markAsNotAvailable() {
+        this.availStatus = "N";
+    }
+
 }
