@@ -31,10 +31,18 @@ public class ReservationStatusScheduler {
         List<Reservation> reservations = reservationRepository.findAll();
 
         for (Reservation reservation: reservations) {
+
             LocalDate reservationDate = reservation.getReservationDate();
             LocalTime reservationTime = reservation.getReservationTime();
+
             Integer reservationNo = reservation.getReservationNo();
+
             ReservedPets reservedPets = reservedPetsRepository.findByReservationNo(reservationNo);
+
+            if (reservedPets == null) {
+                continue;
+            }
+
             if (((reservationTime.plusHours(3)).isBefore(nowTime) && reservationDate.isEqual(nowDate)) || reservationDate.isBefore(nowDate)) {
                 reservedPets.markAsNotAvailable();
                 reservedPetsRepository.save(reservedPets);
