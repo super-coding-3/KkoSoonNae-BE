@@ -68,6 +68,7 @@ public class MyPageController {
     @Operation(summary = "내가 쓴 리뷰")
     @GetMapping("/my-review-list")
     public ResponseEntity<?> getMyReview(){
+
         return null;
     }
 }
