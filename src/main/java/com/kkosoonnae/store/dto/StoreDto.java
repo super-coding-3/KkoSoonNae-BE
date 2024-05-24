@@ -47,6 +47,10 @@ public class StoreDto {
 
     private List<StyleDto> style;
 
+    private double averageReviewScore;
+
+    private String latestReviewMessage;
+    
     public StoreDto(Store store) {
         this.storeNo=store.getStoreNo();
         this.storeName=store.getStoreName();
@@ -61,6 +65,24 @@ public class StoreDto {
                 .stream()
                 .map(StoreImg::getImg).collect(Collectors.toList());
         this.style=store.getStyle().stream().map(StyleDto::new).collect(Collectors.toList());
+    }
+
+    public StoreDto(Store store,double averageReviewScore, String latestReviewMessage) {
+        this.storeNo=store.getStoreNo();
+        this.storeName=store.getStoreName();
+        this.phone=store.getPhone();
+        this.content=store.getContent();
+        this.roadAddress=store.getRoadAddress();
+        this.lat= store.getLat();
+        this.lon= store.getLon();
+        this.openingTime=store.getOpeningTime();
+        this.closingTime=store.getClosingTime();
+        this.storeImg=store.getStoreImg()
+                .stream()
+                .map(StoreImg::getImg).collect(Collectors.toList());
+        this.style=store.getStyle().stream().map(StyleDto::new).collect(Collectors.toList());
+        this.averageReviewScore = averageReviewScore;
+        this.latestReviewMessage = latestReviewMessage;
     }
 }
 

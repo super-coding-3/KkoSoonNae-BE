@@ -53,6 +53,9 @@ public class Store {
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Style> style;
 
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private List<Review> reviews;
+
 
     public Store(String storeName, String phone, Double lat,
                  Double lon, String roadAddress) {

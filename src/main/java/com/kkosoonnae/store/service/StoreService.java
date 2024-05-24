@@ -3,6 +3,7 @@ package com.kkosoonnae.store.service;
 import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.repository.*;
+import com.kkosoonnae.review.ReviewService;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.exception.ErrorCode;
@@ -43,6 +44,8 @@ public class StoreService {
     private final LikeStoreRepository likeStoreRepository;
 
     private final CustomerBasRepository customerBasRepository;
+
+    private final ReviewService reviewService;
 
 
     //매장상세조회
@@ -163,7 +166,15 @@ public class StoreService {
         double distance = 5.0;
         List<Store> stores = storeRepository.findStoresWithinDistance(lat,lon,distance);
 
-        return stores.stream().map(StoreDto::new).collect(Collectors.toList());
+        return stores.stream()
+                .map(store -> {
+                    double averageReviewScore = reviewService.getAverageReviewScore(store.getStoreNo());
+                    Review latestReview = reviewService.getLatestReview(store.getStoreNo());
+                    String latestReviewComment = (latestReview != null) ? latestReview.getContent() : "리뷰가 없습니다.";
+                    return new StoreDto(store, averageReviewScore, latestReviewComment);
+
+                })
+                .collect(Collectors.toList());
     }
 
 
