@@ -1,4 +1,4 @@
-package com.kkosoonnae.reservation.advice;
+package com.kkosoonnae.advice;
 
 
 import com.kkosoonnae.reservation.service.exceptions.InvalidValueException;
