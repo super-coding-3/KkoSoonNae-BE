@@ -19,10 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * packageName    : com.kkosoonnae.reservation.service
@@ -65,6 +62,13 @@ public class ReservationService {
         CustomerBas cstmrBas = customerBasRepository.findByCstmrNo(cstmrNo);
         Integer storeNo = reservationRequest.getStoreNumber();
 
+        AvailTime availTime = availTimeRepository.findAvailTimeByStoreNo(storeNo);
+        Store store = storeRepository.findById(reservationRequest.getStoreNumber()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
+
+        if (!Objects.equals(store.getStoreName(), reservationRequest.getStoreName())) {
+            throw new NotFoundException("해당 매장 일련번호의 매장 이름이 아닙니다.");
+        }
+
         DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -99,9 +103,6 @@ public class ReservationService {
             throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
         }
 
-
-        AvailTime availTime = availTimeRepository.findAvailTimeByStoreNo(storeNo);
-        Store store = storeRepository.findById(reservationRequest.getStoreNumber()).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
         Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetName());
 
         if (pet == null) {
