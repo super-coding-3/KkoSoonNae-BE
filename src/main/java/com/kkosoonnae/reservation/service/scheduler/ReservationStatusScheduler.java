@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -24,20 +25,21 @@ public class ReservationStatusScheduler {
     @Transactional
     public void updateReservationStatus() {
 
+        LocalDate nowDate = LocalDate.now();
         LocalTime nowTime = LocalTime.now();
 
         List<Reservation> reservations = reservationRepository.findAll();
 
         for (Reservation reservation: reservations) {
+            LocalDate reservationDate = reservation.getReservationDate();
             LocalTime reservationTime = reservation.getReservationTime();
             Integer reservationNo = reservation.getReservationNo();
             ReservedPets reservedPets = reservedPetsRepository.findByReservationNo(reservationNo);
-            if ((reservationTime.plusHours(3)).isBefore(nowTime)) {
+            if (((reservationTime.plusHours(3)).isBefore(nowTime) && reservationDate.isEqual(nowDate)) || reservationDate.isBefore(nowDate)) {
                 reservedPets.markAsNotAvailable();
                 reservedPetsRepository.save(reservedPets);
             }
         }
-
 
     }
 
