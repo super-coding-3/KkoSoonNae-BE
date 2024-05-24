@@ -24,6 +24,8 @@ public class QReservedPets extends EntityPathBase<ReservedPets> {
 
     public final QAvailTime avail;
 
+    public final StringPath availStatus = createString("availStatus");
+
     public final QPet pet;
 
     public final QReservation reservation;

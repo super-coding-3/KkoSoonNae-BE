@@ -31,9 +31,18 @@ public class ReservedPets {
     @JoinColumn(name = "AVAIL_NO")
     private AvailTime avail;
 
+    @Column(name = "AVAIL_STATUS")
+    private String availStatus;
+
     public ReservedPets(Reservation reservation, Pet pet, AvailTime avail) {
         this.reservation = reservation;
         this.pet = pet;
         this.avail = avail;
+        this.availStatus = "Y";
     }
+
+    public void markAsNotAvailable() {
+        this.availStatus = "N";
+    }
+
 }
