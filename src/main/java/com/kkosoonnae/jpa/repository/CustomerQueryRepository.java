@@ -145,6 +145,24 @@ public class CustomerQueryRepository {
                 .fetch();
     }
 
+    //회원 번호와 관심 번호로 관심매장을 등록했는지 확인
+    public boolean existsByCstmrNoAndLikeNo(Integer cstmrNo, Integer likeNo){
+        QLikeStore likeStore = QLikeStore.likeStore;
+        return query.selectFrom(likeStore)
+                .where(likeStore.customerBas.cstmrNo.eq(cstmrNo)
+                        .and(likeStore.likeNo.eq(likeNo)))
+                .fetch().size() > 0;
+    }
+
+    public void deleteLike(Integer likeNo){
+        QLikeStore likeStore = QLikeStore.likeStore;
+
+       long deleteLike = query.delete(likeStore)
+                .where(likeStore.likeNo.eq(likeNo))
+                .execute();
+    }
+
+
 
 
 }

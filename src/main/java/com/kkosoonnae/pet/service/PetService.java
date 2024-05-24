@@ -91,13 +91,14 @@ public class PetService {
             petRepository.save(pet);
 
         }
+    @Transactional
+    public void deletePet(Integer cstmrNo,Integer petNo){
+        boolean exists = query.existsByCstmrNoAndPetNo(cstmrNo, petNo);
 
-    public void deletePet(Integer petNo){
-        Pet pet = petRepository.findById(petNo).orElseThrow(()-> new IllegalStateException("반려동물에 대한 정보를 찾을 수 없습니다."));
-
-        if(pet != null){
-            petRepository.deleteById(petNo);
+        if(!exists){
+            throw new IllegalArgumentException("해당 회원의 반려 동물 정보가 없습니다.");
         }
+        query.deletePet(petNo);
     }
 
 }

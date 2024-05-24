@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,12 +101,14 @@ public class PetController {
 
     @Operation(summary = "반려동물 정보 삭제")
     @DeleteMapping("/deletePet/{petNo}")
-    public ResponseEntity<?> deletePet(@PathVariable Integer petNo){
-
-        Map<String,String> rs = new HashMap<>();
-        rs.put("message","반려동물 정보 삭제 성공하였습니다.");
-        service.deletePet(petNo);
-        return ResponseEntity.ok(rs);
+    public ResponseEntity<?> deletePet(@AuthenticationPrincipal PrincipalDetails principalDetails,@PathVariable Integer petNo){
+        try {
+            Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+            service.deletePet(cstmrNo,petNo);
+            return ResponseEntity.ok(Collections.singletonMap("message","반려동물 정보 삭제에 성공 하였습니다."));
+        }catch (IllegalStateException e){
+            return ResponseEntity.ok(Collections.singletonMap("message",e.getMessage()));
+        }
     }
 
 }

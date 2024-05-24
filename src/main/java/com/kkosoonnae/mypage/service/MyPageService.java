@@ -61,12 +61,20 @@ public class MyPageService {
 
         List<LikeStoreDto> dto = query.likeList(cstmrNo);
 
-
         if(dto == null || dto.isEmpty()){
             return Collections.emptyList();
         }
-
-
         return dto;
+    }
+
+    @Transactional
+    public void deleteLike(Integer cstmrNo, Integer likeNo){
+        boolean exists = query.existsByCstmrNoAndLikeNo(cstmrNo, likeNo);
+
+        if(!exists){
+            throw new IllegalArgumentException("해당 회원의 관심 매장 정보가 없습니다.");
+        }
+        query.deleteLike(likeNo);
+
     }
 }
