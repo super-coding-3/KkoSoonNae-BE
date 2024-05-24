@@ -56,4 +56,18 @@ public class MyPageController {
         List<LikeStoreDto> result = service.getMyLikeStore(principalDetails);
         return ResponseEntity.ok().body(result);
     }
+
+    @Operation(summary = "관심매장 취소")
+    @DeleteMapping("/like-cancel/{likeNo}")
+    public ResponseEntity<?> deleteLike(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Integer likeNo){
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        service.deleteLike(cstmrNo,likeNo);
+        return ResponseEntity.ok(Collections.singletonMap("message","관심 매장 취소가 완료 되었습니다."));
+    }
+
+    @Operation(summary = "내가 쓴 리뷰")
+    @GetMapping("/my-review-list")
+    public ResponseEntity<?> getMyReview(){
+        return null;
+    }
 }
