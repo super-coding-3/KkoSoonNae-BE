@@ -31,7 +31,6 @@ public class ReviewResponseDto {
 
     private Integer scope;
 
-    private Integer averageScope;
 
     public ReviewResponseDto(Integer reviewNo, Store store, Integer cstmrNo, String img, String content, LocalDateTime reviewDt, Integer scope) {
     }

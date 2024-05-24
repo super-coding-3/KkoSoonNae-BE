@@ -26,5 +26,4 @@ public class ReviewDto {
 
     private Integer scope;
 
-    private Integer averageScope;
 }

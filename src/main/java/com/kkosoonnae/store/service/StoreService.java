@@ -1,5 +1,6 @@
 package com.kkosoonnae.store.service;
 
+import com.kkosoonnae.jpa.entity.Store;
 import com.kkosoonnae.search.dto.StoreListViewResponseDto;
 import com.kkosoonnae.store.dto.*;
 
@@ -18,4 +19,6 @@ public interface StoreService  {
     StoreDto createStore(InputStoreInformation inputStoreInformation);
 
     List<StoreDto> findStores(double lat, double lon);
+
+    void writeReview(Integer cstmrNo, Store storeNo, String content);
 }

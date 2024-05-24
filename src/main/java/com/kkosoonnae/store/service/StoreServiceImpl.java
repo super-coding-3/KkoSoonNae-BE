@@ -1,11 +1,8 @@
 package com.kkosoonnae.store.service;
 
 import com.kkosoonnae.jpa.entity.*;
-import com.kkosoonnae.jpa.enu.StyleType;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
-import com.kkosoonnae.jpa.projection.StoreListViewProjection;
 import com.kkosoonnae.jpa.repository.*;
-import com.kkosoonnae.search.dto.StoreListViewResponseDto;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.exception.ErrorCode;
@@ -18,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -102,6 +98,11 @@ public class StoreServiceImpl implements StoreService {
         likeStoreRepository.deleteLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(customerNo,storeNo);
     }
 
+    @Override
+    public ReviewResponseDto createReview(ReviewDto reviewDto) {
+        return null;
+    }
+
 
     private Double calculateAverageScope() {
         List<Review> reviews = reviewRepository.findAll();
@@ -118,29 +119,21 @@ public class StoreServiceImpl implements StoreService {
     }
 
     //리뷰작성
-    @Override
-    public ReviewResponseDto createReview(ReviewDto reviewDto) {
-        Review review = new Review(
-                reviewDto.getReviewNo(),
-                reviewDto.getStore(),
-                reviewDto.getCstmrNo(),
-                reviewDto.getImg(),
-                reviewDto.getContent(),
-                reviewDto.getReviewDt(),
-                reviewDto.getScope()
-        );
+    @Transactional
+    public void writeReview(Integer cstmrNo, Store storeNo, String content) {
 
-        Review savedReview = reviewRepository.save(review);
-
-        return new ReviewResponseDto(
-                savedReview.getReviewNo(),
-                savedReview.getStore(),
-                savedReview.getCstmrNo(),
-                savedReview.getImg(),
-                savedReview.getContent(),
-                savedReview.getReviewDt(),
-                savedReview.getScope()
-        );
+        CustomerBas customer = reviewRepository.findCustomerByCustomerNumber(cstmrNo);
+        if (customer != null) {
+            Review review = new Review.Builder()
+                    .cstmrNo(cstmrNo)
+                    .storeNo(storeNo)
+                    .content(content)
+                    .createdAt(LocalDateTime.now())
+                    .build();
+            reviewRepository.save(review);
+        } else {
+            throw new IllegalArgumentException("Invalid customer number");
+        }
     }
 
     @Transactional
