@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -209,9 +210,17 @@ public class ReservationService {
         Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
         Reservation reservation = reservationRepository.findById(reservationNumber).orElseThrow(() -> new NotFoundException("해당 예약을 찾을 수 없습니다."));
 
+        Integer storeNo = reservation.getStore().getStoreNo();
         String storeName = reservation.getStore().getStoreName();
         String styleName = reservation.getStyleName();
         String feature = reservation.getFeature();
+
+        Style style = styleRepository.findByStoreNoAndStyleName(storeNo, styleName);
+        Integer price = style.getPrice();
+
+        NumberFormat numberFormat = NumberFormat.getInstance(Locale.KOREA);
+        String formattedPrice = numberFormat.format(price);
+        String stringPrice = formattedPrice + "원";
 
         ReservedPets reservedPets = reservedPetsRepository.findByReservationNo(reservationNumber);
         if (reservedPets == null) {
@@ -227,7 +236,7 @@ public class ReservationService {
         String fromatterDate = date.format(formatter);
         String responseDate = fromatterDate + "(" + dayOfWeek + ")";
 
-        return new ReservationResultResponse(reservation, storeName, pet, responseDate);
+        return new ReservationResultResponse(reservation, storeName, stringPrice, pet, responseDate);
     }
 
 }
