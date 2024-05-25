@@ -1,10 +1,13 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/kkosoonnae?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: 12341234
-
+  profiles:
+    active: local #default
+    group:
+      local:
+        - jwt
+        - aws
+      prod:
+        - jwt
+        - aws
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -13,9 +16,16 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
-security:
-  jwt:
-    secret-key: KkoSoonNaeFinalProJectKkoSoonNaeFinalProJect
 
+cloud:
+  aws:
+    s3:
+      bucket: kkosoonnae-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      instance-profile: true
 logging:
   config: classpath:logback-spring.xml

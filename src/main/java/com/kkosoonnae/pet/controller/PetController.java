@@ -1,18 +1,23 @@
 package com.kkosoonnae.pet.controller;
 
 import com.kkosoonnae.config.auth.PrincipalDetails;
+import com.kkosoonnae.config.s3.S3Uploader;
 import com.kkosoonnae.jpa.entity.CustomerBas;
+import com.kkosoonnae.pet.dto.PetAddDto;
 import com.kkosoonnae.pet.dto.PetInfoDto;
 import com.kkosoonnae.pet.dto.PetUpdate;
 import com.kkosoonnae.pet.service.PetService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.webjars.NotFoundException;
 
 import java.util.Collections;
@@ -40,6 +45,8 @@ public class PetController {
 
     private final PetService service;
 
+    private final S3Uploader s3Uploader;
+
 
     @Operation(summary = "반려동물 전체 조회")
     @GetMapping("/allPet-list")
@@ -58,22 +65,27 @@ public class PetController {
 
 
     @Operation(summary = "반려동물 추가")
-    @PostMapping("/addPet")
-    public ResponseEntity<?> addPet(@AuthenticationPrincipal PrincipalDetails principalDetails,@RequestBody PetInfoDto petInfoDto){
+    @PostMapping(value = "/addPet",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> addPet(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                    @RequestPart PetAddDto petAddDto,
+                                   @Parameter(description = "반려동물 이미지") @RequestPart(required = false)MultipartFile petImg){
         try{
             Map<String, String> rs = new HashMap<>();
             rs.put("message","반려동물 추가에 성공 하였습니다.");
-            service.petAdd(principalDetails,petInfoDto);
+            String img = s3Uploader.upload(petImg,"pet");
+            petAddDto.setImg(img);
+
+            service.petAdd(principalDetails,petAddDto);
             return ResponseEntity.ok(rs);
         }catch (NotFoundException e){
             Map<String,String> rs = new HashMap<>();
             rs.put("message","정보를 찾을 수 없습니다.");
-            rs.put("message : {} ", e.getMessage());
+            rs.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(rs);
         }catch (Exception e){
             Map<String, String> rs = new HashMap<>();
             rs.put("message" , "반려동물 추가에 실패 하였습니다.");
-            rs.put("message : {} ",e.getMessage());
+            rs.put("error",e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(rs);
         }
     }

@@ -1,5 +1,7 @@
 package com.kkosoonnae.jpa.entity;
 
+import com.kkosoonnae.config.auth.PrincipalDetails;
+import com.kkosoonnae.pet.dto.PetAddDto;
 import com.kkosoonnae.pet.dto.PetInfoDto;
 import com.kkosoonnae.pet.dto.PetUpdate;
 import jakarta.persistence.*;

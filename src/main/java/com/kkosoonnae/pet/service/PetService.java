@@ -1,21 +1,25 @@
 package com.kkosoonnae.pet.service;
 
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.kkosoonnae.config.auth.PrincipalDetails;
+import com.kkosoonnae.config.s3.S3Uploader;
 import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.repository.PetQueryRepository;
 import com.kkosoonnae.jpa.repository.PetRepository;
+import com.kkosoonnae.pet.dto.PetAddDto;
 import com.kkosoonnae.pet.dto.PetInfoDto;
-import com.kkosoonnae.pet.dto.PetListRqDto;
 import com.kkosoonnae.pet.dto.PetUpdate;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 /**
  * packageName    : com.kkosoonnae.member.service
@@ -38,6 +42,8 @@ public class PetService {
 
     private final PetQueryRepository query;
 
+    private final S3Uploader s3Uploader;
+
     public List<PetInfoDto> petList(){
         PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
@@ -56,23 +62,8 @@ public class PetService {
         return result;
     }
 
-    public void petAdd(PrincipalDetails principalDetails, PetInfoDto petInfoDto){
-        CustomerBas customerBas = principalDetails.getCustomerBas();
-
-//        CustomerBas customerBas = customerBasRepository.findById(cstmrNo)
-//                .orElseThrow(()-> new NotFoundException("Customer not found with cstmrNo : " + cstmrNo));
-
-        Pet pet = Pet.builder()
-                .customerBas(customerBas)
-                .img(petInfoDto.getImg())
-                .name(petInfoDto.getName())
-                .type(petInfoDto.getType())
-                .birthDt(petInfoDto.getBirthDt())
-                .gender(petInfoDto.getGender())
-                .weight(petInfoDto.getWeight())
-                .build();
-
-        petRepository.save(pet);
+    public void petAdd(PrincipalDetails principalDetails, PetAddDto petAddDto) {
+        petRepository.save(petAddDto.addPet(principalDetails));
     }
 
     @Transactional
