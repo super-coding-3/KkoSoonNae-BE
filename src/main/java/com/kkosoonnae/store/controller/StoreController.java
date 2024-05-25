@@ -145,6 +145,13 @@ public class StoreController {
         }
     }
 
+    @GetMapping("/allStore")
+    @Operation(summary = "전체 매장 정보 보기")
+    public ResponseEntity<List<AllStore>> getAllStore(){
+        List<AllStore> stores = storeService.getAllStores();
+        return ResponseEntity.ok(stores);
+    }
+
 }
 
 
