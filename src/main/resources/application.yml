@@ -1,14 +1,10 @@
-server:
-  port: 8080
-
 spring:
-  profiles:
-    active: local #default
-    group:
-      local:
-        - jwt
-      prod:
-        - jwt
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/kkosoonnae?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: 12341234
+
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -17,3 +13,9 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+security:
+  jwt:
+    secret-key: KkoSoonNaeFinalProJectKkoSoonNaeFinalProJect
+
+logging:
+  config: classpath:logback-spring.xml

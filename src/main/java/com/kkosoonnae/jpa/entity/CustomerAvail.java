@@ -19,12 +19,21 @@ public class CustomerAvail {
     @Column(name = "CSTMR_AVAIL_NO")
     private Integer cstmrAvailNo;
 
-    @Column(name = "CSTMR_NO")
-    private Integer cstmrNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CSTMR_NO")
+    private CustomerBas cstmrNo;
 
-    @Column(name = "RESERVATION_NO")
-    private Integer reservationNo;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RESERVATION_NO")
+    private Reservation reservationNo;
 
-    @Column(name = "AVAIL_NO")
-    private Integer availNo;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "AVAIL_NO")
+    private AvailTime availNo;
+
+    public CustomerAvail(CustomerBas cstmrNo, Reservation reservationNo, AvailTime availNo) {
+        this.cstmrNo = cstmrNo;
+        this.reservationNo = reservationNo;
+        this.availNo = availNo;
+    }
 }

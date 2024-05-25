@@ -1,17 +1,19 @@
 package com.kkosoonnae.search.controller;
 
+import com.kkosoonnae.search.dto.MainStoreListViewResponseDto;
 import com.kkosoonnae.search.dto.StoreListViewResponseDto;
 import com.kkosoonnae.search.service.SearchService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.webjars.NotFoundException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,18 +37,33 @@ import java.util.Map;
 public class SearchController {
 
     private final SearchService searchService;
+
     @GetMapping("/stores/")
     @Operation(summary = "전체매장검색")
-    public ResponseEntity<?> searchByStores(@RequestParam(required = false) String storeKeyword, @RequestParam(required = false) String addressKeyword) {
-        try{
-            log.info("GET/storeKeyword 또는 addressKeyword 조회요청 들어왔습니다.:" +storeKeyword,addressKeyword);
-            List<StoreListViewResponseDto> storeListViewResponseDto = searchService.findByStores(storeKeyword, addressKeyword);
+    public ResponseEntity<?> searchByStores(@RequestParam String nameAddressKeyword) {
+        try {
+            log.info("GET/storeKeyword 또는 addressKeyword 조회요청 들어왔습니다.:" + nameAddressKeyword);
+            List<StoreListViewResponseDto> storeListViewResponseDto = searchService.findByStores(nameAddressKeyword);
             log.info("GET/storeKeyword 또는 addressKeyword 조회응답.:" + storeListViewResponseDto);
             return ResponseEntity.ok(storeListViewResponseDto);
-        }catch (Exception e) {
+        } catch (Exception e) {
             Map<String, String> errorBody = new HashMap<>();
             errorBody.put("error", "해당 매장이 없습니다.");
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
+        }
+    }
+
+    @GetMapping("/main-stores")
+    @Operation(summary = "메인 강남구 매장 정보")
+    public ResponseEntity<?> mainByStores(@RequestParam String addressKeyword) {
+        try {
+            Pageable pageable = PageRequest.of(0, 10);
+            List<MainStoreListViewResponseDto> mainListViewResponseDto = searchService.findByMainStores(addressKeyword, pageable);
+            return ResponseEntity.ok(mainListViewResponseDto);
+        } catch (Exception e) {
+            Map<String, String> errorBody = new HashMap<>();
+            errorBody.put("error", "해당 매장 없습니다.");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
         }
     }

@@ -1,30 +1,25 @@
 package com.kkosoonnae.pet.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
- * packageName    : com.kkosoonnae.customer.dto
- * fileName       : PetInfoDto
+ * packageName    : com.kkosoonnae.pet.dto
+ * fileName       : PetUpdate
  * author         : hagjoon
- * date           : 2024-05-14
+ * date           : 2024-05-24
  * description    :
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2024-05-14        hagjoon       최초 생성
+ * 2024-05-24        hagjoon       최초 생성
  */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PetInfoDto {
-
-    @Schema(description = "반려동물 일련번호")
-    private Integer petNo;
+public class PetUpdate {
 
     @Schema(description = "이미지")
     private String img;
@@ -43,4 +38,9 @@ public class PetInfoDto {
 
     @Schema(description = "몸무게")
     private String weight;
+
+    @Schema(description = "회원일련번호")
+    @JsonIgnore
+    private Integer cstmrNo;
+
 }

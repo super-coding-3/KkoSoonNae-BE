@@ -1,7 +1,5 @@
 package com.kkosoonnae.store.controller;
 
-import com.kkosoonnae.config.auth.PrincipalDetails;
-import com.kkosoonnae.jpa.entity.Store;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -114,6 +112,19 @@ public class StoreController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+//    @PostMapping("/review")
+//    @Operation(summary = "리뷰 작성")
+//    public ResponseEntity<ReviewResponseDto> createReview(@RequestBody ReviewDto reviewDto) {
+//        try {
+//            log.info("POST /review 리뷰 작성 요청이 들어왔습니다. ReviewDto: {}", reviewDto);
+//            ReviewResponseDto reviewResponseDto = storeService.createReview(reviewDto);
+//            log.info("POST /review 리뷰 작성 응답: {}", reviewResponseDto);
+//            return ResponseEntity.ok(reviewResponseDto);
+//        } catch (Exception e) {
+//            log.error("리뷰 작성 중 오류가 발생했습니다: {}", e.getMessage());
+//            return ResponseEntity.status(500).body(null);
+//        }
+//    }
 
     @PostMapping("/add")
     @Operation(summary = "매장 등록")

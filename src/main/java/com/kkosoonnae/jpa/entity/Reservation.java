@@ -58,7 +58,7 @@ public class Reservation {
         this.avail = avail;
         this.cstmrBas = cstmrBas;
         this.store = store;
-        this.reservationStatus = "확정";
+        this.reservationStatus = "예약 완료";
         this.reservationDate = LocalDate.parse(reservationRequest.getReservationDate());
         this.reservationTime = LocalTime.parse(reservationRequest.getReservationTime());
         this.feature = reservationRequest.getCharacteristics();

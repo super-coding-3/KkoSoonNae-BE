@@ -1,12 +1,14 @@
 package com.kkosoonnae.jpa.repository;
 
 import com.kkosoonnae.jpa.entity.Store;
+import com.kkosoonnae.jpa.projection.MainStoresListviewProjection;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.projection.StoreListViewProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,10 +20,10 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
             "FROM Store s " +
             "LEFT JOIN FETCH StoreImg si ON s.storeNo = si.store.storeNo " +
             "LEFT JOIN FETCH Review r ON s.storeNo = r.store.storeNo " +
-            "WHERE s.storeName LIKE %:nameKeyword " +
-            "OR s.roadAddress LIKE %:addressKeyword " +
+            "WHERE s.storeName LIKE %:nameAddressKeyword% " +
+            "OR s.roadAddress LIKE %:nameAddressKeyword% " +
             "GROUP BY s.storeNo, si.img ")
-    List<StoreListViewProjection> findStoresByStoreNameInAndAddressInOrderByAddressAsc(String nameKeyword,String addressKeyword);
+    List<StoreListViewProjection> findStoresByStoreNameInAndAddressInOrderByAddressAsc(String nameAddressKeyword);
 
     @Query("SELECT new com.kkosoonnae.jpa.projection.StoreDetailViewProjection(" +
             "s.storeNo, s.storeName, s.content, s.phone, s.roadAddress, " +
@@ -41,4 +43,11 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
             "cos(radians(s.lat)) * cos(radians(s.lon)-radians(:lon))+sin(radians(:lat)) * " +
             "sin(radians(s.lat))))< :distance")
     List<Store> findStoresWithinDistance(double lat, double lon, double distance);
+
+    @Query("SELECT new com.kkosoonnae.jpa.projection.MainStoresListviewProjection(s.storeNo,s.storeName,s.roadAddress, AVG(r.scope)) " +
+            "FROM Store s " +
+            "LEFT JOIN FETCH Review r ON s.storeNo = r.store.storeNo " +
+            "WHERE s.roadAddress Like %:addressKeyword% " +
+            "GROUP BY s.storeNo ")
+    List<MainStoresListviewProjection> findMainStores(String addressKeyword, Pageable pageable);
 }
