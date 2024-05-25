@@ -183,6 +183,12 @@ public class StoreService {
     }
 
 
+    public List<AllStore> getAllStores() {
+        List<Store> stores = storeRepository.findAll();
+        return stores.stream()
+                .map(AllStore::new)
+                .collect(Collectors.toList());
+    }
 }
 
 
