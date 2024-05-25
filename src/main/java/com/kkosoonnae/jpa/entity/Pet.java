@@ -59,8 +59,8 @@ public class Pet {
         this.weight = weight;
     }
 
-    public void updatePet(PetUpdate petUpdate){
-        this.img = petUpdate.getImg();
+    public void updatePet(PetUpdate petUpdate,String petImg){
+        this.img = petImg;
         this.name = petUpdate.getName();
         this.type = petUpdate.getType();
         this.birthDt = petUpdate.getBirthDt();

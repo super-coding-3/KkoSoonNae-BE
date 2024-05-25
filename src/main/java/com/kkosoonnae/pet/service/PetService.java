@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -44,6 +45,8 @@ public class PetService {
 
     private final S3Uploader s3Uploader;
 
+    private final CommonService commonService;
+
     public List<PetInfoDto> petList(){
         PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
@@ -67,21 +70,19 @@ public class PetService {
     }
 
     @Transactional
-    public void petUpdate(PrincipalDetails principalDetails,Integer petNo,PetUpdate petUpdate){
-        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
-            Pet pet = petRepository.findById(petNo)
-                    .orElseThrow(()-> new IllegalStateException("반려동물에 대한 정보를 찾을 수 없습니다."));
-
-            if(!pet.getCustomerBas().getCstmrNo().equals(cstmrNo)) {
-                throw new IllegalArgumentException("본인의 반려동물 정보만 수정 가능합니다.");
+    public void petUpdate(PrincipalDetails principalDetails,Integer petNo,PetUpdate petUpdate,MultipartFile file){
+        Pet pet = commonService.getPet(principalDetails,petNo);
+        String img = pet.getImg();
+        if(file != null){
+            try{
+                img = s3Uploader.upload(file,"pet");
+            }catch (IOException e){
+                throw new AmazonS3Exception("file = " + file.getOriginalFilename());
             }
-
-            pet.updatePet(petUpdate);
-
-
-            petRepository.save(pet);
-
         }
+        pet.updatePet(petUpdate,img);
+        petRepository.save(pet);
+    }
     @Transactional
     public void deletePet(Integer cstmrNo,Integer petNo){
         boolean exists = query.existsByCstmrNoAndPetNo(cstmrNo, petNo);

@@ -2,7 +2,6 @@ package com.kkosoonnae.pet.controller;
 
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.config.s3.S3Uploader;
-import com.kkosoonnae.jpa.entity.CustomerBas;
 import com.kkosoonnae.pet.dto.PetAddDto;
 import com.kkosoonnae.pet.dto.PetInfoDto;
 import com.kkosoonnae.pet.dto.PetUpdate;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.webjars.NotFoundException;
 
+import org.springframework.security.access.AccessDeniedException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -91,19 +91,27 @@ public class PetController {
     }
 
     @Operation(summary = "반려동물 정보 수정")
-    @PutMapping("/update/{petNo}")
-    public ResponseEntity<?> updatePet(@AuthenticationPrincipal PrincipalDetails principalDetails,@PathVariable Integer petNo,@RequestBody PetUpdate petUpdate){
+    @PutMapping(value = "/update/{petNo}",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> updatePet(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                       @PathVariable Integer petNo,
+                                       @RequestPart PetUpdate petUpdate,
+                                       @Parameter(description = "반려동물 이미지") @RequestPart(required = false)MultipartFile petImg){
         try {
             Map<String, String> rs = new HashMap<>();
             rs.put("message","반려동물 정보 수정에 성공 하였습니다.");
-            service.petUpdate(principalDetails,petNo,petUpdate);
+            service.petUpdate(principalDetails,petNo,petUpdate,petImg);
             return ResponseEntity.ok(rs);
         }catch (NotFoundException e){
             Map<String,String> rs = new HashMap<>();
             rs.put("message","반려동물 정보를 찾을 수 없습니다.");
             rs.put("message : {}",e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(rs);
-        }catch (Exception e){
+        }catch (AccessDeniedException e){
+            Map<String, String> rs = new HashMap<>();
+            rs.put("message", "본인의 반려동물 정보만 수정 할 수 있습니다.");
+            rs.put("details", e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(rs);
+        } catch (Exception e){
             Map<String, String> rs = new HashMap<>();
             rs.put("message" , "반려동물 정보 수정에 실패 하였습니다.");
             rs.put("message : {} ",e.getMessage());

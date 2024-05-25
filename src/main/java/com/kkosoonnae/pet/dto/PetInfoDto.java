@@ -25,6 +25,9 @@ public class PetInfoDto {
     @Schema(description = "반려동물 일련번호")
     private Integer petNo;
 
+    @Schema(description = "이미지")
+    private String img;
+
     @Schema(description = "이름")
     private String name;
 
