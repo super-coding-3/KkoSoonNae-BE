@@ -2,6 +2,8 @@ package com.kkosoonnae.store.controller;
 
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.jpa.entity.LikeStore;
+import com.kkosoonnae.jpa.entity.Store;
+import com.kkosoonnae.review.ReviewService;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,6 +37,7 @@ public class StoreController {
 
 
     private final StoreService storeService;
+    private final ReviewService reviewService;
 
     @GetMapping("/{storeNo}")
     @Operation(summary = "상세매장조회")
@@ -108,15 +111,13 @@ public class StoreController {
 
 //    @PostMapping("/review")
 //    @Operation(summary = "리뷰 작성")
-//    public ResponseEntity<ReviewResponseDto> createReview(@RequestBody ReviewDto reviewDto) {
+//    public ResponseEntity<String> writeReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Store storeNo, @RequestParam String content) {
 //        try {
-//            log.info("POST /review 리뷰 작성 요청이 들어왔습니다. ReviewDto: {}", reviewDto);
-//            ReviewResponseDto reviewResponseDto = storeService.createReview(reviewDto);
-//            log.info("POST /review 리뷰 작성 응답: {}", reviewResponseDto);
-//            return ResponseEntity.ok(reviewResponseDto);
-//        } catch (Exception e) {
-//            log.error("리뷰 작성 중 오류가 발생했습니다: {}", e.getMessage());
-//            return ResponseEntity.status(500).body(null);
+//            Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+//            reviewService.writeReview(cstmrNo, storeNo, content);
+//            return ResponseEntity.ok("Review submitted successfully");
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());
 //        }
 //    }
 

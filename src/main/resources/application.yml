@@ -1,11 +1,13 @@
 spring:
   profiles:
-    active: prod #default
+    active: local #default
     group:
       local:
         - jwt
+        - aws
       prod:
         - jwt
+        - aws
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -14,5 +16,16 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+
+cloud:
+  aws:
+    s3:
+      bucket: kkosoonnae-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      instance-profile: true
 logging:
   config: classpath:logback-spring.xml
