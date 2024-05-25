@@ -1,15 +1,15 @@
 package com.kkosoonnae.review;
 
+import com.kkosoonnae.jpa.entity.CustomerBas;
 import com.kkosoonnae.jpa.entity.Review;
 import com.kkosoonnae.jpa.entity.Store;
 import com.kkosoonnae.jpa.repository.ReviewRepository;
-import com.kkosoonnae.store.dto.ReviewDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -30,9 +30,20 @@ public class ReviewService {
         return latestReview.orElse(null);
     }
 
-//    public List<ReviewDto> getReviewsByStoreNo(Integer storeNo) {
-//        List<Review> reviews = reviewRepository.findByStoreStoreNo(storeNo);
-//        return reviews.stream().map(ReviewDto::new).collect(Collectors.toList());
-//    }
+    public void writeReview(Integer cstmrNo, Store storeNo, String content) {
+
+        CustomerBas customer = reviewRepository.findCustomerByCustomerNumber(cstmrNo);
+        if (customer != null) {
+            Review review = new Review.Builder()
+                    .cstmrNo(cstmrNo)
+                    .storeNo(storeNo)
+                    .content(content)
+                    .createdAt(LocalDateTime.now())
+                    .build();
+            reviewRepository.save(review);
+        } else {
+            throw new IllegalArgumentException("Invalid customer number");
+        }
+    }
 
 }
