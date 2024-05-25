@@ -127,7 +127,7 @@ public class ReservationService {
         return new ReservationResponse(store.getStoreName(), reservation, reservationRequest.getCutStyle(), pet, reservation.getReservationNo());
     }
 
-    public List<StyleResponse> findStyleNameByStoreNo(Integer storeNo) {
+    public List<StyleResponse> findStyleNameByStoreNo(Integer storeNumber) {
         String loginId = null;
 
         try {
@@ -138,7 +138,7 @@ public class ReservationService {
             throw new AccessDeniedException("로그인이 필요합니다.");
         }
 
-        List<Style> styles = styleRepository.findStylNameByStoreNo(storeNo);
+        List<Style> styles = styleRepository.findStylNameByStoreNo(storeNumber);
 
         if (styles == null || styles.isEmpty()) {
             throw new NotFoundException("해당 매장의 스타일을 찾을 수 없습니다.");
@@ -147,7 +147,7 @@ public class ReservationService {
         return StyleResponse.stylesToStyleResponse(styles);
     }
 
-    public StoreNameResponse findStoreNameByStoreNo(Integer storeNo) {
+    public StoreNameResponse findStoreNameByStoreNo(Integer storeNumber) {
         String loginId = null;
 
         try {
@@ -158,7 +158,7 @@ public class ReservationService {
             throw new AccessDeniedException("로그인이 필요합니다.");
         }
 
-        Store store = storeRepository.findStoreNameByStoreNo(storeNo);
+        Store store = storeRepository.findStoreNameByStoreNo(storeNumber);
 
         if (store == null) {
             throw new NotFoundException("매장 이름을 찾을 수 없습니다.");
