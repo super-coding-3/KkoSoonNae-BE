@@ -2,6 +2,7 @@ package com.kkosoonnae.reservation.dto;
 
 import com.kkosoonnae.jpa.entity.Pet;
 import com.kkosoonnae.jpa.entity.Reservation;
+import com.kkosoonnae.jpa.entity.Style;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -23,6 +24,9 @@ public class ReservationResultResponse {
     @Schema(description = "스타일 이름")
     private String cutStyle;
 
+    @Schema(description = "가격")
+    private String price;
+
     @Schema(description = "반려동물 종류")
     private String breed;
 
@@ -32,11 +36,12 @@ public class ReservationResultResponse {
     @Schema(description = "특징")
     private String characteristics;
 
-    public ReservationResultResponse(Reservation reservation, String storeName, Pet pet, String responseDate) {
+    public ReservationResultResponse(Reservation reservation, String storeName, String stringPrice, Pet pet, String responseDate) {
         this.storeName = storeName;
         this.reservationDate = responseDate;
         this.reservationTime = String.valueOf(reservation.getReservationTime());
         this.cutStyle = reservation.getStyleName();
+        this.price = stringPrice;
         this.breed = pet.getType();
         this.weight = pet.getWeight();
         this.characteristics = reservation.getFeature();

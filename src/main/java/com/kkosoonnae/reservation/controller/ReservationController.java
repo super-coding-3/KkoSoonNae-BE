@@ -34,15 +34,15 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     @Operation(summary = "매장 일련번호로 매장 이름 가져오기")
-    @GetMapping("/store-name/{storeNo}")
-    public StoreNameResponse findStoreName(@PathVariable Integer storeNo) {
-        return reservationService.findStoreNameByStoreNo(storeNo);
+    @GetMapping("/store-name/{storeNumber}")
+    public StoreNameResponse findStoreName(@PathVariable Integer storeNumber) {
+        return reservationService.findStoreNameByStoreNo(storeNumber);
     }
 
     @Operation(summary = "매장 일련번호로 스타일 이름 가져오기")
-    @GetMapping("/style-list/{storeNo}")
-    public List<StyleResponse> findStyleName(@PathVariable Integer storeNo) {
-        return reservationService.findStyleNameByStoreNo(storeNo);
+    @GetMapping("/style-list/{storeNumber}")
+    public List<StyleResponse> findStyleName(@PathVariable Integer storeNumber) {
+        return reservationService.findStyleNameByStoreNo(storeNumber);
     }
 
     @Operation(summary = "로그인한 정보로 펫 정보 가져오기")
