@@ -47,7 +47,7 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
     @Query("SELECT new com.kkosoonnae.jpa.projection.MainStoresListviewProjection(s.storeNo,s.storeName,s.roadAddress, AVG(r.scope)) " +
             "FROM Store s " +
             "LEFT JOIN FETCH Review r ON s.storeNo = r.store.storeNo " +
-            "WHERE s.roadAddress Like %:addressKeyword% " +
-            "GROUP BY s.storeNo ")
-    List<MainStoresListviewProjection> findMainStores(String addressKeyword, Pageable pageable);
+            "WHERE s.roadAddress = :roadAddress " +
+            "GROUP BY s.storeNo " )
+    List<MainStoresListviewProjection> findMainStores(String roadAddress, Pageable pageable);
 }
