@@ -27,7 +27,7 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CSTMR_NO")
-    private CustomerBas cstmrNo;
+    private Integer cstmrNo;
 
     @Column(name = "IMG")
     private String img;
@@ -49,12 +49,12 @@ public class Review {
     }
 
     public static class Builder {
-        private CustomerBas cstmrNo;
+        private Integer cstmrNo;
         private Store storeNo;
         private String content;
         private LocalDateTime reviewDt;
 
-        public Builder cstmrNo(CustomerBas cstmrNo) {
+        public Builder cstmrNo(Integer cstmrNo) {
             this.cstmrNo = cstmrNo;
             return this;
         }

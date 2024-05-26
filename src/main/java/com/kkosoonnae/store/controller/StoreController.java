@@ -109,17 +109,17 @@ public class StoreController {
     }
 
 
-//    @PostMapping("/review")
-//    @Operation(summary = "리뷰 작성")
-//    public ResponseEntity<String> writeReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Store storeNo, @RequestParam String content) {
-//        try {
-//            Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
-//            reviewService.writeReview(cstmrNo, storeNo, content);
-//            return ResponseEntity.ok("Review submitted successfully");
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
+    @PostMapping("/review")
+    @Operation(summary = "리뷰 작성")
+    public ResponseEntity<String> writeReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Store storeNo, @RequestParam String content) {
+        try {
+            Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+            reviewService.writeReview(cstmrNo, storeNo, content);
+            return ResponseEntity.ok("리뷰가 정상적으로 작성되었습니다.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     @PostMapping("/add")
     @Operation(summary = "매장 등록")

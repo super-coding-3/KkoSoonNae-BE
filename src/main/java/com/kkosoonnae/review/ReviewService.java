@@ -30,20 +30,20 @@ public class ReviewService {
         return latestReview.orElse(null);
     }
 
-//    public void writeReview(Integer cstmrNo, Store storeNo, String content) {
-//
-//        CustomerBas customer = reviewRepository.findCustomerByCustomerNumber(cstmrNo);
-//        if (customer != null) {
-//            Review review = new Review.Builder()
-//                    .cstmrNo(cstmrNo)
-//                    .storeNo(storeNo)
-//                    .content(content)
-//                    .createdAt(LocalDateTime.now())
-//                    .build();
-//            reviewRepository.save(review);
-//        } else {
-//            throw new IllegalArgumentException("Invalid customer number");
-//        }
-//    }
+    public void writeReview(Integer cstmrNo, Store storeNo, String content) {
+
+        Integer customer = reviewRepository.findCustomerByCustomerNumber(cstmrNo);
+        if (customer != null) {
+            Review review = new Review.Builder()
+                    .cstmrNo(cstmrNo)
+                    .storeNo(storeNo)
+                    .content(content)
+                    .createdAt(LocalDateTime.now())
+                    .build();
+            reviewRepository.save(review);
+        } else {
+            throw new IllegalArgumentException("Invalid customer number");
+        }
+    }
 
 }
