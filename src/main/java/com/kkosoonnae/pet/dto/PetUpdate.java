@@ -21,9 +21,6 @@ import lombok.*;
 @NoArgsConstructor
 public class PetUpdate {
 
-    @Schema(description = "이미지")
-    private String img;
-
     @Schema(description = "이름")
     private String name;
 
