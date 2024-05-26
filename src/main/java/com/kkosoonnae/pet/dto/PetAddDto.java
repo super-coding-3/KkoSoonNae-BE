@@ -6,6 +6,8 @@ import com.kkosoonnae.jpa.entity.Pet;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.time.LocalDate;
+
 /**
  * packageName    : com.kkosoonnae.pet.dto
  * fileName       : PetAddDto
@@ -39,7 +41,7 @@ public class PetAddDto {
     private String type;
 
     @Schema(description = "생년월일")
-    private String birthDt;
+    private LocalDate birthDt;
 
     @Schema(description = "성별")
     private String gender;

@@ -7,6 +7,8 @@ import com.kkosoonnae.pet.dto.PetUpdate;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 /**
  * packageName    : com.kkosoonnae.jpa.entity
  * fileName       : Pet
@@ -45,7 +47,7 @@ public class Pet {
     private String type;
 
     @Column(name = "BIRTH_DT")
-    private String birthDt;
+    private LocalDate birthDt;
 
     @Column(name = "GENDER")
     private String gender;

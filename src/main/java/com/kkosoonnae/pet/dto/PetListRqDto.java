@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 /**
  * packageName    : com.kkosoonnae.pet.dto
  * fileName       : PetListRqDto
@@ -33,5 +35,5 @@ public class PetListRqDto {
     private String type;
 
     @Schema(description = "생년월일")
-    private String birthDt;
+    private LocalDate birthDt;
 }

@@ -22,7 +22,7 @@ public class QPet extends EntityPathBase<Pet> {
 
     public static final QPet pet = new QPet("pet");
 
-    public final StringPath birthDt = createString("birthDt");
+    public final DatePath<java.time.LocalDate> birthDt = createDate("birthDt", java.time.LocalDate.class);
 
     public final QCustomerBas customerBas;
 
