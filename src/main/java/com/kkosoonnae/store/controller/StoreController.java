@@ -76,7 +76,7 @@ public class StoreController {
     @Operation(summary = "관심매장등록")
     public ResponseEntity<?> likeStore(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
-            @RequestParam  Integer storeNo) {
+            @RequestParam Integer storeNo) {
         try{
             log.info("POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:");
             LikeStoreDto likeStoreDto = storeService.saveLikeStore(principalDetails,storeNo);

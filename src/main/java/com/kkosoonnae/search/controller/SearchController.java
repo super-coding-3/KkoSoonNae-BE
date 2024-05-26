@@ -1,5 +1,6 @@
 package com.kkosoonnae.search.controller;
 
+import com.kkosoonnae.jpa.projection.MainStoresListviewProjection;
 import com.kkosoonnae.search.dto.MainStoreListViewResponseDto;
 import com.kkosoonnae.search.dto.StoreListViewResponseDto;
 import com.kkosoonnae.search.service.SearchService;
@@ -15,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * packageName    : com.kkosoonnae.store.service
@@ -56,10 +56,10 @@ public class SearchController {
 
     @GetMapping("/main-stores")
     @Operation(summary = "메인 강남구 매장 정보")
-    public ResponseEntity<?> mainByStores(@RequestParam String addressKeyword) {
+    public ResponseEntity<?> mainByStores() {
         try {
             Pageable pageable = PageRequest.of(0, 10);
-            List<MainStoreListViewResponseDto> mainListViewResponseDto = searchService.findByMainStores(addressKeyword, pageable);
+            List<MainStoreListViewResponseDto> mainListViewResponseDto = searchService.findByMainStores(pageable);
             return ResponseEntity.ok(mainListViewResponseDto);
         } catch (Exception e) {
             Map<String, String> errorBody = new HashMap<>();
