@@ -234,7 +234,7 @@ public class ReservationService {
 
         String dayOfWeek = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN);
         String fromatterDate = date.format(formatter);
-        String responseDate = fromatterDate + "(" + dayOfWeek + ")";
+        String responseDate = fromatterDate + "(" + dayOfWeek.charAt(0) + ")";
 
         return new ReservationResultResponse(reservation, storeName, stringPrice, pet, responseDate);
     }
