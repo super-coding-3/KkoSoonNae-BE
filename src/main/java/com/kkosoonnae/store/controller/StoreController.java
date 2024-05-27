@@ -113,8 +113,8 @@ public class StoreController {
     @Operation(summary = "리뷰 작성")
     public ResponseEntity<String> writeReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Store storeNo, @RequestParam String content) {
         try {
-            Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
-            reviewService.writeReview(cstmrNo, storeNo, content);
+
+            reviewService.writeReview(principalDetails, storeNo, content);
             return ResponseEntity.ok("리뷰가 정상적으로 작성되었습니다.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

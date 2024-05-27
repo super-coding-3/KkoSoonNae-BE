@@ -25,8 +25,9 @@ public class Review {
     @JoinColumn(name = "STORE_NO")
     private Store store;
 
-    @Column(name = "CSTMR_NO")
-    private Integer cstmrNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CSTMR_NO")
+    private CustomerBas cstmrNo;
 
     @Column(name = "IMG")
     private String img;
@@ -41,7 +42,7 @@ public class Review {
     private Integer scope;
 
 
-    public static Review of(Integer cstmrNo, Store store, String content, LocalDateTime reviewDt) {
+    public static Review of(CustomerBas cstmrNo, Store store, String content, LocalDateTime reviewDt) {
         return Review.builder()
                 .cstmrNo(cstmrNo)
                 .store(store)
