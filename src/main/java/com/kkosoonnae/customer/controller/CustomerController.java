@@ -47,17 +47,20 @@ public class CustomerController {
 
     @PostMapping("/signUp")
     @Operation(summary = "회원 가입")
-    public ResponseEntity<?> signUp(@RequestBody SignUpDto signUpDto){
-        boolean isSuccess = service.signUp(signUpDto);
-
-        if(isSuccess){
-            return ResponseEntity.ok(Collections.singletonMap("message","회원가입이 완료되었습니다."));
-        }else {
-            return ResponseEntity.badRequest().body(Collections.singletonMap("message","회원가입에 실패했습니다."));
+    public ResponseEntity<?> signUp(@RequestBody SignUpDto signUpDto) {
+        try {
+            boolean isSuccess = service.signUp(signUpDto);
+            if (isSuccess) {
+                return ResponseEntity.ok(Collections.singletonMap("message", "회원가입이 완료되었습니다."));
+            } else {
+                return ResponseEntity.badRequest().body(Collections.singletonMap("message", "회원가입에 실패했습니다."));
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", e.getMessage()));
         }
     }
 
-    @GetMapping("/checkLoginId/{loginId}")
+    @GetMapping("/{loginId}")
     @Operation(summary = "로그인 아이디 중복체크")
     public ResponseEntity<?> validationLoginId(@PathVariable String loginId) {
         if (service.existsLoginId(loginId)) {
@@ -67,7 +70,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/checkNickName/{nickName}")
+    @GetMapping("/{nickName}")
     @Operation(summary = "닉네임 중복체크")
     public ResponseEntity<?> validationNickName(@PathVariable String nickName) {
         if (service.existsNickName(nickName)) {
