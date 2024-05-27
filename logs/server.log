@@ -6365,6 +6365,111 @@ Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'r1_0.FEATURE' in 'f
 2024-05-26 17:37:45.512 [http-nio-8080-exec-1] [34mINFO [0;39m [36mo.a.c.c.C.[Tomcat].[localhost].[/][0;39m - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2024-05-26 17:37:45.513 [http-nio-8080-exec-1] [34mINFO [0;39m [36mo.s.web.servlet.DispatcherServlet[0;39m - Initializing Servlet 'dispatcherServlet'
 2024-05-26 17:37:45.520 [http-nio-8080-exec-1] [34mINFO [0;39m [36mo.s.web.servlet.DispatcherServlet[0;39m - Completed initialization in 6 ms
+2024-05-26 19:02:01.802 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m16s566ms).
+2024-05-26 22:22:45.845 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6m42s154ms).
+2024-05-26 22:27:01.970 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m16s876ms).
+2024-05-26 22:28:17.508 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m15s538ms).
+2024-05-26 22:59:42.869 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=30m25s350ms).
+2024-05-26 23:03:11.718 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m58s833ms).
+2024-05-26 23:15:39.791 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Retrograde clock change detected (housekeeper delta=28s1ms), soft-evicting connections from pool.
+2024-05-27 00:32:10.329 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Retrograde clock change detected (housekeeper delta=28s74ms), soft-evicting connections from pool.
+2024-05-27 01:23:03.994 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=30m23s555ms).
+2024-05-27 01:39:15.121 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m41s99ms).
+2024-05-27 02:41:46.488 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Retrograde clock change detected (housekeeper delta=28s85ms), soft-evicting connections from pool.
+2024-05-27 03:24:43.030 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=30m24s384ms).
+2024-05-27 03:42:34.095 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m21s30ms).
+2024-05-27 04:01:19.111 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m44s994ms).
+2024-05-27 04:19:57.082 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m7s938ms).
+2024-05-27 04:38:30.237 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m3s126ms).
+2024-05-27 04:51:33.862 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11m3s599ms).
+2024-05-27 04:55:28.511 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m24s646ms).
+2024-05-27 05:14:24.330 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m55s793ms).
+2024-05-27 05:33:15.534 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m21s217ms).
+2024-05-27 05:51:37.438 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m51s870ms).
+2024-05-27 06:11:28.075 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m20s627ms).
+2024-05-27 06:30:17.253 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m48s425ms).
+2024-05-27 06:49:10.819 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m23s553ms).
+2024-05-27 07:06:33.613 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m52s783ms).
+2024-05-27 07:26:57.799 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m24s146ms).
+2024-05-27 07:44:05.772 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m37s936ms).
+2024-05-27 08:03:38.206 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m2s407ms).
+2024-05-27 08:22:59.249 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m21s31ms).
+2024-05-27 08:40:19.353 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m50s87ms).
+2024-05-27 08:47:59.282 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6m9s912ms).
+2024-05-27 09:07:48.197 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m18s897ms).
+2024-05-27 09:26:29.170 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m41s12ms).
+2024-05-27 09:44:37.140 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m37s959ms).
+2024-05-27 10:01:44.680 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m37s525ms).
+2024-05-27 10:20:13.817 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m29s79ms).
+2024-05-27 10:36:34.165 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=14m50s320ms).
+2024-05-27 10:48:55.467 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m51s276ms).
+2024-05-27 11:08:16.211 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m20s734ms).
+2024-05-27 11:25:27.132 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m40s898ms).
+2024-05-27 11:45:02.947 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m5s804ms).
+2024-05-27 11:49:51.093 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m18s119ms).
+2024-05-27 12:02:00.262 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m8s408ms).
+2024-05-27 12:09:41.867 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27 12:09:41.927 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown initiated...
+2024-05-27 12:09:41.944 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown completed.
+2024-05-27 12:09:58.268 [background-preinit] [34mINFO [0;39m [36mo.h.validator.internal.util.Version[0;39m - HV000001: Hibernate Validator 8.0.1.Final
+2024-05-27 12:09:58.322 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - Starting KkosoonnaeApplication using Java 17.0.11 with PID 29885 (/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main started by user in /Users/user/Desktop/KkoSoonNae-BE)
+2024-05-27 12:09:58.323 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - The following 3 profiles are active: "local", "jwt", "aws"
+2024-05-27 12:09:59.033 [main] [34mINFO [0;39m [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-27 12:09:59.116 [main] [34mINFO [0;39m [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Finished Spring Data repository scanning in 71 ms. Found 16 JPA repository interfaces.
+2024-05-27 12:10:00.108 [main] [34mINFO [0;39m [36mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat initialized with port 8080 (http)
+2024-05-27 12:10:00.120 [main] [34mINFO [0;39m [36mo.a.coyote.http11.Http11NioProtocol[0;39m - Initializing ProtocolHandler ["http-nio-8080"]
+2024-05-27 12:10:00.122 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardService[0;39m - Starting service [Tomcat]
+2024-05-27 12:10:00.123 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardEngine[0;39m - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-05-27 12:10:00.199 [main] [34mINFO [0;39m [36mo.a.c.c.C.[Tomcat].[localhost].[/][0;39m - Initializing Spring embedded WebApplicationContext
+2024-05-27 12:10:00.201 [main] [34mINFO [0;39m [36mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m - Root WebApplicationContext: initialization completed in 1834 ms
+2024-05-27 12:10:00.376 [main] [34mINFO [0;39m [36mo.h.jpa.internal.util.LogHelper[0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-27 12:10:00.448 [main] [34mINFO [0;39m [36morg.hibernate.Version[0;39m - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-05-27 12:10:00.479 [main] [34mINFO [0;39m [36mo.h.c.i.RegionFactoryInitiator[0;39m - HHH000026: Second-level cache disabled
+2024-05-27 12:10:00.795 [main] [34mINFO [0;39m [36mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-27 12:10:00.819 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Starting...
+2024-05-27 12:10:00.993 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7682bf66
+2024-05-27 12:10:00.994 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Start completed.
+2024-05-27 12:10:01.115 [main] [31mWARN [0;39m [36morg.hibernate.orm.deprecation[0;39m - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-05-27 12:10:01.116 [main] [31mWARN [0;39m [36morg.hibernate.orm.deprecation[0;39m - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2024-05-27 12:10:02.515 [main] [34mINFO [0;39m [36mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-27 12:10:02.518 [main] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27 12:10:02.826 [main] [34mINFO [0;39m [36mo.s.d.j.r.query.QueryEnhancerFactory[0;39m - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-05-27 12:10:04.522 [main] [31mWARN [0;39m [36mo.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration[0;39m - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-05-27 12:10:05.128 [main] [34mINFO [0;39m [36mo.s.s.web.DefaultSecurityFilterChain[0;39m - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@76448624, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3b39b73f, org.springframework.security.web.context.SecurityContextHolderFilter@69e64aa8, org.springframework.security.web.header.HeaderWriterFilter@791e4ccc, org.springframework.web.filter.CorsFilter@6094de13, org.springframework.web.filter.CorsFilter@6094de13, org.springframework.security.web.authentication.logout.LogoutFilter@1af4dbba, com.kkosoonnae.config.jwt.JwtAuthenticationFilter@6bc07760, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@26933d99, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6776e974, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@f4416fc, org.springframework.security.web.session.SessionManagementFilter@65ff5d53, org.springframework.security.web.access.ExceptionTranslationFilter@9fbac3f, org.springframework.security.web.access.intercept.AuthorizationFilter@2e5fcec6]
+2024-05-27 12:10:05.468 [main] [34mINFO [0;39m [36mo.a.coyote.http11.Http11NioProtocol[0;39m - Starting ProtocolHandler ["http-nio-8080"]
+2024-05-27 12:10:05.499 [main] [34mINFO [0;39m [36mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat started on port 8080 (http) with context path ''
+2024-05-27 12:10:05.512 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - Started KkosoonnaeApplication in 7.803 seconds (process running for 8.942)
+2024-05-27 12:10:06.395 [http-nio-8080-exec-2] [34mINFO [0;39m [36mo.a.c.c.C.[Tomcat].[localhost].[/][0;39m - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-27 12:10:06.396 [http-nio-8080-exec-2] [34mINFO [0;39m [36mo.s.web.servlet.DispatcherServlet[0;39m - Initializing Servlet 'dispatcherServlet'
+2024-05-27 12:10:06.397 [http-nio-8080-exec-2] [34mINFO [0;39m [36mo.s.web.servlet.DispatcherServlet[0;39m - Completed initialization in 1 ms
+2024-05-27 12:10:06.469 [http-nio-8080-exec-2] [1;31mERROR[0;39m [36mc.k.config.jwt.JwtTokenProvider[0;39m - JWT expired at 2024-05-23T16:18:24Z. Current time: 2024-05-27T03:10:06Z, a difference of 298302464 milliseconds.  Allowed clock skew: 0 milliseconds.
+2024-05-27 12:10:06.502 [http-nio-8080-exec-2] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:
+2024-05-27 12:10:06.508 [http-nio-8080-exec-2] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - Client 요청에 문제가 있어 다음 오류를 출력합니다.:Cannot invoke "com.kkosoonnae.config.auth.PrincipalDetails.getCustomerBas()" because "principalDetails" is null
+2024-05-27 12:10:17.551 [http-nio-8080-exec-3] [34mINFO [0;39m [36mc.k.c.controller.CustomerController[0;39m - jwt 토큰 : eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzE2Nzc5NDE3LCJleHAiOjE3MTY3ODMwMTd9.oOw-beemVGbadD4HrNJBE-FXF6Zw_ckVoHfB-b3VGRY 
+2024-05-27 12:10:17.552 [http-nio-8080-exec-3] [34mINFO [0;39m [36mc.k.c.controller.CustomerController[0;39m - 로그인 완료
+2024-05-27 12:10:44.235 [http-nio-8080-exec-4] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:
+2024-05-27 12:10:44.268 [http-nio-8080-exec-4] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - Client 요청에 문제가 있어 다음 오류를 출력합니다.:해당 매장이 없습니다.
+2024-05-27 12:11:05.000 [http-nio-8080-exec-5] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - POST/customerNo,storeNo 관심매장삭제 요청이 들어왔습니다.
+2024-05-27 12:11:05.021 [http-nio-8080-exec-5] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - Client 요청에 문제가 있어 다음 오류를 출력합니다.:관심매장을 찾을 수 없습니다
+2024-05-27 12:11:15.493 [http-nio-8080-exec-6] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:
+2024-05-27 12:11:15.525 [http-nio-8080-exec-6] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - Client 요청에 문제가 있어 다음 오류를 출력합니다.:관심매장이 중복입니다.
+2024-05-27 12:12:34.116 [http-nio-8080-exec-9] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:
+2024-05-27 12:12:34.140 [http-nio-8080-exec-9] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - Client 요청에 문제가 있어 다음 오류를 출력합니다.:관심매장이 중복입니다.
+2024-05-27 12:13:54.419 [http-nio-8080-exec-2] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - POST/customerNo,storeNo 관심매장삭제 요청이 들어왔습니다.
+2024-05-27 12:13:54.431 [http-nio-8080-exec-2] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - Client 요청에 문제가 있어 다음 오류를 출력합니다.:관심매장을 찾을 수 없습니다
+2024-05-27 12:13:59.639 [http-nio-8080-exec-3] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - POST/customerNo,storeNo 관심매장삭제 요청이 들어왔습니다.
+2024-05-27 12:13:59.886 [http-nio-8080-exec-3] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - POST/관심매장삭제 응답
+2024-05-27 12:14:03.738 [http-nio-8080-exec-4] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:
+2024-05-27 12:14:03.816 [http-nio-8080-exec-4] [34mINFO [0;39m [36mc.k.store.controller.StoreController[0;39m - POST/LikeStore 응답조회:com.kkosoonnae.store.dto.LikeStoreDto@2597ae30
+2024-05-27 13:09:26.039 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=30m24s755ms).
+2024-05-27 13:26:52.126 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m26s62ms).
+2024-05-27 13:43:19.494 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m57s364ms).
+2024-05-27 14:01:53.243 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m3s753ms).
+2024-05-27 14:10:45.388 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=8m22s122ms).
+2024-05-27 15:30:20.807 [HikariPool-1 housekeeper] [31mWARN [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m4s986ms).
+2024-05-27 15:48:39.240 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27 15:48:39.282 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown initiated...
+2024-05-27 15:48:39.304 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown completed.
 2024-05-27 15:05:44.601 [background-preinit] [34mINFO [0;39m [36mo.h.validator.internal.util.Version[0;39m - HV000001: Hibernate Validator 8.0.1.Final
 2024-05-27 15:05:44.984 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - Starting KkosoonnaeApplication using Java 17.0.10 with PID 28756 (C:\SuperCoding\KkoSoonNae-BE\build\classes\java\main started by ehd38 in C:\SuperCoding\KkoSoonNae-BE)
 2024-05-27 15:05:44.990 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - The following 3 profiles are active: "local", "jwt", "aws"
@@ -8101,6 +8206,87 @@ org.hibernate.NonUniqueResultException: Query did not return a unique result: 7 
 2024-05-27 18:23:51.086 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-05-27 18:23:51.088 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown initiated...
 2024-05-27 18:23:51.096 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown completed.
+2024-05-27 20:02:00.502 [background-preinit] [34mINFO [0;39m [36mo.h.validator.internal.util.Version[0;39m - HV000001: Hibernate Validator 8.0.1.Final
+2024-05-27 20:02:00.553 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - Starting KkosoonnaeApplication using Java 17.0.11 with PID 34596 (/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main started by user in /Users/user/Desktop/KkoSoonNae-BE)
+2024-05-27 20:02:00.554 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - The following 3 profiles are active: "local", "jwt", "aws"
+2024-05-27 20:02:01.328 [main] [34mINFO [0;39m [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-27 20:02:01.460 [main] [34mINFO [0;39m [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Finished Spring Data repository scanning in 117 ms. Found 16 JPA repository interfaces.
+2024-05-27 20:02:02.470 [main] [34mINFO [0;39m [36mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat initialized with port 8080 (http)
+2024-05-27 20:02:02.481 [main] [34mINFO [0;39m [36mo.a.coyote.http11.Http11NioProtocol[0;39m - Initializing ProtocolHandler ["http-nio-8080"]
+2024-05-27 20:02:02.483 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardService[0;39m - Starting service [Tomcat]
+2024-05-27 20:02:02.483 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardEngine[0;39m - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-05-27 20:02:02.541 [main] [34mINFO [0;39m [36mo.a.c.c.C.[Tomcat].[localhost].[/][0;39m - Initializing Spring embedded WebApplicationContext
+2024-05-27 20:02:02.542 [main] [34mINFO [0;39m [36mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m - Root WebApplicationContext: initialization completed in 1948 ms
+2024-05-27 20:02:02.704 [main] [34mINFO [0;39m [36mo.h.jpa.internal.util.LogHelper[0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-27 20:02:02.786 [main] [34mINFO [0;39m [36morg.hibernate.Version[0;39m - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-05-27 20:02:02.822 [main] [34mINFO [0;39m [36mo.h.c.i.RegionFactoryInitiator[0;39m - HHH000026: Second-level cache disabled
+2024-05-27 20:02:03.164 [main] [34mINFO [0;39m [36mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-27 20:02:03.190 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Starting...
+2024-05-27 20:02:03.399 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@65da1cbe
+2024-05-27 20:02:03.402 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Start completed.
+2024-05-27 20:02:03.504 [main] [31mWARN [0;39m [36morg.hibernate.orm.deprecation[0;39m - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-05-27 20:02:03.506 [main] [31mWARN [0;39m [36morg.hibernate.orm.deprecation[0;39m - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2024-05-27 20:02:04.578 [main] [34mINFO [0;39m [36mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-27 20:02:04.581 [main] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27 20:02:04.873 [main] [34mINFO [0;39m [36mo.s.d.j.r.query.QueryEnhancerFactory[0;39m - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-05-27 20:02:06.462 [main] [31mWARN [0;39m [36mo.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration[0;39m - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-05-27 20:02:07.117 [main] [34mINFO [0;39m [36mo.s.s.web.DefaultSecurityFilterChain[0;39m - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1e5975db, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@69ef1ff1, org.springframework.security.web.context.SecurityContextHolderFilter@128b1140, org.springframework.security.web.header.HeaderWriterFilter@5d4c616, org.springframework.web.filter.CorsFilter@2dd178f3, org.springframework.web.filter.CorsFilter@2dd178f3, org.springframework.security.web.authentication.logout.LogoutFilter@d13d812, com.kkosoonnae.config.jwt.JwtAuthenticationFilter@84a9f40, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@11090c52, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@72448d57, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@47c67c19, org.springframework.security.web.session.SessionManagementFilter@79f127e, org.springframework.security.web.access.ExceptionTranslationFilter@5ec32f69, org.springframework.security.web.access.intercept.AuthorizationFilter@164ee145]
+2024-05-27 20:02:07.413 [main] [34mINFO [0;39m [36mo.a.coyote.http11.Http11NioProtocol[0;39m - Starting ProtocolHandler ["http-nio-8080"]
+2024-05-27 20:02:07.439 [main] [34mINFO [0;39m [36mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat started on port 8080 (http) with context path ''
+2024-05-27 20:02:07.451 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - Started KkosoonnaeApplication in 7.872 seconds (process running for 8.595)
+2024-05-27 20:02:58.177 [http-nio-8080-exec-1] [34mINFO [0;39m [36mo.a.c.c.C.[Tomcat].[localhost].[/][0;39m - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-27 20:02:58.182 [http-nio-8080-exec-1] [34mINFO [0;39m [36mo.s.web.servlet.DispatcherServlet[0;39m - Initializing Servlet 'dispatcherServlet'
+2024-05-27 20:02:58.222 [http-nio-8080-exec-1] [34mINFO [0;39m [36mo.s.web.servlet.DispatcherServlet[0;39m - Completed initialization in 17 ms
+2024-05-27 20:02:58.344 [http-nio-8080-exec-1] [31mWARN [0;39m [36mo.s.w.s.m.s.DefaultHandlerExceptionResolver[0;39m - Resolved [org.springframework.web.bind.MissingPathVariableException: Required URI template variable 'storeNo' for method parameter type Integer is not present]
+2024-05-27 20:03:26.559 [http-nio-8080-exec-4] [31mWARN [0;39m [36mo.s.w.s.m.s.DefaultHandlerExceptionResolver[0;39m - Resolved [org.springframework.web.bind.MissingPathVariableException: Required URI template variable 'storeNo' for method parameter type Integer is not present]
+2024-05-27 20:04:34.092 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27 20:04:34.117 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown initiated...
+2024-05-27 20:04:34.144 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown completed.
+2024-05-27 20:04:40.291 [background-preinit] [34mINFO [0;39m [36mo.h.validator.internal.util.Version[0;39m - HV000001: Hibernate Validator 8.0.1.Final
+2024-05-27 20:04:40.341 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - Starting KkosoonnaeApplication using Java 17.0.11 with PID 34627 (/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main started by user in /Users/user/Desktop/KkoSoonNae-BE)
+2024-05-27 20:04:40.342 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - The following 3 profiles are active: "local", "jwt", "aws"
+2024-05-27 20:04:40.946 [main] [34mINFO [0;39m [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-27 20:04:41.016 [main] [34mINFO [0;39m [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Finished Spring Data repository scanning in 61 ms. Found 16 JPA repository interfaces.
+2024-05-27 20:04:41.779 [main] [34mINFO [0;39m [36mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat initialized with port 8080 (http)
+2024-05-27 20:04:41.789 [main] [34mINFO [0;39m [36mo.a.coyote.http11.Http11NioProtocol[0;39m - Initializing ProtocolHandler ["http-nio-8080"]
+2024-05-27 20:04:41.791 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardService[0;39m - Starting service [Tomcat]
+2024-05-27 20:04:41.791 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardEngine[0;39m - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-05-27 20:04:41.845 [main] [34mINFO [0;39m [36mo.a.c.c.C.[Tomcat].[localhost].[/][0;39m - Initializing Spring embedded WebApplicationContext
+2024-05-27 20:04:41.846 [main] [34mINFO [0;39m [36mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m - Root WebApplicationContext: initialization completed in 1466 ms
+2024-05-27 20:04:41.991 [main] [34mINFO [0;39m [36mo.h.jpa.internal.util.LogHelper[0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-27 20:04:42.056 [main] [34mINFO [0;39m [36morg.hibernate.Version[0;39m - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-05-27 20:04:42.091 [main] [34mINFO [0;39m [36mo.h.c.i.RegionFactoryInitiator[0;39m - HHH000026: Second-level cache disabled
+2024-05-27 20:04:42.421 [main] [34mINFO [0;39m [36mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-27 20:04:42.474 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Starting...
+2024-05-27 20:04:42.949 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@65da1cbe
+2024-05-27 20:04:42.954 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Start completed.
+2024-05-27 20:04:43.119 [main] [31mWARN [0;39m [36morg.hibernate.orm.deprecation[0;39m - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-05-27 20:04:43.120 [main] [31mWARN [0;39m [36morg.hibernate.orm.deprecation[0;39m - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2024-05-27 20:04:44.290 [main] [34mINFO [0;39m [36mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-27 20:04:44.294 [main] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27 20:04:44.573 [main] [34mINFO [0;39m [36mo.s.d.j.r.query.QueryEnhancerFactory[0;39m - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-05-27 20:04:46.139 [main] [31mWARN [0;39m [36mo.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration[0;39m - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-05-27 20:04:46.743 [main] [34mINFO [0;39m [36mo.s.s.web.DefaultSecurityFilterChain[0;39m - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5e9c61cd, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@562c6d5c, org.springframework.security.web.context.SecurityContextHolderFilter@2d393a72, org.springframework.security.web.header.HeaderWriterFilter@25d42dee, org.springframework.web.filter.CorsFilter@2dd178f3, org.springframework.web.filter.CorsFilter@2dd178f3, org.springframework.security.web.authentication.logout.LogoutFilter@76bf8b60, com.kkosoonnae.config.jwt.JwtAuthenticationFilter@5efd5ebd, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@73707d4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@62b5606a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6999c848, org.springframework.security.web.session.SessionManagementFilter@e4748af, org.springframework.security.web.access.ExceptionTranslationFilter@18f80e28, org.springframework.security.web.access.intercept.AuthorizationFilter@56dbd054]
+2024-05-27 20:04:47.022 [main] [34mINFO [0;39m [36mo.a.coyote.http11.Http11NioProtocol[0;39m - Starting ProtocolHandler ["http-nio-8080"]
+2024-05-27 20:04:47.042 [main] [34mINFO [0;39m [36mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat started on port 8080 (http) with context path ''
+2024-05-27 20:04:47.057 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - Started KkosoonnaeApplication in 7.597 seconds (process running for 8.571)
+2024-05-27 20:04:51.554 [http-nio-8080-exec-2] [34mINFO [0;39m [36mo.a.c.c.C.[Tomcat].[localhost].[/][0;39m - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-27 20:04:51.554 [http-nio-8080-exec-2] [34mINFO [0;39m [36mo.s.web.servlet.DispatcherServlet[0;39m - Initializing Servlet 'dispatcherServlet'
+2024-05-27 20:04:51.556 [http-nio-8080-exec-2] [34mINFO [0;39m [36mo.s.web.servlet.DispatcherServlet[0;39m - Completed initialization in 2 ms
+2024-05-27 20:19:18.066 [http-nio-8080-exec-1] [31mWARN [0;39m [36mo.s.w.s.m.s.DefaultHandlerExceptionResolver[0;39m - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "reviews"]
+2024-05-27 20:20:35.748 [http-nio-8080-exec-3] [31mWARN [0;39m [36mo.s.w.s.m.s.DefaultHandlerExceptionResolver[0;39m - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "reviews"]
+2024-05-27 20:20:59.358 [http-nio-8080-exec-4] [31mWARN [0;39m [36mo.s.w.s.m.s.DefaultHandlerExceptionResolver[0;39m - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "reviews"]
+2024-05-27 20:21:18.449 [http-nio-8080-exec-8] [31mWARN [0;39m [36mo.s.w.s.m.s.DefaultHandlerExceptionResolver[0;39m - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "reviews"]
+2024-05-27 20:21:35.075 [http-nio-8080-exec-9] [31mWARN [0;39m [36mo.s.w.s.m.s.DefaultHandlerExceptionResolver[0;39m - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "reviews"]
+2024-05-27 20:23:26.525 [http-nio-8080-exec-1] [34mINFO [0;39m [36mc.k.c.controller.CustomerController[0;39m - jwt 토큰 : eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzE2ODA5MDA2LCJleHAiOjE3MTY4MTI2MDZ9.O1OzP4UDtkyrQJYts1ydmfBx8D6dLjub8yJM0-kIrn0 
+2024-05-27 20:23:26.527 [http-nio-8080-exec-1] [34mINFO [0;39m [36mc.k.c.controller.CustomerController[0;39m - 로그인 완료
+2024-05-27 20:23:54.270 [http-nio-8080-exec-2] [31mWARN [0;39m [36mo.s.w.s.m.s.DefaultHandlerExceptionResolver[0;39m - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "reviews"]
+2024-05-27 20:24:28.882 [http-nio-8080-exec-5] [31mWARN [0;39m [36mo.s.w.s.m.s.DefaultHandlerExceptionResolver[0;39m - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "reviews"]
+2024-05-27 20:25:11.651 [http-nio-8080-exec-6] [31mWARN [0;39m [36mo.s.w.s.m.s.DefaultHandlerExceptionResolver[0;39m - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "reviews"]
+2024-05-27 20:26:02.019 [http-nio-8080-exec-7] [31mWARN [0;39m [36mo.s.w.s.m.s.DefaultHandlerExceptionResolver[0;39m - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "reviews"]
+2024-05-27 21:16:56.693 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27 21:16:56.731 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown initiated...
+2024-05-27 21:16:56.750 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown completed.
 2024-05-27 20:44:38.804 [background-preinit] [34mINFO [0;39m [36mo.h.validator.internal.util.Version[0;39m - HV000001: Hibernate Validator 8.0.1.Final
 2024-05-27 20:44:38.851 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - Starting KkosoonnaeApplication using Java 17.0.10 with PID 31648 (C:\Users\hagjoon\OneDrive\바탕 화면\supercoding\KkoSoonNae-BE\build\classes\java\main started by hagjoon in C:\Users\hagjoon\OneDrive\바탕 화면\supercoding\KkoSoonNae-BE)
 2024-05-27 20:44:38.852 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - The following 3 profiles are active: "local", "jwt", "aws"
@@ -8265,3 +8451,460 @@ Caused by: org.hibernate.query.SemanticException: Cannot compare left expression
 2024-05-27 20:45:49.360 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-05-27 20:45:49.361 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown initiated...
 2024-05-27 20:45:49.365 [SpringApplicationShutdownHook] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown completed.
+2024-05-27 21:23:40.422 [background-preinit] [34mINFO [0;39m [36mo.h.validator.internal.util.Version[0;39m - HV000001: Hibernate Validator 8.0.1.Final
+2024-05-27 21:23:40.496 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - Starting KkosoonnaeApplication using Java 17.0.11 with PID 35674 (/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main started by user in /Users/user/Desktop/KkoSoonNae-BE)
+2024-05-27 21:23:40.497 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - The following 3 profiles are active: "local", "jwt", "aws"
+2024-05-27 21:23:41.205 [main] [34mINFO [0;39m [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-27 21:23:41.276 [main] [34mINFO [0;39m [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Finished Spring Data repository scanning in 62 ms. Found 16 JPA repository interfaces.
+2024-05-27 21:23:42.048 [main] [34mINFO [0;39m [36mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat initialized with port 8080 (http)
+2024-05-27 21:23:42.058 [main] [34mINFO [0;39m [36mo.a.coyote.http11.Http11NioProtocol[0;39m - Initializing ProtocolHandler ["http-nio-8080"]
+2024-05-27 21:23:42.059 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardService[0;39m - Starting service [Tomcat]
+2024-05-27 21:23:42.059 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardEngine[0;39m - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-05-27 21:23:42.111 [main] [34mINFO [0;39m [36mo.a.c.c.C.[Tomcat].[localhost].[/][0;39m - Initializing Spring embedded WebApplicationContext
+2024-05-27 21:23:42.112 [main] [34mINFO [0;39m [36mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m - Root WebApplicationContext: initialization completed in 1566 ms
+2024-05-27 21:23:42.257 [main] [34mINFO [0;39m [36mo.h.jpa.internal.util.LogHelper[0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-27 21:23:42.327 [main] [34mINFO [0;39m [36morg.hibernate.Version[0;39m - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-05-27 21:23:42.362 [main] [34mINFO [0;39m [36mo.h.c.i.RegionFactoryInitiator[0;39m - HHH000026: Second-level cache disabled
+2024-05-27 21:23:42.710 [main] [34mINFO [0;39m [36mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-27 21:23:42.737 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Starting...
+2024-05-27 21:23:42.896 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@257b6c58
+2024-05-27 21:23:42.898 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Start completed.
+2024-05-27 21:23:42.952 [main] [31mWARN [0;39m [36morg.hibernate.orm.deprecation[0;39m - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-05-27 21:23:42.953 [main] [31mWARN [0;39m [36morg.hibernate.orm.deprecation[0;39m - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2024-05-27 21:23:44.004 [main] [34mINFO [0;39m [36mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-27 21:23:44.006 [main] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27 21:23:44.275 [main] [34mINFO [0;39m [36mo.s.d.j.r.query.QueryEnhancerFactory[0;39m - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-05-27 21:23:45.542 [main] [31mWARN [0;39m [36mo.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext[0;39m - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'reservationController' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/controller/ReservationController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'reservationService' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/service/ReservationService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'storeRepository' defined in com.kkosoonnae.jpa.repository.StoreRepository defined in @EnableJpaRepositories declared on JpaConfig: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+2024-05-27 21:23:45.543 [main] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27 21:23:45.544 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown initiated...
+2024-05-27 21:23:45.552 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown completed.
+2024-05-27 21:23:45.553 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardService[0;39m - Stopping service [Tomcat]
+2024-05-27 21:23:45.565 [main] [34mINFO [0;39m [36mo.s.b.a.l.ConditionEvaluationReportLogger[0;39m - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-05-27 21:23:45.587 [main] [1;31mERROR[0;39m [36mo.s.boot.SpringApplication[0;39m - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'reservationController' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/controller/ReservationController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'reservationService' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/service/ReservationService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'storeRepository' defined in com.kkosoonnae.jpa.repository.StoreRepository defined in @EnableJpaRepositories declared on JpaConfig: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at com.kkosoonnae.KkosoonnaeApplication.main(KkosoonnaeApplication.java:13)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'reservationService' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/service/ReservationService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'storeRepository' defined in com.kkosoonnae.jpa.repository.StoreRepository defined in @EnableJpaRepositories declared on JpaConfig: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782)
+	... 19 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'storeRepository' defined in com.kkosoonnae.jpa.repository.StoreRepository defined in @EnableJpaRepositories declared on JpaConfig: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1786)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782)
+	... 33 common frames omitted
+Caused by: org.springframework.data.repository.query.QueryCreationException: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.data.repository.query.QueryCreationException.create(QueryCreationException.java:101)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lookupQuery(QueryExecutorMethodInterceptor.java:115)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.mapMethodsToQuery(QueryExecutorMethodInterceptor.java:99)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lambda$new$0(QueryExecutorMethodInterceptor.java:88)
+	at java.base/java.util.Optional.map(Optional.java:260)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.<init>(QueryExecutorMethodInterceptor.java:88)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport.getRepository(RepositoryFactorySupport.java:357)
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.lambda$afterPropertiesSet$5(RepositoryFactoryBeanSupport.java:279)
+	at org.springframework.data.util.Lazy.getNullable(Lazy.java:135)
+	at org.springframework.data.util.Lazy.get(Lazy.java:113)
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.afterPropertiesSet(RepositoryFactoryBeanSupport.java:285)
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean.afterPropertiesSet(JpaRepositoryFactoryBean.java:132)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1833)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782)
+	... 44 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.data.jpa.repository.query.SimpleJpaQuery.validateQuery(SimpleJpaQuery.java:100)
+	at org.springframework.data.jpa.repository.query.SimpleJpaQuery.<init>(SimpleJpaQuery.java:70)
+	at org.springframework.data.jpa.repository.query.JpaQueryFactory.fromMethodWithQueryString(JpaQueryFactory.java:60)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$DeclaredQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:170)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$CreateIfNotFoundQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:252)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$AbstractQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:95)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lookupQuery(QueryExecutorMethodInterceptor.java:111)
+	... 56 common frames omitted
+Caused by: java.lang.IllegalArgumentException: org.hibernate.query.SemanticException: Cannot compare left expression of type 'com.kkosoonnae.jpa.entity.CustomerBas' with right expression of type 'java.lang.Integer'
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:143)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:167)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:173)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:848)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:753)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:136)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.orm.jpa.ExtendedEntityManagerCreator$ExtendedEntityManagerInvocationHandler.invoke(ExtendedEntityManagerCreator.java:364)
+	at jdk.proxy2/jdk.proxy2.$Proxy136.createQuery(Unknown Source)
+	at org.springframework.data.jpa.repository.query.SimpleJpaQuery.validateQuery(SimpleJpaQuery.java:94)
+	... 62 common frames omitted
+Caused by: org.hibernate.query.SemanticException: Cannot compare left expression of type 'com.kkosoonnae.jpa.entity.CustomerBas' with right expression of type 'java.lang.Integer'
+	at org.hibernate.query.sqm.internal.TypecheckUtil.assertComparable(TypecheckUtil.java:358)
+	at org.hibernate.query.sqm.tree.predicate.SqmComparisonPredicate.<init>(SqmComparisonPredicate.java:48)
+	at org.hibernate.query.sqm.tree.predicate.SqmComparisonPredicate.<init>(SqmComparisonPredicate.java:34)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.createComparisonPredicate(SemanticQueryBuilder.java:2448)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitComparisonPredicate(SemanticQueryBuilder.java:2392)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitComparisonPredicate(SemanticQueryBuilder.java:269)
+	at org.hibernate.grammars.hql.HqlParser$ComparisonPredicateContext.accept(HqlParser.java:6164)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.consumeJoin(SemanticQueryBuilder.java:2130)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitEntityWithJoins(SemanticQueryBuilder.java:1922)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitFromClause(SemanticQueryBuilder.java:1901)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuery(SemanticQueryBuilder.java:1148)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuerySpecExpression(SemanticQueryBuilder.java:941)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuerySpecExpression(SemanticQueryBuilder.java:269)
+	at org.hibernate.grammars.hql.HqlParser$QuerySpecExpressionContext.accept(HqlParser.java:1869)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSimpleQueryGroup(SemanticQueryBuilder.java:926)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSimpleQueryGroup(SemanticQueryBuilder.java:269)
+	at org.hibernate.grammars.hql.HqlParser$SimpleQueryGroupContext.accept(HqlParser.java:1740)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSelectStatement(SemanticQueryBuilder.java:443)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitStatement(SemanticQueryBuilder.java:402)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.buildSemanticModel(SemanticQueryBuilder.java:311)
+	at org.hibernate.query.hql.internal.StandardHqlTranslator.translate(StandardHqlTranslator.java:71)
+	at org.hibernate.query.internal.QueryInterpretationCacheStandardImpl.createHqlInterpretation(QueryInterpretationCacheStandardImpl.java:165)
+	at org.hibernate.query.internal.QueryInterpretationCacheStandardImpl.resolveHqlInterpretation(QueryInterpretationCacheStandardImpl.java:147)
+	at org.hibernate.internal.AbstractSharedSessionContract.interpretHql(AbstractSharedSessionContract.java:790)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:840)
+	... 71 common frames omitted
+2024-05-27 21:52:45.657 [background-preinit] [34mINFO [0;39m [36mo.h.validator.internal.util.Version[0;39m - HV000001: Hibernate Validator 8.0.1.Final
+2024-05-27 21:52:45.702 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - Starting KkosoonnaeApplication using Java 17.0.11 with PID 36031 (/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main started by user in /Users/user/Desktop/KkoSoonNae-BE)
+2024-05-27 21:52:45.703 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - The following 3 profiles are active: "local", "jwt", "aws"
+2024-05-27 21:52:46.390 [main] [34mINFO [0;39m [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-27 21:52:46.458 [main] [34mINFO [0;39m [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Finished Spring Data repository scanning in 61 ms. Found 16 JPA repository interfaces.
+2024-05-27 21:52:47.238 [main] [34mINFO [0;39m [36mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat initialized with port 8080 (http)
+2024-05-27 21:52:47.249 [main] [34mINFO [0;39m [36mo.a.coyote.http11.Http11NioProtocol[0;39m - Initializing ProtocolHandler ["http-nio-8080"]
+2024-05-27 21:52:47.251 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardService[0;39m - Starting service [Tomcat]
+2024-05-27 21:52:47.251 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardEngine[0;39m - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-05-27 21:52:47.308 [main] [34mINFO [0;39m [36mo.a.c.c.C.[Tomcat].[localhost].[/][0;39m - Initializing Spring embedded WebApplicationContext
+2024-05-27 21:52:47.309 [main] [34mINFO [0;39m [36mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m - Root WebApplicationContext: initialization completed in 1568 ms
+2024-05-27 21:52:47.446 [main] [34mINFO [0;39m [36mo.h.jpa.internal.util.LogHelper[0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-27 21:52:47.514 [main] [34mINFO [0;39m [36morg.hibernate.Version[0;39m - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-05-27 21:52:47.546 [main] [34mINFO [0;39m [36mo.h.c.i.RegionFactoryInitiator[0;39m - HHH000026: Second-level cache disabled
+2024-05-27 21:52:47.875 [main] [34mINFO [0;39m [36mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-27 21:52:47.899 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Starting...
+2024-05-27 21:52:48.056 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@38445703
+2024-05-27 21:52:48.058 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Start completed.
+2024-05-27 21:52:48.115 [main] [31mWARN [0;39m [36morg.hibernate.orm.deprecation[0;39m - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-05-27 21:52:48.116 [main] [31mWARN [0;39m [36morg.hibernate.orm.deprecation[0;39m - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2024-05-27 21:52:49.111 [main] [34mINFO [0;39m [36mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-27 21:52:49.113 [main] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27 21:52:49.323 [main] [34mINFO [0;39m [36mo.s.d.j.r.query.QueryEnhancerFactory[0;39m - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-05-27 21:52:50.740 [main] [31mWARN [0;39m [36mo.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext[0;39m - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'reservationController' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/controller/ReservationController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'reservationService' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/service/ReservationService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'storeRepository' defined in com.kkosoonnae.jpa.repository.StoreRepository defined in @EnableJpaRepositories declared on JpaConfig: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+2024-05-27 21:52:50.741 [main] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27 21:52:50.742 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown initiated...
+2024-05-27 21:52:50.751 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown completed.
+2024-05-27 21:52:50.752 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardService[0;39m - Stopping service [Tomcat]
+2024-05-27 21:52:50.767 [main] [34mINFO [0;39m [36mo.s.b.a.l.ConditionEvaluationReportLogger[0;39m - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-05-27 21:52:50.791 [main] [1;31mERROR[0;39m [36mo.s.boot.SpringApplication[0;39m - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'reservationController' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/controller/ReservationController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'reservationService' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/service/ReservationService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'storeRepository' defined in com.kkosoonnae.jpa.repository.StoreRepository defined in @EnableJpaRepositories declared on JpaConfig: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at com.kkosoonnae.KkosoonnaeApplication.main(KkosoonnaeApplication.java:13)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'reservationService' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/service/ReservationService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'storeRepository' defined in com.kkosoonnae.jpa.repository.StoreRepository defined in @EnableJpaRepositories declared on JpaConfig: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782)
+	... 19 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'storeRepository' defined in com.kkosoonnae.jpa.repository.StoreRepository defined in @EnableJpaRepositories declared on JpaConfig: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1786)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782)
+	... 33 common frames omitted
+Caused by: org.springframework.data.repository.query.QueryCreationException: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.data.repository.query.QueryCreationException.create(QueryCreationException.java:101)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lookupQuery(QueryExecutorMethodInterceptor.java:115)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.mapMethodsToQuery(QueryExecutorMethodInterceptor.java:99)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lambda$new$0(QueryExecutorMethodInterceptor.java:88)
+	at java.base/java.util.Optional.map(Optional.java:260)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.<init>(QueryExecutorMethodInterceptor.java:88)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport.getRepository(RepositoryFactorySupport.java:357)
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.lambda$afterPropertiesSet$5(RepositoryFactoryBeanSupport.java:279)
+	at org.springframework.data.util.Lazy.getNullable(Lazy.java:135)
+	at org.springframework.data.util.Lazy.get(Lazy.java:113)
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.afterPropertiesSet(RepositoryFactoryBeanSupport.java:285)
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean.afterPropertiesSet(JpaRepositoryFactoryBean.java:132)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1833)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782)
+	... 44 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.data.jpa.repository.query.SimpleJpaQuery.validateQuery(SimpleJpaQuery.java:100)
+	at org.springframework.data.jpa.repository.query.SimpleJpaQuery.<init>(SimpleJpaQuery.java:70)
+	at org.springframework.data.jpa.repository.query.JpaQueryFactory.fromMethodWithQueryString(JpaQueryFactory.java:60)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$DeclaredQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:170)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$CreateIfNotFoundQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:252)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$AbstractQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:95)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lookupQuery(QueryExecutorMethodInterceptor.java:111)
+	... 56 common frames omitted
+Caused by: java.lang.IllegalArgumentException: org.hibernate.query.SemanticException: Cannot compare left expression of type 'com.kkosoonnae.jpa.entity.CustomerBas' with right expression of type 'java.lang.Integer'
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:143)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:167)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:173)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:848)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:753)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:136)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.orm.jpa.ExtendedEntityManagerCreator$ExtendedEntityManagerInvocationHandler.invoke(ExtendedEntityManagerCreator.java:364)
+	at jdk.proxy2/jdk.proxy2.$Proxy136.createQuery(Unknown Source)
+	at org.springframework.data.jpa.repository.query.SimpleJpaQuery.validateQuery(SimpleJpaQuery.java:94)
+	... 62 common frames omitted
+Caused by: org.hibernate.query.SemanticException: Cannot compare left expression of type 'com.kkosoonnae.jpa.entity.CustomerBas' with right expression of type 'java.lang.Integer'
+	at org.hibernate.query.sqm.internal.TypecheckUtil.assertComparable(TypecheckUtil.java:358)
+	at org.hibernate.query.sqm.tree.predicate.SqmComparisonPredicate.<init>(SqmComparisonPredicate.java:48)
+	at org.hibernate.query.sqm.tree.predicate.SqmComparisonPredicate.<init>(SqmComparisonPredicate.java:34)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.createComparisonPredicate(SemanticQueryBuilder.java:2448)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitComparisonPredicate(SemanticQueryBuilder.java:2392)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitComparisonPredicate(SemanticQueryBuilder.java:269)
+	at org.hibernate.grammars.hql.HqlParser$ComparisonPredicateContext.accept(HqlParser.java:6164)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.consumeJoin(SemanticQueryBuilder.java:2130)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitEntityWithJoins(SemanticQueryBuilder.java:1922)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitFromClause(SemanticQueryBuilder.java:1901)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuery(SemanticQueryBuilder.java:1148)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuerySpecExpression(SemanticQueryBuilder.java:941)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuerySpecExpression(SemanticQueryBuilder.java:269)
+	at org.hibernate.grammars.hql.HqlParser$QuerySpecExpressionContext.accept(HqlParser.java:1869)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSimpleQueryGroup(SemanticQueryBuilder.java:926)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSimpleQueryGroup(SemanticQueryBuilder.java:269)
+	at org.hibernate.grammars.hql.HqlParser$SimpleQueryGroupContext.accept(HqlParser.java:1740)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSelectStatement(SemanticQueryBuilder.java:443)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitStatement(SemanticQueryBuilder.java:402)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.buildSemanticModel(SemanticQueryBuilder.java:311)
+	at org.hibernate.query.hql.internal.StandardHqlTranslator.translate(StandardHqlTranslator.java:71)
+	at org.hibernate.query.internal.QueryInterpretationCacheStandardImpl.createHqlInterpretation(QueryInterpretationCacheStandardImpl.java:165)
+	at org.hibernate.query.internal.QueryInterpretationCacheStandardImpl.resolveHqlInterpretation(QueryInterpretationCacheStandardImpl.java:147)
+	at org.hibernate.internal.AbstractSharedSessionContract.interpretHql(AbstractSharedSessionContract.java:790)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:840)
+	... 71 common frames omitted
+2024-05-27 23:39:29.760 [background-preinit] [34mINFO [0;39m [36mo.h.validator.internal.util.Version[0;39m - HV000001: Hibernate Validator 8.0.1.Final
+2024-05-27 23:39:29.811 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - Starting KkosoonnaeApplication using Java 17.0.11 with PID 37089 (/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main started by user in /Users/user/Desktop/KkoSoonNae-BE)
+2024-05-27 23:39:29.812 [main] [34mINFO [0;39m [36mc.kkosoonnae.KkosoonnaeApplication[0;39m - The following 3 profiles are active: "local", "jwt", "aws"
+2024-05-27 23:39:30.461 [main] [34mINFO [0;39m [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-27 23:39:30.543 [main] [34mINFO [0;39m [36mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Finished Spring Data repository scanning in 71 ms. Found 16 JPA repository interfaces.
+2024-05-27 23:39:31.417 [main] [34mINFO [0;39m [36mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat initialized with port 8080 (http)
+2024-05-27 23:39:31.428 [main] [34mINFO [0;39m [36mo.a.coyote.http11.Http11NioProtocol[0;39m - Initializing ProtocolHandler ["http-nio-8080"]
+2024-05-27 23:39:31.430 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardService[0;39m - Starting service [Tomcat]
+2024-05-27 23:39:31.430 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardEngine[0;39m - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-05-27 23:39:31.498 [main] [34mINFO [0;39m [36mo.a.c.c.C.[Tomcat].[localhost].[/][0;39m - Initializing Spring embedded WebApplicationContext
+2024-05-27 23:39:31.499 [main] [34mINFO [0;39m [36mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m - Root WebApplicationContext: initialization completed in 1642 ms
+2024-05-27 23:39:31.659 [main] [34mINFO [0;39m [36mo.h.jpa.internal.util.LogHelper[0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-27 23:39:31.729 [main] [34mINFO [0;39m [36morg.hibernate.Version[0;39m - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-05-27 23:39:31.771 [main] [34mINFO [0;39m [36mo.h.c.i.RegionFactoryInitiator[0;39m - HHH000026: Second-level cache disabled
+2024-05-27 23:39:32.182 [main] [34mINFO [0;39m [36mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-27 23:39:32.212 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Starting...
+2024-05-27 23:39:32.450 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6f4029e9
+2024-05-27 23:39:32.452 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Start completed.
+2024-05-27 23:39:32.541 [main] [31mWARN [0;39m [36morg.hibernate.orm.deprecation[0;39m - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-05-27 23:39:32.542 [main] [31mWARN [0;39m [36morg.hibernate.orm.deprecation[0;39m - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2024-05-27 23:39:33.842 [main] [34mINFO [0;39m [36mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-27 23:39:33.845 [main] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27 23:39:34.184 [main] [34mINFO [0;39m [36mo.s.d.j.r.query.QueryEnhancerFactory[0;39m - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-05-27 23:39:35.514 [main] [31mWARN [0;39m [36mo.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext[0;39m - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'reservationController' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/controller/ReservationController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'reservationService' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/service/ReservationService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'storeRepository' defined in com.kkosoonnae.jpa.repository.StoreRepository defined in @EnableJpaRepositories declared on JpaConfig: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+2024-05-27 23:39:35.516 [main] [34mINFO [0;39m [36mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27 23:39:35.516 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown initiated...
+2024-05-27 23:39:35.525 [main] [34mINFO [0;39m [36mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown completed.
+2024-05-27 23:39:35.527 [main] [34mINFO [0;39m [36mo.a.catalina.core.StandardService[0;39m - Stopping service [Tomcat]
+2024-05-27 23:39:35.539 [main] [34mINFO [0;39m [36mo.s.b.a.l.ConditionEvaluationReportLogger[0;39m - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-05-27 23:39:35.557 [main] [1;31mERROR[0;39m [36mo.s.boot.SpringApplication[0;39m - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'reservationController' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/controller/ReservationController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'reservationService' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/service/ReservationService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'storeRepository' defined in com.kkosoonnae.jpa.repository.StoreRepository defined in @EnableJpaRepositories declared on JpaConfig: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at com.kkosoonnae.KkosoonnaeApplication.main(KkosoonnaeApplication.java:13)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'reservationService' defined in file [/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main/com/kkosoonnae/reservation/service/ReservationService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'storeRepository' defined in com.kkosoonnae.jpa.repository.StoreRepository defined in @EnableJpaRepositories declared on JpaConfig: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782)
+	... 19 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'storeRepository' defined in com.kkosoonnae.jpa.repository.StoreRepository defined in @EnableJpaRepositories declared on JpaConfig: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1786)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782)
+	... 33 common frames omitted
+Caused by: org.springframework.data.repository.query.QueryCreationException: Could not create query for public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer); Reason: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.data.repository.query.QueryCreationException.create(QueryCreationException.java:101)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lookupQuery(QueryExecutorMethodInterceptor.java:115)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.mapMethodsToQuery(QueryExecutorMethodInterceptor.java:99)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lambda$new$0(QueryExecutorMethodInterceptor.java:88)
+	at java.base/java.util.Optional.map(Optional.java:260)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.<init>(QueryExecutorMethodInterceptor.java:88)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport.getRepository(RepositoryFactorySupport.java:357)
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.lambda$afterPropertiesSet$5(RepositoryFactoryBeanSupport.java:279)
+	at org.springframework.data.util.Lazy.getNullable(Lazy.java:135)
+	at org.springframework.data.util.Lazy.get(Lazy.java:113)
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.afterPropertiesSet(RepositoryFactoryBeanSupport.java:285)
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean.afterPropertiesSet(JpaRepositoryFactoryBean.java:132)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1833)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782)
+	... 44 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Validation failed for query for method public abstract java.util.List com.kkosoonnae.jpa.repository.StoreRepository.findByReviews(java.lang.Integer)
+	at org.springframework.data.jpa.repository.query.SimpleJpaQuery.validateQuery(SimpleJpaQuery.java:100)
+	at org.springframework.data.jpa.repository.query.SimpleJpaQuery.<init>(SimpleJpaQuery.java:70)
+	at org.springframework.data.jpa.repository.query.JpaQueryFactory.fromMethodWithQueryString(JpaQueryFactory.java:60)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$DeclaredQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:170)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$CreateIfNotFoundQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:252)
+	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$AbstractQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:95)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lookupQuery(QueryExecutorMethodInterceptor.java:111)
+	... 56 common frames omitted
+Caused by: java.lang.IllegalArgumentException: org.hibernate.query.SemanticException: Cannot compare left expression of type 'com.kkosoonnae.jpa.entity.CustomerBas' with right expression of type 'java.lang.Integer'
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:143)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:167)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:173)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:848)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:753)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:136)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.orm.jpa.ExtendedEntityManagerCreator$ExtendedEntityManagerInvocationHandler.invoke(ExtendedEntityManagerCreator.java:364)
+	at jdk.proxy2/jdk.proxy2.$Proxy136.createQuery(Unknown Source)
+	at org.springframework.data.jpa.repository.query.SimpleJpaQuery.validateQuery(SimpleJpaQuery.java:94)
+	... 62 common frames omitted
+Caused by: org.hibernate.query.SemanticException: Cannot compare left expression of type 'com.kkosoonnae.jpa.entity.CustomerBas' with right expression of type 'java.lang.Integer'
+	at org.hibernate.query.sqm.internal.TypecheckUtil.assertComparable(TypecheckUtil.java:358)
+	at org.hibernate.query.sqm.tree.predicate.SqmComparisonPredicate.<init>(SqmComparisonPredicate.java:48)
+	at org.hibernate.query.sqm.tree.predicate.SqmComparisonPredicate.<init>(SqmComparisonPredicate.java:34)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.createComparisonPredicate(SemanticQueryBuilder.java:2448)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitComparisonPredicate(SemanticQueryBuilder.java:2392)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitComparisonPredicate(SemanticQueryBuilder.java:269)
+	at org.hibernate.grammars.hql.HqlParser$ComparisonPredicateContext.accept(HqlParser.java:6164)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.consumeJoin(SemanticQueryBuilder.java:2130)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitEntityWithJoins(SemanticQueryBuilder.java:1922)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitFromClause(SemanticQueryBuilder.java:1901)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuery(SemanticQueryBuilder.java:1148)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuerySpecExpression(SemanticQueryBuilder.java:941)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuerySpecExpression(SemanticQueryBuilder.java:269)
+	at org.hibernate.grammars.hql.HqlParser$QuerySpecExpressionContext.accept(HqlParser.java:1869)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSimpleQueryGroup(SemanticQueryBuilder.java:926)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSimpleQueryGroup(SemanticQueryBuilder.java:269)
+	at org.hibernate.grammars.hql.HqlParser$SimpleQueryGroupContext.accept(HqlParser.java:1740)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSelectStatement(SemanticQueryBuilder.java:443)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitStatement(SemanticQueryBuilder.java:402)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.buildSemanticModel(SemanticQueryBuilder.java:311)
+	at org.hibernate.query.hql.internal.StandardHqlTranslator.translate(StandardHqlTranslator.java:71)
+	at org.hibernate.query.internal.QueryInterpretationCacheStandardImpl.createHqlInterpretation(QueryInterpretationCacheStandardImpl.java:165)
+	at org.hibernate.query.internal.QueryInterpretationCacheStandardImpl.resolveHqlInterpretation(QueryInterpretationCacheStandardImpl.java:147)
+	at org.hibernate.internal.AbstractSharedSessionContract.interpretHql(AbstractSharedSessionContract.java:790)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:840)
+	... 71 common frames omitted
+2024-05-27 23:45:44.556 [background-preinit] [34mINFO [0;39m [36mo.h.validator.internal.util.Version[0;39m - HV000001: Hibernate Validator 8.0.1.Final
+2024-05-27 23:45:44.582 [Test worker] [34mINFO [0;39m [36mc.k.KkosoonnaeApplicationTests[0;39m - Starting KkosoonnaeApplicationTests using Java 21.0.2 with PID 37151 (started by user in /Users/user/Desktop/KkoSoonNae-BE)
+2024-05-27 23:45:44.583 [Test worker] [34mINFO [0;39m [36mc.k.KkosoonnaeApplicationTests[0;39m - The following 3 profiles are active: "local", "jwt", "aws"
+2024-05-27 23:45:44.703 [Test worker] [34mINFO [0;39m [36mc.k.KkosoonnaeApplicationTests[0;39m - Started KkosoonnaeApplicationTests in 0.476 seconds (process running for 1.594)

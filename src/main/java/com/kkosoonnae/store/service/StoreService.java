@@ -3,6 +3,7 @@ package com.kkosoonnae.store.service;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
+import com.kkosoonnae.jpa.projection.StoreReviewsViewProjection;
 import com.kkosoonnae.jpa.repository.*;
 import com.kkosoonnae.review.ReviewService;
 import com.kkosoonnae.store.dto.*;
@@ -205,6 +206,13 @@ public class StoreService {
         }
 
         return true;
+    }
+
+    public List<StoreReviewsResponseDto> findReviews(Integer storeNo) {
+        List<StoreReviewsViewProjection> reviewsViewProjections = storeRepository.findByReviews(storeNo);
+        return reviewsViewProjections.stream()
+                .map(StoreReviewsViewProjection::toDto)
+                .collect(Collectors.toList());
     }
 }
 
