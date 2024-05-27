@@ -16,8 +16,10 @@ public enum ErrorCode {
 
     DUPLICATE_LIKE_STORE("관심매장이 중복입니다.",HttpStatus.BAD_REQUEST),
     //
-    DEFAULT("처리 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+    DEFAULT("처리 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
 
+    STORE_IMG_MISMATCH("해당 매장 이미지가 없습니다.",HttpStatus.NOT_FOUND),
+    STORE_IMG_NOT_FOUND("해당 매장에 id값에 해당하는 이미지가 없습니다.",HttpStatus.NOT_FOUND);
     private final String message;
 
     private final HttpStatus status;

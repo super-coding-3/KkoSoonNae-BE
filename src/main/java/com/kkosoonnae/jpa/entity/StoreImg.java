@@ -30,4 +30,7 @@ public class StoreImg {
         this.img=imageUrl;
     }
 
+    public void updateImageUrl(String newImageUrl) {
+        this.img = newImageUrl;
+    }
 }
