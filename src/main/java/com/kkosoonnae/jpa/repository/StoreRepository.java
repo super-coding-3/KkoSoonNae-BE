@@ -53,13 +53,13 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
     List<MainStoresListviewProjection> findMainStores(String addressKeyword, Pageable pageable);
     @Query("SELECT new com.kkosoonnae.jpa.projection.StoreReviewsViewProjection(" +
             "s.storeNo,s.storeName, si.img, COUNT(ls.likeNo), " +
-            "r.reviewNo,r.cstmrNo,r.content,r.scope,AVG(r.scope),cd.nickName,p.img) " +
+            "r.reviewNo,r.cstmrNo.cstmrNo,r.content,r.scope,AVG(r.scope),cd.nickName,p.img) " +
             "FROM Store s " +
             "LEFT JOIN StoreImg si ON s.storeNo = si.store.storeNo " +
             "LEFT JOIN LikeStore ls ON s.storeNo = ls.store.storeNo " +
-            "LEFT JOIN Review r ON s.storeNo = r.store.storeNo  " +
-            "LEFT JOIN CustomerDtl cd ON r.cstmrNo = cd.cstmrNo " +
-            "LEFT JOIN Pet p ON cd.cstmrNo = p.petNo " +
+            "LEFT JOIN Review r ON s.storeNo = r.store.storeNo " +
+            "LEFT JOIN CustomerDtl cd ON r.cstmrNo.cstmrNo = cd.customerBas.cstmrNo " +
+            "LEFT JOIN Pet p ON cd.cstmrNo = p.customerBas.cstmrNo " +
             "WHERE s.storeNo = :storeNo " +
             "GROUP BY s.storeNo,s.storeName,si.img,r.reviewNo,r.cstmrNo,r.content,r.scope,cd.nickName,p.img")
     List<StoreReviewsViewProjection> findByReviews(Integer storeNo);
