@@ -110,6 +110,12 @@ public class ReservationService {
             throw new NotFoundException("해당 스타일을 찾을 수 없습니다.");
         }
 
+        Integer price = style.getPrice();
+
+        NumberFormat numberFormat = NumberFormat.getInstance(Locale.KOREA);
+        String formattedPrice = numberFormat.format(price);
+        String stringPrice = formattedPrice + "원";
+
         Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetName());
 
         if (pet == null) {
@@ -119,13 +125,21 @@ public class ReservationService {
         Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
         reservationRepository.save(reservation);
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+        LocalDate date = reservation.getReservationDate();
+
+        String dayOfWeek = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN);
+        String fromatterDate = date.format(formatter);
+        String responseDate = fromatterDate + "(" + dayOfWeek.charAt(0) + ")";
+
         CustomerAvail customerAvail = new CustomerAvail(cstmrBas, reservation, availTime);
         customerAvailRepository.save(customerAvail);
 
         ReservedPets reservedPets = new ReservedPets(reservation, pet, availTime);
         reservedPetsRepository.save(reservedPets);
 
-        return new ReservationResponse(store.getStoreName(), reservation, reservationRequest.getCutStyle(), pet, reservation.getReservationNo());
+        return new ReservationResponse(store.getStoreName(), responseDate, reservation, reservationRequest.getCutStyle(), stringPrice, pet, reservation.getReservationNo());
     }
 
     public List<StyleResponse> findStyleNameByStoreNo(Integer storeNumber) {

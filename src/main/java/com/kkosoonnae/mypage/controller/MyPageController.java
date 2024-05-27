@@ -66,18 +66,18 @@ public class MyPageController {
         return ResponseEntity.ok(Collections.singletonMap("message","관심 매장 취소가 완료 되었습니다."));
     }
 
-    @Operation(summary = "내가 쓴 리뷰")
-    @GetMapping("/my-review-list")
-    public ResponseEntity<List<MyReviewDto>> getMyReview(@AuthenticationPrincipal PrincipalDetails principalDetails){
-        List<MyReviewDto> result = service.getMyReview(principalDetails);
-        return ResponseEntity.ok().body(result);
-    }
-
-    @Operation(summary = "리뷰 삭제")
-    @DeleteMapping("/my-review/{reviewNo}")
-    public ResponseEntity<?> deleteReview(@AuthenticationPrincipal PrincipalDetails principalDetails,@PathVariable Integer reviewNo){
-        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
-        service.deleteReview(cstmrNo,reviewNo);
-        return ResponseEntity.ok(Collections.singletonMap("message","내 리뷰가 삭제 되었습니다."));
-    }
+//    @Operation(summary = "내가 쓴 리뷰")
+//    @GetMapping("/my-review-list")
+//    public ResponseEntity<List<MyReviewDto>> getMyReview(@AuthenticationPrincipal PrincipalDetails principalDetails){
+//        List<MyReviewDto> result = service.getMyReview(principalDetails);
+//        return ResponseEntity.ok().body(result);
+//    }
+//
+//    @Operation(summary = "리뷰 삭제")
+//    @DeleteMapping("/my-review/{reviewNo}")
+//    public ResponseEntity<?> deleteReview(@AuthenticationPrincipal PrincipalDetails principalDetails,@PathVariable Integer reviewNo){
+//        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+//        service.deleteReview(cstmrNo,reviewNo);
+//        return ResponseEntity.ok(Collections.singletonMap("message","내 리뷰가 삭제 되었습니다."));
+//    }
 }

@@ -164,35 +164,35 @@ public class CustomerQueryRepository {
                 .execute();
     }
 
-    public List<MyReviewDto> getMyReview(Integer cstmrNo){
-        QReview review = QReview.review;
-        QStore store = QStore.store;
-
-        return query.select(Projections.bean(MyReviewDto.class,
-                review.reviewNo,
-                store.storeNo,
-                store.storeName,
-                review.scope,
-                review.img,
-                review.content,
-                review.reviewDt
-                ))
-                .from(review)
-                .leftJoin(store)
-                .on(review.store.storeNo.eq(store.storeNo))
-                .where(review.cstmrNo.cstmrNo.eq(cstmrNo))
-                .fetch();
-    }
-
-
-    //회원 번호와 리뷰 번호로 내가 쓴 리뷰 확인
-    public boolean existByCstmrNoAndReviewNo(Integer cstmrNo, Integer reviewNo){
-        QReview review = QReview.review;
-        return query.selectFrom(review)
-                .where(review.cstmrNo.cstmrNo.eq(cstmrNo)
-                        .and(review.reviewNo.eq(reviewNo)))
-                .fetch().size() > 0;
-    }
+//    public List<MyReviewDto> getMyReview(Integer cstmrNo){
+//        QReview review = QReview.review;
+//        QStore store = QStore.store;
+//
+//        return query.select(Projections.bean(MyReviewDto.class,
+//                review.reviewNo,
+//                store.storeNo,
+//                store.storeName,
+//                review.scope,
+//                review.img,
+//                review.content,
+//                review.reviewDt
+//                ))
+//                .from(review)
+//                .leftJoin(store)
+//                .on(review.store.storeNo.eq(store.storeNo))
+//                .where(review.cstmrNo.cstmrNo.eq(cstmrNo))
+//                .fetch();
+//    }
+//
+//
+//    //회원 번호와 리뷰 번호로 내가 쓴 리뷰 확인
+//    public boolean existByCstmrNoAndReviewNo(Integer cstmrNo, Integer reviewNo){
+//        QReview review = QReview.review;
+//        return query.selectFrom(review)
+//                .where(review.cstmrNo.cstmrNo.eq(cstmrNo)
+//                        .and(review.reviewNo.eq(reviewNo)))
+//                .fetch().size() > 0;
+//    }
 
     public void deleteReview(Integer reviewNo){
         QReview review = QReview.review;
