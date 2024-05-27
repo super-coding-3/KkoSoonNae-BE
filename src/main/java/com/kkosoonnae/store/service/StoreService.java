@@ -48,6 +48,8 @@ public class StoreService {
 
     private final ReviewService reviewService;
 
+    private final StoreImgRepository storeImgRepository;
+
 
     //매장상세조회
     public StoreDetailWithImageResponseDto findStoreDetailWithImage(Integer storeNo) {
@@ -188,6 +190,21 @@ public class StoreService {
         return stores.stream()
                 .map(AllStore::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public boolean updateStoreImg(Integer storeNo, List<String> newImageUrl) {
+        Store store =storeRepository.findById(storeNo)
+                .orElseThrow(()-> new CustomException(ErrorCode.STORE_NOT_FOUND));
+
+        storeImgRepository.deleteByStore_StoreNo(storeNo);
+
+        for (String imageUrl : newImageUrl){
+            StoreImg storeImg = new StoreImg(store, imageUrl);
+            storeImgRepository.save(storeImg);
+        }
+
+        return true;
     }
 }
 

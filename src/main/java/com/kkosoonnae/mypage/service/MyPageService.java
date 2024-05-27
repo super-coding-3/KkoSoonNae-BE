@@ -79,23 +79,23 @@ public class MyPageService {
 
     }
 
-//    public List<MyReviewDto> getMyReview(PrincipalDetails principalDetails) {
-//        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
-//        List<MyReviewDto> dto = query.getMyReview(cstmrNo);
-//
-//        if(dto == null || dto.isEmpty()){
-//            return Collections.emptyList();
-//        }
-//        return dto;
-//    }
-//
-//    @Transactional
-//    public void deleteReview(Integer cstmrNo, Integer reviewNo){
-//        boolean exists = query.existByCstmrNoAndReviewNo(cstmrNo, reviewNo);
-//
-//        if(!exists){
-//            throw new IllegalArgumentException("회원이 쓴 리뷰가 없습니다.");
-//        }
-//        query.deleteReview(reviewNo);
-//    }
+    public List<MyReviewDto> getMyReview(PrincipalDetails principalDetails) {
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        List<MyReviewDto> dto = query.getMyReview(cstmrNo);
+
+        if(dto == null || dto.isEmpty()){
+            return Collections.emptyList();
+        }
+        return dto;
+    }
+
+    @Transactional
+    public void deleteReview(Integer cstmrNo, Integer reviewNo){
+        boolean exists = query.existByCstmrNoAndReviewNo(cstmrNo, reviewNo);
+
+        if(!exists){
+            throw new IllegalArgumentException("회원이 쓴 리뷰가 없습니다.");
+        }
+        query.deleteReview(reviewNo);
+    }
 }

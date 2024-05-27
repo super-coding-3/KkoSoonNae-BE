@@ -3,6 +3,7 @@ package com.kkosoonnae.store.controller;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.jpa.entity.LikeStore;
 import com.kkosoonnae.jpa.entity.Store;
+import com.kkosoonnae.jpa.entity.StoreImg;
 import com.kkosoonnae.review.ReviewService;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.service.StoreService;
@@ -34,7 +35,6 @@ import java.util.Map;
 @RequestMapping("/KkoSoonNae/store")
 @Slf4j
 public class StoreController {
-
 
     private final StoreService storeService;
     private final ReviewService reviewService;
@@ -152,6 +152,21 @@ public class StoreController {
         List<AllStore> stores = storeService.getAllStores();
         return ResponseEntity.ok(stores);
     }
+
+    @PutMapping("/{storeNo}/images")
+    @Operation(summary = "매장 이미지 바꾸는 코드")
+    public ResponseEntity<String> updateStoreImg(@PathVariable Integer storeNo,
+                                   @RequestBody StoreImageDTO newImageUrls){
+        List<String> newImages =newImageUrls.getNewImageUrls();
+       boolean success= storeService.updateStoreImg(storeNo,newImages);
+       if (success){
+           return ResponseEntity.ok("변경 성공");
+       }else {
+           return ResponseEntity.status(500).body("변경 실패");
+       }
+    }
+
+
 
 }
 
