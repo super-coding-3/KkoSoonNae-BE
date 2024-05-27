@@ -1,4 +1,4 @@
-package com.kkosoonnae.store.dto;
+package com.kkosoonnae.review.dto;
 
 import com.kkosoonnae.jpa.entity.Store;
 import jakarta.persistence.*;
