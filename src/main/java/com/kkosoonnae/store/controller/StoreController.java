@@ -1,10 +1,9 @@
 package com.kkosoonnae.store.controller;
 
 import com.kkosoonnae.config.auth.PrincipalDetails;
-import com.kkosoonnae.jpa.entity.LikeStore;
 import com.kkosoonnae.jpa.entity.Store;
-import com.kkosoonnae.jpa.entity.StoreImg;
-import com.kkosoonnae.review.ReviewService;
+import com.kkosoonnae.review.dto.ReviewRqDto;
+import com.kkosoonnae.review.service.ReviewService;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -108,12 +107,13 @@ public class StoreController {
         }
     }
 
-    @PostMapping("/reviews")
+    @PostMapping("{storeNo}/reviews")
     @Operation(summary = "리뷰 작성")
-    public ResponseEntity<String> writeReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Store storeNo, @RequestParam String content) {
+    public ResponseEntity<?> writeReview(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                         @PathVariable Integer storeNo,
+                                         @RequestBody ReviewRqDto reviewRqDto) {
         try {
-
-            reviewService.writeReview(principalDetails, storeNo, content);
+            reviewService.writeReview(principalDetails, storeNo,reviewRqDto);
             return ResponseEntity.ok("리뷰가 정상적으로 작성되었습니다.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

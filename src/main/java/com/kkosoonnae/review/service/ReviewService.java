@@ -1,4 +1,4 @@
-package com.kkosoonnae.review;
+package com.kkosoonnae.review.service;
 
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.jpa.entity.CustomerBas;
@@ -6,8 +6,10 @@ import com.kkosoonnae.jpa.entity.Review;
 import com.kkosoonnae.jpa.entity.Store;
 import com.kkosoonnae.jpa.repository.ReviewRepository;
 import com.kkosoonnae.jpa.repository.StoreRepository;
+import com.kkosoonnae.review.dto.ReviewRqDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,13 +37,29 @@ public class ReviewService {
     }
 
 
-    public void writeReview(PrincipalDetails principalDetails, Store storeNo, String content) {
-        CustomerBas cstmrNo = principalDetails.getCustomerBas();
-        Store store = storeRepository.findById(storeNo.getStoreNo())
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 store 입니다."));
+//    public void writeReview(PrincipalDetails principalDetails, Store storeNo, String content) {
+//        CustomerBas cstmrNo = principalDetails.getCustomerBas();
+//        Store store = storeRepository.findById(storeNo.getStoreNo())
+//                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 store 입니다."));
+//
+//        Review review = Review.of(cstmrNo,store, content, LocalDateTime.now());
+//
+//        reviewRepository.save(review);
+//    }
 
-        Review review = Review.of(cstmrNo,store, content, LocalDateTime.now());
+    public void writeReview(PrincipalDetails principalDetails, Integer storeNo,ReviewRqDto rq){
+        CustomerBas customerBas = principalDetails.getCustomerBas();
 
+        Store store = storeRepository.findById(storeNo)
+                .orElseThrow(()-> new NotFoundException("해당 매장을 찾을 수 없습니다."));
+
+        Review review = Review.builder()
+                .store(store)
+                .cstmrNo(customerBas)
+                .scope(rq.getScope())
+                .content(rq.getContent())
+                .reviewDt(rq.getCreateDt())
+                .build();
         reviewRepository.save(review);
     }
 

@@ -42,12 +42,12 @@ public class Review {
     private Integer scope;
 
 
-    public static Review of(CustomerBas cstmrNo, Store store, String content, LocalDateTime reviewDt) {
-        return Review.builder()
-                .cstmrNo(cstmrNo)
-                .store(store)
-                .content(content)
-                .reviewDt(reviewDt)
-                .build();
-    }
+//    public static Review of(CustomerBas cstmrNo, Store store, String content, LocalDateTime reviewDt) {
+//        return Review.builder()
+//                .cstmrNo(cstmrNo)
+//                .store(store)
+//                .content(content)
+//                .reviewDt(reviewDt)
+//                .build();
+//    }
 }

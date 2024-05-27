@@ -5,7 +5,7 @@ import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.projection.StoreReviewsViewProjection;
 import com.kkosoonnae.jpa.repository.*;
-import com.kkosoonnae.review.ReviewService;
+import com.kkosoonnae.review.service.ReviewService;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.exception.ErrorCode;
