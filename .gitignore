@@ -41,3 +41,4 @@ application-local.yml
 application.yml
 application-jwt.yml
 application-aws.yml
+logs/
