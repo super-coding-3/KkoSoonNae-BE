@@ -36,19 +36,19 @@ public class MyPageService {
     private final CustomerQueryRepository query;
 
 
-    public List<AvailDto> getMyAvailList(PrincipalDetails principalDetails){
+    public List<AvailDto> getMyAvailList(PrincipalDetails principalDetails) {
         Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
 
         List<AvailDto> dto = query.availList(cstmrNo);
 
-        if(dto == null || dto.isEmpty()){
+        if (dto == null || dto.isEmpty()) {
             return Collections.emptyList();
         }
         return dto;
     }
 
     @Transactional
-    public void deleteAvail(Integer cstmrNo,Integer reservationNo){
+    public void deleteAvail(Integer cstmrNo, Integer reservationNo) {
         // 예약을 조회하고 해당 회원의 예약인지 확인
         boolean exists = query.existsByCstmrNoAndReservationNo(cstmrNo, reservationNo);
         if (!exists) {
@@ -57,45 +57,45 @@ public class MyPageService {
         query.deleteAvail(reservationNo);
     }
 
-    public List<LikeStoreDto> getMyLikeStore(PrincipalDetails principalDetails){
+    public List<LikeStoreDto> getMyLikeStore(PrincipalDetails principalDetails) {
         Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
 
         List<LikeStoreDto> dto = query.likeList(cstmrNo);
 
-        if(dto == null || dto.isEmpty()){
+        if (dto == null || dto.isEmpty()) {
             return Collections.emptyList();
         }
         return dto;
     }
 
     @Transactional
-    public void deleteLike(Integer cstmrNo, Integer likeNo){
+    public void deleteLike(Integer cstmrNo, Integer likeNo) {
         boolean exists = query.existsByCstmrNoAndLikeNo(cstmrNo, likeNo);
 
-        if(!exists){
+        if (!exists) {
             throw new IllegalArgumentException("해당 회원의 관심 매장 정보가 없습니다.");
         }
         query.deleteLike(likeNo);
 
     }
-
-    public List<MyReviewDto> getMyReview(PrincipalDetails principalDetails) {
-        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
-        List<MyReviewDto> dto = query.getMyReview(cstmrNo);
-
-        if(dto == null || dto.isEmpty()){
-            return Collections.emptyList();
-        }
-        return dto;
-    }
-
-    @Transactional
-    public void deleteReview(Integer cstmrNo, Integer reviewNo){
-        boolean exists = query.existByCstmrNoAndReviewNo(cstmrNo, reviewNo);
-
-        if(!exists){
-            throw new IllegalArgumentException("회원이 쓴 리뷰가 없습니다.");
-        }
-        query.deleteReview(reviewNo);
-    }
 }
+//    public List<MyReviewDto> getMyReview(PrincipalDetails principalDetails) {
+//        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+//        List<MyReviewDto> dto = query.getMyReview(cstmrNo);
+//
+//        if(dto == null || dto.isEmpty()){
+//            return Collections.emptyList();
+//        }
+//        return dto;
+//    }
+//
+//    @Transactional
+//    public void deleteReview(Integer cstmrNo, Integer reviewNo){
+//        boolean exists = query.existByCstmrNoAndReviewNo(cstmrNo, reviewNo);
+//
+//        if(!exists){
+//            throw new IllegalArgumentException("회원이 쓴 리뷰가 없습니다.");
+//        }
+//        query.deleteReview(reviewNo);
+//    }
+//}
