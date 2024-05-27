@@ -185,7 +185,7 @@ public class CustomerQueryRepository {
     }
 
 
-    //회원 번호와 리뷰 번호로 내가 쓴 리뷰 확인
+//    //회원 번호와 리뷰 번호로 내가 쓴 리뷰 확인
     public boolean existByCstmrNoAndReviewNo(Integer cstmrNo, Integer reviewNo){
         QReview review = QReview.review;
         return query.selectFrom(review)

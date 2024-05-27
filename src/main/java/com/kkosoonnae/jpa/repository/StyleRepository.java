@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface StyleRepository extends JpaRepository<Style,Integer> {
     @Query("SELECT s FROM Style s LEFT JOIN FETCH s.store WHERE s.store.storeNo = :storeNo")
@@ -16,4 +18,6 @@ public interface StyleRepository extends JpaRepository<Style,Integer> {
 
     @Query("SELECT s FROM Style s WHERE s.store.storeNo = :storeNo AND s.styleName = :cutStyle")
     Style findByStoreNoAndStyleName(Integer storeNo, String cutStyle);
+
+    List<Style> findByStyleName(String styleName);
 }

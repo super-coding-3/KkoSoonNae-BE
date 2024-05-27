@@ -39,7 +39,7 @@ public class ReservationController {
         return reservationService.findStoreNameByStoreNo(storeNumber);
     }
 
-    @Operation(summary = "매장 일련번호로 스타일 이름 가져오기")
+    @Operation(summary = "매장 일련번호로 스타일 정보 가져오기")
     @GetMapping("/style-list/{storeNumber}")
     public List<StyleResponse> findStyleName(@PathVariable Integer storeNumber) {
         return reservationService.findStyleNameByStoreNo(storeNumber);

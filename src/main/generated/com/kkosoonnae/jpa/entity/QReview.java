@@ -24,7 +24,7 @@ public class QReview extends EntityPathBase<Review> {
 
     public final StringPath content = createString("content");
 
-    public final QCustomerBas cstmrNo;
+    public final NumberPath<Integer> cstmrNo = createNumber("cstmrNo", Integer.class);
 
     public final StringPath img = createString("img");
 
@@ -54,7 +54,6 @@ public class QReview extends EntityPathBase<Review> {
 
     public QReview(Class<? extends Review> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.cstmrNo = inits.isInitialized("cstmrNo") ? new QCustomerBas(forProperty("cstmrNo")) : null;
         this.store = inits.isInitialized("store") ? new QStore(forProperty("store")) : null;
     }
 

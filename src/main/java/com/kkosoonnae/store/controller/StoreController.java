@@ -3,6 +3,7 @@ package com.kkosoonnae.store.controller;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.jpa.entity.LikeStore;
 import com.kkosoonnae.jpa.entity.Store;
+import com.kkosoonnae.jpa.entity.StoreImg;
 import com.kkosoonnae.review.ReviewService;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.service.StoreService;
@@ -34,7 +35,6 @@ import java.util.Map;
 @RequestMapping("/KkoSoonNae/store")
 @Slf4j
 public class StoreController {
-
 
     private final StoreService storeService;
     private final ReviewService reviewService;
@@ -76,7 +76,7 @@ public class StoreController {
     @Operation(summary = "관심매장등록")
     public ResponseEntity<?> likeStore(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
-            @RequestParam  Integer storeNo) {
+            @RequestParam Integer storeNo) {
         try{
             log.info("POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:");
             LikeStoreDto likeStoreDto = storeService.saveLikeStore(principalDetails,storeNo);
@@ -109,17 +109,17 @@ public class StoreController {
     }
 
 
-//    @PostMapping("/review")
-//    @Operation(summary = "리뷰 작성")
-//    public ResponseEntity<String> writeReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Store storeNo, @RequestParam String content) {
-//        try {
-//            Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
-//            reviewService.writeReview(cstmrNo, storeNo, content);
-//            return ResponseEntity.ok("Review submitted successfully");
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
+    @PostMapping("/reviews")
+    @Operation(summary = "리뷰 작성")
+    public ResponseEntity<String> writeReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Store storeNo, @RequestParam String content) {
+        try {
+            Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+            reviewService.writeReview(cstmrNo, storeNo, content);
+            return ResponseEntity.ok("리뷰가 정상적으로 작성되었습니다.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     @PostMapping("/add")
     @Operation(summary = "매장 등록")
@@ -152,6 +152,21 @@ public class StoreController {
         List<AllStore> stores = storeService.getAllStores();
         return ResponseEntity.ok(stores);
     }
+
+    @PutMapping("/{storeNo}/images")
+    @Operation(summary = "매장 이미지 바꾸는 코드")
+    public ResponseEntity<String> updateStoreImg(@PathVariable Integer storeNo,
+                                   @RequestBody StoreImageDTO newImageUrls){
+        List<String> newImages =newImageUrls.getNewImageUrls();
+       boolean success= storeService.updateStoreImg(storeNo,newImages);
+       if (success){
+           return ResponseEntity.ok("변경 성공");
+       }else {
+           return ResponseEntity.status(500).body("변경 실패");
+       }
+    }
+
+
 
 }
 

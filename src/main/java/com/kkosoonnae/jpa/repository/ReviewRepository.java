@@ -16,11 +16,11 @@ public interface ReviewRepository extends JpaRepository<Review,Integer> {
 
     Optional<Review> findTopByStoreStoreNoOrderByReviewDtDesc(Integer storeNo);
 
-//    @Query("SELECT r.reviewNo, cb.cstmrNo, r.store, r.content, r.reviewDt " +
-//            "FROM Review r " +
-//            "LEFT JOIN CustomerBas cb ON r.cstmrNo.cstmrNo = cb.cstmrNo " +
-//            "LEFT JOIN Store s ON r.store.storeNo = s.storeNo " +
-//            "WHERE cb.cstmrNo = :cstmrNo")
-//    Integer findCustomerByCustomerNumber(@Param("cstmrNo") Integer cstmrNo);
+    @Query("SELECT r.reviewNo, cb.cstmrNo, r.store, r.content, r.reviewDt " +
+            "FROM Review r " +
+            "LEFT JOIN CustomerBas cb ON r.cstmrNo = cb.cstmrNo " +
+            "LEFT JOIN Store s ON r.store.storeNo = s.storeNo " +
+            "WHERE cb.cstmrNo = :cstmrNo")
+    Integer findCustomerByCustomerNumber(@Param("cstmrNo") Integer cstmrNo);
 
 }

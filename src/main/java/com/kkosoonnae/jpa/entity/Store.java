@@ -65,7 +65,7 @@ public class Store {
         this.lat = lat;
         this.lon = lon;
         this.roadAddress = roadAddress;
-        this.openingTime = LocalTime.parse("09:00");
+        this.openingTime = LocalTime.parse("10:00");
         this.closingTime = LocalTime.parse("18:00");
     }
 
@@ -76,8 +76,6 @@ public class Store {
     public void setStoreImages(List<StoreImg> storeImages) {
         this.storeImg = storeImages;
     }
-
-
 
 
     public Store(String placeName, Object o, String zipCode, String address, Object o1, String phone, Object o2, String roadAddress) {

@@ -38,4 +38,8 @@ public class Style {
         this.img = styleType.getImageUrl();
         this.price = styleType.getPrice();
     }
+
+    public void updateImageUrl(String newImageUrl) {
+        this.img = newImageUrl;
+    }
 }
