@@ -109,7 +109,8 @@ public class StoreController {
     }
 
 
-    @PostMapping
+    @PostMapping("/reviews")
+    @Operation(summary = "리뷰 작성")
     public ResponseEntity<String> writeReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Store storeNo, @RequestParam String content) {
         try {
             Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
