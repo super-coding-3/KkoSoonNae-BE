@@ -14,9 +14,6 @@ import java.util.Optional;
 @Repository
 public interface LikeStoreRepository extends JpaRepository<LikeStore,Integer> {
     List<LikeStore> countLikeStoreByStoreStoreNo (Integer customerId);
-
     boolean existsLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(Integer customerNo, Integer storeNo);
-    @Transactional
-    @Modifying
     void deleteLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(Integer customerNo, Integer storeNo);
 }

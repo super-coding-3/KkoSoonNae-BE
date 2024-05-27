@@ -4,6 +4,7 @@ import com.kkosoonnae.jpa.entity.Store;
 import com.kkosoonnae.jpa.projection.MainStoresListviewProjection;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.projection.StoreListViewProjection;
+import com.kkosoonnae.jpa.projection.StoreReviewsViewProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -47,7 +48,19 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
     @Query("SELECT new com.kkosoonnae.jpa.projection.MainStoresListviewProjection(s.storeNo,s.storeName,s.roadAddress, AVG(r.scope)) " +
             "FROM Store s " +
             "LEFT JOIN FETCH Review r ON s.storeNo = r.store.storeNo " +
-            "WHERE s.roadAddress = :roadAddress " +
+            "WHERE s.roadAddress LIKE %:addressKeyword% " +
             "GROUP BY s.storeNo " )
-    List<MainStoresListviewProjection> findMainStores(String roadAddress, Pageable pageable);
+    List<MainStoresListviewProjection> findMainStores(String addressKeyword, Pageable pageable);
+    @Query("SELECT new com.kkosoonnae.jpa.projection.StoreReviewsViewProjection(" +
+            "s.storeNo,s.storeName, si.img, COUNT(ls.likeNo), " +
+            "r.reviewNo,r.cstmrNo.cstmrNo,r.content,r.scope,AVG(r.scope),cd.nickName,p.img) " +
+            "FROM Store s " +
+            "LEFT JOIN StoreImg si ON s.storeNo = si.store.storeNo " +
+            "LEFT JOIN LikeStore ls ON s.storeNo = ls.store.storeNo " +
+            "LEFT JOIN Review r ON s.storeNo = r.store.storeNo " +
+            "LEFT JOIN CustomerDtl cd ON r.cstmrNo.cstmrNo = cd.customerBas.cstmrNo " +
+            "LEFT JOIN Pet p ON cd.cstmrNo = p.customerBas.cstmrNo " +
+            "WHERE s.storeNo = :storeNo " +
+            "GROUP BY s.storeNo,s.storeName,si.img,r.reviewNo,r.cstmrNo,r.content,r.scope,cd.nickName,p.img")
+    List<StoreReviewsViewProjection> findByReviews(Integer storeNo);
 }

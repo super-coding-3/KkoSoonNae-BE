@@ -56,10 +56,10 @@ public class SearchController {
 
     @GetMapping("/main-stores")
     @Operation(summary = "메인 강남구 매장 정보")
-    public ResponseEntity<?> mainByStores() {
+    public ResponseEntity<?> mainByStores(@RequestParam String addressKeyword) {
         try {
             Pageable pageable = PageRequest.of(0, 10);
-            List<MainStoreListViewResponseDto> mainListViewResponseDto = searchService.findByMainStores(pageable);
+            List<MainStoreListViewResponseDto> mainListViewResponseDto = searchService.findByMainStores(addressKeyword,pageable);
             return ResponseEntity.ok(mainListViewResponseDto);
         } catch (Exception e) {
             Map<String, String> errorBody = new HashMap<>();

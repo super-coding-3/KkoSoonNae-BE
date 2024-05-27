@@ -108,7 +108,6 @@ public class StoreController {
         }
     }
 
-
     @PostMapping("/reviews")
     @Operation(summary = "리뷰 작성")
     public ResponseEntity<String> writeReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam Store storeNo, @RequestParam String content) {
@@ -151,6 +150,12 @@ public class StoreController {
     public ResponseEntity<List<AllStore>> getAllStore(){
         List<AllStore> stores = storeService.getAllStores();
         return ResponseEntity.ok(stores);
+    }
+    @GetMapping("list-review/{storeNo}")
+    @Operation(summary = "매장별 리뷰 리스트")
+    public ResponseEntity<List<StoreReviewsResponseDto>> getReviews(@PathVariable Integer storeNo) {
+        List<StoreReviewsResponseDto> reviewsResponse = storeService.findReviews(storeNo);
+        return ResponseEntity.ok(reviewsResponse);
     }
 
     @PutMapping("/{storeNo}/images")

@@ -47,8 +47,8 @@ public class SearchService {
                     .collect(Collectors.toList());
         }
 
-    public List<MainStoreListViewResponseDto> findByMainStores(Pageable pageable) {
-        List<MainStoresListviewProjection> projections = storeRepository.findMainStores("강남구" , pageable);
+    public List<MainStoreListViewResponseDto> findByMainStores(String addressKeyword ,Pageable pageable) {
+        List<MainStoresListviewProjection> projections = storeRepository.findMainStores(addressKeyword, pageable);
         if (projections.isEmpty()) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
