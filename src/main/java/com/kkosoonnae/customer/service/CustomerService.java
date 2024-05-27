@@ -43,8 +43,12 @@ public class CustomerService {
     private final PasswordEncoder passwordEncoder;
 
 
-    public boolean signUp(SignUpDto signUpDto){
-        try{
+    public boolean signUp(SignUpDto signUpDto) {
+        if (existsLoginId(signUpDto.getLoginId())) {
+            throw new IllegalArgumentException("중복된 아이디 입니다.");
+        } if (existsNickName(signUpDto.getNickName())) {
+            throw new IllegalArgumentException("중복된 닉네임 입니다.");
+        }
             CustomerBas customerBas = CustomerBas.builder()
                     .loginId(signUpDto.getLoginId())
                     .email(signUpDto.getEmail())
@@ -65,12 +69,7 @@ public class CustomerService {
                     .build();
 
             customerDtlRepository.save(customerDtl);
-
             return true;
-        }catch (Exception e){
-            log.error("회원 가입에 실패하였습니다. : {}",e);
-            return false;
-        }
     }
 
     public boolean existsLoginId(String loginId){

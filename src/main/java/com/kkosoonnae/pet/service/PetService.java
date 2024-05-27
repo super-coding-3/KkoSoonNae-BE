@@ -1,8 +1,10 @@
 package com.kkosoonnae.pet.service;
 
 //import com.amazonaws.services.s3.model.AmazonS3Exception;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 //import com.kkosoonnae.config.s3.S3Uploader;
+import com.kkosoonnae.config.s3.S3Uploader;
 import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.repository.PetQueryRepository;
 import com.kkosoonnae.jpa.repository.PetRepository;
@@ -43,7 +45,7 @@ public class PetService {
 
     private final PetQueryRepository query;
 
-//    private final S3Uploader s3Uploader;
+    private final S3Uploader s3Uploader;
 
     private final CommonService commonService;
 
@@ -69,20 +71,20 @@ public class PetService {
         petRepository.save(petAddDto.addPet(principalDetails));
     }
 
-//    @Transactional
-//    public void petUpdate(PrincipalDetails principalDetails,Integer petNo,PetUpdate petUpdate,MultipartFile file){
-//        Pet pet = commonService.getPet(principalDetails,petNo);
-//        String img = pet.getImg();
-//        if(file != null){
-//            try{
-//                img = s3Uploader.upload(file,"pet");
-//            }catch (IOException e){
-//                throw new AmazonS3Exception("file = " + file.getOriginalFilename());
-//            }
-//        }
-//        pet.updatePet(petUpdate,img);
-//        petRepository.save(pet);
-//    }
+    @Transactional
+    public void petUpdate(PrincipalDetails principalDetails,Integer petNo,PetUpdate petUpdate,MultipartFile file){
+        Pet pet = commonService.getPet(principalDetails,petNo);
+        String img = pet.getImg();
+        if(file != null){
+            try{
+                img = s3Uploader.upload(file,"pet");
+            }catch (IOException e){
+                throw new AmazonS3Exception("file = " + file.getOriginalFilename());
+            }
+        }
+        pet.updatePet(petUpdate,img);
+        petRepository.save(pet);
+    }
     @Transactional
     public void deletePet(Integer cstmrNo,Integer petNo){
         boolean exists = query.existsByCstmrNoAndPetNo(cstmrNo, petNo);

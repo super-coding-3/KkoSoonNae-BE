@@ -2,6 +2,7 @@ package com.kkosoonnae.pet.controller;
 
 import com.kkosoonnae.config.auth.PrincipalDetails;
 //import com.kkosoonnae.config.s3.S3Uploader;
+import com.kkosoonnae.config.s3.S3Uploader;
 import com.kkosoonnae.pet.dto.PetAddDto;
 import com.kkosoonnae.pet.dto.PetInfoDto;
 import com.kkosoonnae.pet.dto.PetUpdate;
@@ -45,7 +46,7 @@ public class PetController {
 
     private final PetService service;
 
-//    private final S3Uploader s3Uploader;
+    private final S3Uploader s3Uploader;
 
 
     @Operation(summary = "반려동물 전체 조회")
@@ -64,60 +65,60 @@ public class PetController {
     }
 
 
-//    @Operation(summary = "반려동물 추가")
-//    @PostMapping(value = "/addPet",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-//    public ResponseEntity<?> addPet(@AuthenticationPrincipal PrincipalDetails principalDetails,
-//                                    @RequestPart PetAddDto petAddDto,
-//                                   @Parameter(description = "반려동물 이미지") @RequestPart(required = false)MultipartFile petImg){
-//        try{
-//            Map<String, String> rs = new HashMap<>();
-//            rs.put("message","반려동물 추가에 성공 하였습니다.");
-//            String img = s3Uploader.upload(petImg,"pet");
-//            petAddDto.setImg(img);
-//
-//            service.petAdd(principalDetails,petAddDto);
-//            return ResponseEntity.ok(rs);
-//        }catch (NotFoundException e){
-//            Map<String,String> rs = new HashMap<>();
-//            rs.put("message","정보를 찾을 수 없습니다.");
-//            rs.put("error", e.getMessage());
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(rs);
-//        }catch (Exception e){
-//            Map<String, String> rs = new HashMap<>();
-//            rs.put("message" , "반려동물 추가에 실패 하였습니다.");
-//            rs.put("error",e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(rs);
-//        }
-//    }
+    @Operation(summary = "반려동물 추가")
+    @PostMapping(value = "/addPet",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> addPet(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                    @RequestPart PetAddDto petAddDto,
+                                   @Parameter(description = "반려동물 이미지") @RequestPart(required = false)MultipartFile petImg){
+        try{
+            Map<String, String> rs = new HashMap<>();
+            rs.put("message","반려동물 추가에 성공 하였습니다.");
+            String img = s3Uploader.upload(petImg,"pet");
+            petAddDto.setImg(img);
 
-//    @Operation(summary = "반려동물 정보 수정")
-//    @PutMapping(value = "/update/{petNo}",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-//    public ResponseEntity<?> updatePet(@AuthenticationPrincipal PrincipalDetails principalDetails,
-//                                       @PathVariable Integer petNo,
-//                                       @RequestPart PetUpdate petUpdate,
-//                                       @Parameter(description = "반려동물 이미지") @RequestPart(required = false)MultipartFile petImg){
-//        try {
-//            Map<String, String> rs = new HashMap<>();
-//            rs.put("message","반려동물 정보 수정에 성공 하였습니다.");
-//            service.petUpdate(principalDetails,petNo,petUpdate,petImg);
-//            return ResponseEntity.ok(rs);
-//        }catch (NotFoundException e){
-//            Map<String,String> rs = new HashMap<>();
-//            rs.put("message","반려동물 정보를 찾을 수 없습니다.");
-//            rs.put("message : {}",e.getMessage());
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(rs);
-//        }catch (AccessDeniedException e){
-//            Map<String, String> rs = new HashMap<>();
-//            rs.put("message", "본인의 반려동물 정보만 수정 할 수 있습니다.");
-//            rs.put("details", e.getMessage());
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(rs);
-//        } catch (Exception e){
-//            Map<String, String> rs = new HashMap<>();
-//            rs.put("message" , "반려동물 정보 수정에 실패 하였습니다.");
-//            rs.put("message : {} ",e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(rs);
-//        }
-//    }
+            service.petAdd(principalDetails,petAddDto);
+            return ResponseEntity.ok(rs);
+        }catch (NotFoundException e){
+            Map<String,String> rs = new HashMap<>();
+            rs.put("message","정보를 찾을 수 없습니다.");
+            rs.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(rs);
+        }catch (Exception e){
+            Map<String, String> rs = new HashMap<>();
+            rs.put("message" , "반려동물 추가에 실패 하였습니다.");
+            rs.put("error",e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(rs);
+        }
+    }
+
+    @Operation(summary = "반려동물 정보 수정")
+    @PutMapping(value = "/update/{petNo}",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> updatePet(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                       @PathVariable Integer petNo,
+                                       @RequestPart PetUpdate petUpdate,
+                                       @Parameter(description = "반려동물 이미지") @RequestPart(required = false)MultipartFile petImg){
+        try {
+            Map<String, String> rs = new HashMap<>();
+            rs.put("message","반려동물 정보 수정에 성공 하였습니다.");
+            service.petUpdate(principalDetails,petNo,petUpdate,petImg);
+            return ResponseEntity.ok(rs);
+        }catch (NotFoundException e){
+            Map<String,String> rs = new HashMap<>();
+            rs.put("message","반려동물 정보를 찾을 수 없습니다.");
+            rs.put("message : {}",e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(rs);
+        }catch (AccessDeniedException e){
+            Map<String, String> rs = new HashMap<>();
+            rs.put("message", "본인의 반려동물 정보만 수정 할 수 있습니다.");
+            rs.put("details", e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(rs);
+        } catch (Exception e){
+            Map<String, String> rs = new HashMap<>();
+            rs.put("message" , "반려동물 정보 수정에 실패 하였습니다.");
+            rs.put("message : {} ",e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(rs);
+        }
+    }
 
     @Operation(summary = "반려동물 정보 삭제")
     @DeleteMapping("/deletePet/{petNo}")
