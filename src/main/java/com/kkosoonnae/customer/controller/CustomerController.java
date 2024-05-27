@@ -60,7 +60,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/checkLoginId/{loginId}")
+    @GetMapping("/{loginId}")
     @Operation(summary = "로그인 아이디 중복체크")
     public ResponseEntity<?> validationLoginId(@PathVariable String loginId) {
         if (service.existsLoginId(loginId)) {
@@ -70,7 +70,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/checkNickName/{nickName}")
+    @GetMapping("/{nickName}")
     @Operation(summary = "닉네임 중복체크")
     public ResponseEntity<?> validationNickName(@PathVariable String nickName) {
         if (service.existsNickName(nickName)) {
