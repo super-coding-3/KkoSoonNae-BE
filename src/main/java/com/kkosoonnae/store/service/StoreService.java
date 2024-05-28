@@ -63,6 +63,8 @@ public class StoreService {
 
         List<String> imgUrls = storeImgRepository.findImgUrlsByStoreNo(storeNo);
 
+        Double averageScope = calculateAverageScope(storeNo);
+
         StoreDetailViewProjection projectionWithImages = new StoreDetailViewProjection(
                 storeDetailViewProjection.storeNo(),
                 storeDetailViewProjection.storeName(),
@@ -72,7 +74,7 @@ public class StoreService {
                 storeDetailViewProjection.openingTime(),
                 storeDetailViewProjection.closingTime(),
                 imgUrls,
-                storeDetailViewProjection.averageScope(),
+                averageScope,
                 storeDetailViewProjection.totalLikeStore()
         );
 
@@ -221,10 +223,11 @@ public class StoreService {
     private Double calculateAverageScope(Integer storeNo) {
         List<Review> reviews = reviewRepository.findAll();
         if (reviews.isEmpty()) {
-            return (double) 0;
+            return 0.0;
         }
         int totalScope = reviews.stream().mapToInt(Review::getScope).sum();
-        return (double) (totalScope / reviews.size());
+        double average = (double) totalScope / reviews.size();
+        return Math.round(average * 10) /10.0;
     }
 
     private Long calculateTotalLikeStore(Integer storeNo) {

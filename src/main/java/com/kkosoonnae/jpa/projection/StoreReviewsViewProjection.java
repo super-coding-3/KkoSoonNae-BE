@@ -8,12 +8,10 @@ import java.time.LocalDateTime;
 public record StoreReviewsViewProjection(
         Integer storeNo,
         String storeName,
-        String storeImg,
         Long totalLikeStore,
         Integer reviewNo,
         Integer cstmrNo,
         String content,
-        Integer scope,
         String nickName,
         String petImg
 
@@ -22,12 +20,10 @@ public record StoreReviewsViewProjection(
         return StoreReviewsResponseDto.builder()
                 .storeNo(storeNo)
                 .storeName(storeName)
-                .storeImg(storeImg)
                 .totalLikeStore(totalLikeStore)
                 .reviewNo(reviewNo)
                 .cstmrNo(cstmrNo)
                 .content(content)
-                .scope(scope)
                 .averageScope(averageScope)
                 .nickName(nickName)
                 .petImg(petImg)
