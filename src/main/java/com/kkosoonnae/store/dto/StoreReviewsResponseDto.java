@@ -40,6 +40,9 @@ public class StoreReviewsResponseDto {
     @Schema(description = "유저 닉네임")
     private String nickName;
 
+    @Schema(description = "펫 이미지")
+    private String img;
+
     @Schema(description = "메인펫이미지")
     private String mainPet;
 }

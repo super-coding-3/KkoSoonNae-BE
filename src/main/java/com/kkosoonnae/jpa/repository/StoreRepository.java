@@ -50,15 +50,15 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
 
     @Query("SELECT new com.kkosoonnae.jpa.projection.StoreReviewsViewProjection(" +
             "s.storeNo,s.storeName,COUNT(ls.likeNo), " +
-            "r.reviewNo,r.cstmrNo.cstmrNo,r.content,r.scope,cd.nickName,p.mainPet) " +
+            "r.reviewNo,r.cstmrNo.cstmrNo,r.content,r.scope,cd.nickName,p.img,p.mainPet) " +
             "FROM Store s " +
             "LEFT JOIN StoreImg si ON s.storeNo = si.store.storeNo " +
             "LEFT JOIN LikeStore ls ON s.storeNo = ls.store.storeNo " +
             "LEFT JOIN Review r ON s.storeNo = r.store.storeNo " +
             "LEFT JOIN CustomerDtl cd ON r.cstmrNo.cstmrNo = cd.customerBas.cstmrNo " +
-            "LEFT JOIN Pet p ON cd.cstmrNo = p.customerBas.cstmrNo " +
+            "LEFT JOIN Pet p ON cd.cstmrNo = p.customerBas.cstmrNo AND p.mainPet = 'Y' " +
             "WHERE s.storeNo = :storeNo " +
-            "GROUP BY s.storeNo,s.storeName,r.reviewNo,r.cstmrNo,r.content,r.scope,cd.nickName,p.mainPet")
+            "GROUP BY s.storeNo,s.storeName,r.reviewNo,r.cstmrNo,r.content,r.scope,cd.nickName,p.img, p.mainPet")
     List<StoreReviewsViewProjection> findByStoreReviews(Integer storeNo);
 
     @Query("SELECT s FROM Store s " +

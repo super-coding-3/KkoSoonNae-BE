@@ -14,13 +14,15 @@ import lombok.NoArgsConstructor;
 public class MainStoreListViewResponseDto {
     @Schema(description = "매장 번호")
     private Integer storeNo;
+
     @Schema(description = "매장 이름")
     private String storeName;
+
     @Schema(description = "매장 주소")
     private String roadAddress;
+
     @Schema(description = "총점")
     private Double averageScope;
 
 
     }
-

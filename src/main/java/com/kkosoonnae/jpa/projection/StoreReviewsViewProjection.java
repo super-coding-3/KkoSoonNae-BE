@@ -14,6 +14,7 @@ public record StoreReviewsViewProjection(
         String content,
         Integer scope,
         String nickName,
+        String img,
         String mainPet
 
 ) {
@@ -25,8 +26,10 @@ public record StoreReviewsViewProjection(
                 .reviewNo(reviewNo)
                 .cstmrNo(cstmrNo)
                 .content(content)
+                .scope(scope)
                 .averageScope(averageScope)
                 .nickName(nickName)
+                .img(img)
                 .mainPet(mainPet)
                 .build();
     }
