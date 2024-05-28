@@ -13,5 +13,4 @@ import java.util.List;
 
 public class StoreImageDTO {
     private List<String> newImageUrls;
-
 }
