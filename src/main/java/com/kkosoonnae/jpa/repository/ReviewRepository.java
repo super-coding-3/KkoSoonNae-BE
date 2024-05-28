@@ -3,6 +3,7 @@ package com.kkosoonnae.jpa.repository;
 import com.kkosoonnae.jpa.entity.CustomerBas;
 import com.kkosoonnae.jpa.entity.Review;
 import com.kkosoonnae.jpa.entity.Store;
+import com.kkosoonnae.jpa.projection.MainStoresListviewProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,5 +23,6 @@ public interface ReviewRepository extends JpaRepository<Review,Integer> {
             "LEFT JOIN Store s ON r.store.storeNo = s.storeNo " +
             "WHERE cb.cstmrNo = :cstmrNo")
     Integer findCustomerByCustomerNumber(@Param("cstmrNo") Integer cstmrNo);
+
 
 }

@@ -12,8 +12,9 @@ public record StoreReviewsViewProjection(
         Integer reviewNo,
         Integer cstmrNo,
         String content,
+        Integer scope,
         String nickName,
-        String petImg
+        String mainPet
 
 ) {
     public StoreReviewsResponseDto toDto(Double averageScope) {
@@ -26,7 +27,7 @@ public record StoreReviewsViewProjection(
                 .content(content)
                 .averageScope(averageScope)
                 .nickName(nickName)
-                .petImg(petImg)
+                .mainPet(mainPet)
                 .build();
     }
 }

@@ -42,8 +42,6 @@ public class StoreService {
 
     private final StyleRepository styleRepository;
 
-    private final ReviewRepository reviewRepository;
-
     private final LikeStoreRepository likeStoreRepository;
 
     private final CustomerBasRepository customerBasRepository;
@@ -66,7 +64,7 @@ public class StoreService {
 
         List<String> imgUrls = storeImgRepository.findImgUrlsByStoreNo(storeNo);
 
-        Double averageScope = calculateAverageScope(storeNo);
+        Double averageScope = reviewService.getAverageReviewScore(storeNo);
 
         StoreDetailViewProjection projectionWithImages = new StoreDetailViewProjection(
                 storeDetailViewProjection.storeNo(),
@@ -225,26 +223,21 @@ public class StoreService {
     }
 
     public List<StoreReviewsResponseDto> findReviews(Integer storeNo) {
-        Double averageScope = calculateAverageScope(storeNo);
-        List<StoreReviewsViewProjection> reviewsViewProjections = storeRepository.findByReviews(storeNo);
+        if(storeNo == null) {
+            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
+        }
+        List<StoreReviewsViewProjection> reviewsViewProjections = storeRepository.findByStoreReviews(storeNo);
+        if(reviewsViewProjections.isEmpty()) {
+            throw new CustomException(ErrorCode.REVIEW_NOT_FOUND);
+        }
+
+        Double averageScope = reviewService.getAverageReviewScore(storeNo);
+
         return reviewsViewProjections.stream()
                 .map(viewProjection -> viewProjection.toDto(averageScope))
                 .collect(Collectors.toList());
     }
-    private Double calculateAverageScope(Integer storeNo) {
-        List<Review> reviews = reviewRepository.findAll();
-        if (reviews.isEmpty()) {
-            return 0.0;
-        }
-        int totalScope = reviews.stream().mapToInt(Review::getScope).sum();
-        double average = (double) totalScope / reviews.size();
-        return Math.round(average * 10) /10.0;
-    }
-
-    private Long calculateTotalLikeStore(Integer storeNo) {
-        List<LikeStore> likeStores = likeStoreRepository.countLikeStoreByStoreStoreNo(storeNo);
-        return (long) likeStores.size();
-    }
 }
+
 
 

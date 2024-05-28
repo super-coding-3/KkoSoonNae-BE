@@ -1,10 +1,12 @@
 package com.kkosoonnae.search.dto;
 
-import com.kkosoonnae.jpa.projection.StoreListViewProjection;
+import com.kkosoonnae.jpa.entity.Store;
+import com.kkosoonnae.jpa.entity.StoreImg;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -21,17 +23,17 @@ public class StoreListViewResponseDto {
     private String roadAddress;
     @Schema(description = "매장 이미지")
     private List<String> img;
-    @Schema(description = "평균 별점")
+    @Schema(description = "총점")
     private Double averageScope;
-   // private Long totalLikeStore;
 
-//    public static StoreListViewResponseDto projectToDto(StoreListViewProjection projection) {
-//        return StoreListViewResponseDto.builder()
-//                .storeNo(projection.storeNo())
-//                .storeName(projection.storeName())
-//                .roadAddress(projection.roadAddress())
-//                .img(projection.img())
-//                .averageScope(projection.scope())
-//                .build();
-//    }
+    public StoreListViewResponseDto(Store store, double averageScope) {
+        this.storeNo =store.getStoreNo();
+        this.storeName =store.getStoreName();
+        this.roadAddress =store.getRoadAddress();
+        this.img =store.getStoreImg()
+                .stream()
+                .map(StoreImg::getImg).collect(Collectors.toList());
+        this.averageScope = averageScope;
+    }
 }
+

@@ -18,7 +18,7 @@ public class MainStoreListViewResponseDto {
     private String storeName;
     @Schema(description = "매장 주소")
     private String roadAddress;
-    @Schema(description = "평균 별점")
+    @Schema(description = "총점")
     private Double averageScope;
 
 

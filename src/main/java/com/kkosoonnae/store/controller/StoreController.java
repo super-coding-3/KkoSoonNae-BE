@@ -1,10 +1,10 @@
 package com.kkosoonnae.store.controller;
 
 import com.kkosoonnae.config.auth.PrincipalDetails;
-import com.kkosoonnae.jpa.entity.Store;
 import com.kkosoonnae.review.dto.ReviewRqDto;
 import com.kkosoonnae.review.service.ReviewService;
 import com.kkosoonnae.store.dto.*;
+import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * packageName    : com.kkosoonnae.store.controller
@@ -47,10 +45,8 @@ public class StoreController {
             log.info("GET/Store 조회응답:" + storeDetailWithImageResponseDto);
             return ResponseEntity.ok().body(storeDetailWithImageResponseDto);
         } catch (Exception e) {
-            Map<String, String> errorBody = new HashMap<>();
-            errorBody.put("error", "매장이 없습니다.");
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
@@ -62,11 +58,9 @@ public class StoreController {
             List<StyleDto> styleDto = storeService.findStyles(storeNo);
             log.info("GET/petHair 응답:" + styleDto);
             return ResponseEntity.ok(styleDto);
-        } catch (Exception e) {
-            Map<String, String> errorBody = new HashMap<>();
-            errorBody.put("error", "펫스타일이 없습니다.");
+        } catch (CustomException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 
         }
     }
@@ -81,11 +75,9 @@ public class StoreController {
             LikeStoreDto likeStoreDto = storeService.saveLikeStore(principalDetails,storeNo);
             log.info("POST/LikeStore 응답조회:" + likeStoreDto);
             return ResponseEntity.ok(likeStoreDto);
-        } catch (Exception e) {
-            Map<String, String> errorBody = new HashMap<>();
-            errorBody.put("error", "관심매장이 중복입니다.");
+        } catch (CustomException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorBody);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
 
@@ -99,11 +91,9 @@ public class StoreController {
             storeService.deleteLikeStore(principalDetails, storeNo);
             log.info("POST/관심매장삭제 응답");
             return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            Map<String, String> errorBody = new HashMap<>();
-            errorBody.put("error", "관심매장이 없습니다.");
+        } catch (CustomException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
@@ -153,11 +143,14 @@ public class StoreController {
     }
     @GetMapping("list-review/{storeNo}")
     @Operation(summary = "매장별 리뷰 리스트")
-    public ResponseEntity<List<StoreReviewsResponseDto>> getReviews(@PathVariable Integer storeNo) {
-        List<StoreReviewsResponseDto> reviewsResponse = storeService.findReviews(storeNo);
-        return ResponseEntity.ok(reviewsResponse);
+    public ResponseEntity<?> getReviews(@PathVariable Integer storeNo) {
+        try {
+            List<StoreReviewsResponseDto> reviewsResponse = storeService.findReviews(storeNo);
+            return ResponseEntity.ok(reviewsResponse);
+        } catch (CustomException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
-
     @PutMapping("/{storeNo}/images")
     @Operation(summary = "매장 이미지 바꾸는 코드")
     public ResponseEntity<String> updateStoreImg(@PathVariable Integer storeNo,
