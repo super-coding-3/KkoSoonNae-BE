@@ -28,7 +28,7 @@ public class StoreReviewsResponseDto {
 
     private Integer scope;
 
-    private Double totalScope;
+    private Double averageScope;
 
     private String nickName;
 

@@ -1,0 +1,31 @@
+2024-05-28 02:58:49.005 INFO  [background-preinit] [o.h.validator.internal.util.Version] - HV000001: Hibernate Validator 8.0.1.Final
+2024-05-28 02:58:49.042 INFO  [main] [com.kkosoonnae.KkosoonnaeApplication] - Starting KkosoonnaeApplication using Java 17.0.11 with PID 40696 (/Users/user/Desktop/KkoSoonNae-BE/build/classes/java/main started by user in /Users/user/Desktop/KkoSoonNae-BE)
+2024-05-28 02:58:49.043 INFO  [main] [com.kkosoonnae.KkosoonnaeApplication] - The following 3 profiles are active: "local", "jwt", "aws"
+2024-05-28 02:58:49.844 INFO  [main] [o.s.d.r.c.RepositoryConfigurationDelegate] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-28 02:58:49.947 INFO  [main] [o.s.d.r.c.RepositoryConfigurationDelegate] - Finished Spring Data repository scanning in 92 ms. Found 16 JPA repository interfaces.
+2024-05-28 02:58:50.870 INFO  [main] [o.s.b.w.embedded.tomcat.TomcatWebServer] - Tomcat initialized with port 8080 (http)
+2024-05-28 02:58:50.881 INFO  [main] [o.apache.coyote.http11.Http11NioProtocol] - Initializing ProtocolHandler ["http-nio-8080"]
+2024-05-28 02:58:50.884 INFO  [main] [o.apache.catalina.core.StandardService] - Starting service [Tomcat]
+2024-05-28 02:58:50.884 INFO  [main] [org.apache.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-05-28 02:58:50.946 INFO  [main] [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
+2024-05-28 02:58:50.946 INFO  [main] [o.s.b.w.s.c.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 1871 ms
+2024-05-28 02:58:51.105 INFO  [main] [o.hibernate.jpa.internal.util.LogHelper] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-28 02:58:51.181 INFO  [main] [org.hibernate.Version] - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-05-28 02:58:51.217 INFO  [main] [o.h.c.internal.RegionFactoryInitiator] - HHH000026: Second-level cache disabled
+2024-05-28 02:58:51.595 INFO  [main] [o.s.o.j.p.SpringPersistenceUnitInfo] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-28 02:58:51.621 INFO  [main] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Starting...
+2024-05-28 02:58:51.786 INFO  [main] [com.zaxxer.hikari.pool.HikariPool] - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7c68a63c
+2024-05-28 02:58:51.787 INFO  [main] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Start completed.
+2024-05-28 02:58:51.869 WARN  [main] [org.hibernate.orm.deprecation] - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-05-28 02:58:51.870 WARN  [main] [org.hibernate.orm.deprecation] - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2024-05-28 02:58:53.038 INFO  [main] [o.h.e.t.j.p.i.JtaPlatformInitiator] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-28 02:58:53.041 INFO  [main] [o.s.o.j.LocalContainerEntityManagerFactoryBean] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-28 02:58:53.268 INFO  [main] [o.s.d.j.r.query.QueryEnhancerFactory] - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-05-28 02:58:55.473 WARN  [main] [o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-05-28 02:58:56.104 INFO  [main] [o.s.s.web.DefaultSecurityFilterChain] - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4fbabaca, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@15f6d246, org.springframework.security.web.context.SecurityContextHolderFilter@6dc78fa8, org.springframework.security.web.header.HeaderWriterFilter@2a0dda9e, org.springframework.web.filter.CorsFilter@4fd74223, org.springframework.web.filter.CorsFilter@4fd74223, org.springframework.security.web.authentication.logout.LogoutFilter@3ae8394, com.kkosoonnae.config.jwt.JwtAuthenticationFilter@51110a39, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6ed4eacd, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6eb668b7, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@67cce6e8, org.springframework.security.web.session.SessionManagementFilter@2741f66d, org.springframework.security.web.access.ExceptionTranslationFilter@2d301b0e, org.springframework.security.web.access.intercept.AuthorizationFilter@316eb9b8]
+2024-05-28 02:58:56.394 INFO  [main] [o.apache.coyote.http11.Http11NioProtocol] - Starting ProtocolHandler ["http-nio-8080"]
+2024-05-28 02:58:56.418 INFO  [main] [o.s.b.w.embedded.tomcat.TomcatWebServer] - Tomcat started on port 8080 (http) with context path ''
+2024-05-28 02:58:56.431 INFO  [main] [com.kkosoonnae.KkosoonnaeApplication] - Started KkosoonnaeApplication in 7.927 seconds (process running for 13.65)
+2024-05-28 02:59:11.181 INFO  [http-nio-8080-exec-2] [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-28 02:59:11.181 INFO  [http-nio-8080-exec-2] [o.s.web.servlet.DispatcherServlet] - Initializing Servlet 'dispatcherServlet'
+2024-05-28 02:59:11.185 INFO  [http-nio-8080-exec-2] [o.s.web.servlet.DispatcherServlet] - Completed initialization in 4 ms
