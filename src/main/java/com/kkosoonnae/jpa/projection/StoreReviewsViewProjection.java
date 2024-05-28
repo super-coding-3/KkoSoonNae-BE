@@ -14,12 +14,11 @@ public record StoreReviewsViewProjection(
         Integer cstmrNo,
         String content,
         Integer scope,
-        Double totalScope,
         String nickName,
         String petImg
 
 ) {
-    public StoreReviewsResponseDto toDto() {
+    public StoreReviewsResponseDto toDto(Double averageScope) {
         return StoreReviewsResponseDto.builder()
                 .storeNo(storeNo)
                 .storeName(storeName)
@@ -29,7 +28,7 @@ public record StoreReviewsViewProjection(
                 .cstmrNo(cstmrNo)
                 .content(content)
                 .scope(scope)
-                .totalScope(totalScope)
+                .averageScope(averageScope)
                 .nickName(nickName)
                 .petImg(petImg)
                 .build();

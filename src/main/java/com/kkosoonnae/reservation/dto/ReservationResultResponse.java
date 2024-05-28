@@ -24,6 +24,9 @@ public class ReservationResultResponse {
     @Schema(description = "스타일 이름")
     private String cutStyle;
 
+    @Schema(description = "펫 이름")
+    private String petName;
+
     @Schema(description = "가격")
     private String price;
 
@@ -41,6 +44,7 @@ public class ReservationResultResponse {
         this.reservationDate = responseDate;
         this.reservationTime = String.valueOf(reservation.getReservationTime());
         this.cutStyle = reservation.getStyleName();
+        this.petName = pet.getName();
         this.price = stringPrice;
         this.breed = pet.getType();
         this.weight = pet.getWeight();
