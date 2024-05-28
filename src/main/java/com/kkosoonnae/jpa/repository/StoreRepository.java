@@ -17,13 +17,12 @@ import java.util.Optional;
 
 @Repository
 public interface StoreRepository extends JpaRepository<Store,Integer> {
-    @Query("SELECT new com.kkosoonnae.jpa.projection.StoreListViewProjection(s.storeNo,s.storeName,s.roadAddress, si.img, AVG(r.scope)) " +
+    @Query("SELECT new com.kkosoonnae.jpa.projection.StoreListViewProjection(s.storeNo,s.storeName,s.roadAddress,AVG (r.scope)) " +
             "FROM Store s " +
-            "LEFT JOIN FETCH StoreImg si ON s.storeNo = si.store.storeNo " +
             "LEFT JOIN FETCH Review r ON s.storeNo = r.store.storeNo " +
             "WHERE s.storeName LIKE %:nameAddressKeyword% " +
             "OR s.roadAddress LIKE %:nameAddressKeyword% " +
-            "GROUP BY s.storeNo, si.img ")
+            "GROUP BY s.storeNo, s.storeName, s.roadAddress" )
     List<StoreListViewProjection> findStoresByStoreNameInAndAddressInOrderByAddressAsc(String nameAddressKeyword);
 
     @Query("SELECT new com.kkosoonnae.jpa.projection.StoreDetailViewProjection(" +
@@ -44,15 +43,15 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
             "sin(radians(s.lat))))< :distance")
     List<Store> findStoresWithinDistance(double lat, double lon, double distance);
 
-    @Query("SELECT new com.kkosoonnae.jpa.projection.MainStoresListviewProjection(s.storeNo,s.storeName,s.roadAddress, AVG(r.scope)) " +
+    @Query("SELECT new com.kkosoonnae.jpa.projection.MainStoresListviewProjection(s.storeNo,s.storeName,s.roadAddress) " +
             "FROM Store s " +
             "LEFT JOIN FETCH Review r ON s.storeNo = r.store.storeNo " +
             "WHERE s.roadAddress LIKE %:addressKeyword% " +
             "GROUP BY s.storeNo " )
     List<MainStoresListviewProjection> findMainStores(String addressKeyword, Pageable pageable);
     @Query("SELECT new com.kkosoonnae.jpa.projection.StoreReviewsViewProjection(" +
-            "s.storeNo,s.storeName, si.img, COUNT(ls.likeNo), " +
-            "r.reviewNo,r.cstmrNo.cstmrNo,r.content,r.scope,cd.nickName,p.img) " +
+            "s.storeNo,s.storeName,COUNT(ls.likeNo), " +
+            "r.reviewNo,r.cstmrNo.cstmrNo,r.content,cd.nickName,p.img) " +
             "FROM Store s " +
             "LEFT JOIN StoreImg si ON s.storeNo = si.store.storeNo " +
             "LEFT JOIN LikeStore ls ON s.storeNo = ls.store.storeNo " +
