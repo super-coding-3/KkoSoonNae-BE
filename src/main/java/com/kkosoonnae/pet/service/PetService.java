@@ -108,4 +108,11 @@ public class PetService {
         petRepository.setMainPet(petNo);
     }
 
+
+
+    public String getMainPetImageByCustomerNo(CustomerBas customerBas) {
+        return petRepository.findByCustomerNoAndMainPet(customerBas.getCstmrNo(), "Y")
+                .map(Pet::getImg)
+                .orElse(null);
+    }
 }
