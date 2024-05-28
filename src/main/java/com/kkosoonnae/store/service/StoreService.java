@@ -54,11 +54,29 @@ public class StoreService {
 
     //매장상세조회
     public StoreDetailWithImageResponseDto findStoreDetailWithImage(Integer storeNo) {
-        Optional<StoreDetailViewProjection> storeDetailViewProjection = storeRepository.findStoreByStoreNo(storeNo);
-        if (storeDetailViewProjection.isEmpty()) {
+        Optional<StoreDetailViewProjection> storeDetailViewProjectionOpt = storeRepository.findStoreByStoreNo(storeNo);
+        if (storeDetailViewProjectionOpt.isEmpty()) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
-        return new StoreDetailWithImageResponseDto(storeDetailViewProjection.get());
+
+        StoreDetailViewProjection storeDetailViewProjection = storeDetailViewProjectionOpt.get();
+
+        List<String> imgUrls = storeImgRepository.findImgUrlsByStoreNo(storeNo);
+
+        StoreDetailViewProjection projectionWithImages = new StoreDetailViewProjection(
+                storeDetailViewProjection.storeNo(),
+                storeDetailViewProjection.storeName(),
+                storeDetailViewProjection.content(),
+                storeDetailViewProjection.phone(),
+                storeDetailViewProjection.roadAddress(),
+                storeDetailViewProjection.openingTime(),
+                storeDetailViewProjection.closingTime(),
+                imgUrls,
+                storeDetailViewProjection.averageScope(),
+                storeDetailViewProjection.totalLikeStore()
+        );
+
+        return new StoreDetailWithImageResponseDto(projectionWithImages);
     }
 
     //매장스타일조회
