@@ -132,4 +132,17 @@ public class PetController {
         }
     }
 
+    @Operation(summary = "대표 반려동물 설정")
+    @PutMapping("/main-pet/{petNo}")
+    public ResponseEntity<?> mainPet(@PathVariable Integer petNo,
+                                     @AuthenticationPrincipal PrincipalDetails principalDetails){
+        try{
+            Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        service.mainPet(petNo, cstmrNo);
+        return ResponseEntity.ok(Collections.singletonMap("message","대표 반려동물 설정에 성공 하였습니다."));
+        } catch (Exception e){
+            return ResponseEntity.ok(Collections.singletonMap("message",e.getMessage()));
+        }
+    }
+
 }

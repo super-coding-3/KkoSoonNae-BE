@@ -45,6 +45,7 @@ public class PetQueryRepository {
                         pet.weight))
                 .from(pet)
                 .where(pet.customerBas.cstmrNo.eq(cstmrNo))  // 해당 회원의 cstmrNo와 일치하는 반려동물 정보 조회
+                .orderBy(pet.mainPet.desc(), pet.name.asc()) // 메인으로 설정된 반려동물 우선 표출 그다음 이름으로
                 .fetch();
     }
 
