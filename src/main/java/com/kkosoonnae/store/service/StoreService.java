@@ -105,21 +105,6 @@ public class StoreService {
         likeStoreRepository.deleteLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(cstmrNo,storeNo);
     }
 
-
-    private Double calculateAverageScope() {
-        List<Review> reviews = reviewRepository.findAll();
-        if (reviews.isEmpty()) {
-            return (double) 0;
-        }
-        int totalScope = reviews.stream().mapToInt(Review::getScope).sum();
-        return (double) (totalScope / reviews.size());
-    }
-
-    private Long calculateTotalLikeStore(Integer storeNo) {
-       List<LikeStore> likeStores = likeStoreRepository.countLikeStoreByStoreStoreNo(storeNo);
-       return (long) likeStores.size();
-    }
-
     //리뷰작성
 //    public ReviewResponseDto createReview(ReviewDto reviewDto) {
 //        Review review = new Review(
@@ -209,10 +194,24 @@ public class StoreService {
     }
 
     public List<StoreReviewsResponseDto> findReviews(Integer storeNo) {
+        Double averageScope = calculateAverageScope(storeNo);
         List<StoreReviewsViewProjection> reviewsViewProjections = storeRepository.findByReviews(storeNo);
         return reviewsViewProjections.stream()
-                .map(StoreReviewsViewProjection::toDto)
+                .map(viewProjection -> viewProjection.toDto(averageScope))
                 .collect(Collectors.toList());
+    }
+    private Double calculateAverageScope(Integer storeNo) {
+        List<Review> reviews = reviewRepository.findAll();
+        if (reviews.isEmpty()) {
+            return (double) 0;
+        }
+        int totalScope = reviews.stream().mapToInt(Review::getScope).sum();
+        return (double) (totalScope / reviews.size());
+    }
+
+    private Long calculateTotalLikeStore(Integer storeNo) {
+        List<LikeStore> likeStores = likeStoreRepository.countLikeStoreByStoreStoreNo(storeNo);
+        return (long) likeStores.size();
     }
 }
 

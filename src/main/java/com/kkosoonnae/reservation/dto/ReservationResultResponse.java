@@ -27,6 +27,12 @@ public class ReservationResultResponse {
     @Schema(description = "가격")
     private String price;
 
+    @Schema(description = "펫 이름")
+    private String petName;
+
+    @Schema(description = "펫 이미지")
+    private String petImg;
+
     @Schema(description = "반려동물 종류")
     private String breed;
 
@@ -42,6 +48,8 @@ public class ReservationResultResponse {
         this.reservationTime = String.valueOf(reservation.getReservationTime());
         this.cutStyle = reservation.getStyleName();
         this.price = stringPrice;
+        this.petName = pet.getName();
+        this.petImg = pet.getImg();
         this.breed = pet.getType();
         this.weight = pet.getWeight();
         this.characteristics = reservation.getFeature();
