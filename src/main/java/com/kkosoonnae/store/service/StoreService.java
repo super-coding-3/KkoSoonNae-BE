@@ -5,6 +5,7 @@ import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.projection.StoreReviewsViewProjection;
 import com.kkosoonnae.jpa.repository.*;
+import com.kkosoonnae.pet.service.PetService;
 import com.kkosoonnae.review.service.ReviewService;
 import com.kkosoonnae.store.dto.*;
 import com.kkosoonnae.store.exception.CustomException;
@@ -50,6 +51,8 @@ public class StoreService {
     private final ReviewService reviewService;
 
     private final StoreImgRepository storeImgRepository;
+
+    private final PetService petService;
 
 
     //매장상세조회
@@ -184,7 +187,15 @@ public class StoreService {
                     double averageReviewScore = reviewService.getAverageReviewScore(store.getStoreNo());
                     Review latestReview = reviewService.getLatestReview(store.getStoreNo());
                     String latestReviewComment = (latestReview != null) ? latestReview.getContent() : "리뷰가 없습니다.";
-                    return new StoreDto(store, averageReviewScore, latestReviewComment);
+
+                    String mainPetImage=null;
+
+                    if (latestReview !=null){
+                        mainPetImage=petService.getMainPetImageByCustomerNo(latestReview.getCstmrNo());
+                    }
+
+
+                    return new StoreDto(store, averageReviewScore, latestReviewComment,mainPetImage);
 
                 })
                 .collect(Collectors.toList());

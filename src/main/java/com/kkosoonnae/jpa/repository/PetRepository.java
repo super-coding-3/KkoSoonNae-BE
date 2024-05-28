@@ -1,5 +1,6 @@
 package com.kkosoonnae.jpa.repository;
 
+import com.kkosoonnae.jpa.entity.CustomerBas;
 import com.kkosoonnae.jpa.entity.Pet;
 import com.kkosoonnae.pet.dto.PetInfoDto;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -42,4 +43,8 @@ public interface PetRepository extends JpaRepository<Pet,Integer> {
     @Transactional
     @Query("UPDATE Pet p SET p.mainPet = 'Y' WHERE p.petNo = :petNo")
     void setMainPet(Integer petNo);
+
+
+    @Query("SELECT p FROM Pet p WHERE p.customerBas.cstmrNo = :cstmrNo AND p.mainPet = :y")
+    Optional<Pet> findByCustomerNoAndMainPet(Integer cstmrNo, String y);
 }
