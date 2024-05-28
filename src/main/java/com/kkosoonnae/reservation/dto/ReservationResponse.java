@@ -53,7 +53,7 @@ public class ReservationResponse {
         this.cutStyle = styleName;
         this.price = price;
         this.petName = pet.getName();
-        this.petImg = getPetImg();
+        this.petImg = pet.getImg();
         this.breed = pet.getType();
         this.weight = pet.getWeight();
         this.characteristics = reservation.getFeature();
