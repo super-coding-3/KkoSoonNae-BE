@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.webjars.NotFoundException;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
@@ -93,6 +94,18 @@ public class PetService {
             throw new IllegalArgumentException("해당 회원의 반려 동물 정보가 없습니다.");
         }
         query.deletePet(petNo);
+    }
+
+    public void mainPet(Integer petNo,Integer cstmrNo){
+        Pet pet = petRepository.findById(petNo)
+                .orElseThrow(()-> new NotFoundException("해당 반려동물을 찾을 수 없습니다."));
+
+        if (!pet.getCustomerBas().getCstmrNo().equals(cstmrNo)) {
+            throw new IllegalArgumentException("해당 고객의 반려동물이 아닙니다.");
+        }
+
+        petRepository.resetMainPetForCustomer(cstmrNo,petNo);
+        petRepository.setMainPet(petNo);
     }
 
 }

@@ -60,6 +60,7 @@ public class PetAddDto {
                 .birthDt(birthDt)
                 .gender(gender)
                 .weight(weight)
+                .mainPet("N")
                 .build();
         return pet;
     }

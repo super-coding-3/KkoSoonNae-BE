@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class StoreDetailWithImageResponseDto {
+
     private StoreDetailViewProjection storeDetail;
 
 }

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,6 +26,8 @@ public class StoreImg {
 
     @Column(name = "IMG")
     private String img;
+
+
 
     public StoreImg(Store store, String imageUrl){
         this.store=store;

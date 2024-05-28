@@ -54,11 +54,31 @@ public class StoreService {
 
     //매장상세조회
     public StoreDetailWithImageResponseDto findStoreDetailWithImage(Integer storeNo) {
-        Optional<StoreDetailViewProjection> storeDetailViewProjection = storeRepository.findStoreByStoreNo(storeNo);
-        if (storeDetailViewProjection.isEmpty()) {
+        Optional<StoreDetailViewProjection> storeDetailViewProjectionOpt = storeRepository.findStoreByStoreNo(storeNo);
+        if (storeDetailViewProjectionOpt.isEmpty()) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
-        return new StoreDetailWithImageResponseDto(storeDetailViewProjection.get());
+
+        StoreDetailViewProjection storeDetailViewProjection = storeDetailViewProjectionOpt.get();
+
+        List<String> imgUrls = storeImgRepository.findImgUrlsByStoreNo(storeNo);
+
+        Double averageScope = calculateAverageScope(storeNo);
+
+        StoreDetailViewProjection projectionWithImages = new StoreDetailViewProjection(
+                storeDetailViewProjection.storeNo(),
+                storeDetailViewProjection.storeName(),
+                storeDetailViewProjection.content(),
+                storeDetailViewProjection.phone(),
+                storeDetailViewProjection.roadAddress(),
+                storeDetailViewProjection.openingTime(),
+                storeDetailViewProjection.closingTime(),
+                imgUrls,
+                averageScope,
+                storeDetailViewProjection.totalLikeStore()
+        );
+
+        return new StoreDetailWithImageResponseDto(projectionWithImages);
     }
 
     //매장스타일조회
@@ -203,10 +223,11 @@ public class StoreService {
     private Double calculateAverageScope(Integer storeNo) {
         List<Review> reviews = reviewRepository.findAll();
         if (reviews.isEmpty()) {
-            return (double) 0;
+            return 0.0;
         }
         int totalScope = reviews.stream().mapToInt(Review::getScope).sum();
-        return (double) (totalScope / reviews.size());
+        double average = (double) totalScope / reviews.size();
+        return Math.round(average * 10) /10.0;
     }
 
     private Long calculateTotalLikeStore(Integer storeNo) {

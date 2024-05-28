@@ -55,6 +55,9 @@ public class Pet {
     @Column(name = "WEIGHT")
     private String weight;
 
+    @Column(name = "MAIN_PET")
+    private String mainPet;
+
     public Pet(CustomerBas customerBas, String type, String weight) {
         this.customerBas = customerBas;
         this.type = type;
