@@ -93,6 +93,13 @@ public class PetService {
         if(!exists){
             throw new IllegalArgumentException("해당 회원의 반려 동물 정보가 없습니다.");
         }
+
+        boolean isReserved = query.existsReservedPetWithStatusY(petNo);
+        if(isReserved){
+            throw new IllegalStateException("해당 반려동물은 현재 예약 상태입니다.");
+        }
+
+
         query.deletePet(petNo);
     }
 

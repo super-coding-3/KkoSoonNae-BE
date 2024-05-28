@@ -91,4 +91,12 @@ public class PetQueryRepository {
 
     }
 
+    public boolean existsReservedPetWithStatusY(Integer petNo) {
+        QReservedPets reservedPets = QReservedPets.reservedPets;
+        return query.selectFrom(reservedPets)
+                .where(reservedPets.pet.petNo.eq(petNo)
+                        .and(reservedPets.availStatus.eq("Y")))
+                .fetchFirst() != null;
+    }
+
 }

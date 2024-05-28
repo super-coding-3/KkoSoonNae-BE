@@ -127,6 +127,8 @@ public class PetController {
             Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
             service.deletePet(cstmrNo,petNo);
             return ResponseEntity.ok(Collections.singletonMap("message","반려동물 정보 삭제에 성공 하였습니다."));
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.ok(Collections.singletonMap("message",e.getMessage()));
         }catch (IllegalStateException e){
             return ResponseEntity.ok(Collections.singletonMap("message",e.getMessage()));
         }
