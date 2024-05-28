@@ -21,12 +21,6 @@ public class MainStoreListViewResponseDto {
     @Schema(description = "평균 별점")
     private Double averageScope;
 
-    public static MainStoreListViewResponseDto mainStoresDto(MainStoresListviewProjection projection) {
-        return MainStoreListViewResponseDto.builder()
-                .storeNo(projection.storeNo())
-                .storeName(projection.storeName())
-                .roadAddress(projection.roadAddress())
-                .averageScope(projection.scope())
-                .build();
+
     }
-}
+

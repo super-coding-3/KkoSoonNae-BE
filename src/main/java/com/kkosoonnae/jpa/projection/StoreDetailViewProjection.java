@@ -1,5 +1,6 @@
 package com.kkosoonnae.jpa.projection;
 
+import com.kkosoonnae.store.dto.StoreDetailWithImageResponseDto;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -27,4 +28,5 @@ public record StoreDetailViewProjection(
                 new ArrayList<>(), averageScope, totalLikeStore);
     }
 
-}
+    }
+
