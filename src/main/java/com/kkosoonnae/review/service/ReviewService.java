@@ -22,13 +22,13 @@ public class ReviewService {
 
     private final StoreRepository storeRepository;
 
-    public double getAverageReviewScore(Integer storeId){
+    public Integer getAverageReviewScore(Integer storeId){
         List<Review> reviews = reviewRepository.findByStoreStoreNo(storeId);
-        double averageScore= reviews.stream()
+        Integer averageScore= (int) reviews.stream()
                 .mapToInt(Review::getScope)
                 .average()
                 .orElse(Double.NaN);
-        return Math.round(averageScore *10.0)/10.0;
+        return Math.round(averageScore *10)/10;
     }
 
     public Review getLatestReview(Integer storeNo) {

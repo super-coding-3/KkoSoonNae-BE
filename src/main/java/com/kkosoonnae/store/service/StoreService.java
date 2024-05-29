@@ -64,7 +64,7 @@ public class StoreService {
 
         List<String> imgUrls = storeImgRepository.findImgUrlsByStoreNo(storeNo);
 
-        Double averageScope = reviewService.getAverageReviewScore(storeNo);
+        Integer averageScope = reviewService.getAverageReviewScore(storeNo);
 
         StoreDetailViewProjection projectionWithImages = new StoreDetailViewProjection(
                 storeDetailViewProjection.storeNo(),
@@ -231,7 +231,7 @@ public class StoreService {
             throw new CustomException(ErrorCode.REVIEW_NOT_FOUND);
         }
 
-        Double averageScope = reviewService.getAverageReviewScore(storeNo);
+        Integer averageScope = reviewService.getAverageReviewScore(storeNo);
 
         return reviewsViewProjections.stream()
                 .map(viewProjection -> viewProjection.toDto(averageScope))

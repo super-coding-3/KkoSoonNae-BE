@@ -3,7 +3,6 @@ package com.kkosoonnae.jpa.projection;
 import com.kkosoonnae.store.dto.StoreReviewsResponseDto;
 import lombok.Builder;
 
-import java.time.LocalDateTime;
 @Builder
 public record StoreReviewsViewProjection(
         Integer storeNo,
@@ -18,7 +17,7 @@ public record StoreReviewsViewProjection(
         String mainPet
 
 ) {
-    public StoreReviewsResponseDto toDto(Double averageScope) {
+    public StoreReviewsResponseDto toDto(Integer averageScope) {
         return StoreReviewsResponseDto.builder()
                 .storeNo(storeNo)
                 .storeName(storeName)
