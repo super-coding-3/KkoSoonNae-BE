@@ -11,19 +11,18 @@ import java.util.List;
 public record StoreListViewProjection(
         Integer storeNo,
         String storeName,
-        String roadAddress,
-        Double scope
-
+        String roadAddress
 
         // ... (목록 조회 때 보여 줄 필드만 작성)
 ) {
-    public StoreListViewResponseDto toDto(List<String> storeImgList ,Double averageScope) {
+    public StoreListViewResponseDto toDto(List<String> img,Double averageScope) {
         return StoreListViewResponseDto.builder()
-                .storeNo(storeNo)
-                .storeName(storeName)
-                .roadAddress(roadAddress)
-                .img(storeImgList)
+                .storeNo(this.storeNo)
+                .storeName(this.storeName)
+                .roadAddress(this.roadAddress)
+                .img(img)
                 .averageScope(averageScope)
                 .build();
     }
 }
+

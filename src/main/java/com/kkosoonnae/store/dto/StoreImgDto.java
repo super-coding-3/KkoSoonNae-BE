@@ -10,7 +10,9 @@ import lombok.*;
 @Builder
 public class StoreImgDto {
     private Integer storeImgNo;
+
     private Integer storeNo;
+
     private String img;
 
     }

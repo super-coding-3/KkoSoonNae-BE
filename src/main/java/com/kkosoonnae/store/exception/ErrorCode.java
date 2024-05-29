@@ -16,6 +16,7 @@ public enum ErrorCode {
 
     DUPLICATE_LIKE_STORE("관심매장이 중복입니다.",HttpStatus.BAD_REQUEST),
     //
+    REVIEW_NOT_FOUND("리뷰를 찾을 수 없습니다." ,HttpStatus.NOT_FOUND),
     DEFAULT("처리 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
 
     STORE_IMG_MISMATCH("해당 매장 이미지가 없습니다.",HttpStatus.NOT_FOUND),

@@ -16,6 +16,5 @@ public interface StoreImgRepository extends JpaRepository<StoreImg, Integer> {
     void deleteByStore_StoreNo(Integer storeNo);
     @Query("SELECT si.img FROM StoreImg si WHERE si.store.storeNo = :storeNo")
     List<String> findImgUrlsByStoreNo(Integer storeNo);
-    @Query("SELECT si.img FROM StoreImg si WHERE si.store.storeNo IN :storeNo")
-    List<String> findStoresImgStoreNo(List<Integer> storeNo);
+
 }

@@ -1,9 +1,8 @@
 package com.kkosoonnae.search.service;
 
 import com.kkosoonnae.jpa.entity.Review;
-import com.kkosoonnae.jpa.entity.StoreImg;
+import com.kkosoonnae.jpa.entity.Store;
 import com.kkosoonnae.jpa.projection.MainStoresListviewProjection;
-import com.kkosoonnae.jpa.projection.StoreListViewProjection;
 import com.kkosoonnae.jpa.repository.ReviewRepository;
 import com.kkosoonnae.jpa.repository.StoreImgRepository;
 import com.kkosoonnae.jpa.repository.StoreRepository;
@@ -13,11 +12,9 @@ import com.kkosoonnae.store.exception.CustomException;
 import com.kkosoonnae.store.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,49 +38,46 @@ public class SearchService {
 
     private final StoreRepository storeRepository;
     private final ReviewRepository reviewRepository;
-    private final StoreImgRepository storeImgRepository;
+
     public List<StoreListViewResponseDto> findByStores(String nameAddressKeyword) {
         if (nameAddressKeyword == null || nameAddressKeyword.isEmpty()) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
-        List<StoreListViewProjection> projection = storeRepository.findStoresByStoreNameInAndAddressInOrderByAddressAsc(nameAddressKeyword);
-        if (projection.isEmpty()) {
+        List<Store> stores = storeRepository.findListStores(nameAddressKeyword);
+        if (stores.isEmpty()) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
-        List<Integer> storeNo = projection.stream()
-                .map(StoreListViewProjection::storeNo)
-                .collect(Collectors.toList());
-
-        List<String> storeImgList = storeImgRepository.findStoresImgStoreNo(storeNo);
-
-        Double averageScope = calculateAverageScope();
-
-        return projection.stream()
-                .map(store ->store.toDto(storeImgList,averageScope))
+        return stores.stream()
+                .map(store-> {
+                    double averageScope = getAverageReviewScore(store.getStoreNo());
+                    return new StoreListViewResponseDto(store,averageScope);
+                })
                 .collect(Collectors.toList());
 
     }
-    public List<MainStoreListViewResponseDto> findByMainStores(String addressKeyword ,Pageable pageable) {
+
+    public List<MainStoreListViewResponseDto> findByMainStores(String addressKeyword, Pageable pageable) {
         List<MainStoresListviewProjection> projections = storeRepository.findMainStores(addressKeyword, pageable);
         if (projections.isEmpty()) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
-        Double averageScope = calculateAverageScope();
-        Collections.shuffle(projections);
         return projections.stream()
-                .map(listviewProjection-> listviewProjection.MainStoreToDto(averageScope))
+                .map(projection -> {
+                    Double averageScope = getAverageReviewScore(projection.storeNo());
+                    return projection.MainStoreToDto(averageScope);
+                })
                 .collect(Collectors.toList());
+    }
 
-     }
-    private Double calculateAverageScope() {
-        List<Review> reviews = reviewRepository.findAll();
-        if (reviews.isEmpty()) {
-            return 0.0;
-        }
-        int totalScope = reviews.stream().mapToInt(Review::getScope).sum();
-        double average = (double) totalScope / reviews.size();
-        return Math.round(average * 10) /10.0;
+    public double getAverageReviewScore(Integer storeId){
+        List<Review> reviews = reviewRepository.findByStoreStoreNo(storeId);
+        double averageScore= reviews.stream()
+                .mapToInt(Review::getScope)
+                .average()
+                .orElse(Double.NaN);
+        return Math.round(averageScore *10.0)/10.0;
     }
 }
+
 
 
