@@ -50,7 +50,7 @@ public class PetAddDto {
     private String weight;
 
 
-    public Pet addPet(PrincipalDetails principalDetails){
+    public Pet addPet(PrincipalDetails principalDetails,boolean hasPets){
         Pet pet = Pet.builder()
                 .petNo(petNo)
                 .customerBas(principalDetails.getCustomerBas())
@@ -60,7 +60,7 @@ public class PetAddDto {
                 .birthDt(birthDt)
                 .gender(gender)
                 .weight(weight)
-                .mainPet("N")
+                .mainPet(hasPets ? "N" : "Y")
                 .build();
         return pet;
     }

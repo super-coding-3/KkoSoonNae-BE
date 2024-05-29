@@ -69,7 +69,8 @@ public class PetService {
     }
 
     public void petAdd(PrincipalDetails principalDetails, PetAddDto petAddDto) {
-        petRepository.save(petAddDto.addPet(principalDetails));
+        boolean hasPets = petRepository.existsByCustomerBas(principalDetails.getCustomerBas());
+        petRepository.save(petAddDto.addPet(principalDetails,hasPets));
     }
 
     @Transactional

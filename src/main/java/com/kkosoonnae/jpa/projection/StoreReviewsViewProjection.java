@@ -26,7 +26,7 @@ public record StoreReviewsViewProjection(
                 .cstmrNo(cstmrNo)
                 .content(content)
                 .scope(scope)
-                .averageScope(averageScope)
+                .averageScope(Double.valueOf(averageScope))
                 .nickName(nickName)
                 .img(img)
                 .mainPet(mainPet)

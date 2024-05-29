@@ -21,7 +21,7 @@ public record StoreDetailViewProjection(
 ) {
     public StoreDetailViewProjection(Integer storeNo, String storeName, String content, String phone,
                                      String roadAddress, LocalTime openingTime, LocalTime closingTime,
-                                     Double averageScope, Long totalLikeStore) {
+                                     Integer averageScope, Long totalLikeStore) {
         this(storeNo, storeName, content, phone, roadAddress, openingTime, closingTime,
                 new ArrayList<>(), averageScope, totalLikeStore);
     }
