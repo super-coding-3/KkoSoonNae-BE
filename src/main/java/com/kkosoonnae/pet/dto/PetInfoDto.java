@@ -45,4 +45,7 @@ public class PetInfoDto {
     @Schema(description = "몸무게")
     private String weight;
 
+    @Schema(description = "대표 반려동물")
+    private String mainPet;
+
 }
