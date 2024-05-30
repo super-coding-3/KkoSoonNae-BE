@@ -51,7 +51,7 @@ public class ReservationController {
         return reservationService.findMyPet();
     }
 
-    @Operation(summary = "에약 하기")
+    @Operation(summary = "예약 하기")
     @PostMapping("/make-reservation")
     public ReservationResponse makeReservation(@RequestBody ReservationRequest reservationRequest) {
         return reservationService.makeReservation(reservationRequest);
