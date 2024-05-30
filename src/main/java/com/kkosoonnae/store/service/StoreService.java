@@ -64,7 +64,7 @@ public class StoreService {
 
         List<String> imgUrls = storeImgRepository.findImgUrlsByStoreNo(storeNo);
 
-        Integer averageScope = reviewService.getAverageReviewScore(storeNo);
+        double averageScope = reviewService.getAverageReviewScore(storeNo);
 
         StoreDetailViewProjection projectionWithImages = new StoreDetailViewProjection(
                 storeDetailViewProjection.storeNo(),
@@ -82,7 +82,7 @@ public class StoreService {
         return new StoreDetailWithImageResponseDto(projectionWithImages);
     }
 
-    //매장스타일조회
+    //매장 펫스타일 조회
     public List<StyleDto> findStyles(Integer storeNo) {
         if (storeNo == null) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
@@ -221,7 +221,7 @@ public class StoreService {
 
         return true;
     }
-
+    //매장 리뷰리스트 조회
     public List<StoreReviewsResponseDto> findReviews(Integer storeNo) {
         if(storeNo == null) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);

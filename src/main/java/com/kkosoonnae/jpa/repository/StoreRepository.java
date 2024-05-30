@@ -30,7 +30,7 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
             "LEFT JOIN FETCH  Review  r ON s.storeNo = r.store.storeNo " +
             "LEFT JOIN FETCH LikeStore ls ON s.storeNo = ls.store.storeNo " +
             "WHERE s.storeNo = :storeNo " +
-            "GROUP BY s.storeNo")
+            "GROUP BY s.storeNo" )
     Optional<StoreDetailViewProjection> findStoreByStoreNo(Integer storeNo);
 
     @Query("SELECT s FROM Store s WHERE s.storeNo = :storeNo")
@@ -41,24 +41,24 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
             "sin(radians(s.lat))))< :distance")
     List<Store> findStoresWithinDistance(double lat, double lon, double distance);
 
-    @Query("SELECT new com.kkosoonnae.jpa.projection.MainStoresListviewProjection(s.storeNo,s.storeName,s.roadAddress) " +
+    @Query("SELECT new com.kkosoonnae.jpa.projection.MainStoresListviewProjection(s.storeNo,s.storeName,s.roadAddress,COUNT(ls.likeNo)) " +
             "FROM Store s " +
-            "LEFT JOIN FETCH Review r ON s.storeNo = r.store.storeNo " +
+            "LEFT JOIN FETCH LikeStore ls ON s.storeNo = ls.store.storeNo " +
             "WHERE s.roadAddress LIKE %:addressKeyword% " +
-            "GROUP BY s.storeNo " )
+            "GROUP BY s.storeNo" )
     List<MainStoresListviewProjection> findMainStores(String addressKeyword, Pageable pageable);
 
     @Query("SELECT new com.kkosoonnae.jpa.projection.StoreReviewsViewProjection(" +
             "s.storeNo,s.storeName,COUNT(ls.likeNo), " +
-            "r.reviewNo,r.cstmrNo.cstmrNo,r.content,r.scope,cd.nickName,p.img,p.mainPet) " +
+            "r.reviewNo,r.cstmrNo.cstmrNo,r.content,r.reviewDt,r.scope,cd.nickName,p.img,p.mainPet) " +
             "FROM Store s " +
             "LEFT JOIN StoreImg si ON s.storeNo = si.store.storeNo " +
             "LEFT JOIN LikeStore ls ON s.storeNo = ls.store.storeNo " +
             "LEFT JOIN Review r ON s.storeNo = r.store.storeNo " +
             "LEFT JOIN CustomerDtl cd ON r.cstmrNo.cstmrNo = cd.customerBas.cstmrNo " +
-            "LEFT JOIN Pet p ON cd.cstmrNo = p.customerBas.cstmrNo AND p.mainPet = 'Y' " +
+            "INNER JOIN Pet p ON cd.cstmrNo = p.customerBas.cstmrNo AND p.mainPet = 'Y' " +
             "WHERE s.storeNo = :storeNo " +
-            "GROUP BY s.storeNo,s.storeName,r.reviewNo,r.cstmrNo,r.content,r.scope,cd.nickName,p.img, p.mainPet")
+            "GROUP BY s.storeNo,s.storeName,r.reviewNo,r.cstmrNo,r.reviewDt,r.content,r.scope,cd.nickName,p.img, p.mainPet ")
     List<StoreReviewsViewProjection> findByStoreReviews(Integer storeNo);
 
     @Query("SELECT s FROM Store s " +

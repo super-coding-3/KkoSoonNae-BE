@@ -10,7 +10,8 @@ import java.util.List;
 public record MainStoresListviewProjection(
         Integer storeNo,
         String storeName,
-        String roadAddress
+        String roadAddress,
+        Long totalLikeStore
 
 
 ) {
@@ -19,6 +20,7 @@ public record MainStoresListviewProjection(
                 .storeNo(storeNo)
                 .storeName(storeName)
                 .roadAddress(roadAddress)
+                .totalLikeStore(totalLikeStore)
                 .averageScope(averageScope)
                 .build();
     }
