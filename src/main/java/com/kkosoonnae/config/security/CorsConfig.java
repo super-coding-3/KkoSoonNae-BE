@@ -31,7 +31,7 @@ public class CorsConfig implements WebMvcConfigurer {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedHeaders(Collections.singletonList("*"));
         config.setAllowedMethods(Collections.singletonList("*"));
-        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://kkosoonnae.vercel.app","https://kkosoonnae.store"));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://kkosoonnae.vercel.app","https://kkosoonnae.store:8080"));
         config.setAllowCredentials(true);
 
         source.registerCorsConfiguration("/**",config);
