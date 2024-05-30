@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.joda.time.DateTime;
 
 import java.time.LocalDateTime;
 @Getter
@@ -30,6 +31,9 @@ public class StoreReviewsResponseDto {
 
     @Schema(description = "리뷰 본문")
     private String content;
+
+    @Schema(description = "리뷰 날짜")
+    private LocalDateTime reviewDt;
 
     @Schema(description = "별점")
     private Integer scope;

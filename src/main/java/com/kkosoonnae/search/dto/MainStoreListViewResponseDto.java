@@ -20,6 +20,8 @@ public class MainStoreListViewResponseDto {
 
     @Schema(description = "매장 주소")
     private String roadAddress;
+    @Schema(description = "매장 관심수")
+    private Long totalLikeStore;
 
     @Schema(description = "총점")
     private Double averageScope;
