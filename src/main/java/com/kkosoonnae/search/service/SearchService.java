@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,6 +62,7 @@ public class SearchService {
         if (projections.isEmpty()) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
+        Collections.shuffle(projections);
         return projections.stream()
                 .map(projection -> {
                     Double averageScope = getAverageReviewScore(projection.storeNo());

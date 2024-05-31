@@ -20,7 +20,7 @@ public record StoreReviewsViewProjection(
         String mainPet
 
 ) {
-    public StoreReviewsResponseDto toDto(Integer averageScope) {
+    public StoreReviewsResponseDto toDto(double averageScope) {
         return StoreReviewsResponseDto.builder()
                 .storeNo(storeNo)
                 .storeName(storeName)
@@ -30,7 +30,7 @@ public record StoreReviewsViewProjection(
                 .content(content)
                 .reviewDt(reviewDt)
                 .scope(scope)
-                .averageScope(Double.valueOf(averageScope))
+                .averageScope(averageScope)
                 .nickName(nickName)
                 .img(img)
                 .mainPet(mainPet)
