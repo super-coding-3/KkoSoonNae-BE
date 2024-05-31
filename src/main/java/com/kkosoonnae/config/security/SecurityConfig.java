@@ -43,6 +43,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.disable());
+        http.cors(cors -> corsConfig.corsConfigurer());
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.formLogin(f -> f.disable());
         http.httpBasic(AbstractHttpConfigurer::disable)
@@ -60,8 +61,6 @@ public class SecurityConfig {
                         .accessDeniedHandler(new CustomerAccessDeniedHandler()))
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
-        http.with(new MyCustomDs(), myCustomDs -> myCustomDs.getClass());
-
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().permitAll());
@@ -74,13 +73,4 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    public class MyCustomDs extends AbstractHttpConfigurer<MyCustomDs, HttpSecurity> {
-
-        @Override
-        public void configure(HttpSecurity http) throws Exception {
-
-            AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-            http.addFilter(corsConfig.corsFilter());
-        }
-    }
 }

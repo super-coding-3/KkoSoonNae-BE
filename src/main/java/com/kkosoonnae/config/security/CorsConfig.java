@@ -23,25 +23,19 @@ import java.util.Collections;
  * 2024-04-24        hagjoon       최초 생성
  */
 @Configuration
-public class CorsConfig implements WebMvcConfigurer {
+public class CorsConfig {
 
     @Bean
-    public CorsFilter corsFilter(){
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedHeaders(Collections.singletonList("*"));
-        config.setAllowedMethods(Collections.singletonList("*"));
-        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://kkosoonnae.vercel.app","https://kkosoonnae.shop:8080"));
-        config.setAllowCredentials(true);
-
-        source.registerCorsConfiguration("/**",config);
-        return new CorsFilter(source);
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("https://www.kkosoonnae.shop")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
+            }
+        };
     }
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry){
-//        registry.addMapping("/KkoSoonNae/**")
-//                .allowedOrigins("http://localhost","https://kkosoonnae.vercel.app")
-//                .allowedMethods("*")
-//                .exposedHeaders("Location");
-//    }
 }
