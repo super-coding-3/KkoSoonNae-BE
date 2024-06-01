@@ -3,6 +3,8 @@ package com.kkosoonnae.jpa.projection;
 import com.kkosoonnae.store.dto.StoreReviewsResponseDto;
 import lombok.Builder;
 
+import java.time.LocalDateTime;
+
 @Builder
 public record StoreReviewsViewProjection(
         Integer storeNo,
@@ -11,6 +13,7 @@ public record StoreReviewsViewProjection(
         Integer reviewNo,
         Integer cstmrNo,
         String content,
+        LocalDateTime reviewDt,
         Integer scope,
         String nickName,
         String img,
@@ -25,6 +28,7 @@ public record StoreReviewsViewProjection(
                 .reviewNo(reviewNo)
                 .cstmrNo(cstmrNo)
                 .content(content)
+                .reviewDt(reviewDt)
                 .scope(scope)
                 .averageScope(Double.valueOf(averageScope))
                 .nickName(nickName)
