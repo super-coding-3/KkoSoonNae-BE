@@ -64,7 +64,7 @@ public class StoreService {
 
         List<String> imgUrls = storeImgRepository.findImgUrlsByStoreNo(storeNo);
 
-        Integer averageScope = reviewService.getAverageReviewScore(storeNo);
+        double averageScope = reviewService.getAverageReviewScore(storeNo);
 
         StoreDetailViewProjection projectionWithImages = new StoreDetailViewProjection(
                 storeDetailViewProjection.storeNo(),
@@ -192,7 +192,6 @@ public class StoreService {
                         mainPetImage=petService.getMainPetImageByCustomerNo(latestReview.getCstmrNo());
                     }
 
-
                     return new StoreDto(store, averageReviewScore, latestReviewComment,mainPetImage);
 
                 })
@@ -231,7 +230,7 @@ public class StoreService {
             throw new CustomException(ErrorCode.REVIEW_NOT_FOUND);
         }
 
-        Integer averageScope = reviewService.getAverageReviewScore(storeNo);
+        Double averageScope = reviewService.getAverageReviewScore(storeNo);
 
         return reviewsViewProjections.stream()
                 .map(viewProjection -> viewProjection.toDto(averageScope))
