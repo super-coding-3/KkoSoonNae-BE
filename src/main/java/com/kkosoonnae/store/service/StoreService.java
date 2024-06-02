@@ -232,7 +232,7 @@ public class StoreService {
             throw new CustomException(ErrorCode.REVIEW_NOT_FOUND);
         }
 
-        Integer averageScope = reviewService.getAverageReviewScore(storeNo);
+        double averageScope = reviewService.getAverageReviewScore(storeNo);
 
         return reviewsViewProjections.stream()
                 .map(viewProjection -> viewProjection.toDto(averageScope))
