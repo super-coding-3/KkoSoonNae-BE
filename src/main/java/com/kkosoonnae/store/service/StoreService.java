@@ -198,7 +198,7 @@ public class StoreService {
                 .collect(Collectors.toList());
     }
 
-    
+
 
     public List<AllStore> getAllStores() {
         List<Store> stores = storeRepository.findAll();

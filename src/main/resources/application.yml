@@ -1,6 +1,7 @@
 spring:
   profiles:
     active: local #default
+
     group:
       local:
         - jwt
@@ -31,5 +32,3 @@ cloud:
       auto: false
     credentials:
       instance-profile: true
-logging:
-  config: classpath:logback-spring.xml
