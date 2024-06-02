@@ -30,7 +30,7 @@ public record StoreReviewsViewProjection(
                 .content(content)
                 .reviewDt(reviewDt)
                 .scope(scope)
-                .averageScope(Double.valueOf(averageScope))
+                .averageScope(averageScope)
                 .nickName(nickName)
                 .img(img)
                 .mainPet(mainPet)

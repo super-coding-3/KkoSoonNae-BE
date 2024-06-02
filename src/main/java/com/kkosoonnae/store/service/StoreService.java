@@ -192,13 +192,14 @@ public class StoreService {
                         mainPetImage=petService.getMainPetImageByCustomerNo(latestReview.getCstmrNo());
                     }
 
+
                     return new StoreDto(store, averageReviewScore, latestReviewComment,mainPetImage);
 
                 })
                 .collect(Collectors.toList());
     }
 
-    
+
 
     public List<AllStore> getAllStores() {
         List<Store> stores = storeRepository.findAll();
@@ -231,7 +232,7 @@ public class StoreService {
             throw new CustomException(ErrorCode.REVIEW_NOT_FOUND);
         }
 
-        Double averageScope = reviewService.getAverageReviewScore(storeNo);
+        double averageScope = reviewService.getAverageReviewScore(storeNo);
 
         return reviewsViewProjections.stream()
                 .map(viewProjection -> viewProjection.toDto(averageScope))
