@@ -4,6 +4,9 @@ import com.kkosoonnae.config.jwt.JwtAuthenticationFilter;
 import com.kkosoonnae.config.jwt.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.connector.Connector;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,6 +46,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.disable());
+        http.cors(cors -> corsConfig.corsConfigurer());
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.formLogin(f -> f.disable());
         http.httpBasic(AbstractHttpConfigurer::disable)
@@ -60,8 +64,6 @@ public class SecurityConfig {
                         .accessDeniedHandler(new CustomerAccessDeniedHandler()))
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
-        http.with(new MyCustomDs(), myCustomDs -> myCustomDs.getClass());
-
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().permitAll());
@@ -74,13 +76,4 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    public class MyCustomDs extends AbstractHttpConfigurer<MyCustomDs, HttpSecurity> {
-
-        @Override
-        public void configure(HttpSecurity http) throws Exception {
-
-            AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-            http.addFilter(corsConfig.corsFilter());
-        }
-    }
 }

@@ -200,6 +200,7 @@ public class StoreService {
     }
 
 
+
     public List<AllStore> getAllStores() {
         List<Store> stores = storeRepository.findAll();
         return stores.stream()
@@ -231,7 +232,7 @@ public class StoreService {
             throw new CustomException(ErrorCode.REVIEW_NOT_FOUND);
         }
 
-        double averageScope = reviewService.getAverageReviewScore(storeNo);
+        Integer averageScope = reviewService.getAverageReviewScore(storeNo);
 
         return reviewsViewProjections.stream()
                 .map(viewProjection -> viewProjection.toDto(averageScope))
