@@ -15,7 +15,7 @@ spring:
       max-file-size: 10MB
   jpa:
     database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.MariaDBDialect
     show-sql: true
     properties:
       hibernate:
