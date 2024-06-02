@@ -68,30 +68,12 @@ public class SecurityConfig {
                 .requestMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().permitAll());
 
-        http.requiresChannel(channel -> channel.anyRequest().requiresSecure());
-
         return http.build();
     }
 
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
-    }
-
-    @Bean
-    public ServletWebServerFactory servletContainer() {
-        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
-        tomcat.addAdditionalTomcatConnectors(httpToHttpsRedirectConnector());
-        return tomcat;
-    }
-
-    private Connector httpToHttpsRedirectConnector() {
-        Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
-        connector.setScheme("http");
-        connector.setPort(80);
-        connector.setSecure(false);
-        connector.setRedirectPort(443);
-        return connector;
     }
 
 }
