@@ -1,4 +1,5 @@
 # :dog:KkoSoonNae-BE:dog:
+![IMG_1164](https://github.com/super-coding-3/KkoSoonNae-BE/assets/162071460/0fb32551-01d4-48e8-ad9b-ed48dc8de8dc)
 ## 프로젝트 소개
 KkoSoonNae 꼬순내는 반려동물이 계속해서 늘어나고 있는 요즘 사람이 아닌 반려동물에 대한 니즈를 충족하기 위해 기획했다.
 사람도 시간이 지나면 자라는 머리카락을 위해 미용실을 이용하듯 반려동물 미용실도 쉽고 간편하게 원하는 니즈를 충족시켜주기 위한 웹 사이트 이다.
