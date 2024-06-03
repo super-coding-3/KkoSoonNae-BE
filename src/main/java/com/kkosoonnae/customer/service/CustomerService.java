@@ -112,12 +112,7 @@ public class CustomerService {
         return infoDto;
     }
 
-    public void updateUserProfile(InfoDto infoDto){
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CustomerBas customerBas = principalDetails.getCustomerBas();
-
-        Integer cstmrNo = customerBas.getCstmrNo();
-
+    public void updateUserProfile(InfoDto infoDto,Integer cstmrNo){
         CustomerDtl customerDtl = customerDtlRepository.findByCstmrNo(cstmrNo);
 
         if (customerDtl == null) {
@@ -130,12 +125,7 @@ public class CustomerService {
 
     }
 
-    public String getUserNickname() {
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CustomerBas customerBas = principalDetails.getCustomerBas();
-
-        Integer cstmrNo = customerBas.getCstmrNo();
-
+    public String getUserNickname(Integer cstmrNo) {
         CustomerDtl customerDtl = customerDtlRepository.findByCstmrNo(cstmrNo);
 
         if (customerDtl == null) {

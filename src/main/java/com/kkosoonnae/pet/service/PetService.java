@@ -50,9 +50,7 @@ public class PetService {
 
     private final CommonService commonService;
 
-    public List<PetInfoDto> petList(){
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+    public List<PetInfoDto> petList(Integer cstmrNo){
 
         List<PetInfoDto> petList = query.listPet(cstmrNo);
 

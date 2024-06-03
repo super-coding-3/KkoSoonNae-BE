@@ -51,8 +51,9 @@ public class PetController {
 
     @Operation(summary = "반려동물 전체 조회")
     @GetMapping("/allPet-list")
-    public ResponseEntity<List<PetInfoDto>> allListPet(){
-        List<PetInfoDto> myPets = service.petList();
+    public ResponseEntity<List<PetInfoDto>> allListPet(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        Integer custmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        List<PetInfoDto> myPets = service.petList(custmrNo);
         return ResponseEntity.ok().body(myPets);
     }
 

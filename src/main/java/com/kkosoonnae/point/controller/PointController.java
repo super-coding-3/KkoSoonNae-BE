@@ -36,7 +36,8 @@ public class PointController {
     @Operation(summary = "잔여 포인트")
     @GetMapping()
     public ResponseEntity<?> getMyPoint(@AuthenticationPrincipal PrincipalDetails principalDetails){
-        PointDto dto = service.getMyPoint(principalDetails);
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        PointDto dto = service.getMyPoint(cstmrNo);
         return ResponseEntity.ok().body(dto);
     }
 }

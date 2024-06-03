@@ -50,10 +50,7 @@ public class QnaService {
         qnaRepository.save(qna);
     }
 
-    public List<QnaListDto> allList() {
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
-
+    public List<QnaListDto> allList(Integer cstmrNo) {
         List<QnaListDto> qnaList = query.listQna(cstmrNo);
 
         if(qnaList == null || qnaList.isEmpty()){
