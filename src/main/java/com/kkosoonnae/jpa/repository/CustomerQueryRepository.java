@@ -56,6 +56,7 @@ public class CustomerQueryRepository {
                 reservation.reservationDate,
                 reservation.reservationTime,
                 reservation.reservationStatus,
+                store.storeImg,
                 store.storeName,
                 reservation.styleName,
                 style.price
