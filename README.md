@@ -11,6 +11,7 @@ KkoSoonNae 꼬순내는 반려동물이 계속해서 늘어나고 있는 요즘 
 + **내위치 매장검색:** 키워드검색이 아닌 내 주변 위치로도 매장을 찾을 수 있다. 
 + **예약 시스템:** 반려동물 주인이 이용 가능한 시간대를 확인하고 미용 예약을 할 수 있습니다.
 ### ERD 설계
+![ERD](https://github.com/super-coding-3/KkoSoonNae-BE/assets/162071460/e79427f7-91c2-47e4-bd04-a141c4356ea6)
 ### ⚙️ 개발 환경
 + Java 17
 + IDE : Intellij
