@@ -5,6 +5,7 @@ import com.kkosoonnae.mypage.dto.AvailDto;
 import com.kkosoonnae.mypage.dto.LikeStoreDto;
 import com.kkosoonnae.mypage.dto.MyReviewDto;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
@@ -49,17 +50,18 @@ public class CustomerQueryRepository {
         QReservation reservation = QReservation.reservation;
         QStyle style = QStyle.style;
         QStore store = QStore.store;
+        QStoreImg storeImg = QStoreImg.storeImg;
 
 
         return query.select(Projections.bean(AvailDto.class,
-                reservation.reservationNo,
-                reservation.reservationDate,
-                reservation.reservationTime,
-                reservation.reservationStatus,
-                store.storeImg,
-                store.storeName,
-                reservation.styleName,
-                style.price
+                        reservation.reservationNo,
+                        reservation.reservationDate,
+                        reservation.reservationTime,
+                        reservation.reservationStatus,
+                        store.storeName,
+                        storeImg.img, // 첫 번째 이미지 가져오기
+                        reservation.styleName,
+                        style.price
                 ))
                 .from(customerAvail)
                 .leftJoin(reservation)
@@ -68,9 +70,16 @@ public class CustomerQueryRepository {
                 .on(reservation.store.storeNo.eq(store.storeNo))
                 .leftJoin(style)
                 .on(store.storeNo.eq(style.store.storeNo))
+                .leftJoin(storeImg)
+                .on(store.storeNo.eq(storeImg.store.storeNo))
                 .where(customerAvail.cstmrNo.cstmrNo.eq(cstmrNo)
-                                .and(style.styleName.eq(reservation.styleName))
-                        )
+                        .and(style.styleName.eq(reservation.styleName))
+                        .and(storeImg.storeImgNo.eq(
+                                        JPAExpressions.select(storeImg.storeImgNo.min()) // 첫 번째 이미지만 선택
+                                                .from(storeImg)
+                                                .where(storeImg.store.storeNo.eq(store.storeNo))
+                        ) )
+                )
                 .fetch();
 
     }
