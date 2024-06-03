@@ -39,7 +39,8 @@ public class MyPageController {
     @Operation(summary = "예약 내역 리스트")
     @GetMapping("/avail-list")
     public ResponseEntity<List<AvailDto>> getAvailList(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        List<AvailDto> result = service.getMyAvailList(principalDetails);
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        List<AvailDto> result = service.getMyAvailList(cstmrNo);
         return ResponseEntity.ok().body(result);
     }
 
@@ -54,7 +55,8 @@ public class MyPageController {
     @Operation(summary = "관심매장 조회")
     @GetMapping("/like-store")
     public ResponseEntity<List<LikeStoreDto>> getLikeStore(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        List<LikeStoreDto> result = service.getMyLikeStore(principalDetails);
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        List<LikeStoreDto> result = service.getMyLikeStore(cstmrNo);
         return ResponseEntity.ok().body(result);
     }
 
@@ -68,7 +70,8 @@ public class MyPageController {
     @Operation(summary = "내가 쓴 리뷰")
     @GetMapping("/my-review-list")
     public ResponseEntity<List<MyReviewDto>> getMyReview(@AuthenticationPrincipal PrincipalDetails principalDetails){
-        List<MyReviewDto> result = service.getMyReview(principalDetails);
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        List<MyReviewDto> result = service.getMyReview(cstmrNo);
         return ResponseEntity.ok().body(result);
     }
 

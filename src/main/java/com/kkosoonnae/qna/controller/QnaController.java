@@ -55,9 +55,10 @@ public class QnaController {
 
     @Operation(summary = "문의사항 전체 조회")
     @GetMapping("/all-list")
-    public ResponseEntity<?> getQnaAllList(){
+    public ResponseEntity<?> getQnaAllList(@AuthenticationPrincipal PrincipalDetails principalDetails){
         try {
-            List<QnaListDto> result = service.allList();
+            Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+            List<QnaListDto> result = service.allList(cstmrNo);
             return ResponseEntity.ok().body(result);
         }catch (IllegalStateException e){
             Map<String,String> rs = new HashMap<>();

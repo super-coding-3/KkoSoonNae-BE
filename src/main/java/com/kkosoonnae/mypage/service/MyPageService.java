@@ -36,9 +36,7 @@ public class MyPageService {
     private final CustomerQueryRepository query;
 
 
-    public List<AvailDto> getMyAvailList(PrincipalDetails principalDetails) {
-        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
-
+    public List<AvailDto> getMyAvailList(Integer cstmrNo) {
         List<AvailDto> dto = query.availList(cstmrNo);
 
         if (dto == null || dto.isEmpty()) {
@@ -57,9 +55,7 @@ public class MyPageService {
         query.deleteAvail(reservationNo);
     }
 
-    public List<LikeStoreDto> getMyLikeStore(PrincipalDetails principalDetails) {
-        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
-
+    public List<LikeStoreDto> getMyLikeStore(Integer cstmrNo) {
         List<LikeStoreDto> dto = query.likeList(cstmrNo);
 
         if (dto == null || dto.isEmpty()) {
@@ -78,8 +74,7 @@ public class MyPageService {
         query.deleteLike(likeNo);
 
     }
-    public List<MyReviewDto> getMyReview(PrincipalDetails principalDetails) {
-        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+    public List<MyReviewDto> getMyReview(Integer cstmrNo) {
         List<MyReviewDto> dto = query.getMyReview(cstmrNo);
 
         if(dto == null || dto.isEmpty()){

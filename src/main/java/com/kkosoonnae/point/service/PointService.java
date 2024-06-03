@@ -32,10 +32,9 @@ public class PointService {
 
     private final PointQueryRepository query;
 
-    public PointDto getMyPoint(PrincipalDetails principalDetails){
-        Integer customerBas = principalDetails.getCustomerBas().getCstmrNo();
+    public PointDto getMyPoint(Integer cstmrNo){
 
-           PointDto dto = query.getMyPoint(customerBas);
+           PointDto dto = query.getMyPoint(cstmrNo);
 
            if(dto == null){
                dto = new PointDto();

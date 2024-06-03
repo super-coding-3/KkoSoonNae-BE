@@ -142,10 +142,12 @@ public class CustomerController {
 
     @Operation(summary = "회원 정보 수정")
     @PutMapping("/profile/update")
-    public ResponseEntity<?> updateUserProfile(@RequestBody InfoDto infoDto){
+    public ResponseEntity<?> updateUserProfile(@RequestBody InfoDto infoDto,
+                                               @AuthenticationPrincipal PrincipalDetails principalDetails){
         try{
+            Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
             Map<String,String> response = new HashMap<>();
-            service.updateUserProfile(infoDto);
+            service.updateUserProfile(infoDto,cstmrNo);
             response.put("message","회원 정보 수정에 성공 하였습니다.");
             return ResponseEntity.ok(response);
         }catch (IllegalStateException e){
@@ -156,9 +158,10 @@ public class CustomerController {
 
     @Operation(summary = "로그인한 회원 닉네임")
     @GetMapping("/nickname")
-    public ResponseEntity<?> getUserNickname() {
+    public ResponseEntity<?> getUserNickname(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         try {
-            String nickname = service.getUserNickname();
+            Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+            String nickname = service.getUserNickname(cstmrNo);
             return ResponseEntity.ok(nickname);
         } catch (IllegalStateException e) {
             // 사용자의 상세 정보를 찾을 수 없는 경우
