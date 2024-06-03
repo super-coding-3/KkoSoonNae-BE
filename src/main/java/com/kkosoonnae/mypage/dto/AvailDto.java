@@ -23,7 +23,6 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class AvailDto {
 
     @Schema(description = "예약 일련번호")
@@ -49,4 +48,16 @@ public class AvailDto {
 
     @Schema(description = "가격")
     private Integer price;
+
+    public AvailDto(Integer reservationNo, LocalDate reservationDate, LocalTime reservationTime,
+                    String reservationStatus, String storeImg, String storeName, String styleName, Integer price) {
+        this.reservationNo = reservationNo;
+        this.reservationDate = reservationDate;
+        this.reservationTime = reservationTime;
+        this.reservationStatus = reservationStatus;
+        this.storeImg = storeImg;
+        this.storeName = storeName;
+        this.styleName = styleName;
+        this.price = price;
+    }
 }
