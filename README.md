@@ -26,7 +26,7 @@
 <br>
   
 ## 4. ERD 설계
-![ERD](https://github.com/super-coding-3/KkoSoonNae-BE/assets/162071460/e79427f7-91c2-47e4-bd04-a141c4356ea6)
+![erd](https://github.com/super-coding-3/KkoSoonNae-BE/assets/105399835/4b233eb1-53f5-4964-984c-7df831b99686)
 
 <br>
 
