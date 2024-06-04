@@ -1,60 +1,130 @@
-# :dog:KkoSoonNae-BE:dog:
+# 🐶🐱 반려동물의 미용샵 플랫폼서비스 
 ![IMG_1164](https://github.com/super-coding-3/KkoSoonNae-BE/assets/162071460/0fb32551-01d4-48e8-ad9b-ed48dc8de8dc)
-## 프로젝트 소개
-KkoSoonNae 꼬순내는 반려동물이 계속해서 늘어나고 있는 요즘 사람이 아닌 반려동물에 대한 니즈를 충족하기 위해 기획했다.
-사람도 시간이 지나면 자라는 머리카락을 위해 미용실을 이용하듯 반려동물 미용실도 쉽고 간편하게 원하는 니즈를 충족시켜주기 위한 웹 사이트 이다.
-## 프로젝트 아키텍쳐
-## 프로젝트 구조
-### 주요 기능
+- 배포 URL : [https://www.kkosoonnae.store/](https://www.kkosoonnae.store/)
+
+<br>
+
+## 1. 프로젝트 소개
+- 꼬순내는 펫팸족과 전문 반려동물 미용사를 연결하는 플랫폼입니다. 
+- 내 반려동물 등록 후 원하는 날짜, 스타일을 예약할수있습니다.
+- 검색을 통해 근처 펫미용샵을 알아보고 후기등을 참고 할수있습니다.
+- 문의하기, 리뷰관리, 펫정보 등을 수정할수있습니다.
+
+<br>
+  
+## 2. 프로젝트 아키텍쳐
+  
+<br>
+  
+## 3. 주요 기능
 + **사용자 등록 및 로그인:** 반려동물 주인과 미용사가 계정을 생성하고 로그인하여 웹을 접근할 수 있습니다.
 + **프로필 관리:** 사용자가 개인 정보와 반려동물 정보를 업데이트할 수 있습니다.
 + **매장 검색:** 사용자가 매장명, 주소로 매장을 찾을 수 있다.
 + **내위치 매장검색:** 키워드검색이 아닌 내 주변 위치로도 매장을 찾을 수 있다. 
 + **예약 시스템:** 반려동물 주인이 이용 가능한 시간대를 확인하고 미용 예약을 할 수 있습니다.
-### ERD 설계
+
+<br>
+  
+## 4. ERD 설계
 ![ERD](https://github.com/super-coding-3/KkoSoonNae-BE/assets/162071460/e79427f7-91c2-47e4-bd04-a141c4356ea6)
-### ⚙️ 개발 환경
+
+<br>
+
+## 5. 개발 환경
 + Java 17
 + IDE : Intellij
-+ Framework : Spring Boot (3.25)
++ Framework : Spring Boot (3.2.5)
 + ORM : JPA,Query DSL
 + DB : MySQL
 + Security : JWT
 + API 문서화 : Swagger
-+ AWS : EC2 , RDS , S3# KkoSoonNae-BE
++ AWS : EC2 , RDS , S3
 + Nginx
 + certbot
-### 개발기간 및 작업관리
-+ 24.05.06~24.06.03
-### 개발 기술 및 브랜치 전략
-![git  다이어그램](https://github.com/super-coding-3/KkoSoonNae-BE/assets/162071460/22d42a48-c6a8-48fc-ba63-f326cdb04da3)
-## 역할 분담(기여도)
-+ **채동현:** 내 주변 매장 찾아서 정보 보여주기 
-+ **이학준:** Spring Boot 초기작업 ,Security 및 Jwt적용, AWS EC2, RDS S3,Swagger 초기 작업,CustomException 제작,마이페이지 프로필수정,프로젝트 배포 ,
-             내가쓴리뷰,예약내역,내포인트,문의하기,관심매장,내꼬순내,회원가입
- 
-+ **김재익:** 메인 강남구 매장리스트,매장전체검색,매장상세조회,매장 펫스타일, 매장관심매장추가,관심매장 삭제,매장 리뷰조회,CustomException
-+ **배기한:** 예약페이지 - 예약하기 , 펫정보 가져오기,펫등록하기 ,스타일가져오기, 예약확인 ,스프링 스케쥴러 ,ExceptionHandler ,Logback
-+ **이용이:** 공지사항 조회, 매장 리뷰작성, 별점추가
-## 팀원 구성
-<table>
-  <tbody>
-    <tr>
-      <td align="center"><a href="https://github.com/Chaedonghyun"><img src="https://avatars.githubusercontent.com/u/102035495?v=4" width="100px;" alt=""/><br /><sub><b>BE 팀장 : 채동현</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/leehagjoon"><img src="https://avatars.githubusercontent.com/u/105399835?v=4" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 이학준</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/kimjaeik95"><img src="https://avatars.githubusercontent.com/u/162071460?v=4" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 김재익</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/keehan95"><img src="https://avatars.githubusercontent.com/u/157384713?v=4" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 배기한</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/skfkfh"><img src="https://avatars.githubusercontent.com/u/156290150?v=4" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 이용이</b></sub></a><br /></td>
-     <tr/>
-      <td align="center"><a href="https://github.com/ruby-yujin"><img src="https://avatars.githubusercontent.com/u/101633842?v=4" width="100px;" alt=""/><br /><sub><b>FE 팀장 : 박유진</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/HyoKyoungLee"><img src="https://avatars.githubusercontent.com/u/43572462?v=4" width="100px;" alt=""/><br /><sub><b>FE 팀원 : 이효경</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/ines012"><img src="https://avatars.githubusercontent.com/u/140510592?v=4" width="100px;" alt=""/><br /><sub><b>FE 팀원 : 박우혁</b></sub></a><br /></td>
-    </tr>
-  </tbody>
-</table>
++ Front 협업 : [Figma](https://www.figma.com/design/blBt17GB6m2L5OEHCmAMtP/%EA%BC%AC%EC%88%9C%EB%82%B4-UI?node-id=41-357&t=f6FakeOd9r1YTGTv-1)
+<br>
 
-## 개선목표
-처음 프로젝트를 기획 할때는 스스로와 팀원들의 실력을 고려하여 필수라고 생각되는 기능을 구현하는데에 초점을 맞췄었다.
-생각보다 빠르게 필수 기능들을 구현하게 되면서 개선을 위한 시간을 얻었고 먼저는 코드의 간소화를 시도했다.
-필수 기능을 구현하는데만 초점을 맞추다보니 나중에가서 코드의 가독성이 많이 떨어지고 서버를 구동할때에도 생각보다 많은 시간이 걸려 코드의 간소화가 필수적이라고 생각했다.
-## 트러블 슈팅
+### ⚒️ 개발 기술 및 브랜치 전략
+
+![git  다이어그램](https://github.com/super-coding-3/KkoSoonNae-BE/assets/162071460/22d42a48-c6a8-48fc-ba63-f326cdb04da3)
+
+<br>
+
+## 6. 개발 기간 및 작업 관리
+
+### 개발 기간
+
+- 전체 개발 기간 : 2024-12-09 ~ 2024-12-31
+- 기획 : 2024-05-07 ~ 2024-05-12
+- UI 구현 : 2024-05-13 ~ 2024-05-19
+- 기능 구현 : 2024-05-20 ~ 2024-06-03
+
+<br>
+
+### 작업 관리
+
+- GitHub PR과 디스코드를 사용하여 진행 상황을 공유했습니다.
+- 주간회의를 진행하며 작업 순서와 방향성에 대한 고민을 나누고 [Notion](https://www.notion.so/511920be91a34f8485c6c91f82d8fd19?pvs=4)에 회의 내용을 기록했습니다.
+- WBS 작성하여 프로젝트 범위 명확화하고 진척도 추적을 했습니다.
+![image](https://github.com/super-coding-3/KkoSoonNae-BE/assets/105399835/9444b61f-41c1-4c16-a1e8-c8d473fabfd4)
+
+<br>
+
+## 7. 역할 분담
+
+### 🐵 채동현
+
+내 주변 매장 찾아서 정보 보여주기 
+
+<br>
+
+### 🐶 이학준
+Spring Boot 초기작업 ,Security 및 Jwt적용, AWS EC2, RDS S3,Swagger 초기 작업,CustomException 제작,마이페이지 프로필수정,프로젝트 배포 ,내가쓴리뷰,예약내역,내포인트,문의하기,관심매장,내꼬순내,회원가입
+
+<br>
+
+ 
+### 🐭 김재익
+메인 강남구 매장리스트,매장전체검색,매장상세조회,매장 펫스타일, 매장관심매장추가,관심매장 삭제,매장 리뷰조회,CustomException
+
+<br>
+
+### 🐺 배기한 
+예약페이지 - 예약하기 , 펫정보 가져오기,펫등록하기 ,스타일가져오기, 예약확인 ,스프링 스케쥴러 ,ExceptionHandler ,Logback
+
+<br>
+
+### 🐼 이용이
+공지사항 조회, 매장 리뷰작성, 별점추가
+  
+<br>
+  
+## 👨‍💻 팀원 구성
+<table align="center">
+    <tr>
+      <th><img src="https://avatars.githubusercontent.com/u/102035495?v=4" width=150></th>
+      <th><img src="https://avatars.githubusercontent.com/u/105399835?v=4" width=150></th>
+      <th><img src="https://avatars.githubusercontent.com/u/162071460?v=4" width=150></th>
+      <th><img src="https://avatars.githubusercontent.com/u/157384713?v=4" width=150></th>
+      <th><img src="https://avatars.githubusercontent.com/u/156290150?v=4" width=150></th>
+     </tr>
+       <tr>
+       <td align="center">채동현</td>
+       <td align="center">이학준</td>
+       <td align="center">김재익</td>
+       <td align="center">배기한</td>
+       <td align="center">이용이</td>
+       </tr>
+</table>
+  
+<br>
+
+## 8. 개선목표
+1. 단순 API CRUD의 양보단 질 , 퀄리티 고민
+2. Controller에서 Map으로 메시지를 보내주고 있는것을 Response 형식으로 처리
+3. Controller Advice 에러처리 Exception Handler로 캐치해서 에러 인 경우 응답 처리
+4. 공지사항 캐시 처리 -> 매번 DB를 찌를 필요 가 없기 때문에
+5. 코드 리팩토링 -> 한 메소드의 로직이 책 처럼 읽혀 지지 않음 -> 메소드 분리 후 코드 간결화
+6. 지도 거리 관련 거리 계산 할 때 DB 풀 스캔 성능 이슈가 발생 할 수 있기에 거리기반 인덱스를 지원하는 DB를 찾거나 다른 방법 찾아보기
+7. JPQL로 쓴 쿼리들 QueryDSL로 바꾸기
+8. 리뷰 별점 - 매장 정보 내보낼 때 마다 계산을 하고 있다. 별점이 실시간일 이유는 없기에 스케줄러 비정규화 하거나 레디스 , 캐시 사용해보기
