@@ -24,7 +24,7 @@ import java.util.List;
  * 2024-05-10        hagjoon       최초 생성
  */
 @RestController
-@RequestMapping("/KkoSoonNae/notice")
+@RequestMapping("/api/notice")
 @RequiredArgsConstructor
 @Slf4j
 public class NoticeController {

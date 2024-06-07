@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/KkoSoonNae/style")
+@RequestMapping("/api/style")
 @Slf4j
 public class StyleController {
     private final StyleService styleService;

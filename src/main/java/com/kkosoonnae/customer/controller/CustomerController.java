@@ -35,7 +35,7 @@ import java.util.Map;
  * 2024-05-10        hagjoon       최초 생성
  */
 @RestController
-@RequestMapping("/KkoSoonNae/customer")
+@RequestMapping("/api/customer")
 @Tag(name = "CustomerController",description = "회원 API 정보 컨트롤러")
 @Slf4j
 @RequiredArgsConstructor

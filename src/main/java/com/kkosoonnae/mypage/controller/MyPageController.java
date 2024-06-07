@@ -28,7 +28,7 @@ import java.util.List;
  * 2024-05-23        hagjoon       최초 생성
  */
 @RestController
-@RequestMapping("/KkoSoonNae")
+@RequestMapping("/api")
 @Tag(name = "MyPageController",description = "마이페이지 API 정보 컨트롤러")
 @Slf4j
 @RequiredArgsConstructor
