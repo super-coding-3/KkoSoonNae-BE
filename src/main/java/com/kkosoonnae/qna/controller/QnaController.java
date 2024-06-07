@@ -29,7 +29,7 @@ import java.util.Map;
  * 2024-05-10        hagjoon       최초 생성
  */
 @RestController
-@RequestMapping("/KkoSoonNae/qna")
+@RequestMapping("/api/qna")
 @Tag(name = "QnaController",description = "회원 QNA API 정보 컨트롤러")
 @Slf4j
 @RequiredArgsConstructor

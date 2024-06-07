@@ -25,7 +25,7 @@ import java.util.List;
  * 2024-05-10        hagjoon       최초 생성
  */
 @RestController
-@RequestMapping("/KkoSoonNae/reservation")
+@RequestMapping("/api/reservation")
 @Tag(name = "ReservationController",description = "예약페이지 API 컨트롤러")
 @Slf4j
 @RequiredArgsConstructor

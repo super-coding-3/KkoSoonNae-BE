@@ -29,7 +29,7 @@ import java.util.*;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/KkoSoonNae/search/")
+@RequestMapping("/api/search/")
 @Slf4j
 public class SearchController {
 
