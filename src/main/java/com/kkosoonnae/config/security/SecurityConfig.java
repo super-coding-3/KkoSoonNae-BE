@@ -39,7 +39,7 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
 
     private static final String[] AUTH_WHITELIST = {
-            "/KkoSoonNae/**", "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
+            "/api/**", "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
             "/swagger-ui.html", "/swagger/", "/swagger-resources/"
     };
 
@@ -50,7 +50,7 @@ public class SecurityConfig {
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.formLogin(f -> f.disable());
         http.httpBasic(AbstractHttpConfigurer::disable)
-                .logout(logout -> logout.logoutUrl("/KkoSoonNae/customer/logout")
+                .logout(logout -> logout.logoutUrl("/api/customer/logout")
                         .invalidateHttpSession(true) // 세션 무효화
                         .deleteCookies("JSESSIONID") // 쿠키 삭제
                         .logoutSuccessHandler((request, response, authentication) -> {

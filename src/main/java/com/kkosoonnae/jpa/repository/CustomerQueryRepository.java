@@ -120,6 +120,13 @@ public class CustomerQueryRepository {
 
         QLikeStore subLikeStore = new QLikeStore("subLikeStore");
 
+        // 서브쿼리로 최소 storeImgNo를 가진 storeImg를 선택
+        QStoreImg subStoreImg = new QStoreImg("subStoreImg");
+        JPQLQuery<Integer> minImgNoQuery = JPAExpressions
+                .select(subStoreImg.storeImgNo.min())
+                .from(subStoreImg)
+                .where(subStoreImg.store.storeNo.eq(store.storeNo));
+
         NumberExpression<Integer> likeCountExpression = numberTemplate(
                 Integer.class,
                 "coalesce({0}, 0L)",
@@ -146,7 +153,8 @@ public class CustomerQueryRepository {
                 .leftJoin(store)
                 .on(likeStore.store.storeNo.eq(store.storeNo))
                 .leftJoin(storeImg)
-                .on(store.storeNo.eq(storeImg.store.storeNo))
+                .on(store.storeNo.eq(storeImg.store.storeNo)
+                        .and(storeImg.storeImgNo.eq(minImgNoQuery))) // 최소 imgNo에 해당하는 이미지만 선택
                 .leftJoin(review)
                 .on(store.storeNo.eq(review.store.storeNo))
                 .where(likeStore.customerBas.cstmrNo.eq(cstmrNo))
@@ -155,6 +163,7 @@ public class CustomerQueryRepository {
                         storeImg.img)
                 .fetch();
     }
+
 
     //회원 번호와 관심 번호로 관심매장을 등록했는지 확인
     public boolean existsByCstmrNoAndLikeNo(Integer cstmrNo, Integer likeNo){
