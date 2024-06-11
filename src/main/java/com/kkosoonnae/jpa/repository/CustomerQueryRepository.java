@@ -6,6 +6,7 @@ import com.kkosoonnae.mypage.dto.LikeStoreDto;
 import com.kkosoonnae.mypage.dto.MyReviewDto;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
@@ -45,23 +46,29 @@ public class CustomerQueryRepository {
 
     private final EntityManager entityManager;
 
-    public List<AvailDto> availList(Integer cstmrNo){
+    public List<AvailDto> availList(Integer cstmrNo) {
         QCustomerAvail customerAvail = QCustomerAvail.customerAvail;
         QReservation reservation = QReservation.reservation;
         QStyle style = QStyle.style;
         QStore store = QStore.store;
         QStoreImg storeImg = QStoreImg.storeImg;
 
+        // 서브쿼리로 최소 storeImgNo를 가진 storeImg의 img를 가져오기
+        QStoreImg subStoreImg = new QStoreImg("subStoreImg");
+        JPQLQuery<Integer> minImgNoQuery = JPAExpressions
+                .select(subStoreImg.storeImgNo.min())
+                .from(subStoreImg)
+                .where(subStoreImg.store.storeNo.eq(store.storeNo));
 
-        return query.select(Projections.bean(AvailDto.class,
-                        reservation.reservationNo,
-                        reservation.reservationDate,
-                        reservation.reservationTime,
-                        reservation.reservationStatus,
-                        store.storeName,
-                        storeImg.img, // 첫 번째 이미지 가져오기
-                        reservation.styleName,
-                        style.price
+        return query.select(Projections.fields(AvailDto.class,
+                        reservation.reservationNo.as("reservationNo"),
+                        reservation.reservationDate.as("reservationDate"),
+                        reservation.reservationTime.as("reservationTime"),
+                        reservation.reservationStatus.as("reservationStatus"),
+                        store.storeName.as("storeName"),
+                        storeImg.img.as( "storeImg"), // 서브쿼리를 사용하여 첫 번째 이미지 가져오기
+                        reservation.styleName.as("styleName"),
+                        style.price.as("price")
                 ))
                 .from(customerAvail)
                 .leftJoin(reservation)
@@ -69,20 +76,18 @@ public class CustomerQueryRepository {
                 .leftJoin(store)
                 .on(reservation.store.storeNo.eq(store.storeNo))
                 .leftJoin(style)
-                .on(store.storeNo.eq(style.store.storeNo))
+                .on(store.storeNo.eq(style.store.storeNo)
+                        .and(style.styleName.eq(reservation.styleName)))
                 .leftJoin(storeImg)
-                .on(store.storeNo.eq(storeImg.store.storeNo))
-                .where(customerAvail.cstmrNo.cstmrNo.eq(cstmrNo)
-                        .and(style.styleName.eq(reservation.styleName))
-                        .and(storeImg.storeImgNo.eq(
-                                        JPAExpressions.select(storeImg.storeImgNo.min()) // 첫 번째 이미지만 선택
-                                                .from(storeImg)
-                                                .where(storeImg.store.storeNo.eq(store.storeNo))
-                        ) )
-                )
+                .on(store.storeNo.eq(storeImg.store.storeNo)
+                        .and(storeImg.storeImgNo.eq(minImgNoQuery)))
+                .where(customerAvail.cstmrNo.cstmrNo.eq(cstmrNo))
                 .fetch();
-
     }
+
+
+
+
 
     public void deleteAvail(Integer reservationNo){
         QCustomerAvail customerAvail = QCustomerAvail.customerAvail;
