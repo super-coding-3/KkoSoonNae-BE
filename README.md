@@ -13,7 +13,8 @@
 <br>
   
 ## 2. 프로젝트 아키텍쳐
-  
+  ![아키텍쳐112 drawio](https://github.com/super-coding-3/KkoSoonNae-BE/assets/162071460/8594b0d6-08dc-4460-94a7-31109aae1272)
+
 <br>
   
 ## 3. 주요 기능
