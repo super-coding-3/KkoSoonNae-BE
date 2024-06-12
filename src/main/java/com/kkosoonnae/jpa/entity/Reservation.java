@@ -2,9 +2,8 @@ package com.kkosoonnae.jpa.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.kkosoonnae.reservation.dto.ReservationRequest;
+import com.kkosoonnae.user.reservation.dto.ReservationRequest;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

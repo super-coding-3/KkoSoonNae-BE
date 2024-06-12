@@ -1,11 +1,8 @@
 package com.kkosoonnae.jpa.repository;
 
-import com.kkosoonnae.jpa.entity.CustomerBas;
 import com.kkosoonnae.jpa.entity.CustomerDtl;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 /**
  * packageName    : com.kkosoonnae.jpa.repository

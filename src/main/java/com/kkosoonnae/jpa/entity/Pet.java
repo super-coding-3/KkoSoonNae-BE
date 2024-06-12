@@ -1,9 +1,6 @@
 package com.kkosoonnae.jpa.entity;
 
-import com.kkosoonnae.config.auth.PrincipalDetails;
-import com.kkosoonnae.pet.dto.PetAddDto;
-import com.kkosoonnae.pet.dto.PetInfoDto;
-import com.kkosoonnae.pet.dto.PetUpdate;
+import com.kkosoonnae.user.pet.dto.PetUpdate;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -64,7 +61,7 @@ public class Pet {
         this.weight = weight;
     }
 
-    public void updatePet(PetUpdate petUpdate,String petImg){
+    public void updatePet(PetUpdate petUpdate, String petImg){
         this.img = petImg;
         this.name = petUpdate.getName();
         this.type = petUpdate.getType();

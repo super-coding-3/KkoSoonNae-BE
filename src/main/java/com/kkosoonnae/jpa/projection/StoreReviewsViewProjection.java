@@ -1,6 +1,6 @@
 package com.kkosoonnae.jpa.projection;
 
-import com.kkosoonnae.store.dto.StoreReviewsResponseDto;
+import com.kkosoonnae.user.store.dto.StoreReviewsResponseDto;
 import lombok.Builder;
 
 import java.time.LocalDateTime;

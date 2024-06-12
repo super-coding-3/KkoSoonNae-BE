@@ -1,10 +1,7 @@
 package com.kkosoonnae.jpa.projection;
 
-import com.kkosoonnae.jpa.entity.StoreImg;
-import com.kkosoonnae.search.dto.MainStoreListViewResponseDto;
+import com.kkosoonnae.user.search.dto.MainStoreListViewResponseDto;
 import lombok.Builder;
-
-import java.util.List;
 
 @Builder
 public record MainStoresListviewProjection(

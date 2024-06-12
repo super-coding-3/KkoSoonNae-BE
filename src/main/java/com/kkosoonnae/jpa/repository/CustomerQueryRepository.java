@@ -1,19 +1,14 @@
 package com.kkosoonnae.jpa.repository;
 
+
 import com.kkosoonnae.jpa.entity.*;
-import com.kkosoonnae.mypage.dto.AvailDto;
-import com.kkosoonnae.mypage.dto.LikeStoreDto;
-import com.kkosoonnae.mypage.dto.MyReviewDto;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Expression;
-import com.querydsl.core.types.ExpressionUtils;
+import com.kkosoonnae.user.mypage.dto.AvailDto;
+import com.kkosoonnae.user.mypage.dto.LikeStoreDto;
+import com.kkosoonnae.user.mypage.dto.MyReviewDto;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
-import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;

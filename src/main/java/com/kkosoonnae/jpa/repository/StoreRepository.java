@@ -1,9 +1,9 @@
 package com.kkosoonnae.jpa.repository;
 
-import com.kkosoonnae.jpa.entity.Store;
 import com.kkosoonnae.jpa.projection.MainStoresListviewProjection;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
 import com.kkosoonnae.jpa.projection.StoreListViewProjection;
+import com.kkosoonnae.jpa.entity.Store;
 import com.kkosoonnae.jpa.projection.StoreReviewsViewProjection;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

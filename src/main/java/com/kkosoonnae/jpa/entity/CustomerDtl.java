@@ -1,6 +1,6 @@
 package com.kkosoonnae.jpa.entity;
 
-import com.kkosoonnae.customer.dto.InfoDto;
+import com.kkosoonnae.user.customer.dto.InfoDto;
 import jakarta.persistence.*;
 import lombok.*;
 

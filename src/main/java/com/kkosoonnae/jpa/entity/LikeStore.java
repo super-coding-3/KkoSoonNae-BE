@@ -1,15 +1,12 @@
 package com.kkosoonnae.jpa.entity;
 
-import com.kkosoonnae.store.dto.LikeStoreDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.lang.annotation.Target;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Builder

@@ -1,7 +1,8 @@
 package com.kkosoonnae.jpa.repository;
 
+
 import com.kkosoonnae.jpa.entity.QPoint;
-import com.kkosoonnae.point.dto.PointDto;
+import com.kkosoonnae.user.point.dto.PointDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

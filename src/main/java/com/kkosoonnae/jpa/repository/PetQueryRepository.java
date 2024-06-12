@@ -1,12 +1,9 @@
 package com.kkosoonnae.jpa.repository;
 
-import com.kkosoonnae.jpa.entity.QCustomerBas;
 import com.kkosoonnae.jpa.entity.QPet;
 import com.kkosoonnae.jpa.entity.QReservedPets;
-import com.kkosoonnae.pet.dto.PetInfoDto;
-import com.kkosoonnae.pet.dto.PetListRqDto;
+import com.kkosoonnae.user.pet.dto.PetInfoDto;
 import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
