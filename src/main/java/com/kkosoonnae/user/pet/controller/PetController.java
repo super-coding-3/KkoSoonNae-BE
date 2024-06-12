@@ -1,5 +1,6 @@
 package com.kkosoonnae.user.pet.controller;
 
+import com.kkosoonnae.common.exception.NotFoundException;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.config.s3.S3Uploader;
 import com.kkosoonnae.user.pet.dto.PetAddDto;
@@ -18,7 +19,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.webjars.NotFoundException;
 
 import java.util.Collections;
 import java.util.HashMap;

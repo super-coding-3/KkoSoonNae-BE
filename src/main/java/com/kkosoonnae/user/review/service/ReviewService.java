@@ -1,5 +1,6 @@
 package com.kkosoonnae.user.review.service;
 
+import com.kkosoonnae.common.exception.NotFoundException;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.jpa.entity.CustomerBas;
 import com.kkosoonnae.jpa.entity.Review;
@@ -9,7 +10,6 @@ import com.kkosoonnae.jpa.repository.StoreRepository;
 import com.kkosoonnae.user.review.dto.ReviewRqDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
