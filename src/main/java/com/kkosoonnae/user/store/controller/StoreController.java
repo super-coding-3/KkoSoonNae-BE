@@ -29,7 +29,7 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/store")
+@RequestMapping("/api/user/store")
 @Slf4j
 public class StoreController {
 
@@ -94,19 +94,6 @@ public class StoreController {
         } catch (CustomException e) {
             log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
-
-    @PostMapping("{storeNo}/reviews")
-    @Operation(summary = "리뷰 작성")
-    public ResponseEntity<?> writeReview(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                         @PathVariable Integer storeNo,
-                                         @RequestBody ReviewRqDto reviewRqDto) {
-        try {
-            reviewService.writeReview(principalDetails, storeNo,reviewRqDto);
-            return ResponseEntity.ok("리뷰가 정상적으로 작성되었습니다.");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

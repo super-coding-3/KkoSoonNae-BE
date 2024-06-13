@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/style")
+@RequestMapping("/api/user/style")
 @Slf4j
 public class StyleController {
     private final StyleService styleService;

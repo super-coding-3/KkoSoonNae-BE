@@ -27,7 +27,7 @@ import java.util.*;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/search/")
+@RequestMapping("/api/user/search/")
 @Slf4j
 public class SearchController {
 

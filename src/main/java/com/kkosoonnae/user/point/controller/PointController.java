@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 2024-05-20        hagjoon       최초 생성
  */
 @RestController
-@RequestMapping("/api/point")
+@RequestMapping("/api/user/point")
 @Tag(name = "PointController",description = "포인트 API 정보 컨트롤러")
 @Slf4j
 @RequiredArgsConstructor
