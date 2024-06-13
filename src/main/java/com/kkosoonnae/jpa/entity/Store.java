@@ -1,5 +1,6 @@
 package com.kkosoonnae.jpa.entity;
 
+import com.kkosoonnae.president.mystore.dto.AdminStoreRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -85,7 +86,4 @@ public class Store {
         this.roadAddress = address;
         this.phone = phone;
     }
-
-
-
 }

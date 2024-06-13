@@ -7,6 +7,7 @@ import com.kkosoonnae.user.review.service.ReviewService;
 import com.kkosoonnae.user.store.service.StoreService;
 import com.kkosoonnae.user.store.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user/store")
+@Tag(name = "StoreController",description = "매장 API 정보 컨트롤러")
 @Slf4j
 public class StoreController {
 
@@ -65,11 +67,11 @@ public class StoreController {
         }
     }
 
-    @PostMapping("/like-store")
+    @PostMapping("/like-store/{storeNo}")
     @Operation(summary = "관심매장등록")
     public ResponseEntity<?> likeStore(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
-            @RequestParam Integer storeNo) {
+            @PathVariable Integer storeNo) {
         try{
             log.info("POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:");
             LikeStoreDto likeStoreDto = storeService.saveLikeStore(principalDetails,storeNo);
@@ -81,11 +83,11 @@ public class StoreController {
         }
     }
 
-    @DeleteMapping("/delete-likeStore")
+    @DeleteMapping("/delete-likeStore/{storeNo}")
     @Operation(summary = "관심매장삭제")
     public ResponseEntity<?> removeLikeStore(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
-            @RequestParam Integer storeNo) {
+            @PathVariable Integer storeNo) {
         try {
             log.info("POST/customerNo,storeNo 관심매장삭제 요청이 들어왔습니다.");
             storeService.deleteLikeStore(principalDetails, storeNo);

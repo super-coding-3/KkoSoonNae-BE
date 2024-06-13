@@ -9,6 +9,7 @@ public enum ErrorCode {
     STORE_IMAGE_NOT_FOUND("해당 이미지가 없습니다.", HttpStatus.NOT_FOUND),
     //Style
     STYLE_NOT_FOUND("해당 스타일이 없습니다.", HttpStatus.NOT_FOUND),
+    STORE_SAME_NAME("해당 매장이름은 존재합니다.",HttpStatus.CONFLICT),
 
     CUSTOMER_NOT_FOUND("유저를 찾을 수 없습니다.",HttpStatus.NOT_FOUND),
 

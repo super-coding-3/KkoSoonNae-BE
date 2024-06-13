@@ -1,11 +1,10 @@
 package com.kkosoonnae.common.advice;
 
 
-import com.kkosoonnae.common.exception.InvalidValueException;
-import com.kkosoonnae.common.exception.NotAcceptException;
-import com.kkosoonnae.common.exception.NotFoundException;
+import com.kkosoonnae.common.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -41,6 +40,12 @@ public class ExceptionControllerAdvice {
     public String handleAccessDeniedException(AccessDeniedException ade){
         log.error("Client 요청에 문제가 있어 다음처럼 출력합니다. " + ade.getMessage());
         return ade.getMessage();
+    }
+
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateStoreNameException(CustomException ce) {
+        ErrorResponse errorResponse = new ErrorResponse(ce.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
