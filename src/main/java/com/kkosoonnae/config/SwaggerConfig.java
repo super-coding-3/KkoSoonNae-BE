@@ -33,7 +33,7 @@ public class SwaggerConfig {
     public GroupedOpenApi userApi() {
         return GroupedOpenApi.builder()
                 .group("user")
-                .pathsToMatch("/api/**")
+                .pathsToMatch("/api/user/**")
                 .addOpenApiCustomizer(openApi -> openApi.info(new Info()
                         .title("User API")
                         .description("회원 전용 Swagger API 문서")
