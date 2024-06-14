@@ -93,8 +93,19 @@ public class ReservationService {
             throw new InvalidValueException("요청하신 날짜 또는 시간 형식이 올바르지 않습니다.");
         }
 
-        if ((reservationDate.isBefore(nowDate)) || (reservationDate.isEqual(nowDate)) && !reservationTime.isAfter(nowTime.plusHours(2))) {
-            throw new InvalidValueException("해당 시간은 예약이 불가합니다. 2시간 전에는 미리 예약해야 합니다.");
+        if (reservationDate.isBefore(nowDate)) {
+            throw new InvalidValueException("해당 날짜는 예약이 불가합니다.");
+        }
+
+        if ( reservationDate.isEqual(nowDate) && reservationTime.isBefore(nowTime) ) {
+            throw new InvalidValueException("해당 시간은 예약이 불가합니다.");
+        }
+
+        int compareOne = nowTime.plusHours(2).compareTo(reservationTime);
+        int compareTwo = nowTime.compareTo(reservationTime);
+
+        if ( reservationDate.isEqual(nowDate) && ((compareOne > 0) && (compareTwo < 0)) ) {
+            throw new InvalidValueException("2시간 전에는 미리 예약해야 합니다.");
         }
 
         Reservation isAvailable = reservationRepository.findByStoreNoAndReservationDateAndReservationTime(storeNo, reservationDate, reservationTime);
@@ -102,6 +113,10 @@ public class ReservationService {
         if (isAvailable != null) {
             throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
         }
+
+//        if (reservationDate.isEqual(nowDate) && !reservationTime.isAfter(nowTime.plusHours(2))) {
+//            throw new InvalidValueException("해당 시간은 예약할 수 없습니다.");
+//        }
 
         Style style = styleRepository.findByStoreNoAndStyleName(storeNo, reservationRequest.getCutStyle());
 
