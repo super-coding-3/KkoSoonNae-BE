@@ -1,22 +1,15 @@
 package com.kkosoonnae.president.mystore.controller;
 
-import com.kkosoonnae.common.advice.ErrorResponse;
-import com.kkosoonnae.common.exception.CustomException;
-import com.kkosoonnae.common.exception.DuplicateStoreNameException;
-import com.kkosoonnae.common.exception.ErrorCode;
 import com.kkosoonnae.president.mystore.dto.AdminStoreRequestDto;
 import com.kkosoonnae.president.mystore.service.MyStoreService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import static com.kkosoonnae.common.exception.ErrorCode.DUPLICATE_LIKE_STORE;
 
 /**
  * packageName    : com.kkosoonnae.president.mystore.controller
@@ -39,14 +32,12 @@ public class MyStoreController {
 
     @PostMapping("/register")
     public ResponseEntity<?> adminCreateStore(@RequestBody AdminStoreRequestDto adminStoreRequestDto) {
-        try {
             AdminStoreRequestDto requestDto = myStoreService.createStore(adminStoreRequestDto);
             return ResponseEntity.ok().body(requestDto);
-        } catch (CustomException ce) {
-            throw new CustomException(ErrorCode.STORE_SAME_NAME);
+
         }
     }
-}
+
 
 
 

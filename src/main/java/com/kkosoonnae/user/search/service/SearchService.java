@@ -11,6 +11,7 @@ import com.kkosoonnae.user.search.dto.MainStoreListViewResponseDto;
 import com.kkosoonnae.user.search.dto.StoreListViewResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -40,34 +41,39 @@ public class SearchService {
     private final ReviewRepository reviewRepository;
 
     public List<StoreListViewResponseDto> findByStores(String nameAddressKeyword) {
-        if (nameAddressKeyword == null || nameAddressKeyword.isEmpty()) {
-            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
+        List<Store> stores;
+        try {
+            stores = storeRepository.findListStores(nameAddressKeyword);
+            if (stores.isEmpty()) {
+                throw new CustomException(ErrorCode.STORE_NOT_FOUND);
+            }
+            return stores.stream()
+                    .map(store -> {
+                        double averageScope = getAverageReviewScore(store.getStoreNo());
+                        return new StoreListViewResponseDto(store, averageScope);
+                    })
+                    .collect(Collectors.toList());
+        } catch (DataAccessException dae) {
+            throw new CustomException(ErrorCode.DATABASE_ERROR);
         }
-        List<Store> stores = storeRepository.findListStores(nameAddressKeyword);
-        if (stores.isEmpty()) {
-            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
-        }
-        return stores.stream()
-                .map(store-> {
-                    double averageScope = getAverageReviewScore(store.getStoreNo());
-                    return new StoreListViewResponseDto(store,averageScope);
-                })
-                .collect(Collectors.toList());
-
     }
 
     public List<MainStoreListViewResponseDto> findByMainStores(String addressKeyword, Pageable pageable) {
-        List<MainStoresListviewProjection> projections = storeRepository.findMainStores(addressKeyword, pageable);
-        if (projections.isEmpty()) {
-            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
+        try {
+            List<MainStoresListviewProjection> projections = storeRepository.findMainStores(addressKeyword, pageable);
+            if (projections.isEmpty()) {
+                throw new CustomException(ErrorCode.STORE_NOT_FOUND);
+            }
+            Collections.shuffle(projections);
+            return projections.stream()
+                    .map(projection -> {
+                        double averageScope = getAverageReviewScore(projection.storeNo());
+                        return projection.MainStoreToDto(averageScope);
+                    })
+                    .collect(Collectors.toList());
+        } catch (DataAccessException dae) {
+            throw new CustomException(ErrorCode.DATABASE_ERROR);
         }
-        Collections.shuffle(projections);
-        return projections.stream()
-                .map(projection -> {
-                    Double averageScope = getAverageReviewScore(projection.storeNo());
-                    return projection.MainStoreToDto(averageScope);
-                })
-                .collect(Collectors.toList());
     }
 
     public double getAverageReviewScore(Integer storeId){

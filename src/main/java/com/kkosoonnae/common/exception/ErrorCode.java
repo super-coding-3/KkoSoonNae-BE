@@ -1,5 +1,6 @@
 package com.kkosoonnae.common.exception;
 
+import lombok.Builder;
 import org.springframework.http.HttpStatus;
 
 public enum ErrorCode {
@@ -21,7 +22,10 @@ public enum ErrorCode {
     DEFAULT("처리 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
 
     STORE_IMG_MISMATCH("해당 매장 이미지가 없습니다.",HttpStatus.NOT_FOUND),
-    STORE_IMG_NOT_FOUND("해당 매장에 id값에 해당하는 이미지가 없습니다.",HttpStatus.NOT_FOUND);
+    STORE_IMG_NOT_FOUND("해당 매장에 id값에 해당하는 이미지가 없습니다.",HttpStatus.NOT_FOUND),
+    USER_NOT_LOGIN("로그인 하지 않았습니다.",HttpStatus.UNAUTHORIZED),
+    INVALID_SEARCH_KEYWORD("키워드를 제대로 입력하세요",HttpStatus.NOT_FOUND),
+    DATABASE_ERROR("데이터베이스 접근 중 오류",HttpStatus.INTERNAL_SERVER_ERROR);
     private final String message;
 
     private final HttpStatus status;
@@ -33,7 +37,13 @@ public enum ErrorCode {
     public String getMessage() {
         return message;
     }
+
+    public HttpStatus getStatus() {
+        return status;
+    }
+
 }
+
 
 
 
