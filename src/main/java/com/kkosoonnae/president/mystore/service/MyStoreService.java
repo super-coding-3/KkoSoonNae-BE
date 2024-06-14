@@ -1,12 +1,10 @@
 package com.kkosoonnae.president.mystore.service;
 
 import com.kkosoonnae.common.exception.CustomException;
-import com.kkosoonnae.common.exception.DuplicateStoreNameException;
 import com.kkosoonnae.common.exception.ErrorCode;
 import com.kkosoonnae.jpa.entity.Store;
 import com.kkosoonnae.jpa.repository.StoreRepository;
 import com.kkosoonnae.president.mystore.dto.AdminStoreRequestDto;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

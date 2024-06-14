@@ -13,6 +13,7 @@ import com.kkosoonnae.user.review.service.ReviewService;
 import com.kkosoonnae.user.store.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,48 +56,56 @@ public class StoreService {
 
     //매장상세조회
     public StoreDetailWithImageResponseDto findStoreDetailWithImage(Integer storeNo) {
-        Optional<StoreDetailViewProjection> storeDetailViewProjectionOpt = storeRepository.findStoreByStoreNo(storeNo);
-        if (storeDetailViewProjectionOpt.isEmpty()) {
-            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
+        try {
+            Optional<StoreDetailViewProjection> storeDetailViewProjectionOpt = storeRepository.findStoreByStoreNo(storeNo);
+            if (storeDetailViewProjectionOpt.isEmpty()) {
+                throw new CustomException(ErrorCode.STORE_NOT_FOUND);
+            }
+
+            StoreDetailViewProjection storeDetailViewProjection = storeDetailViewProjectionOpt.get();
+
+            List<String> imgUrls = storeImgRepository.findImgUrlsByStoreNo(storeNo);
+            if (imgUrls.isEmpty()) {
+                throw new CustomException(ErrorCode.STORE_IMAGE_NOT_FOUND);
+            }
+            double averageScope = reviewService.getAverageReviewScore(storeNo);
+
+            StoreDetailViewProjection projectionWithImages = new StoreDetailViewProjection(
+                    storeDetailViewProjection.storeNo(),
+                    storeDetailViewProjection.storeName(),
+                    storeDetailViewProjection.content(),
+                    storeDetailViewProjection.phone(),
+                    storeDetailViewProjection.roadAddress(),
+                    storeDetailViewProjection.openingTime(),
+                    storeDetailViewProjection.closingTime(),
+                    imgUrls,
+                    averageScope,
+                    storeDetailViewProjection.totalLikeStore()
+            );
+
+            return new StoreDetailWithImageResponseDto(projectionWithImages);
+        } catch (DataAccessException e) {
+            throw new CustomException(ErrorCode.DATABASE_ERROR);
         }
-
-        StoreDetailViewProjection storeDetailViewProjection = storeDetailViewProjectionOpt.get();
-
-        List<String> imgUrls = storeImgRepository.findImgUrlsByStoreNo(storeNo);
-
-        double averageScope = reviewService.getAverageReviewScore(storeNo);
-
-        StoreDetailViewProjection projectionWithImages = new StoreDetailViewProjection(
-                storeDetailViewProjection.storeNo(),
-                storeDetailViewProjection.storeName(),
-                storeDetailViewProjection.content(),
-                storeDetailViewProjection.phone(),
-                storeDetailViewProjection.roadAddress(),
-                storeDetailViewProjection.openingTime(),
-                storeDetailViewProjection.closingTime(),
-                imgUrls,
-                averageScope,
-                storeDetailViewProjection.totalLikeStore()
-        );
-
-        return new StoreDetailWithImageResponseDto(projectionWithImages);
     }
-
     //매장 펫스타일 조회
-    public List<StyleDto> findStyles(Integer storeNo) {
-        if (storeNo == null) {
-            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
-        }
-        List<Style> styles = styleRepository.findByStoreNo(storeNo);
-        if (styles.isEmpty()) {
-            throw new CustomException(ErrorCode.STYLE_NOT_FOUND);
-        }
-        return StyleDto.styleToDto(styles);
+    public List<StyleDto> findStyles(Integer storeNo){
+            if (storeNo == null) {
+                throw new CustomException(ErrorCode.STORE_NOT_FOUND);
+            }
+            List<Style> styles = styleRepository.findByStoreNo(storeNo);
+            if (styles.isEmpty()) {
+                throw new CustomException(ErrorCode.STYLE_NOT_FOUND);
+            }
+            return StyleDto.styleToDto(styles);
     }
 
     //관심매장추가
     @Transactional
     public LikeStoreDto saveLikeStore(PrincipalDetails principalDetails, Integer storeNo) {
+        if (principalDetails == null) {
+            throw new CustomException(ErrorCode.USER_NOT_LOGIN);
+        }
         Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
         CustomerBas customerBas = customerBasRepository.findById(cstmrNo)
                 .orElseThrow(() -> new CustomException(ErrorCode.CUSTOMER_NOT_FOUND));
@@ -118,6 +127,9 @@ public class StoreService {
     //관심매장삭제
     @Transactional
     public void deleteLikeStore(PrincipalDetails principalDetails, Integer storeNo) {
+        if (principalDetails ==null) {
+            throw new CustomException(ErrorCode.USER_NOT_LOGIN);
+        }
         Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
         boolean likeStoreExists = likeStoreRepository.existsLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(cstmrNo,storeNo);
         if(!likeStoreExists)
@@ -224,12 +236,19 @@ public class StoreService {
     }
     //매장 리뷰리스트 조회
     public List<StoreReviewsResponseDto> findReviews(Integer storeNo) {
-        if(storeNo == null) {
+        if (storeNo == null) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
-        List<StoreReviewsViewProjection> reviewsViewProjections = storeRepository.findByStoreReviews(storeNo);
-        if(reviewsViewProjections.isEmpty()) {
-            throw new CustomException(ErrorCode.REVIEW_NOT_FOUND);
+
+        List<StoreReviewsViewProjection> reviewsViewProjections;
+        try {
+            reviewsViewProjections= storeRepository.findByStoreReviews(storeNo);
+        }catch (DataAccessException dae) {
+            throw new CustomException(ErrorCode.DATABASE_ERROR);
+        }
+        if (reviewsViewProjections.isEmpty()) {
+                throw new CustomException(ErrorCode.REVIEW_NOT_FOUND);
+
         }
 
         double averageScope = reviewService.getAverageReviewScore(storeNo);

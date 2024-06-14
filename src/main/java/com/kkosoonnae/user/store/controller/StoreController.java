@@ -1,6 +1,7 @@
 package com.kkosoonnae.user.store.controller;
 
 import com.kkosoonnae.common.exception.CustomException;
+import com.kkosoonnae.common.exception.ErrorCode;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.user.review.dto.ReviewRqDto;
 import com.kkosoonnae.user.review.service.ReviewService;
@@ -41,30 +42,22 @@ public class StoreController {
     @GetMapping("/{storeNo}")
     @Operation(summary = "상세매장조회")
     public ResponseEntity<?> StoreDetailWithImage(@PathVariable Integer storeNo) {
-        try {
-            log.info("GET/Store 조회요청이 들어왔습니다.StoreNo:" + storeNo);
-            StoreDetailWithImageResponseDto storeDetailWithImageResponseDto = storeService.findStoreDetailWithImage(storeNo);
-            log.info("GET/Store 조회응답:" + storeDetailWithImageResponseDto);
-            return ResponseEntity.ok().body(storeDetailWithImageResponseDto);
-        } catch (Exception e) {
-            log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        log.info("GET/Store 조회요청이 들어왔습니다.StoreNo:" + storeNo);
+        StoreDetailWithImageResponseDto storeDetailWithImageResponseDto = storeService.findStoreDetailWithImage(storeNo);
+        log.info("GET/Store 조회응답:" + storeDetailWithImageResponseDto);
+        return ResponseEntity.ok().body(storeDetailWithImageResponseDto);
+
     }
+
 
     @GetMapping("/{storeNo}/pethair")
     @Operation(summary = "펫스타일조회")
     public ResponseEntity<?> AllStyles(@PathVariable Integer storeNo) {
-        try {
             log.info("GET/storeNo로 펫스타일 조회요청이 들어왔습니다.:" + storeNo);
             List<StyleDto> styleDto = storeService.findStyles(storeNo);
             log.info("GET/petHair 응답:" + styleDto);
             return ResponseEntity.ok(styleDto);
-        } catch (CustomException e) {
-            log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 
-        }
     }
 
     @PostMapping("/like-store/{storeNo}")
@@ -72,15 +65,10 @@ public class StoreController {
     public ResponseEntity<?> likeStore(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
             @PathVariable Integer storeNo) {
-        try{
             log.info("POST/customerNo,storeNo 관심매장등록 요청이 들어왔습니다.:");
-            LikeStoreDto likeStoreDto = storeService.saveLikeStore(principalDetails,storeNo);
+            LikeStoreDto likeStoreDto = storeService.saveLikeStore(principalDetails, storeNo);
             log.info("POST/LikeStore 응답조회:" + likeStoreDto);
             return ResponseEntity.ok(likeStoreDto);
-        } catch (CustomException e) {
-            log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
     }
 
     @DeleteMapping("/delete-likeStore/{storeNo}")
@@ -88,16 +76,14 @@ public class StoreController {
     public ResponseEntity<?> removeLikeStore(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
             @PathVariable Integer storeNo) {
-        try {
-            log.info("POST/customerNo,storeNo 관심매장삭제 요청이 들어왔습니다.");
-            storeService.deleteLikeStore(principalDetails, storeNo);
-            log.info("POST/관심매장삭제 응답");
-            return ResponseEntity.noContent().build();
-        } catch (CustomException e) {
-            log.info("Client 요청에 문제가 있어 다음 오류를 출력합니다.:" + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        log.info("POST/customerNo,storeNo 관심매장삭제 요청이 들어왔습니다.");
+        storeService.deleteLikeStore(principalDetails, storeNo);
+        log.info("POST/관심매장삭제 응답");
+        return ResponseEntity.noContent().build();
+
     }
+
+
 
     @PostMapping("/add")
     @Operation(summary = "매장 등록")
@@ -133,13 +119,11 @@ public class StoreController {
     @GetMapping("list-review/{storeNo}")
     @Operation(summary = "매장별 리뷰 리스트")
     public ResponseEntity<?> getReviews(@PathVariable Integer storeNo) {
-        try {
             List<StoreReviewsResponseDto> reviewsResponse = storeService.findReviews(storeNo);
             return ResponseEntity.ok(reviewsResponse);
-        } catch (CustomException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+
     }
+
     @PutMapping("/{storeNo}/images")
     @Operation(summary = "매장 이미지 바꾸는 코드")
     public ResponseEntity<String> updateStoreImg(@PathVariable Integer storeNo,

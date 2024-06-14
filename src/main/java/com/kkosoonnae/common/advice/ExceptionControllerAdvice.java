@@ -41,11 +41,10 @@ public class ExceptionControllerAdvice {
         log.error("Client 요청에 문제가 있어 다음처럼 출력합니다. " + ade.getMessage());
         return ade.getMessage();
     }
-
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ErrorResponse> handleDuplicateStoreNameException(CustomException ce) {
-        ErrorResponse errorResponse = new ErrorResponse(ce.getMessage());
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    public ResponseEntity<ErrorResponse> handleCustomException(CustomException e) {
+        return ErrorResponse.toResponseEntity(e.getErrorCode());
+
     }
 
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
