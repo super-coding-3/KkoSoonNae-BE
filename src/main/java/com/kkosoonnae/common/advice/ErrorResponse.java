@@ -1,6 +1,4 @@
 package com.kkosoonnae.common.advice;
-import ch.qos.logback.core.spi.ErrorCodes;
-import com.kkosoonnae.common.exception.CustomException;
 import com.kkosoonnae.common.exception.ErrorCode;
 import lombok.Builder;
 import lombok.Getter;
