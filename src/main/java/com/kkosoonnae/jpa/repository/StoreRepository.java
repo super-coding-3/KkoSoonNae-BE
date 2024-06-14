@@ -65,4 +65,8 @@ public interface StoreRepository extends JpaRepository<Store,Integer> {
             "WHERE s.storeName LIKE %:nameAddressKeyword% " +
             "OR s.roadAddress LIKE %:nameAddressKeyword% " )
     List<Store> findListStores(String nameAddressKeyword);
+
+
+    boolean existsByStoreName(String storeName);
 }
+
