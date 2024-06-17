@@ -1,7 +1,9 @@
 package com.kkosoonnae.config.security;
 
-import com.kkosoonnae.config.jwt.JwtAuthenticationFilter;
-import com.kkosoonnae.config.jwt.JwtTokenProvider;
+//import com.kkosoonnae.config.jwt.JwtAuthenticationFilter;
+import com.kkosoonnae.config.jwt.JwtFilter;
+//import com.kkosoonnae.config.jwt.JwtTokenProvider;
+import com.kkosoonnae.config.jwt.TokenProvider;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.connector.Connector;
@@ -35,7 +37,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final CorsConfig corsConfig;
-    private final JwtTokenProvider jwtTokenProvider;
+//    private final JwtTokenProvider jwtTokenProvider;
+    private final TokenProvider tokenProvider;
     private final AuthenticationConfiguration authenticationConfiguration;
 
     private static final String[] AUTH_WHITELIST = {
@@ -70,7 +73,7 @@ public class SecurityConfig {
                         .permitAll())
                 .exceptionHandling(e -> e.authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                         .accessDeniedHandler(new CustomerAccessDeniedHandler()))
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(AUTH_WHITELIST).permitAll()
