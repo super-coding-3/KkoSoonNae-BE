@@ -1,19 +1,22 @@
 package com.kkosoonnae.user.customer.service;
 
+import com.kkosoonnae.config.jwt.TokenProvider;
 import com.kkosoonnae.jpa.entity.CustomerBas;
 import com.kkosoonnae.jpa.entity.CustomerDtl;
 import com.kkosoonnae.jpa.entity.RoleType;
 import com.kkosoonnae.config.auth.PrincipalDetails;
-import com.kkosoonnae.config.jwt.JwtTokenProvider;
+//import com.kkosoonnae.config.jwt.JwtTokenProvider;
 import com.kkosoonnae.jpa.repository.CustomerBasRepository;
 import com.kkosoonnae.jpa.repository.CustomerDtlRepository;
 import com.kkosoonnae.user.customer.dto.InfoDto;
 import com.kkosoonnae.user.customer.dto.LoginDto;
 import com.kkosoonnae.user.customer.dto.SignUpDto;
+import com.kkosoonnae.user.customer.dto.TokenResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,7 +45,11 @@ public class CustomerService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final JwtTokenProvider jwtTokenProvider;
+//    private final JwtTokenProvider jwtTokenProvider;
+
+    private final TokenProvider tokenProvider;
+
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -57,7 +64,7 @@ public class CustomerService {
                     .loginId(signUpDto.getLoginId())
                     .email(signUpDto.getEmail())
                     .password(passwordEncoder.encode(signUpDto.getPassword()))
-                    .cstmrDivCd(RoleType.USER)
+                    .cstmrDivCd(RoleType.ROLE_USER)
                     .createDt(LocalDateTime.now())
                     .build();
 
@@ -84,14 +91,20 @@ public class CustomerService {
         return customerDtlRepository.existsByNickName(nickName);
     }
 
-    public String login(LoginDto login){
-        String loginId = login.getLoginId();
-        String password = login.getPassword();
+    public TokenResponseDto login(LoginDto login){
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginId,password));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return jwtTokenProvider.createToken(loginId);
+        // username, password를 파라미터로 받고 이를 이용해 UsernamePasswordAuthenticationToken을 생성
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(login.getLoginId(),login.getPassword());
+
+        // authenticationToken을 이용해서 Authenticaiton 객체를 생성하려고 authenticate 메소드가 실행될 때
+        // CustomUserDetailsService에서 override한 loadUserByUsername 메소드가 실행된다.
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+        // authentication 을 기준으로 jwt token 생성
+        String jwt = tokenProvider.createToken(authentication);
+
+        return new TokenResponseDto(jwt);
     }
 
     public InfoDto getUserProfile(PrincipalDetails principalDetails){

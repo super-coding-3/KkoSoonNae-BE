@@ -12,5 +12,7 @@ package com.kkosoonnae.jpa.entity;
  * 2024-05-10        hagjoon       최초 생성
  */
 public enum RoleType {
-    USER
+    ROLE_USER,
+    ROLE_PRESIDENT,
+    ROLE_ADMIN
 }
