@@ -5,8 +5,8 @@ import com.kkosoonnae.config.jwt.JwtProperties;
 import com.kkosoonnae.config.security.CustomLogoutHandler;
 import com.kkosoonnae.user.customer.dto.InfoDto;
 import com.kkosoonnae.user.customer.dto.LoginDto;
+import com.kkosoonnae.user.customer.dto.LoginRsDto;
 import com.kkosoonnae.user.customer.dto.SignUpDto;
-import com.kkosoonnae.user.customer.dto.TokenResponseDto;
 import com.kkosoonnae.user.customer.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -86,33 +86,36 @@ public class CustomerController {
 
     @PostMapping("/login")
     @Operation(summary = "로그인")
-    public ResponseEntity<?> logIn(@RequestBody LoginDto login, HttpServletResponse httpServletResponse){
-        try{
+    public ResponseEntity<Map<String, Object>> logIn(@RequestBody LoginDto login, HttpServletResponse httpServletResponse) {
+        try {
             // 로그인 시도 및 jwt 토큰 생성
-            String token = service.login(login);
+            LoginRsDto tokenResponse = service.login(login);
 
-            Map<String,String> data = new HashMap<>();
-            data.put("token", JwtProperties.TOKEN_PREFIX + token);
+            Map<String, Object> data = new HashMap<>();
+            data.put("token", tokenResponse.getToken());
 
             Map<String, Object> responseBody = new HashMap<>();
-            responseBody.put("data",data);
-            responseBody.put("message","로그인에 성공하였습니다. 토큰을 발급합니다.");
+            responseBody.put("data", tokenResponse);
+            responseBody.put("message", "로그인에 성공하였습니다. 토큰을 발급합니다.");
 
-            httpServletResponse.setHeader(JwtProperties.HEADER_STRING,JwtProperties.TOKEN_PREFIX + token);
-            log.info("jwt 토큰 : {} ",token);
+            httpServletResponse.setHeader(JwtProperties.HEADER_STRING, tokenResponse.getToken());
+            log.info("jwt 토큰 : {}", tokenResponse.getToken());
             log.info("로그인 완료");
             return ResponseEntity.ok(responseBody);
 
-        }catch (BadCredentialsException e){
-            Map<String,String> errorBody = new HashMap<>();
-            errorBody.put("error","이메일 또는 비밀번호가 올바르지 않습니다.");
+        } catch (BadCredentialsException e) {
+            Map<String, Object> errorBody = new HashMap<>();
+            errorBody.put("error", "이메일 또는 비밀번호가 올바르지 않습니다.");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorBody);
-        }catch (Exception e){
-            Map<String, String> errorBody = new HashMap<>();
-            errorBody.put("error","로그인 처리 중 문제가 발생하였습니다.");
+        } catch (Exception e) {
+            Map<String, Object> errorBody = new HashMap<>();
+            errorBody.put("error", "로그인 처리 중 문제가 발생하였습니다.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorBody);
         }
     }
+
+
+
 
     @Operation(summary = "로그아웃")
     @PostMapping("/logout")
