@@ -41,13 +41,13 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
             writer.flush();
         }else {
             // JSON 형식이 아닌 경우에는 리다이렉트하여 로그인 페이지로 이동
-            response.sendRedirect("/KkoSoonNae/customer/login");
+            response.sendRedirect("/api/user/customer/login");
         }
-        if (request.getRequestURI().equals("/KkoSoonNae/customer/login")){
+        if (request.getRequestURI().equals("/api/user/customer/login")){
             // 이미 로그인 페이지로 요청 중인 경우, 다시 리다이렉트할 필요가 없음
             return;
         }
-        response.sendRedirect("/KkoSoonNae/customer/login");
+        response.sendRedirect("/api/user/customer/login");
 
     }
 }

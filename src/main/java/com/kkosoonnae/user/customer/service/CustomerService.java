@@ -1,6 +1,6 @@
 package com.kkosoonnae.user.customer.service;
 
-import com.kkosoonnae.config.jwt.TokenProvider;
+import com.kkosoonnae.config.jwt.JwtTokenProvider;
 import com.kkosoonnae.jpa.entity.CustomerBas;
 import com.kkosoonnae.jpa.entity.CustomerDtl;
 import com.kkosoonnae.jpa.entity.RoleType;
@@ -45,9 +45,8 @@ public class CustomerService {
 
     private final AuthenticationManager authenticationManager;
 
-//    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    private final TokenProvider tokenProvider;
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
@@ -91,20 +90,15 @@ public class CustomerService {
         return customerDtlRepository.existsByNickName(nickName);
     }
 
-    public TokenResponseDto login(LoginDto login){
+    public String login(LoginDto login){
 
-        // username, password를 파라미터로 받고 이를 이용해 UsernamePasswordAuthenticationToken을 생성
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(login.getLoginId(),login.getPassword());
-
-        // authenticationToken을 이용해서 Authenticaiton 객체를 생성하려고 authenticate 메소드가 실행될 때
-        // CustomUserDetailsService에서 override한 loadUserByUsername 메소드가 실행된다.
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
+        String loginId = login.getLoginId();
+        String password = login.getPassword();
         // authentication 을 기준으로 jwt token 생성
-        String jwt = tokenProvider.createToken(authentication);
-
-        return new TokenResponseDto(jwt);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginId,password));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return jwtTokenProvider.createToken(loginId);
     }
 
     public InfoDto getUserProfile(PrincipalDetails principalDetails){

@@ -1,7 +1,6 @@
 package com.kkosoonnae.user.customer.controller;
 
 import com.kkosoonnae.config.auth.PrincipalDetails;
-import com.kkosoonnae.config.jwt.JwtFilter;
 import com.kkosoonnae.config.jwt.JwtProperties;
 import com.kkosoonnae.config.security.CustomLogoutHandler;
 import com.kkosoonnae.user.customer.dto.InfoDto;
@@ -15,7 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -88,31 +86,23 @@ public class CustomerController {
 
     @PostMapping("/login")
     @Operation(summary = "로그인")
-    public ResponseEntity<?> logIn(@RequestBody LoginDto login){
+    public ResponseEntity<?> logIn(@RequestBody LoginDto login, HttpServletResponse httpServletResponse){
         try{
-//            // 로그인 시도 및 jwt 토큰 생성
-//            String token = service.login(login);
-//
-//            Map<String,String> data = new HashMap<>();
-//            data.put("token", JwtProperties.TOKEN_PREFIX + token);
-//
-//            Map<String, Object> responseBody = new HashMap<>();
-//            responseBody.put("data",data);
-//            responseBody.put("message","로그인에 성공하였습니다. 토큰을 발급합니다.");
-//
-//            httpServletResponse.setHeader(JwtProperties.HEADER_STRING,JwtProperties.TOKEN_PREFIX + token);
-//            log.info("jwt 토큰 : {} ",token);
-//            log.info("로그인 완료");
-//            return ResponseEntity.ok(responseBody);
+            // 로그인 시도 및 jwt 토큰 생성
+            String token = service.login(login);
 
-            TokenResponseDto tokenResponseDto = service.login(login);
+            Map<String,String> data = new HashMap<>();
+            data.put("token", JwtProperties.TOKEN_PREFIX + token);
 
-            // 1. Response Header에 token 값을 넣어준다.
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER,"Bearer " + tokenResponseDto.getToken());
+            Map<String, Object> responseBody = new HashMap<>();
+            responseBody.put("data",data);
+            responseBody.put("message","로그인에 성공하였습니다. 토큰을 발급합니다.");
 
-            // 2. Response Body에 token 값을 넣어준다.
-            return new ResponseEntity<>(tokenResponseDto,httpHeaders,HttpStatus.OK);
+            httpServletResponse.setHeader(JwtProperties.HEADER_STRING,JwtProperties.TOKEN_PREFIX + token);
+            log.info("jwt 토큰 : {} ",token);
+            log.info("로그인 완료");
+            return ResponseEntity.ok(responseBody);
+
         }catch (BadCredentialsException e){
             Map<String,String> errorBody = new HashMap<>();
             errorBody.put("error","이메일 또는 비밀번호가 올바르지 않습니다.");

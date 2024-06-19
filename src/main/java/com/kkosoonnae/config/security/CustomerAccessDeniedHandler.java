@@ -31,7 +31,7 @@ public class CustomerAccessDeniedHandler implements AccessDeniedHandler {
         // 사용자가 접근 권한이 없는 자원에 접근했을 때 실행 되는 메소드
         // 접근 거부 예외의 스택 트레이스를 콘솔에 출력
         accessDeniedException.printStackTrace();
-        response.sendRedirect("/KkoSoonNae/customer/login");
+        response.sendRedirect("/api/user/customer/login");
 
     }
 }
