@@ -2,16 +2,14 @@ package com.kkosoonnae.jpa.entity;
 
 import com.kkosoonnae.president.mystore.dto.AdminStoreRequestDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalTime;
 import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -66,6 +64,9 @@ public class Store {
         this.roadAddress = roadAddress;
         this.openingTime = LocalTime.parse("10:00");
         this.closingTime = LocalTime.parse("18:00");
+    }
+
+    public Store(Integer storeNo) {
     }
 
     public void setStyles(List<Style> styles) {
