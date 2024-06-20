@@ -59,7 +59,7 @@ public class QReservation extends EntityPathBase<Reservation> {
     public QReservation(Class<? extends Reservation> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.avail = inits.isInitialized("avail") ? new QAvailTime(forProperty("avail"), inits.get("avail")) : null;
-        this.cstmrBas = inits.isInitialized("cstmrBas") ? new QCustomerBas(forProperty("cstmrBas")) : null;
+        this.cstmrBas = inits.isInitialized("cstmrBas") ? new QCustomerBas(forProperty("cstmrBas"), inits.get("cstmrBas")) : null;
         this.store = inits.isInitialized("store") ? new QStore(forProperty("store")) : null;
     }
 

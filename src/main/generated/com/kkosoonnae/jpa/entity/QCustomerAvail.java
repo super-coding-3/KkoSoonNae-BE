@@ -49,7 +49,7 @@ public class QCustomerAvail extends EntityPathBase<CustomerAvail> {
     public QCustomerAvail(Class<? extends CustomerAvail> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.availNo = inits.isInitialized("availNo") ? new QAvailTime(forProperty("availNo"), inits.get("availNo")) : null;
-        this.cstmrNo = inits.isInitialized("cstmrNo") ? new QCustomerBas(forProperty("cstmrNo")) : null;
+        this.cstmrNo = inits.isInitialized("cstmrNo") ? new QCustomerBas(forProperty("cstmrNo"), inits.get("cstmrNo")) : null;
         this.reservationNo = inits.isInitialized("reservationNo") ? new QReservation(forProperty("reservationNo"), inits.get("reservationNo")) : null;
     }
 

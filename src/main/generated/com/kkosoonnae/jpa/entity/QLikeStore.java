@@ -48,7 +48,7 @@ public class QLikeStore extends EntityPathBase<LikeStore> {
 
     public QLikeStore(Class<? extends LikeStore> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.customerBas = inits.isInitialized("customerBas") ? new QCustomerBas(forProperty("customerBas")) : null;
+        this.customerBas = inits.isInitialized("customerBas") ? new QCustomerBas(forProperty("customerBas"), inits.get("customerBas")) : null;
         this.store = inits.isInitialized("store") ? new QStore(forProperty("store")) : null;
     }
 
