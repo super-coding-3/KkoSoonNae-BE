@@ -10,7 +10,7 @@ public interface ReservationMapper {
 
     ReservationMapper INSTANCE = Mappers.getMapper(ReservationMapper.class);
 
-    ReservationListResponse reservationToReservationListResponse(Reservation reservation);
+//    ReservationListResponse reservationToReservationListResponse(Reservation reservation);
 
 
 }
