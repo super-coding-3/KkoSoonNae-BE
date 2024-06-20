@@ -3,6 +3,7 @@ package com.kkosoonnae.president.reservationmanage.service;
 import com.kkosoonnae.jpa.repository.ReservationQueryRepository;
 import com.kkosoonnae.jpa.repository.ReservationRepository;
 import com.kkosoonnae.jpa.entity.ReservationListResponse;
+import com.kkosoonnae.president.reservationmanage.dto.ReservationDtlRs;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -56,31 +57,12 @@ public class ReservationManageService {
             reservationEndDate = LocalDate.parse(endDate, formatDate);
         }
 
-//        if (startDate != null || !startDate.isEmpty()) {
-//            reservationStartDate = LocalDate.parse(startDate, formatDate);
-//        }
-//
-//        if (endDate != null || !endDate.isEmpty()) {
-//            reservationEndDate = LocalDate.parse(endDate, formatDate);
-//        }
-
-
         return query.findReservation(name, reservationStartDate, reservationEndDate, status);
 
     }
 
-//    public List<ReservationListResponse> getByDatesAndStatus(String startDate, String endDate, String status) {
-//
-//        DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        LocalDate reservationStartDate = LocalDate.parse(startDate, formatDate);
-//        LocalDate reservationEndDate = LocalDate.parse(endDate, formatDate);
-//
-//        return reservationRepository.findByReservationDateAndReservationStatus(reservationStartDate, reservationEndDate, status);
-//
-//        //        return reservations.stream().map(ReservationMapper.INSTANCE::reservationToReservationListResponse).collect(Collectors.toList());
-//    }
-    
 
-
-
+    public ReservationDtlRs getReservationDtl(Integer reservationNumber) {
+        return query.findReservationDtl(reservationNumber);
+    }
 }

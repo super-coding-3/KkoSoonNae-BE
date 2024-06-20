@@ -16,9 +16,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     Reservation findByStoreNoAndReservationDateAndReservationTime(Integer storeNo, LocalDate reservationDate, LocalTime reservationTime);
 
 
-    @Query("SELECT new com.kkosoonnae.jpa.entity.ReservationListResponse(r.reservationNo, cb.customerDtl.nickName, r.reservationDate, r.reservationStatus) " +
-    "FROM Reservation r " +
-    "JOIN r.cstmrBas cb ON r.cstmrBas.cstmrNo = cb.cstmrNo " +
-    "WHERE r.reservationDate BETWEEN :reservationStartDate AND :reservationEndDate AND r.reservationStatus = :status")
-    List<ReservationListResponse> findByReservationDateAndReservationStatus(LocalDate reservationStartDate, LocalDate reservationEndDate, String status);
+//    @Query("SELECT new com.kkosoonnae.jpa.entity.ReservationListResponse(r.reservationNo, cb.customerDtl.nickName, r.reservationDate, r.reservationStatus) " +
+//    "FROM Reservation r " +
+//    "JOIN r.cstmrBas cb ON r.cstmrBas.cstmrNo = cb.cstmrNo " +
+//    "WHERE r.reservationDate BETWEEN :reservationStartDate AND :reservationEndDate AND r.reservationStatus = :status")
+//    List<ReservationListResponse> findByReservationDateAndReservationStatus(LocalDate reservationStartDate, LocalDate reservationEndDate, String status);
 }

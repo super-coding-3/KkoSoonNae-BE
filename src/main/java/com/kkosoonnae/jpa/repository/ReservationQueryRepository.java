@@ -1,9 +1,7 @@
 package com.kkosoonnae.jpa.repository;
 
-import com.kkosoonnae.jpa.entity.QCustomerBas;
-import com.kkosoonnae.jpa.entity.QCustomerDtl;
-import com.kkosoonnae.jpa.entity.QReservation;
-import com.kkosoonnae.jpa.entity.ReservationListResponse;
+import com.kkosoonnae.jpa.entity.*;
+import com.kkosoonnae.president.reservationmanage.dto.ReservationDtlRs;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -46,6 +44,7 @@ public class ReservationQueryRepository {
                 reservation.reservationNo,
                 customerBas.customerDtl.nickName,
                 reservation.reservationDate,
+                reservation.reservationTime,
                 reservation.reservationStatus
         ))
         .from(reservation)
@@ -58,4 +57,34 @@ public class ReservationQueryRepository {
 
     }
 
+    public ReservationDtlRs findReservationDtl(Integer reservationNumber) {
+        QReservation reservation = QReservation.reservation;
+        QCustomerBas customerBas = QCustomerBas.customerBas;
+        QCustomerDtl customerDtl = QCustomerDtl.customerDtl;
+        QReservedPets reservedPets = QReservedPets.reservedPets;
+        QPet pet = QPet.pet;
+
+        return query.select(Projections.constructor(ReservationDtlRs.class,
+                reservation.reservationNo,
+                customerBas.customerDtl.nickName,
+                reservation.reservationDate,
+                reservation.reservationTime,
+                reservation.styleName,
+                reservedPets.pet.type,
+                reservedPets.pet.name,
+                reservedPets.pet.weight,
+                reservation.feature
+        ))
+                .from(reservation)
+                .leftJoin(customerBas)
+                .on(reservation.cstmrBas.cstmrNo.eq(customerBas.cstmrNo))
+                .leftJoin(customerDtl)
+                .on(customerBas.cstmrNo.eq(customerDtl.cstmrNo))
+                .leftJoin(reservedPets)
+                .on(reservation.reservationNo.eq(reservedPets.reservation.reservationNo))
+                .leftJoin(pet)
+                .on(reservedPets.pet.petNo.eq(pet.petNo))
+                .where(reservation.reservationNo.eq(reservationNumber))
+                .fetchOne();
+    }
 }
