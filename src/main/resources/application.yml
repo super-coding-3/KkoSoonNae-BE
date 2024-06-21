@@ -41,5 +41,3 @@ cloud:
       instance-profile: true
 logging:
   config: classpath:logback-spring.xml
-
-
