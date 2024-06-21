@@ -1,10 +1,15 @@
 package com.kkosoonnae.president.reservationmanage.controller;
 
+import com.kkosoonnae.jpa.entity.ReservationListResponse;
+import com.kkosoonnae.president.reservationmanage.dto.ReservationDtlRs;
+import com.kkosoonnae.president.reservationmanage.service.ReservationManageService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * packageName    : com.kkosoonnae.president.reservationmanage.controller
@@ -23,4 +28,19 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 public class ReservationManageController {
+
+    private final ReservationManageService reservationManageService;
+
+    @Operation(summary = "예약 목록 조회")
+    @GetMapping("/list")
+    public List<ReservationListResponse> getResultReservation(@RequestParam(value = "name", required = false) String name, @RequestParam String startDate, @RequestParam String endDate, @RequestParam(value = "status", required = false) String status) {
+        return reservationManageService.getReservation(name, startDate, endDate, status);
+    }
+
+    @Operation(summary = "예약 상세 보기")
+    @GetMapping("/{reservationNumber}")
+    public ReservationDtlRs getReservationDtl(@PathVariable Integer reservationNumber) {
+        return reservationManageService.getReservationDtl(reservationNumber);
+    }
+
 }

@@ -48,7 +48,7 @@ public class QPoint extends EntityPathBase<Point> {
 
     public QPoint(Class<? extends Point> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.customerBas = inits.isInitialized("customerBas") ? new QCustomerBas(forProperty("customerBas")) : null;
+        this.customerBas = inits.isInitialized("customerBas") ? new QCustomerBas(forProperty("customerBas"), inits.get("customerBas")) : null;
     }
 
 }
