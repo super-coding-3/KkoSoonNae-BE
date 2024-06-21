@@ -35,8 +35,8 @@ public class MyStoreController {
     @PostMapping("/register")
     @Operation(summary = "어드민 매장등록" )
     public ResponseEntity<?> adminCreateStore(@RequestBody AdminStoreRequestDto adminStoreRequestDto) {
-        AdminStoreRequestDto requestDto = myStoreService.createStore(adminStoreRequestDto);
-        return ResponseEntity.ok().body(requestDto);
+        AdminStoreRequestDto responseDto = myStoreService.createStore(adminStoreRequestDto);
+        return ResponseEntity.ok().body(responseDto);
 
     }
 
