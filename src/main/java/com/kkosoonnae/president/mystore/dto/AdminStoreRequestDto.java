@@ -47,4 +47,17 @@ public class AdminStoreRequestDto {
                 .closingTime(store.getClosingTime())
                 .build();
     }
+    public void updateEntity(Store store) {
+        store.setStoreName(this.storeName);
+        store.setContent(this.content);
+        store.setPhone(this.phone);
+        store.setLat(this.lat);
+        store.setLon(this.lon);
+        store.setRoadAddress(this.roadAddress);
+        store.setOpeningTime(this.openingTime);
+        store.setClosingTime(this.closingTime);
+
+    }
+
 }
+
