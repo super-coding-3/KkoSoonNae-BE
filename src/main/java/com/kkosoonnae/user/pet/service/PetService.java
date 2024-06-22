@@ -21,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
@@ -76,7 +78,12 @@ public class PetService {
         String img = pet.getImg();
         if(file != null){
             try{
-                img = s3Uploader.upload(file,"pet");
+                if(img != null && !img.isEmpty()){
+                    String oldFileName = extractFileNameFromUrl(img);
+                    img = s3Uploader.updateFile(file,oldFileName,"pet");
+                }else {
+                    img = s3Uploader.upload(file,"pet");
+                }
             }catch (IOException e){
                 throw new AmazonS3Exception("file = " + file.getOriginalFilename());
             }
@@ -84,6 +91,17 @@ public class PetService {
         pet.updatePet(petUpdate,img);
         petRepository.save(pet);
     }
+
+    private String extractFileNameFromUrl(String url) {
+        try {
+            URL parsedUrl = new URL(url);
+            String path = parsedUrl.getPath();
+            return path.substring(path.indexOf("pet/"));
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("Invalid URL: " + url, e);
+        }
+    }
+
     @Transactional
     public void deletePet(Integer cstmrNo,Integer petNo){
         boolean exists = query.existsByCstmrNoAndPetNo(cstmrNo, petNo);
@@ -96,7 +114,12 @@ public class PetService {
         if(isReserved){
             throw new IllegalStateException("해당 반려동물은 현재 예약 상태입니다.");
         }
-
+        String img = petRepository.findPetImgByPetNo(petNo);
+        if (img != null && !img.isEmpty()) {
+            // 이미지 URL에서 파일 이름 추출 및 S3에서 삭제
+            String fileName = extractFileNameFromUrl(img);
+            s3Uploader.deleteFile(fileName);
+        }
 
         query.deletePet(petNo);
     }

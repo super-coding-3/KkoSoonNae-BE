@@ -48,4 +48,7 @@ public interface PetRepository extends JpaRepository<Pet,Integer> {
     Optional<Pet> findByCustomerNoAndMainPet(Integer cstmrNo, String y);
 
     boolean existsByCustomerBas(CustomerBas customerBas);
+
+    @Query("SELECT p.img FROM Pet p WHERE p.petNo = :petNo")
+    String findPetImgByPetNo(Integer petNo);
 }
