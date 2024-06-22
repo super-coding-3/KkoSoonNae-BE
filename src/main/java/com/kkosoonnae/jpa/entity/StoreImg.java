@@ -1,10 +1,8 @@
 package com.kkosoonnae.jpa.entity;
 
+import com.kkosoonnae.president.mystore.dto.AdminStoreRequestDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @AllArgsConstructor
@@ -30,6 +28,15 @@ public class StoreImg {
     public StoreImg(Store store, String imageUrl){
         this.store=store;
         this.img=imageUrl;
+    }
+
+
+    public StoreImg(String url) {
+
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public void updateImageUrl(String newImageUrl) {

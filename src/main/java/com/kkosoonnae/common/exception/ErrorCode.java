@@ -25,7 +25,10 @@ public enum ErrorCode {
     STORE_IMG_NOT_FOUND("해당 매장에 id값에 해당하는 이미지가 없습니다.",HttpStatus.NOT_FOUND),
     USER_NOT_LOGIN("로그인 하지 않았습니다.",HttpStatus.UNAUTHORIZED),
     INVALID_SEARCH_KEYWORD("키워드를 제대로 입력하세요",HttpStatus.NOT_FOUND),
-    DATABASE_ERROR("데이터베이스 접근 중 오류",HttpStatus.INTERNAL_SERVER_ERROR);
+    DATABASE_ERROR("데이터베이스 접근 중 오류",HttpStatus.INTERNAL_SERVER_ERROR),
+    FILE_UPLOAD_ERROR("S3 파일업로드 오류",HttpStatus.INTERNAL_SERVER_ERROR),
+
+    INTERNAL_SERVER_ERROR("서버에서 요청을 처리하는중에 오류가 발생했습니다. 개발자에게 문의해주세요",HttpStatus.INTERNAL_SERVER_ERROR);
     private final String message;
 
     private final HttpStatus status;

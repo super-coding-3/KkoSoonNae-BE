@@ -54,7 +54,7 @@ public class QCustomerDtl extends EntityPathBase<CustomerDtl> {
 
     public QCustomerDtl(Class<? extends CustomerDtl> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.customerBas = inits.isInitialized("customerBas") ? new QCustomerBas(forProperty("customerBas")) : null;
+        this.customerBas = inits.isInitialized("customerBas") ? new QCustomerBas(forProperty("customerBas"), inits.get("customerBas")) : null;
     }
 
 }

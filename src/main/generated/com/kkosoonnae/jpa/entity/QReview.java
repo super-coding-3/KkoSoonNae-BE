@@ -54,7 +54,7 @@ public class QReview extends EntityPathBase<Review> {
 
     public QReview(Class<? extends Review> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.cstmrNo = inits.isInitialized("cstmrNo") ? new QCustomerBas(forProperty("cstmrNo")) : null;
+        this.cstmrNo = inits.isInitialized("cstmrNo") ? new QCustomerBas(forProperty("cstmrNo"), inits.get("cstmrNo")) : null;
         this.store = inits.isInitialized("store") ? new QStore(forProperty("store")) : null;
     }
 
