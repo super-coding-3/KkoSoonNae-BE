@@ -53,6 +53,8 @@ public class StoreService {
 
     private final PetService petService;
 
+    private final RedisLikeStoreRepository redisLikeStoreRepository;
+
 
     //매장상세조회
     public StoreDetailWithImageResponseDto findStoreDetailWithImage(Integer storeNo) {
@@ -121,6 +123,9 @@ public class StoreService {
                 .createDt(LocalDateTime.now())
                 .build();
         LikeStore saveLikeStore = likeStoreRepository.save(likeStore);
+
+        redisLikeStoreRepository.LikeStoreCount(storeNo);
+
         return LikeStoreDto.mapToListStoreDto(saveLikeStore);
     }
 

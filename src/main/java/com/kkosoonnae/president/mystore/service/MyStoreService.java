@@ -53,7 +53,6 @@ public class MyStoreService {
             return adminStoreRequestDto.storeFromDto(saveStore);
 
 
-
         } catch (DataAccessException dae) {
             throw new CustomException(ErrorCode.DATABASE_ERROR);
 

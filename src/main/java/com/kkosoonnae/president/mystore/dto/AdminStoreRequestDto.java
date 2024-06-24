@@ -12,6 +12,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Builder
 public class AdminStoreRequestDto {
+
     private String storeName;
     private String content;
     private String phone;
