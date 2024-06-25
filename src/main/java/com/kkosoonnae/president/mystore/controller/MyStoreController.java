@@ -2,6 +2,7 @@ package com.kkosoonnae.president.mystore.controller;
 
 import com.kkosoonnae.president.mystore.dto.AdminStoreImgRequestDto;
 import com.kkosoonnae.president.mystore.dto.AdminStoreRequestDto;
+import com.kkosoonnae.president.mystore.dto.AdminStoreResponseDto;
 import com.kkosoonnae.president.mystore.service.MyStoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,7 +36,7 @@ public class MyStoreController {
     @PostMapping("/register")
     @Operation(summary = "어드민 매장등록" )
     public ResponseEntity<?> adminCreateStore(@RequestBody AdminStoreRequestDto adminStoreRequestDto) {
-        AdminStoreRequestDto responseDto = myStoreService.createStore(adminStoreRequestDto);
+        AdminStoreResponseDto responseDto = myStoreService.createStore(adminStoreRequestDto);
         return ResponseEntity.ok().body(responseDto);
 
     }
@@ -50,8 +51,8 @@ public class MyStoreController {
     @PutMapping("/update-store/{storeNo}")
     @Operation(summary = "어드민 매장정보 수정")
     public ResponseEntity<?> updateStoreInfo(@PathVariable Integer storeNo,@RequestBody AdminStoreRequestDto adminStoreRequestDto) {
-        AdminStoreRequestDto requestDto = myStoreService.updateStore(storeNo,adminStoreRequestDto);
-        return ResponseEntity.ok().body(requestDto);
+        AdminStoreResponseDto responseDto = myStoreService.updateStore(storeNo,adminStoreRequestDto);
+        return ResponseEntity.ok().body(responseDto);
 
     }
     @PutMapping("/updateImg/{storeNo}")
