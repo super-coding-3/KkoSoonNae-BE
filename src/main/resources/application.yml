@@ -27,10 +27,10 @@ spring:
 
 
 
-#  data:
-#    redis:
-#      host: localhost
-#      port: 6379
+  data:
+    redis:
+      host: 13.124.164.122
+      port: 6379
 
 cloud:
   aws:

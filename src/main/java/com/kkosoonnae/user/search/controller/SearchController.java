@@ -49,13 +49,13 @@ public class SearchController {
         }
 
 
-//    @GetMapping("/main-stores/{addressKeyword}")
-//    @Operation(summary = "메인 강남구 매장 정보")
-//    public ResponseEntity<?> mainByStores(@PathVariable String addressKeyword) {
-//            Pageable pageable = PageRequest.of(0, 10);
-//            List<MainStoreListViewResponseDto> mainListViewResponseDto = searchService.findByMainStores(addressKeyword,pageable);
-//            return ResponseEntity.ok(mainListViewResponseDto);
-//
-//        }
+    @GetMapping("/main-stores/{addressKeyword}")
+    @Operation(summary = "메인 강남구 매장 정보")
+    public ResponseEntity<?> mainByStores(@PathVariable String addressKeyword) {
+            Pageable pageable = PageRequest.of(0, 10);
+            List<MainStoreListViewResponseDto> mainListViewResponseDto = searchService.findByMainStores(addressKeyword,pageable);
+            return ResponseEntity.ok(mainListViewResponseDto);
+
+        }
     }
 

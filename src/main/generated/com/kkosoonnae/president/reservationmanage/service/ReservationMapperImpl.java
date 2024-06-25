@@ -6,7 +6,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-25T20:47:28+0900",
+    date = "2024-06-25T21:02:28+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.7.jar, environment: Java 17.0.10 (Azul Systems, Inc.)"
 )
 public class ReservationMapperImpl implements ReservationMapper {
