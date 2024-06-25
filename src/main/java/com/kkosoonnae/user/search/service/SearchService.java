@@ -38,8 +38,8 @@ public class SearchService {
 
     private final StoreRepository storeRepository;
     private final ReviewRepository reviewRepository;
-    private final RedisLikeStoreRepository redisLikeStoreRepository;
-    private final RedisScopeRepository redisScopeRepository;
+//    private final RedisLikeStoreRepository redisLikeStoreRepository;
+//    private final RedisScopeRepository redisScopeRepository;
     private final StoreQueryRepository storeQueryRepository;
 
     public List<StoreListViewResponseDto> findByStores(String nameAddressKeyword) {
@@ -60,28 +60,28 @@ public class SearchService {
         }
     }
 
-    public List<MainStoreListViewResponseDto> findByMainStores(String addressKeyword, Pageable pageable) {
-        try {
-            List<MainStoreListViewResponseDto> projections = storeQueryRepository.listViewResponseDto(addressKeyword,pageable);
-            if (projections.isEmpty()) {
-                throw new CustomException(ErrorCode.STORE_NOT_FOUND);
-            }
-            Collections.shuffle(projections);
-
-            return projections.stream()
-                    .map(projection -> {
-                        double averageScope = redisScopeRepository.getAverageScope(projection.getStoreNo());
-                        Long totalLike = redisLikeStoreRepository.getTotalLikeStoreCount(projection.getStoreNo());
-                        log.info("Retrieved from Redis - storeNo: {}, averageScope: {}, totalLike: {}",
-                                projection.getStoreNo(), averageScope, totalLike);
-                        return projection.MainStoreToDto(averageScope,totalLike);
-                    })
-                    .collect(Collectors.toList());
-        } catch (DataAccessException dae) {
-            log.error("Data access exception occurred: " + dae.getMessage(), dae);
-            throw new CustomException(ErrorCode.DATABASE_ERROR);
-        }
-    }
+//    public List<MainStoreListViewResponseDto> findByMainStores(String addressKeyword, Pageable pageable) {
+//        try {
+//            List<MainStoreListViewResponseDto> projections = storeQueryRepository.listViewResponseDto(addressKeyword,pageable);
+//            if (projections.isEmpty()) {
+//                throw new CustomException(ErrorCode.STORE_NOT_FOUND);
+//            }
+//            Collections.shuffle(projections);
+//
+//            return projections.stream()
+//                    .map(projection -> {
+//                        double averageScope = redisScopeRepository.getAverageScope(projection.getStoreNo());
+//                        Long totalLike = redisLikeStoreRepository.getTotalLikeStoreCount(projection.getStoreNo());
+//                        log.info("Retrieved from Redis - storeNo: {}, averageScope: {}, totalLike: {}",
+//                                projection.getStoreNo(), averageScope, totalLike);
+//                        return projection.MainStoreToDto(averageScope,totalLike);
+//                    })
+//                    .collect(Collectors.toList());
+//        } catch (DataAccessException dae) {
+//            log.error("Data access exception occurred: " + dae.getMessage(), dae);
+//            throw new CustomException(ErrorCode.DATABASE_ERROR);
+//        }
+//    }
 
     public double getAverageReviewScore(Integer storeId){
         List<Review> reviews = reviewRepository.findByStoreStoreNo(storeId);

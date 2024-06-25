@@ -53,7 +53,7 @@ public class StoreService {
 
     private final PetService petService;
 
-    private final RedisLikeStoreRepository redisLikeStoreRepository;
+//    private final RedisLikeStoreRepository redisLikeStoreRepository;
 
 
     //매장상세조회
@@ -124,7 +124,7 @@ public class StoreService {
                 .build();
         LikeStore saveLikeStore = likeStoreRepository.save(likeStore);
 
-        redisLikeStoreRepository.LikeStoreCount(storeNo);
+//        redisLikeStoreRepository.LikeStoreCount(storeNo);
 
         return LikeStoreDto.mapToListStoreDto(saveLikeStore);
     }
