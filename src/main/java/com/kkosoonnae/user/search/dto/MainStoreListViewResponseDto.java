@@ -26,7 +26,9 @@ public class MainStoreListViewResponseDto {
     private Double averageScope;
 
 
-    public MainStoreListViewResponseDto MainStoreToDto(double averageScope ,Long totalLikeStore) {
+
+
+    public MainStoreListViewResponseDto mainStoreToDto(Long totalLikeStore,double averageScope) {
         return MainStoreListViewResponseDto.builder()
                 .storeNo(this.storeNo)
                 .storeName(this.storeName)

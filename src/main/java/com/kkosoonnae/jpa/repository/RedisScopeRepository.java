@@ -3,14 +3,13 @@ package com.kkosoonnae.jpa.repository;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
-import static org.hibernate.query.sqm.tree.SqmNode.log;
 
 @Repository
 public class RedisScopeRepository {
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
-    public RedisScopeRepository(RedisTemplate<String, Object> redisTemplate) {
+    public RedisScopeRepository(RedisTemplate<String, String> redisTemplate)  {
         this.redisTemplate = redisTemplate;
     }
 
@@ -26,16 +25,16 @@ public class RedisScopeRepository {
         try {
             Object totalScopeObj = redisTemplate
                     .opsForHash()
-                    .get(generateScopeKey(storeNo), "totalScope");
+                    .get(generateScopeKey(storeNo) , "totalScope");
             Object scopeCountObj = redisTemplate
                     .opsForHash()
-                    .get(generateScopeKey(storeNo), "scopeCount");
+                    .get(generateScopeKey(storeNo) , "scopeCount");
 
             if (totalScopeObj == null || scopeCountObj == null) {
                 return 0.0;
             }
-            double totalScope = (double) totalScopeObj;
-            int scopeCount = (int) scopeCountObj;
+            double totalScope = Double.parseDouble((String) totalScopeObj);
+            int scopeCount =Integer.parseInt((String) scopeCountObj);
 
             if (scopeCount == 0) {
                 return 0.0;
@@ -44,10 +43,10 @@ public class RedisScopeRepository {
             return totalScope / scopeCount;
 
         } catch (Exception e) {
-            e.printStackTrace();
             return 0.0;
         }
     }
+
     private String generateScopeKey(Integer storeNo) {
         return "store:" + storeNo + ":scope";
     }
