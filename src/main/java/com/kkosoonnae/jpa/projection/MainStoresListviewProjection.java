@@ -12,6 +12,15 @@ public record MainStoresListviewProjection(
 
 
 ) {
+    public MainStoreListViewResponseDto MainStoreToDto(double averageScope) {
+        return MainStoreListViewResponseDto.builder()
+                .storeNo(storeNo)
+                .storeName(storeName)
+                .roadAddress(roadAddress)
+                .totalLikeStore(totalLikeStore)
+                .averageScope(averageScope)
+                .build();
 
+    }
 }
 

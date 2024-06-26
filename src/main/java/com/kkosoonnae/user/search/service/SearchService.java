@@ -14,10 +14,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.kkosoonnae.jpa.entity.QStore.store;
 
 
 /**
@@ -43,38 +45,40 @@ public class SearchService {
     private final StoreQueryRepository storeQueryRepository;
 
     public List<StoreListViewResponseDto> findByStores(String nameAddressKeyword) {
-        List<Store> stores;
+            List<Store> stores;
         try {
-            stores = storeRepository.findListStores(nameAddressKeyword);
+           stores= storeRepository.findListStores(nameAddressKeyword);
             if (stores.isEmpty()) {
                 throw new CustomException(ErrorCode.STORE_NOT_FOUND);
             }
             return stores.stream()
-                    .map(store -> {
-                        double averageScope = getAverageReviewScore(store.getStoreNo());
-                        return new StoreListViewResponseDto(store, averageScope);
+                    .map(storeList -> {
+                        double averageScope = getAverageReviewScore(storeList.getStoreNo());
+                        log.info("Retrieved from Redis - storeNo: {}, averageScope: {}",
+                                storeList.getStoreNo(), averageScope);
+                        return new StoreListViewResponseDto(storeList,averageScope);
                     })
                     .collect(Collectors.toList());
         } catch (DataAccessException dae) {
+            log.error("Database access error", dae);
             throw new CustomException(ErrorCode.DATABASE_ERROR);
         }
     }
 
     public List<MainStoreListViewResponseDto> findByMainStores(String addressKeyword, Pageable pageable) {
         try {
-            List<MainStoreListViewResponseDto> projections = storeQueryRepository.listViewResponseDto(addressKeyword,pageable);
-            if (projections.isEmpty()) {
+            List<MainStoresListviewProjection> mainStoreResponses = storeRepository.findMainStores(addressKeyword,pageable);
+            if (mainStoreResponses.isEmpty()) {
                 throw new CustomException(ErrorCode.STORE_NOT_FOUND);
             }
-            Collections.shuffle(projections);
+            Collections.shuffle(mainStoreResponses);
 
-            return projections.stream()
-                    .map(projection -> {
-                        double averageScope = redisScopeRepository.getAverageScope(projection.getStoreNo());
-                        Long totalLike = redisLikeStoreRepository.getTotalLikeStoreCount(projection.getStoreNo());
-                        log.info("Retrieved from Redis - storeNo: {}, averageScope: {}, totalLike: {}",
-                                projection.getStoreNo(), averageScope, totalLike);
-                        return projection.MainStoreToDto(averageScope,totalLike);
+            return mainStoreResponses.stream()
+                    .map(mainStores -> {
+                        double averageScope = getAverageReviewScore(mainStores.storeNo());
+                        log.info("Retrieved from Redis - storeNo: {}, averageScope: {}",
+                                mainStores.storeNo(), averageScope);
+                       return mainStores.MainStoreToDto(averageScope);
                     })
                     .collect(Collectors.toList());
         } catch (DataAccessException dae) {
