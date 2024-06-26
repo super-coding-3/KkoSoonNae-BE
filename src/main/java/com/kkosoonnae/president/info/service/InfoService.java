@@ -41,7 +41,7 @@ public class InfoService {
                 .loginId(signUpDto.getLoginId())
                 .password(passwordEncoder.encode(signUpDto.getPassword()))
                 .email(signUpDto.getEmail())
-                .cstmrDivCd(RoleType.ROLE_PRESIDENT)
+                .cstmrDivCd(RoleType.PRESIDENT)
                 .createDt(LocalDateTime.now())
                 .build();
 
