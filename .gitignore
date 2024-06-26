@@ -43,3 +43,6 @@ application-jwt.yml
 application-aws.yml
 logs/
 log/
+
+### ReservationMapperImpl ###
+ReservationMapperImpl.java
