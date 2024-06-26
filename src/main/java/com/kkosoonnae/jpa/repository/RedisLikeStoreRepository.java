@@ -3,7 +3,7 @@ package com.kkosoonnae.jpa.repository;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
-import static org.springframework.cache.interceptor.SimpleKeyGenerator.generateKey;
+
 @Repository
 public class RedisLikeStoreRepository {
 
