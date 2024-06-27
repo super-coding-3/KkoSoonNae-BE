@@ -1,6 +1,6 @@
 package com.kkosoonnae.user.search.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -26,8 +26,6 @@ public class MainStoreListViewResponseDto {
     private Double averageScope;
 
 
-
-
     public MainStoreListViewResponseDto mainStoreToDto(Long totalLikeStore,double averageScope) {
         return MainStoreListViewResponseDto.builder()
                 .storeNo(this.storeNo)
@@ -36,5 +34,11 @@ public class MainStoreListViewResponseDto {
                 .totalLikeStore(totalLikeStore)
                 .averageScope(averageScope)
                 .build();
+    }
+
+    public MainStoreListViewResponseDto(Integer storeNo, String storeName, String roadAddress) {
+        this.storeNo = storeNo;
+        this.storeName = storeName;
+        this.roadAddress = roadAddress;
     }
 }
