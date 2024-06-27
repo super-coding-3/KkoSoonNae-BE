@@ -1,4 +1,4 @@
-package com.kkosoonnae.user.customer.dto;
+package com.kkosoonnae.president.info.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -7,21 +7,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * packageName    : com.kkosoonnae.user.customer.dto
- * fileName       : TokenResponseDto
+ * packageName    : com.kkosoonnae.president.info.dto
+ * fileName       : LoginRs
  * author         : hagjoon
- * date           : 2024-06-17
+ * date           : 2024-06-27
  * description    :
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2024-06-17        hagjoon       최초 생성
+ * 2024-06-27        hagjoon       최초 생성
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRsDto {
+public class LoginRs {
 
     @Schema(description = "회원 일련번호")
     private Integer cstmrNo;
@@ -34,4 +34,5 @@ public class LoginRsDto {
 
     @Schema(description = "토큰")
     private String token;
+
 }

@@ -18,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,10 +59,10 @@ public class CustomerService {
 
     public boolean signUp(SignUpDto signUpDto) {
         // 1. 아이디, 닉네임 중복 확인
-        if (existsLoginId(signUpDto.getLoginId())) {
-            throw new IllegalArgumentException("중복된 아이디 입니다.");
-        } if (existsNickName(signUpDto.getNickName())) {
-            throw new IllegalArgumentException("중복된 닉네임 입니다.");
+        if(customerBasRepository.existsByLoginId(signUpDto.getLoginId())){
+            throw new CustomException(ErrorCode.DUPLICATE_LOGIN);
+        } if (customerDtlRepository.existsByNickName(signUpDto.getNickName())) {
+            throw new CustomException(ErrorCode.DUPLICATE_NICKNAME);
         }
 
         // 2. 기본 정보 저장
@@ -104,7 +103,7 @@ public class CustomerService {
                 .addressDtl(rq.getAddressDtl())
                 .build();
 
-        return customerDtlRepository.save(customerDtl);
+       return customerDtlRepository.save(customerDtl);
     }
 
     private TermsAgreeTxn saveTermsAgreeTxn(TermDto agree, CustomerBas bas){
@@ -150,7 +149,7 @@ public class CustomerService {
 
         // LoginRsDto 생성 및 설정
         LoginRsDto loginRsDto = new LoginRsDto();
-        loginRsDto.setCustmrNo(customerBas.getCstmrNo());
+        loginRsDto.setCstmrNo(customerBas.getCstmrNo());
         loginRsDto.setLoginId(customerBas.getLoginId());
         loginRsDto.setNickName(customerDtl.getNickName());
         loginRsDto.setToken(prefixedToken);
