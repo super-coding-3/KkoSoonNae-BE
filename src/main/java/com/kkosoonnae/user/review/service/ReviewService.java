@@ -72,7 +72,7 @@ public class ReviewService {
                 .build();
         reviewRepository.save(review);
 
-        redisScopeRepository.addScope(storeNo, rq.getScope());
+        redisScopeRepository.addScope(customerBas.getCstmrNo(),storeNo, rq.getScope());
     }
 
 }

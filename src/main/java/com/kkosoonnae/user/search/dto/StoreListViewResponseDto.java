@@ -1,7 +1,7 @@
 package com.kkosoonnae.user.search.dto;
 
 import com.kkosoonnae.jpa.entity.Store;
-import com.kkosoonnae.user.store.dto.StoreImsDto;
+import com.kkosoonnae.user.store.dto.StoreImgDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import java.util.List;
@@ -20,7 +20,7 @@ public class StoreListViewResponseDto {
     @Schema(description = "매장 주소")
     private String roadAddress;
     @Schema(description = "매장 이미지")
-    private List<StoreImsDto> img;
+    private List<StoreImgDto> img;
     @Schema(description = "매장 관심수")
     private Long totalLikeStore;
     @Schema(description = "총점")
@@ -55,7 +55,7 @@ public class StoreListViewResponseDto {
                 .build();
     }
 
-    public StoreListViewResponseDto(Integer storeNo, String storeName, String roadAddress, List<StoreImsDto> img) {
+    public StoreListViewResponseDto(Integer storeNo, String storeName, String roadAddress, List<StoreImgDto> img) {
         this.storeNo = storeNo;
         this.storeName = storeName;
         this.roadAddress = roadAddress;

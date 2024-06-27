@@ -5,18 +5,14 @@ import lombok.*;
 import java.util.List;
 
 @Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class StoreImgDto {
-    private Integer storeImgNo;
+    private String img;
 
-    private Integer storeNo;
-
-    private List<String> img;
-
-
+    public StoreImgDto(String img) {
+        this.img = img;
     }
+}
 
 

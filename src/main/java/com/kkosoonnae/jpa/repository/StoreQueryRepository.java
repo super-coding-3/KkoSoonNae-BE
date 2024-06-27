@@ -3,15 +3,13 @@ package com.kkosoonnae.jpa.repository;
 import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.user.search.dto.MainStoreListViewResponseDto;
 import com.kkosoonnae.user.search.dto.StoreListViewResponseDto;
+import com.kkosoonnae.user.store.dto.QStoreReviewsResponseDto;
+import com.kkosoonnae.user.store.dto.StoreImgDto;
+import com.kkosoonnae.user.store.dto.StoreReviewsResponseDto;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.QueryResults;
-import com.querydsl.core.Tuple;
-import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.JPAExpressions;
-import com.querydsl.jpa.JPQLQuery;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityManager;
@@ -21,9 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.hibernate.query.sqm.tree.SqmNode.log;
 
 @RequiredArgsConstructor
 @Repository
@@ -53,43 +49,57 @@ public class StoreQueryRepository {
 
     }
 
-    public List<StoreListViewResponseDto> findStoreListQuery(String nameKeyword, String addressKeyword) {
+    public List<StoreListViewResponseDto> findStoreListQuery(String nameAddressKeyword) {
         QStore store = QStore.store;
         QStoreImg storeImg = QStoreImg.storeImg;
 
         BooleanBuilder whereClause = new BooleanBuilder();
 
-        if (!StringUtils.isEmpty(nameKeyword)) {
-            whereClause.and(store.storeName.contains(nameKeyword));
+        if (!StringUtils.isEmpty(nameAddressKeyword)) {
+            whereClause.and(store.storeName.contains(nameAddressKeyword)
+                    .or(whereClause.and(store.roadAddress.contains(nameAddressKeyword))));
         }
-        if (!StringUtils.isEmpty(addressKeyword)) {
-            whereClause.and(store.roadAddress.contains(addressKeyword));
-        }
+
         List<StoreListViewResponseDto> storeList = queryFactory
-                .select(Projections.constructor(StoreListViewResponseDto.class,
-                        store.storeNo,
-                        store.storeName,
-                        store.roadAddress,
-                        Projections.list(storeImg.img)
-
-
-
-                        ))
-                .from(store)
+                .selectFrom(store)
                 .leftJoin(storeImg).on(store.storeNo.eq(storeImg.store.storeNo))
                 .where(whereClause)
-                //.groupBy(store.storeNo,store.storeName,store.roadAddress)
-                .fetch()
-                .stream()
-                .map(tuple -> new StoreListViewResponseDto(
-                        tuple.getStoreNo(),
-                        tuple.getStoreName(),
-                        tuple.getRoadAddress(),
-                        tuple.getImg()
-                ))
-                .collect(Collectors.toList());
+                .transform(GroupBy.groupBy(store.storeNo)
+                        .list(Projections.constructor(StoreListViewResponseDto.class,
+                                store.storeNo, store.storeName, store.roadAddress,
+                                GroupBy.list(Projections.constructor(StoreImgDto.class, storeImg.img)))));
 
         return storeList;
+
+    }
+
+    public List<StoreReviewsResponseDto> reviewListQuery(Integer storeNo) {
+        QStore store = QStore.store;
+        QReview review = QReview.review;
+        QCustomerBas customerBas = QCustomerBas.customerBas;
+        QCustomerDtl customerDtl = QCustomerDtl.customerDtl;
+        QPet pet = QPet.pet;
+
+        return queryFactory
+                .select(new QStoreReviewsResponseDto(
+                        store.storeNo,
+                        store.storeName,
+                        review.reviewNo,
+                        review.cstmrNo.cstmrNo,
+                        review.content,
+                        review.reviewDt,
+                        review.scope,
+                        customerDtl.nickName,
+                        pet.img,
+                        pet.mainPet))
+                .from(store)
+                .leftJoin(review).on(store.storeNo.eq(review.store.storeNo))
+                .leftJoin(customerBas).on(review.cstmrNo.cstmrNo.eq(customerBas.cstmrNo))
+                .leftJoin(customerDtl).on(customerBas.cstmrNo.eq(customerDtl.cstmrNo))
+                .leftJoin(pet).on(customerDtl.cstmrNo.eq(pet.customerBas.cstmrNo)
+                        .and(pet.mainPet.eq("Y")))
+                .where(store.storeNo.eq(storeNo))
+                .fetch();
     }
 }
 
