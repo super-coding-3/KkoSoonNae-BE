@@ -1,5 +1,6 @@
 package com.kkosoonnae.president.info.dto;
 
+import com.kkosoonnae.user.customer.dto.TermDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,4 +38,6 @@ public class SignUpDto {
 
     @Schema(description = "닉네임")
     private String nickName;
+
+    private TermDto[] terms;
 }

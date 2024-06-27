@@ -1,6 +1,5 @@
 package com.kkosoonnae.common.exception;
 
-import lombok.Builder;
 import org.springframework.http.HttpStatus;
 
 public enum ErrorCode {
@@ -17,7 +16,10 @@ public enum ErrorCode {
     LIKE_STORE_NOT_FOUND("관심매장을 찾을 수 없습니다",HttpStatus.NOT_FOUND),
 
     DUPLICATE_LIKE_STORE("관심매장이 중복입니다.",HttpStatus.BAD_REQUEST),
-    //
+
+    DUPLICATE_LOGIN("중복된 아이디 입니다.",HttpStatus.CONFLICT),
+
+    DUPLICATE_NICKNAME("중복된 닉네임 입니다.",HttpStatus.CONFLICT),
     REVIEW_NOT_FOUND("리뷰를 찾을 수 없습니다." ,HttpStatus.NOT_FOUND),
     DEFAULT("처리 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
 
