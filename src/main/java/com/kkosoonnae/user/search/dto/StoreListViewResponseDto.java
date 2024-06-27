@@ -1,14 +1,10 @@
 package com.kkosoonnae.user.search.dto;
 
 import com.kkosoonnae.jpa.entity.Store;
-import com.kkosoonnae.jpa.entity.StoreImg;
+import com.kkosoonnae.user.store.dto.StoreImsDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -24,21 +20,22 @@ public class StoreListViewResponseDto {
     @Schema(description = "매장 주소")
     private String roadAddress;
     @Schema(description = "매장 이미지")
-    private List<String> img;
+    private List<StoreImsDto> img;
     @Schema(description = "매장 관심수")
     private Long totalLikeStore;
     @Schema(description = "총점")
     private Double averageScope;
 
-    public StoreListViewResponseDto(Store store, double averageScope) {
-        this.storeNo =store.getStoreNo();
-        this.storeName =store.getStoreName();
-        this.roadAddress =store.getRoadAddress();
-        this.img =store.getStoreImg()
-                .stream()
-                .map(StoreImg::getImg).collect(Collectors.toList());
-        this.averageScope = averageScope;
-    }
+    //주석된 부분 나중에 완전히 로직바뀌면 삭제할게요
+//    public StoreListViewResponseDto(Store store, double averageScope) {
+//        this.storeNo =store.getStoreNo();
+//        this.storeName =store.getStoreName();
+//        this.roadAddress =store.getRoadAddress();
+//        this.img =store.getStoreImg()
+//                .stream()
+//                .map(StoreImg::getImg).collect(Collectors.toList());
+//        this.averageScope = averageScope;
+//    }
 
     public StoreListViewResponseDto StoreListToDto(Store store) {
         return StoreListViewResponseDto.builder()
@@ -52,13 +49,13 @@ public class StoreListViewResponseDto {
                 .storeNo(this.storeNo)
                 .storeName(this.storeName)
                 .roadAddress(this.roadAddress)
-                .img(this.img != null ? this.img : new ArrayList<>())
+                .img(img)
                 .averageScope(averageScope)
                 .totalLikeStore(totalLikeStore)
                 .build();
     }
 
-    public StoreListViewResponseDto(Integer storeNo, String storeName, String roadAddress, List<String> img) {
+    public StoreListViewResponseDto(Integer storeNo, String storeName, String roadAddress, List<StoreImsDto> img) {
         this.storeNo = storeNo;
         this.storeName = storeName;
         this.roadAddress = roadAddress;

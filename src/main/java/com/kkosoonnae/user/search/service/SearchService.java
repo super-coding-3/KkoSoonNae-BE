@@ -45,18 +45,18 @@ public class SearchService {
     private final StoreQueryRepository storeQueryRepository;
 
     public List<StoreListViewResponseDto> findByStores(String nameAddressKeyword) {
-            List<Store> stores;
         try {
-           stores= storeRepository.findListStores(nameAddressKeyword);
+           List<StoreListViewResponseDto> stores= storeQueryRepository.findStoreListQuery(nameAddressKeyword);
             if (stores.isEmpty()) {
                 throw new CustomException(ErrorCode.STORE_NOT_FOUND);
             }
             return stores.stream()
                     .map(storeList -> {
-                        double averageScope = getAverageReviewScore(storeList.getStoreNo());
-                        log.info("Retrieved from Redis - storeNo: {}, averageScope: {}",
-                                storeList.getStoreNo(), averageScope);
-                        return new StoreListViewResponseDto(storeList,averageScope);
+                        double averageScope = redisScopeRepository.getAverageScope(storeList.getStoreNo());
+                        Long likeStore = redisLikeStoreRepository.getTotalLikeStoreCount(storeList.getStoreNo());
+                        log.info("Retrieved from Redis - storeNo: {}, averageScope: {},likeStore: {}",
+                                storeList.getStoreNo(),averageScope,likeStore);
+                        return  storeList.ListToDto(averageScope,likeStore);
                     })
                     .collect(Collectors.toList());
         } catch (DataAccessException dae) {
@@ -67,7 +67,7 @@ public class SearchService {
 
     public List<MainStoreListViewResponseDto> findByMainStores(String addressKeyword, Pageable pageable) {
         try {
-            List<MainStoresListviewProjection> mainStoreResponses = storeRepository.findMainStores(addressKeyword,pageable);
+            List<MainStoreListViewResponseDto> mainStoreResponses = storeQueryRepository.listViewResponseDto(addressKeyword,pageable);
             if (mainStoreResponses.isEmpty()) {
                 throw new CustomException(ErrorCode.STORE_NOT_FOUND);
             }
@@ -75,10 +75,11 @@ public class SearchService {
 
             return mainStoreResponses.stream()
                     .map(mainStores -> {
-                        double averageScope = getAverageReviewScore(mainStores.storeNo());
-                        log.info("Retrieved from Redis - storeNo: {}, averageScope: {}",
-                                mainStores.storeNo(), averageScope);
-                       return mainStores.MainStoreToDto(averageScope);
+                        double averageScope = redisScopeRepository.getAverageScope(mainStores.getStoreNo());
+                        Long totalLike = redisLikeStoreRepository.getTotalLikeStoreCount(mainStores.getStoreNo());
+                        log.info("Retrieved from Redis - storeNo: {}, averageScope: {}, totalLike: {}",
+                                mainStores.getStoreNo(),averageScope,totalLike);
+                       return mainStores.mainStoreToDto(totalLike,averageScope);
                     })
                     .collect(Collectors.toList());
         } catch (DataAccessException dae) {

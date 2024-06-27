@@ -13,14 +13,13 @@ public record StoreListViewProjection(
 
         // ... (목록 조회 때 보여 줄 필드만 작성)
 ) {
-    public StoreListViewResponseDto toDto(List<String> img,Double averageScope) {
-        return StoreListViewResponseDto.builder()
-                .storeNo(this.storeNo)
-                .storeName(this.storeName)
-                .roadAddress(this.roadAddress)
-                .img(img)
-                .averageScope(averageScope)
-                .build();
-    }
+//    public StoreListViewResponseDto toDto(List<String> img,Double averageScope) {
+//        return StoreListViewResponseDto.builder()
+//                .storeNo(this.storeNo)
+//                .storeName(this.storeName)
+//                .roadAddress(this.roadAddress)
+//                .img(img)
+//                .averageScope(averageScope)
+//                .build();
 }
 

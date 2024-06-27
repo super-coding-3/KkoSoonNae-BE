@@ -2,6 +2,8 @@ package com.kkosoonnae.user.store.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -12,7 +14,9 @@ public class StoreImgDto {
 
     private Integer storeNo;
 
-    private String img;
+    private List<String> img;
+
 
     }
+
 
