@@ -149,7 +149,7 @@ public class CustomerService {
 
         // LoginRsDto 생성 및 설정
         LoginRsDto loginRsDto = new LoginRsDto();
-        loginRsDto.setCustmrNo(customerBas.getCstmrNo());
+        loginRsDto.setCstmrNo(customerBas.getCstmrNo());
         loginRsDto.setLoginId(customerBas.getLoginId());
         loginRsDto.setNickName(customerDtl.getNickName());
         loginRsDto.setToken(prefixedToken);
