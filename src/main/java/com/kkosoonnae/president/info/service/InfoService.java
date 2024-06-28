@@ -153,9 +153,19 @@ public class InfoService {
         if(customerBas.isEmpty()){
             throw new CustomException(ErrorCode.USER_NOT_LOGIN);
         }
+        CustomerBas bas = customerBas.get();
+        bas.updateEmail(rq);
+        bas.getCustomerDtl().updateInfo(rq);
+
+        // 반환할 InfoUpdateRs 생성
+        InfoUpdateRs rs = new InfoUpdateRs();
+        rs.setLoginId(bas.getLoginId()); // 기존 로그인 아이디 유지
+        rs.setName(rq.getName()); // 닉네임을 설정
+        rs.setEmail(rq.getEmail());
+        rs.setPhone(rq.getPhone());
 
 
-        return null;
+        return rs;
     }
 
 
