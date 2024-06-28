@@ -12,10 +12,8 @@ import com.kkosoonnae.jpa.entity.TermsAgreeTxn;
 import com.kkosoonnae.jpa.repository.CustomerBasRepository;
 import com.kkosoonnae.jpa.repository.CustomerDtlRepository;
 import com.kkosoonnae.jpa.repository.TermsAgreeTxnRepository;
-import com.kkosoonnae.president.info.dto.LoginRq;
-import com.kkosoonnae.president.info.dto.LoginRs;
-import com.kkosoonnae.president.info.dto.SignUpDto;
-import com.kkosoonnae.president.info.dto.TermRq;
+import com.kkosoonnae.president.info.dto.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * packageName    : com.kkosoonnae.president.info.service
@@ -145,5 +144,46 @@ public class InfoService {
         loginRs.setToken(prefixedToken);
 
         return loginRs;
+    }
+
+    @Transactional
+    public InfoUpdateRs updateInfo(Integer cstmrNo,InfoUpdateRq rq){
+        Optional<CustomerBas> customerBas = customerBasRepository.findById(cstmrNo);
+
+        if(customerBas.isEmpty()){
+            throw new CustomException(ErrorCode.USER_NOT_LOGIN);
+        }
+        CustomerBas existingBas = customerBas.get();
+        CustomerBas bas = this.updateCustomerBas(existingBas,rq);
+
+        CustomerDtl dtl = this.updateCustomerDtl(bas,rq);
+
+        InfoUpdateRs rs = new InfoUpdateRs();
+        rs.setLoginId(customerBas.get().getLoginId());
+        rs.setName(dtl.getNickName());
+        rs.setEmail(bas.getEmail());
+        rs.setPhone(dtl.getPhone());
+
+        return rs;
+    }
+
+    private CustomerBas updateCustomerBas(CustomerBas bas,InfoUpdateRq rq){
+        CustomerBas customerBas = CustomerBas.builder()
+                .loginId(bas.getLoginId())
+                .password(bas.getPassword())
+                .email(rq.getEmail())
+                .createDt(bas.getCreateDt())
+                .cstmrDivCd(bas.getCstmrDivCd())
+                .build();
+        return customerBasRepository.save(customerBas);
+    }
+
+    private CustomerDtl updateCustomerDtl(CustomerBas bas,InfoUpdateRq rq){
+        CustomerDtl customerDtl = CustomerDtl.builder()
+                .customerBas(bas)
+                .nickName(rq.getName())
+                .phone(rq.getPhone())
+                .build();
+        return customerDtlRepository.save(customerDtl);
     }
 }
