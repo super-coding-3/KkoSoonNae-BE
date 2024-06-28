@@ -1,7 +1,5 @@
 package com.kkosoonnae.president.info.controller;
 
-import com.kkosoonnae.common.exception.CustomException;
-import com.kkosoonnae.common.exception.ErrorCode;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.config.jwt.JwtProperties;
 import com.kkosoonnae.president.info.dto.*;
@@ -15,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -87,11 +84,21 @@ public class InfoController {
         }
     }
 
-    @PutMapping("/update")
+    @PutMapping("/my-page/update")
     @Operation(summary = "사장 기본 정보 수정")
     public ResponseEntity<InfoUpdateRs> update(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody InfoUpdateRq rq){
         Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
         InfoUpdateRs rs = infoService.updateInfo(cstmrNo,rq);
         return ResponseEntity.ok(rs);
+    }
+
+    @PostMapping("/my-page/updatepas")
+    @Operation(summary = "사장 비밀번호 수정")
+    public ResponseEntity<?> updatePas(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody PwRq rq){
+        Map<String,String> result = new HashMap<>();
+        Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+        infoService.updatePas(cstmrNo,rq);
+        result.put("message","비밀번호 변경에 성공하였습니다.");
+        return ResponseEntity.ok(result);
     }
 }

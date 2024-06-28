@@ -153,37 +153,30 @@ public class InfoService {
         if(customerBas.isEmpty()){
             throw new CustomException(ErrorCode.USER_NOT_LOGIN);
         }
-        CustomerBas existingBas = customerBas.get();
-        CustomerBas bas = this.updateCustomerBas(existingBas,rq);
 
-        CustomerDtl dtl = this.updateCustomerDtl(bas,rq);
 
-        InfoUpdateRs rs = new InfoUpdateRs();
-        rs.setLoginId(customerBas.get().getLoginId());
-        rs.setName(dtl.getNickName());
-        rs.setEmail(bas.getEmail());
-        rs.setPhone(dtl.getPhone());
-
-        return rs;
+        return null;
     }
 
-    private CustomerBas updateCustomerBas(CustomerBas bas,InfoUpdateRq rq){
-        CustomerBas customerBas = CustomerBas.builder()
-                .loginId(bas.getLoginId())
-                .password(bas.getPassword())
-                .email(rq.getEmail())
-                .createDt(bas.getCreateDt())
-                .cstmrDivCd(bas.getCstmrDivCd())
-                .build();
-        return customerBasRepository.save(customerBas);
-    }
 
-    private CustomerDtl updateCustomerDtl(CustomerBas bas,InfoUpdateRq rq){
-        CustomerDtl customerDtl = CustomerDtl.builder()
-                .customerBas(bas)
-                .nickName(rq.getName())
-                .phone(rq.getPhone())
-                .build();
-        return customerDtlRepository.save(customerDtl);
+    public void updatePas(Integer cstmrNo,PwRq rq){
+
+        // 1. DB의 유저 정보 조회
+        CustomerBas bas = customerBasRepository.findById(cstmrNo)
+                .orElseThrow(()-> new IllegalArgumentException("회원 정보를 찾을 수 없습니다."));
+
+        // 2. 새로운 비밀번호 검증
+        if(!rq.getNewPassword().equals(rq.getCheckPas())){
+            throw new CustomException(ErrorCode.NOT_MATCH_PASSWORD);
+        }
+
+        // 3. 새로운 비밀번호 암호화
+        String encodeNewPassword = passwordEncoder.encode(rq.getNewPassword());;
+
+        // 4. 엔티티에 암호화된 비밀번호 설정
+        bas.updatePassword(encodeNewPassword);
+
+        // 5. 변경 정보 DB 저장
+        customerBasRepository.save(bas);
     }
 }
