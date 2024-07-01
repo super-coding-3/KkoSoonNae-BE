@@ -1,16 +1,15 @@
 package com.kkosoonnae.president.reviewmanage.controller;
 
+import com.kkosoonnae.president.reviewmanage.dto.ReviewManageRs;
 import com.kkosoonnae.president.reviewmanage.service.ReviewManageService;
 import com.kkosoonnae.user.review.dto.ReviewResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -33,10 +32,17 @@ public class ReviewManageController {
 
     private final ReviewManageService reviewManageService;
 
-    @Operation(summary = "리뷰 목록 조회")
-    @GetMapping("/list")
-    public List<ReviewResponseDto> getReviewList(@RequestParam(value = "id", required = false) Integer id, @RequestParam(value = "cstmrNo", required = false) Integer cstmrNo) {
-        return ReviewManageService.getReviewList(id, cstmrNo);
+    @Operation(summary = "리뷰 목록 상점 일련번호로 조회")
+    @GetMapping("/customer/{cstmrNo}")
+    public List<ReviewResponseDto> getReviewsByCustomer(@PathVariable Integer cstmrNo,
+                                                         @RequestParam LocalDateTime startDate,
+                                                         @RequestParam LocalDateTime endDate) {
+        return reviewManageService.getReviewsByCustomerAndDate(cstmrNo, startDate, endDate);
     }
 
+    @Operation(summary = "리뷰 목록 일련번호로 조회")
+    @GetMapping("/{reviewNo}")
+    public ReviewManageRs getReviewDetail(@PathVariable Integer reviewNo) {
+        return reviewManageService.getReviewDetail(reviewNo);
+    }
 }
