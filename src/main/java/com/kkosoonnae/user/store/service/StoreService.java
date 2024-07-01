@@ -6,7 +6,6 @@ import com.kkosoonnae.common.util.RandomStyleTypeUtil;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.jpa.entity.*;
 import com.kkosoonnae.jpa.projection.StoreDetailViewProjection;
-import com.kkosoonnae.jpa.projection.StoreReviewsViewProjection;
 import com.kkosoonnae.jpa.repository.*;
 import com.kkosoonnae.user.pet.service.PetService;
 import com.kkosoonnae.user.review.service.ReviewService;
@@ -52,6 +51,12 @@ public class StoreService {
     private final StoreImgRepository storeImgRepository;
 
     private final PetService petService;
+
+    private final RedisLikeStoreRepository redisLikeStoreRepository;
+
+    private final StoreQueryRepository storeQueryRepository;
+
+    private final RedisScopeRepository redisScopeRepository;
 
 
     //매장상세조회
@@ -121,6 +126,9 @@ public class StoreService {
                 .createDt(LocalDateTime.now())
                 .build();
         LikeStore saveLikeStore = likeStoreRepository.save(likeStore);
+
+        redisLikeStoreRepository.LikeStoreCount(cstmrNo,storeNo);
+
         return LikeStoreDto.mapToListStoreDto(saveLikeStore);
     }
 
@@ -136,32 +144,11 @@ public class StoreService {
             throw new CustomException(ErrorCode.LIKE_STORE_NOT_FOUND);
 
         likeStoreRepository.deleteLikeStoreByCustomerBas_CstmrNoAndStore_StoreNo(cstmrNo,storeNo);
+
+        redisLikeStoreRepository.RedisDeleteLikeStore(cstmrNo, storeNo);
     }
 
-    //리뷰작성
-//    public ReviewResponseDto createReview(ReviewDto reviewDto) {
-//        Review review = new Review(
-//                reviewDto.getReviewNo(),
-//                reviewDto.getStore(),
-//                reviewDto.getCstmrNo(),
-//                reviewDto.getImg(),
-//                reviewDto.getContent(),
-//                reviewDto.getReviewDt(),
-//                reviewDto.getScope()
-//        );
-//
-//        Review savedReview = reviewRepository.save(review);
-//
-//        return new ReviewResponseDto(
-//                savedReview.getReviewNo(),
-//                savedReview.getStore(),
-//                savedReview.getCstmrNo(),
-//                savedReview.getImg(),
-//                savedReview.getContent(),
-//                savedReview.getReviewDt(),
-//                savedReview.getScope()
-//        );
-//    }
+
 
     @Transactional
     public StoreDto createStore(InputStoreInformation inputStoreInformation) {
@@ -239,22 +226,20 @@ public class StoreService {
         if (storeNo == null) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
-
-        List<StoreReviewsViewProjection> reviewsViewProjections;
+        List<StoreReviewsResponseDto> reviewResponse;
         try {
-            reviewsViewProjections= storeRepository.findByStoreReviews(storeNo);
+            reviewResponse = storeQueryRepository.reviewListQuery(storeNo);
         }catch (DataAccessException dae) {
             throw new CustomException(ErrorCode.DATABASE_ERROR);
         }
-        if (reviewsViewProjections.isEmpty()) {
+        if (reviewResponse.isEmpty()) {
                 throw new CustomException(ErrorCode.REVIEW_NOT_FOUND);
 
         }
-
-        double averageScope = reviewService.getAverageReviewScore(storeNo);
-
-        return reviewsViewProjections.stream()
-                .map(viewProjection -> viewProjection.toDto(averageScope))
+        double averageScope = redisLikeStoreRepository.getTotalLikeStoreCount(storeNo);
+        Long likeStore = redisLikeStoreRepository.getTotalLikeStoreCount(storeNo);
+        return reviewResponse.stream()
+                .map(reviewDto -> reviewDto.ReviewToDto(averageScope,likeStore))
                 .collect(Collectors.toList());
     }
 }

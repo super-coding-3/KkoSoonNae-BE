@@ -5,8 +5,7 @@ import com.kkosoonnae.common.exception.ErrorCode;
 import com.kkosoonnae.jpa.entity.Review;
 import com.kkosoonnae.jpa.entity.Store;
 import com.kkosoonnae.jpa.projection.MainStoresListviewProjection;
-import com.kkosoonnae.jpa.repository.ReviewRepository;
-import com.kkosoonnae.jpa.repository.StoreRepository;
+import com.kkosoonnae.jpa.repository.*;
 import com.kkosoonnae.user.search.dto.MainStoreListViewResponseDto;
 import com.kkosoonnae.user.search.dto.StoreListViewResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +14,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.kkosoonnae.jpa.entity.QStore.store;
 
 
 /**
@@ -39,39 +40,50 @@ public class SearchService {
 
     private final StoreRepository storeRepository;
     private final ReviewRepository reviewRepository;
+    private final RedisLikeStoreRepository redisLikeStoreRepository;
+    private final RedisScopeRepository redisScopeRepository;
+    private final StoreQueryRepository storeQueryRepository;
 
     public List<StoreListViewResponseDto> findByStores(String nameAddressKeyword) {
-        List<Store> stores;
         try {
-            stores = storeRepository.findListStores(nameAddressKeyword);
+           List<StoreListViewResponseDto> stores= storeQueryRepository.findStoreListQuery(nameAddressKeyword);
             if (stores.isEmpty()) {
                 throw new CustomException(ErrorCode.STORE_NOT_FOUND);
             }
             return stores.stream()
-                    .map(store -> {
-                        double averageScope = getAverageReviewScore(store.getStoreNo());
-                        return new StoreListViewResponseDto(store, averageScope);
+                    .map(storeList -> {
+                        double averageScope = redisScopeRepository.getAverageScope(storeList.getStoreNo());
+                        Long likeStore = redisLikeStoreRepository.getTotalLikeStoreCount(storeList.getStoreNo());
+                        log.info("Retrieved from Redis - storeNo: {}, averageScope: {},likeStore: {}",
+                                storeList.getStoreNo(),averageScope,likeStore);
+                        return  storeList.ListToDto(averageScope,likeStore);
                     })
                     .collect(Collectors.toList());
         } catch (DataAccessException dae) {
+            log.error("Database access error", dae);
             throw new CustomException(ErrorCode.DATABASE_ERROR);
         }
     }
 
     public List<MainStoreListViewResponseDto> findByMainStores(String addressKeyword, Pageable pageable) {
         try {
-            List<MainStoresListviewProjection> projections = storeRepository.findMainStores(addressKeyword, pageable);
-            if (projections.isEmpty()) {
+            List<MainStoreListViewResponseDto> mainStoreResponses = storeQueryRepository.listViewResponseDto(addressKeyword,pageable);
+            if (mainStoreResponses.isEmpty()) {
                 throw new CustomException(ErrorCode.STORE_NOT_FOUND);
             }
-            Collections.shuffle(projections);
-            return projections.stream()
-                    .map(projection -> {
-                        double averageScope = getAverageReviewScore(projection.storeNo());
-                        return projection.MainStoreToDto(averageScope);
+            Collections.shuffle(mainStoreResponses);
+
+            return mainStoreResponses.stream()
+                    .map(mainStores -> {
+                        double averageScope = redisScopeRepository.getAverageScope(mainStores.getStoreNo());
+                        Long totalLike = redisLikeStoreRepository.getTotalLikeStoreCount(mainStores.getStoreNo());
+                        log.info("Retrieved from Redis - storeNo: {}, averageScope: {}, totalLike: {}",
+                                mainStores.getStoreNo(),averageScope,totalLike);
+                       return mainStores.mainStoreToDto(totalLike,averageScope);
                     })
                     .collect(Collectors.toList());
         } catch (DataAccessException dae) {
+            log.error("Data access exception occurred: " + dae.getMessage(), dae);
             throw new CustomException(ErrorCode.DATABASE_ERROR);
         }
     }

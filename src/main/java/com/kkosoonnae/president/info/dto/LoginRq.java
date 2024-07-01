@@ -1,6 +1,5 @@
 package com.kkosoonnae.president.info.dto;
 
-import com.kkosoonnae.user.customer.dto.TermDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,35 +8,24 @@ import lombok.Setter;
 
 /**
  * packageName    : com.kkosoonnae.president.info.dto
- * fileName       : SignUpDto
+ * fileName       : LoginRq
  * author         : hagjoon
- * date           : 2024-06-20
+ * date           : 2024-06-27
  * description    :
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2024-06-20        hagjoon       최초 생성
+ * 2024-06-27        hagjoon       최초 생성
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignUpDto {
+public class LoginRq {
 
     @Schema(description = "로그인 ID")
     private String loginId;
 
-    @Schema(description = "비밀번호")
+    @Schema(description = "비밀버호")
     private String password;
-
-    @Schema(description = "이메일")
-    private String email;
-
-    @Schema(description = "핸드폰 번호")
-    private String phone;
-
-    @Schema(description = "닉네임")
-    private String nickName;
-
-    private TermRq[] terms;
 }

@@ -1,5 +1,7 @@
 package com.kkosoonnae.user.customer.service;
 
+import com.kkosoonnae.common.exception.CustomException;
+import com.kkosoonnae.common.exception.ErrorCode;
 import com.kkosoonnae.config.jwt.JwtProperties;
 import com.kkosoonnae.config.jwt.JwtTokenProvider;
 import com.kkosoonnae.jpa.entity.CustomerBas;
@@ -7,17 +9,15 @@ import com.kkosoonnae.jpa.entity.CustomerDtl;
 import com.kkosoonnae.jpa.entity.RoleType;
 import com.kkosoonnae.config.auth.PrincipalDetails;
 //import com.kkosoonnae.config.jwt.JwtTokenProvider;
+import com.kkosoonnae.jpa.entity.TermsAgreeTxn;
 import com.kkosoonnae.jpa.repository.CustomerBasRepository;
 import com.kkosoonnae.jpa.repository.CustomerDtlRepository;
-import com.kkosoonnae.user.customer.dto.InfoDto;
-import com.kkosoonnae.user.customer.dto.LoginDto;
-import com.kkosoonnae.user.customer.dto.LoginRsDto;
-import com.kkosoonnae.user.customer.dto.SignUpDto;
+import com.kkosoonnae.jpa.repository.TermsAgreeTxnRepository;
+import com.kkosoonnae.user.customer.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,6 +48,8 @@ public class CustomerService {
 
     private final AuthenticationManager authenticationManager;
 
+    private final TermsAgreeTxnRepository termsAgreeTxnRepository;
+
     private final JwtTokenProvider jwtTokenProvider;
 
     private final UserDetailsService userDetailsService;
@@ -56,32 +58,62 @@ public class CustomerService {
 
 
     public boolean signUp(SignUpDto signUpDto) {
-        if (existsLoginId(signUpDto.getLoginId())) {
-            throw new IllegalArgumentException("중복된 아이디 입니다.");
-        } if (existsNickName(signUpDto.getNickName())) {
-            throw new IllegalArgumentException("중복된 닉네임 입니다.");
+        // 1. 아이디, 닉네임 중복 확인
+        if(customerBasRepository.existsByLoginId(signUpDto.getLoginId())){
+            throw new CustomException(ErrorCode.DUPLICATE_LOGIN);
+        } if (customerDtlRepository.existsByNickName(signUpDto.getNickName())) {
+            throw new CustomException(ErrorCode.DUPLICATE_NICKNAME);
         }
-            CustomerBas customerBas = CustomerBas.builder()
-                    .loginId(signUpDto.getLoginId())
-                    .email(signUpDto.getEmail())
-                    .password(passwordEncoder.encode(signUpDto.getPassword()))
-                    .cstmrDivCd(RoleType.ROLE_USER)
-                    .createDt(LocalDateTime.now())
-                    .build();
 
-            customerBasRepository.save(customerBas);
+        // 2. 기본 정보 저장
+        CustomerBas bas = this.saveCustomerBas(signUpDto);
 
-            CustomerDtl customerDtl = CustomerDtl.builder()
-                    .customerBas(customerBas)
-                    .nickName(signUpDto.getNickName())
-                    .phone(signUpDto.getPhone())
-                    .zipCode(signUpDto.getZipCode())
-                    .address(signUpDto.getAddress())
-                    .addressDtl(signUpDto.getAddressDtl())
-                    .build();
+        // 3. 상세 정보 저장
+        this.saveCustomerDtl(signUpDto,bas);
 
-            customerDtlRepository.save(customerDtl);
+        // 4. 약관 동의 정보 저장
+        if(signUpDto.getTerms() != null){
+            for(TermDto agree : signUpDto.getTerms()){
+                this.saveTermsAgreeTxn(agree,bas);
+            }
+        }
+
             return true;
+    }
+
+    private CustomerBas saveCustomerBas(SignUpDto rq){
+        CustomerBas customerBas = CustomerBas.builder()
+                .loginId(rq.getLoginId())
+                .email(rq.getEmail())
+                .password(passwordEncoder.encode(rq.getPassword()))
+                .cstmrDivCd(RoleType.USER)
+                .createDt(LocalDateTime.now())
+                .build();
+
+        return customerBasRepository.save(customerBas);
+    }
+
+    private CustomerDtl saveCustomerDtl(SignUpDto rq, CustomerBas bas){
+        CustomerDtl customerDtl = CustomerDtl.builder()
+                .customerBas(bas)
+                .nickName(rq.getNickName())
+                .phone(rq.getPhone())
+                .zipCode(rq.getZipCode())
+                .address(rq.getAddress())
+                .addressDtl(rq.getAddressDtl())
+                .build();
+
+       return customerDtlRepository.save(customerDtl);
+    }
+
+    private TermsAgreeTxn saveTermsAgreeTxn(TermDto agree, CustomerBas bas){
+        TermsAgreeTxn termsAgreeTxn = TermsAgreeTxn.builder()
+                .cstmrNo(bas.getCstmrNo())
+                .termNo(agree.getTermNo())
+                .agreeYn(agree.getAgreeYn())
+                .agreeDt(LocalDateTime.now())
+                .build();
+        return termsAgreeTxnRepository.save(termsAgreeTxn);
     }
 
     public boolean existsLoginId(String loginId){
@@ -117,7 +149,7 @@ public class CustomerService {
 
         // LoginRsDto 생성 및 설정
         LoginRsDto loginRsDto = new LoginRsDto();
-        loginRsDto.setCustmrNo(customerBas.getCstmrNo());
+        loginRsDto.setCstmrNo(customerBas.getCstmrNo());
         loginRsDto.setLoginId(customerBas.getLoginId());
         loginRsDto.setNickName(customerDtl.getNickName());
         loginRsDto.setToken(prefixedToken);
@@ -125,12 +157,7 @@ public class CustomerService {
         return loginRsDto;
     }
 
-    public InfoDto getUserProfile(PrincipalDetails principalDetails){
-        //PrincipalDetails를 이용해 로그인한 사용자 기본 정보 조회
-        CustomerBas customerBas = principalDetails.getCustomerBas();
-
-        Integer cstmrNo = customerBas.getCstmrNo();
-
+    public InfoDto getUserProfile(Integer cstmrNo){
         CustomerDtl customerDtl = customerDtlRepository.findByCstmrNo(cstmrNo);
 
         if (customerDtl == null) {

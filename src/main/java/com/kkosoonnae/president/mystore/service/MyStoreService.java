@@ -9,6 +9,7 @@ import com.kkosoonnae.jpa.repository.StoreImgRepository;
 import com.kkosoonnae.jpa.repository.StoreRepository;
 import com.kkosoonnae.president.mystore.dto.AdminStoreImgRequestDto;
 import com.kkosoonnae.president.mystore.dto.AdminStoreRequestDto;
+import com.kkosoonnae.president.mystore.dto.AdminStoreResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
@@ -41,7 +42,7 @@ public class MyStoreService {
     private final S3Uploader s3Uploader;
 
     //어드민 매장 생성
-    public AdminStoreRequestDto createStore(AdminStoreRequestDto adminStoreRequestDto) {
+    public AdminStoreResponseDto createStore(AdminStoreRequestDto adminStoreRequestDto) {
         try {
             Store store = adminStoreRequestDto.toEntity();
             if (storeRepository.existsByStoreName(store.getStoreName())) {
@@ -50,8 +51,9 @@ public class MyStoreService {
             }
             Store saveStore = storeRepository.save(store);
 
-            return adminStoreRequestDto.storeFromDto(saveStore);
+            AdminStoreResponseDto adminStoreResponseDto = new AdminStoreResponseDto();
 
+            return adminStoreResponseDto.storeFromDto(saveStore);
 
 
         } catch (DataAccessException dae) {
@@ -94,7 +96,7 @@ public class MyStoreService {
     }
 
     //어드민 매장정보 수정
-    public AdminStoreRequestDto updateStore(Integer storeNo, AdminStoreRequestDto adminStoreRequestDto) {
+    public AdminStoreResponseDto updateStore(Integer storeNo, AdminStoreRequestDto adminStoreRequestDto) {
         try {
             Store store = storeRepository.findByStoreNo(storeNo);
             if (store == null) {
@@ -105,7 +107,9 @@ public class MyStoreService {
 
             Store updateStore = storeRepository.save(store);
 
-            return adminStoreRequestDto.storeFromDto(updateStore);
+            AdminStoreResponseDto adminStoreResponseDto = new AdminStoreResponseDto();
+
+            return adminStoreResponseDto.storeFromDto(updateStore);
 
         } catch (DataAccessException dae) {
             throw new CustomException(ErrorCode.DATABASE_ERROR);

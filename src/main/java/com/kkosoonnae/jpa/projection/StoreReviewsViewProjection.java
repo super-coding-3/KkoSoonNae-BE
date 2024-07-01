@@ -20,20 +20,20 @@ public record StoreReviewsViewProjection(
         String mainPet
 
 ) {
-    public StoreReviewsResponseDto toDto(Double averageScope) {
-        return StoreReviewsResponseDto.builder()
-                .storeNo(storeNo)
-                .storeName(storeName)
-                .totalLikeStore(totalLikeStore)
-                .reviewNo(reviewNo)
-                .cstmrNo(cstmrNo)
-                .content(content)
-                .reviewDt(reviewDt)
-                .scope(scope)
-                .averageScope(averageScope)
-                .nickName(nickName)
-                .img(img)
-                .mainPet(mainPet)
-                .build();
-    }
+//    public StoreReviewsResponseDto toDto(Double averageScope) {
+//        return StoreReviewsResponseDto.builder()
+//                .storeNo(storeNo)
+//                .storeName(storeName)
+//                .totalLikeStore(totalLikeStore)
+//                .reviewNo(reviewNo)
+//                .cstmrNo(cstmrNo)
+//                .content(content)
+//                .reviewDt(reviewDt)
+//                .scope(scope)
+//                .averageScope(averageScope)
+//                .nickName(nickName)
+//                .img(img)
+//                .mainPet(mainPet)
+//                .build();
 }
+

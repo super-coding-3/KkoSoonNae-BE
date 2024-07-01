@@ -1,12 +1,11 @@
 package com.kkosoonnae.user.search.dto;
 
+
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -19,6 +18,7 @@ public class MainStoreListViewResponseDto {
 
     @Schema(description = "매장 주소")
     private String roadAddress;
+
     @Schema(description = "매장 관심수")
     private Long totalLikeStore;
 
@@ -26,4 +26,19 @@ public class MainStoreListViewResponseDto {
     private Double averageScope;
 
 
+    public MainStoreListViewResponseDto mainStoreToDto(Long totalLikeStore,double averageScope) {
+        return MainStoreListViewResponseDto.builder()
+                .storeNo(this.storeNo)
+                .storeName(this.storeName)
+                .roadAddress(this.roadAddress)
+                .totalLikeStore(totalLikeStore)
+                .averageScope(averageScope)
+                .build();
     }
+
+    public MainStoreListViewResponseDto(Integer storeNo, String storeName, String roadAddress) {
+        this.storeNo = storeNo;
+        this.storeName = storeName;
+        this.roadAddress = roadAddress;
+    }
+}

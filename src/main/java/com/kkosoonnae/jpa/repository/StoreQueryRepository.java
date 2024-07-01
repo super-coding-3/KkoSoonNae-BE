@@ -1,0 +1,109 @@
+package com.kkosoonnae.jpa.repository;
+
+import com.kkosoonnae.jpa.entity.*;
+import com.kkosoonnae.user.search.dto.MainStoreListViewResponseDto;
+import com.kkosoonnae.user.search.dto.StoreListViewResponseDto;
+import com.kkosoonnae.user.store.dto.QStoreReviewsResponseDto;
+import com.kkosoonnae.user.store.dto.StoreImgDto;
+import com.kkosoonnae.user.store.dto.StoreReviewsResponseDto;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.group.GroupBy;
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import io.micrometer.common.util.StringUtils;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+
+@RequiredArgsConstructor
+@Repository
+public class StoreQueryRepository {
+
+    private final JPAQueryFactory queryFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public List<MainStoreListViewResponseDto> listViewResponseDto(String addressKeyword, Pageable pageable) {
+        QStore store = QStore.store;
+
+        BooleanExpression keywordExpression = store.roadAddress.containsIgnoreCase(addressKeyword);
+
+        return queryFactory.select(
+                        Projections.bean(MainStoreListViewResponseDto.class,
+                                store.storeNo.as("storeNo"),
+                                store.storeName.as("storeName"),
+                                store.roadAddress.as("roadAddress")
+
+                        ))
+                .from(store)
+                .where(keywordExpression)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+    }
+
+    public List<StoreListViewResponseDto> findStoreListQuery(String nameAddressKeyword) {
+        QStore store = QStore.store;
+        QStoreImg storeImg = QStoreImg.storeImg;
+
+        BooleanBuilder whereClause = new BooleanBuilder();
+
+        if (!StringUtils.isEmpty(nameAddressKeyword)) {
+            whereClause.and(store.storeName.contains(nameAddressKeyword)
+                    .or(whereClause.and(store.roadAddress.contains(nameAddressKeyword))));
+        }
+
+        List<StoreListViewResponseDto> storeList = queryFactory
+                .selectFrom(store)
+                .leftJoin(storeImg).on(store.storeNo.eq(storeImg.store.storeNo))
+                .where(whereClause)
+                .transform(GroupBy.groupBy(store.storeNo)
+                        .list(Projections.constructor(StoreListViewResponseDto.class,
+                                store.storeNo, store.storeName, store.roadAddress,
+                                GroupBy.list(Projections.constructor(StoreImgDto.class, storeImg.img)))));
+
+        return storeList;
+
+    }
+
+    public List<StoreReviewsResponseDto> reviewListQuery(Integer storeNo) {
+        QStore store = QStore.store;
+        QReview review = QReview.review;
+        QCustomerBas customerBas = QCustomerBas.customerBas;
+        QCustomerDtl customerDtl = QCustomerDtl.customerDtl;
+        QPet pet = QPet.pet;
+
+        return queryFactory
+                .select(new QStoreReviewsResponseDto(
+                        store.storeNo,
+                        store.storeName,
+                        review.reviewNo,
+                        review.cstmrNo.cstmrNo,
+                        review.content,
+                        review.reviewDt,
+                        review.scope,
+                        customerDtl.nickName,
+                        pet.img,
+                        pet.mainPet))
+                .from(store)
+                .leftJoin(review).on(store.storeNo.eq(review.store.storeNo))
+                .leftJoin(customerBas).on(review.cstmrNo.cstmrNo.eq(customerBas.cstmrNo))
+                .leftJoin(customerDtl).on(customerBas.cstmrNo.eq(customerDtl.cstmrNo))
+                .leftJoin(pet).on(customerDtl.cstmrNo.eq(pet.customerBas.cstmrNo)
+                        .and(pet.mainPet.eq("Y")))
+                .where(store.storeNo.eq(storeNo))
+                .fetch();
+    }
+}
+
+
+
+
+

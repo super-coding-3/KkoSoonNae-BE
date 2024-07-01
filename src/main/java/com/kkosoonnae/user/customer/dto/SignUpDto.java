@@ -43,4 +43,6 @@ public class SignUpDto {
 
     @Schema(description = "상세주소")
     private String addressDtl;
+
+    private TermDto[] terms;
 }

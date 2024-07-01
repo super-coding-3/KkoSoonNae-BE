@@ -1,18 +1,26 @@
 package com.kkosoonnae.president.info.controller;
 
+import com.kkosoonnae.config.jwt.JwtProperties;
+import com.kkosoonnae.president.info.dto.LoginRq;
+import com.kkosoonnae.president.info.dto.LoginRs;
 import com.kkosoonnae.president.info.dto.SignUpDto;
 import com.kkosoonnae.president.info.service.InfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * packageName    : com.kkosoonnae.president.info.controller
@@ -46,6 +54,36 @@ public class InfoController {
             }
         }catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(Collections.singletonMap("message", e.getMessage()));
+        }
+    }
+
+    @PostMapping("/login")
+    @Operation(summary = "로그인")
+    public ResponseEntity<Map<String, Object>> logIn(@RequestBody LoginRq login, HttpServletResponse httpServletResponse) {
+        try {
+            // 로그인 시도 및 jwt 토큰 생성
+            LoginRs tokenResponse = infoService.login(login);
+
+            Map<String, Object> data = new HashMap<>();
+            data.put("token", tokenResponse.getToken());
+
+            Map<String, Object> responseBody = new HashMap<>();
+            responseBody.put("data", tokenResponse);
+            responseBody.put("message", "로그인에 성공하였습니다. 토큰을 발급합니다.");
+
+            httpServletResponse.setHeader(JwtProperties.HEADER_STRING, tokenResponse.getToken());
+            log.info("jwt 토큰 : {}", tokenResponse.getToken());
+            log.info("로그인 완료");
+            return ResponseEntity.ok(responseBody);
+
+        } catch (BadCredentialsException e) {
+            Map<String, Object> errorBody = new HashMap<>();
+            errorBody.put("error", "이메일 또는 비밀번호가 올바르지 않습니다.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorBody);
+        } catch (Exception e) {
+            Map<String, Object> errorBody = new HashMap<>();
+            errorBody.put("error", "로그인 처리 중 문제가 발생하였습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorBody);
         }
     }
 }

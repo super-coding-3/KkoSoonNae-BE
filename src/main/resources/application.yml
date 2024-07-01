@@ -1,6 +1,7 @@
 spring:
   profiles:
     active: local #default
+
     group:
       local:
         - jwt
@@ -26,6 +27,13 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+
+
 
 
 
@@ -41,3 +49,4 @@ cloud:
       instance-profile: true
 logging:
   config: classpath:logback-spring.xml
+

@@ -128,7 +128,8 @@ public class CustomerController {
     @GetMapping("/profile")
         public ResponseEntity<InfoDto> getUserProFile(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         try {
-            InfoDto userProfile = service.getUserProfile(principalDetails);
+            Integer cstmrNo = principalDetails.getCustomerBas().getCstmrNo();
+            InfoDto userProfile = service.getUserProfile(cstmrNo);
             log.info("userProFile : {} ", userProfile);
             return ResponseEntity.ok(userProfile);
         } catch (UsernameNotFoundException e) {

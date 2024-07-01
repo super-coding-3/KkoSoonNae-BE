@@ -12,6 +12,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Builder
 public class AdminStoreRequestDto {
+
     private String storeName;
     private String content;
     private String phone;
@@ -35,18 +36,6 @@ public class AdminStoreRequestDto {
                 .build();
 
     }
-    public AdminStoreRequestDto storeFromDto(Store store) {
-        return AdminStoreRequestDto.builder()
-                .storeName(store.getStoreName())
-                .content(store.getContent())
-                .phone(store.getPhone())
-                .lat(store.getLat())
-                .lon(store.getLon())
-                .roadAddress(store.getRoadAddress())
-                .openingTime(store.getOpeningTime())
-                .closingTime(store.getClosingTime())
-                .build();
-    }
     public void updateEntity(Store store) {
         store.setStoreName(this.storeName);
         store.setContent(this.content);
@@ -60,4 +49,6 @@ public class AdminStoreRequestDto {
     }
 
 }
+
+
 

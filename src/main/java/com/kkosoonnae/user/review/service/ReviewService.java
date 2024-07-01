@@ -5,6 +5,7 @@ import com.kkosoonnae.config.auth.PrincipalDetails;
 import com.kkosoonnae.jpa.entity.CustomerBas;
 import com.kkosoonnae.jpa.entity.Review;
 import com.kkosoonnae.jpa.entity.Store;
+import com.kkosoonnae.jpa.repository.RedisScopeRepository;
 import com.kkosoonnae.jpa.repository.ReviewRepository;
 import com.kkosoonnae.jpa.repository.StoreRepository;
 import com.kkosoonnae.user.review.dto.ReviewRqDto;
@@ -20,6 +21,8 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
 
     private final StoreRepository storeRepository;
+
+    private  final RedisScopeRepository redisScopeRepository;
 
     public Double getAverageReviewScore(Integer storeId){
         List<Review> reviews = reviewRepository.findByStoreStoreNo(storeId);
@@ -68,6 +71,8 @@ public class ReviewService {
                 .reviewDt(rq.getCreateDt())
                 .build();
         reviewRepository.save(review);
+
+        redisScopeRepository.addScope(customerBas.getCstmrNo(),storeNo, rq.getScope());
     }
 
 }
