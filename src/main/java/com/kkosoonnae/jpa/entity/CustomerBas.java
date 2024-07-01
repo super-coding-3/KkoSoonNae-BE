@@ -1,5 +1,7 @@
 package com.kkosoonnae.jpa.entity;
 
+import com.kkosoonnae.president.info.dto.InfoUpdateRq;
+import com.kkosoonnae.president.info.dto.PwRq;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -47,5 +49,13 @@ public class CustomerBas {
 
     @OneToOne(mappedBy = "customerBas")
     private CustomerDtl customerDtl;
+
+    public void updatePassword(String encodeNewPassword){
+        this.password = encodeNewPassword;
+    }
+
+    public void updateEmail(InfoUpdateRq rq){
+        this.email = rq.getEmail();
+    }
 
 }
