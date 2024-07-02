@@ -1,5 +1,7 @@
 package com.kkosoonnae.user.reservation.service;
 
+import com.kkosoonnae.common.exception.CustomException;
+import com.kkosoonnae.common.exception.ErrorCode;
 import com.kkosoonnae.common.exception.InvalidValueException;
 import com.kkosoonnae.common.exception.NotFoundException;
 import com.kkosoonnae.config.auth.PrincipalDetails;
@@ -37,122 +39,9 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ReservationService {
 
-    private final CustomerBasRepository customerBasRepository;
-    private final StoreRepository storeRepository;
-    private final ReservationRepository reservationRepository;
-    private final AvailTimeRepository availTimeRepository;
-    private final PetRepository petRepository;
-    private final ReservedPetsRepository reservedPetsRepository;
-    private final StyleRepository styleRepository;
-    private final CustomerAvailRepository customerAvailRepository;
-    private final RedisLockService redisLockService;
     private final ReservationQueryRepository query;
 
-//    @Transactional
-//    public ReservationResponse makeReservation(ReservationRequest reservationRequest) {
-//        String loginId = null;
-//
-//        try {
-//            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            CustomerBas customerBas = principalDetails.getCustomerBas();
-//            loginId = customerBas.getLoginId();
-//        } catch (Exception e) {
-//            throw new AccessDeniedException("로그인이 필요합니다.");
-//        }
-//
-//        Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
-//        CustomerBas cstmrBas = customerBasRepository.findByCstmrNo(cstmrNo);
-//        Integer storeNo = reservationRequest.getStoreNumber();
-//
-//        AvailTime availTime = availTimeRepository.findAvailTimeByStoreNo(storeNo);
-//        Store store = storeRepository.findById(storeNo).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
-//
-//        if (!Objects.equals(store.getStoreName(), reservationRequest.getStoreName())) {
-//            throw new NotFoundException("해당 매장 일련번호의 매장 이름이 아닙니다.");
-//        }
-//
-//        DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("HH:mm");
-//
-//        LocalDate nowD = LocalDate.now();
-//        LocalTime nowT = LocalTime.now();
-//
-//        String nowDateString = nowD.format(formatDate);
-//        String nowTimeString = nowT.format(formatTime);
-//
-//        LocalDate nowDate = LocalDate.parse(nowDateString, formatDate);
-//        LocalTime nowTime = LocalTime.parse(nowTimeString, formatTime);
-//
-//        LocalDate reservationDate;
-//        LocalTime reservationTime;
-//
-//        try {
-//            reservationDate = LocalDate.parse(reservationRequest.getReservationDate(), formatDate);
-//            reservationTime = LocalTime.parse(reservationRequest.getReservationTime(), formatTime);
-//        } catch (Exception e) {
-//            throw new InvalidValueException("요청하신 날짜 또는 시간 형식이 올바르지 않습니다.");
-//        }
-//
-//        if (reservationDate.isBefore(nowDate)) {
-//            throw new InvalidValueException("해당 날짜는 예약이 불가합니다.");
-//        }
-//
-//        if ( reservationDate.isEqual(nowDate) && reservationTime.isBefore(nowTime) ) {
-//            throw new InvalidValueException("해당 시간은 예약이 불가합니다.");
-//        }
-//
-//        int compareOne = nowTime.plusHours(2).compareTo(reservationTime);
-//        int compareTwo = nowTime.compareTo(reservationTime);
-//
-//        if ( reservationDate.isEqual(nowDate) && ((compareOne > 0) && (compareTwo < 0)) ) {
-//            throw new InvalidValueException("2시간 전에는 미리 예약해야 합니다.");
-//        }
-//
-//        Reservation isAvailable = reservationRepository.findByStoreNoAndReservationDateAndReservationTime(storeNo, reservationDate, reservationTime);
-//
-//        if (isAvailable != null) {
-//            throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
-//        }
-//
-//        Style style = styleRepository.findByStoreNoAndStyleName(storeNo, reservationRequest.getCutStyle());
-//
-//        if (style == null) {
-//            throw new NotFoundException("해당 스타일을 찾을 수 없습니다.");
-//        }
-//
-//        Integer price = style.getPrice();
-//
-//        NumberFormat numberFormat = NumberFormat.getInstance(Locale.KOREA);
-//        String formattedPrice = numberFormat.format(price);
-//        String stringPrice = formattedPrice + "원";
-//
-//        Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, reservationRequest.getPetName());
-//
-//        if (pet == null) {
-//            throw new NotFoundException("해당 펫을 찾을 수 없습니다.");
-//        }
-//
-//        Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
-//        reservationRepository.save(reservation);
-//
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-//
-//        LocalDate date = reservation.getReservationDate();
-//
-//        String dayOfWeek = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN);
-//        String fromatterDate = date.format(formatter);
-//        String responseDate = fromatterDate + "(" + dayOfWeek.charAt(0) + ")";
-//
-//        CustomerAvail customerAvail = new CustomerAvail(cstmrBas, reservation, availTime);
-//        customerAvailRepository.save(customerAvail);
-//
-//        ReservedPets reservedPets = new ReservedPets(reservation, pet, availTime);
-//        reservedPetsRepository.save(reservedPets);
-//
-//        return new ReservationResponse(store.getStoreName(), responseDate, reservation, reservationRequest.getCutStyle(), stringPrice, pet, reservation.getReservationNo());
-//    }
-
-    private static final long LOCK_EXPIRE_TIME = 10000L;  // 10 seconds
+    private static final long LOCK_EXPIRE_TIME = 10000L;  // 10초.
 
     @Transactional
     public ReservationResponse makeReservation(ReservationRequest reservationRequest) {
@@ -180,17 +69,14 @@ public class ReservationService {
 
                 Reservation reservation = new Reservation(store, availTime, cstmrBas, reservationRequest);
                 query.saveReservation(reservation);
-//                reservationRepository.save(reservation);
 
                 String responseDate = formatReservationDate(reservation.getReservationDate());
 
                 CustomerAvail customerAvail = new CustomerAvail(cstmrBas, reservation, availTime);
                 query.saveCustomerAvail(customerAvail);
-//                customerAvailRepository.save(customerAvail);
 
                 ReservedPets reservedPets = new ReservedPets(reservation, pet, availTime);
                 query.saveReservedPets(reservedPets);
-//                reservedPetsRepository.save(reservedPets);
 
                 return new ReservationResponse(store.getStoreName(), responseDate, reservation, reservationRequest.getCutStyle(), stringPrice, pet, reservation.getReservationNo());
 //            } finally {
@@ -207,76 +93,66 @@ public class ReservationService {
             CustomerBas customerBas = principalDetails.getCustomerBas();
             return customerBas.getLoginId();
         } catch (Exception e) {
-            throw new AccessDeniedException("로그인이 필요합니다.");
+            throw new CustomException(ErrorCode.USER_NOT_LOGIN);
         }
     }
 
     private CustomerBas getCustomerBas(String loginId) {
-//        Integer cstmrNo = customerBasRepository.findCstmrNoByLoginId(loginId);
-//        return customerBasRepository.findByCstmrNo(cstmrNo);
         return query.getCustomerBas(loginId);
     }
 
     private AvailTime getAvailTime(Integer storeNo) {
-//        return availTimeRepository.findAvailTimeByStoreNo(storeNo);
         return query.getAvailTime(storeNo);
     }
 
     private Store getStore(Integer storeNo, String storeName) {
-//        Store store = storeRepository.findById(storeNo).orElseThrow(() -> new NotFoundException("선택하신 매장을 찾을 수 없습니다."));
         Store store = query.findStoreById(storeNo);
         if (store == null) {
-            throw new NotFoundException("해당 매장을 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
         if (!Objects.equals(store.getStoreName(), storeName)) {
-            throw new NotFoundException("해당 매장 일련번호의 매장 이름이 아닙니다.");
+            throw new CustomException(ErrorCode.NOT_MATCH_STORE_INFO);
         }
         return store;
     }
 
     private void validateDateTime(LocalDate reservationDate, LocalTime reservationTime) {
-//        DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("HH:mm");
-
         LocalDate nowDate = LocalDate.now();
         LocalTime nowTime = LocalTime.now();
 
         if (reservationDate.isBefore(nowDate)) {
-            throw new InvalidValueException("해당 날짜는 예약이 불가합니다.");
+            throw new CustomException(ErrorCode.UNABLE_DATE_RESERVATION);
         }
 
         if (reservationDate.isEqual(nowDate) && reservationTime.isBefore(nowTime)) {
-            throw new InvalidValueException("해당 시간은 예약이 불가합니다.");
+            throw new CustomException(ErrorCode.UNABLE_TIME_RESERVATION);
         }
 
         if (reservationDate.isEqual(nowDate) && nowTime.plusHours(2).isAfter(reservationTime)) {
-            throw new InvalidValueException("2시간 전에는 미리 예약해야 합니다.");
+            throw new CustomException(ErrorCode.UNABLE_NOW_TIME_RESERVATION);
         }
     }
 
     private Style validateStyle(Integer storeNo, String cutStyle) {
-//        Style style = styleRepository.findByStoreNoAndStyleName(storeNo, cutStyle);
         Style style = query.findByStoreNoAndStyleName(storeNo, cutStyle);
         if (style == null) {
-            throw new NotFoundException("해당 스타일을 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.STYLE_NOT_FOUND);
         }
         return style;
     }
 
     private Pet validatePet(Integer cstmrNo, String petName) {
-//        Pet pet = petRepository.findByCstmrNoAndPetNo(cstmrNo, petName);
         Pet pet = query.findByCstmrNoAndPetNo(cstmrNo, petName);
         if (pet == null) {
-            throw new NotFoundException("해당 펫을 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.PET_NOT_FOUND);
         }
         return pet;
     }
 
     private void checkReservationDuplicate(Integer storeNo, LocalDate reservationDate, LocalTime reservationTime) {
-//        Reservation isAvailable = reservationRepository.findByStoreNoAndReservationDateAndReservationTime(storeNo, reservationDate, reservationTime);
         Reservation isAvailable = query.findByStoreNoAndReservationDateAndReservationTime(storeNo, reservationDate, reservationTime);
         if (isAvailable != null) {
-            throw new InvalidValueException("해당 날짜와 시간에는 이미 예약이 있습니다.");
+            throw new CustomException(ErrorCode.UNABLE_RESERVATION);
         }
     }
 
@@ -293,96 +169,55 @@ public class ReservationService {
         return formattedDate + "(" + dayOfWeek.charAt(0) + ")";
     }
 
-
-
-
     public List<StyleResponse> findStyleNameByStoreNo(Integer storeNumber) {
-        String loginId = null;
+        String loginId = getLoginId();
 
-        try {
-            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            CustomerBas customerBas = principalDetails.getCustomerBas();
-            loginId = customerBas.getLoginId();
-        } catch (Exception e) {
-            throw new AccessDeniedException("로그인이 필요합니다.");
-        }
-
-//        List<Style> styles = styleRepository.findStylNameByStoreNo(storeNumber);
         List<Style> styles = query.findStylNameByStoreNo(storeNumber);
 
         if (styles == null || styles.isEmpty()) {
-            throw new NotFoundException("해당 매장의 스타일을 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.STORE_STYLE_NOT_FOUND);
         }
 
         return StyleResponse.stylesToStyleResponse(styles);
     }
 
     public StoreNameResponse findStoreNameByStoreNo(Integer storeNumber) {
-        String loginId = null;
+        String loginId = getLoginId();
 
-        try {
-            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            CustomerBas customerBas = principalDetails.getCustomerBas();
-            loginId = customerBas.getLoginId();
-        } catch (Exception e) {
-            throw new AccessDeniedException("로그인이 필요합니다.");
-        }
-
-//        Store store = storeRepository.findStoreNameByStoreNo(storeNumber);
         Store store = query.findStoreNameByStoreNo(storeNumber);
 
         if (store == null) {
-            throw new NotFoundException("매장 이름을 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
 
         return new StoreNameResponse(store.getStoreName());
     }
 
     public List<PetResponse> findMyPet() {
-        String loginId = null;
+        String loginId = getLoginId();
 
-        try {
-            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            CustomerBas customerBas = principalDetails.getCustomerBas();
-            loginId = customerBas.getLoginId();
-        } catch (Exception e) {
-            throw new AccessDeniedException("로그인이 필요합니다.");
-        }
-
-        Integer cstmrNo = query.findCstmrNoByLoginId(loginId); //customerBasRepository.findCstmrNoByLoginId(loginId);
-        List<Pet> pets =  query.findByCstmrNo(cstmrNo); //petRepository.findByCstmrNo(cstmrNo);
+        Integer cstmrNo = query.findCstmrNoByLoginId(loginId);
+        List<Pet> pets =  query.findByCstmrNo(cstmrNo);
 
         if (pets == null || pets.isEmpty()) {
-            throw new NotFoundException("등록된 펫 정보가 없습니다.");
+            throw new CustomException(ErrorCode.USER_PET_NOT_FOUND);
         }
 
         return PetResponse.petsToPetResponse(pets);
     }
 
     public ReservationResultResponse resultReservation(Integer reservationNumber) {
+        String loginId = getLoginId();
 
-        String loginId = null;
-
-        try {
-            PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            CustomerBas customerBas = principalDetails.getCustomerBas();
-            loginId = customerBas.getLoginId();
-        } catch (Exception e) {
-            throw new AccessDeniedException("로그인이 필요합니다.");
-        }
-
-        Integer cstmrNo = query.findCstmrNoByLoginId(loginId); //customerBasRepository.findCstmrNoByLoginId(loginId);
-        Reservation reservation = query.findReservationById(reservationNumber); //reservationRepository.findById(reservationNumber).orElseThrow(() -> new NotFoundException("해당 예약을 찾을 수 없습니다."));
+        Reservation reservation = query.findReservationById(reservationNumber);
         if (reservation == null) {
-            throw new NotFoundException("해당 예약을 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.RESERVATION_NOT_FOUND);
         }
 
         Integer storeNo = reservation.getStore().getStoreNo();
         String storeName = reservation.getStore().getStoreName();
         String styleName = reservation.getStyleName();
-        String feature = reservation.getFeature();
 
-//        Style style = styleRepository.findByStoreNoAndStyleName(storeNo, styleName);
         Style style = query.findByStoreNoAndStyleName(storeNo, styleName);
         Integer price = style.getPrice();
 
@@ -390,11 +225,11 @@ public class ReservationService {
         String formattedPrice = numberFormat.format(price);
         String stringPrice = formattedPrice + "원";
 
-        ReservedPets reservedPets = query.findByReservationNo(reservationNumber); //reservedPetsRepository.findByReservationNo(reservationNumber);
+        ReservedPets reservedPets = query.findByReservationNo(reservationNumber);
         if (reservedPets == null) {
-            throw new NotFoundException("해당 펫은 예약에 등록되지 않았습니다.");
+            throw new CustomException(ErrorCode.PET_NOT_REGIST_RESERVATION);
         }
-//        Pet pet = petRepository.findByPetNo(reservedPets.getPet().getPetNo());
+
         Pet pet = query.findByPetNo(reservedPets.getPet().getPetNo());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
