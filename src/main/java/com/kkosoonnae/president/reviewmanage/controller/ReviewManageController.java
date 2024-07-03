@@ -33,7 +33,7 @@ public class ReviewManageController {
     private final ReviewManageService reviewManageService;
 
     @Operation(summary = "리뷰 목록 상점 일련번호로 조회")
-    @GetMapping("/customer/{cstmrNo}")
+    @GetMapping("/{cstmrNo}")
     public List<ReviewResponseDto> getReviewsByCustomer(@PathVariable Integer cstmrNo,
                                                          @RequestParam LocalDateTime startDate,
                                                          @RequestParam LocalDateTime endDate) {
