@@ -11,6 +11,7 @@ import com.kkosoonnae.jpa.repository.StoreRepository;
 import com.kkosoonnae.user.review.dto.ReviewRqDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,6 +58,7 @@ public class ReviewService {
 //        reviewRepository.save(review);
 //    }
 
+    @Transactional
     public void writeReview(PrincipalDetails principalDetails, Integer storeNo, ReviewRqDto rq){
         CustomerBas customerBas = principalDetails.getCustomerBas();
 
