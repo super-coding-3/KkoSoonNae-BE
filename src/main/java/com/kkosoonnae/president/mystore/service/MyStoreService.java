@@ -103,13 +103,22 @@ public class MyStoreService {
                 throw new CustomException(ErrorCode.STORE_NOT_FOUND);
             }
 
-            adminStoreRequestDto.updateEntity(store);
+            store.updateStore(
+                    adminStoreRequestDto.getStoreName(),
+                    adminStoreRequestDto.getContent(),
+                    adminStoreRequestDto.getPhone(),
+                    adminStoreRequestDto.getLat(),
+                    adminStoreRequestDto.getLon(),
+                    adminStoreRequestDto.getRoadAddress(),
+                    adminStoreRequestDto.getOpeningTime(),
+                    adminStoreRequestDto.getClosingTime()
+            );
 
-            Store updateStore = storeRepository.save(store);
+            Store update = storeRepository.save(store);
 
             AdminStoreResponseDto adminStoreResponseDto = new AdminStoreResponseDto();
 
-            return adminStoreResponseDto.storeFromDto(updateStore);
+            return adminStoreResponseDto.storeFromDto(update);
 
         } catch (DataAccessException dae) {
             throw new CustomException(ErrorCode.DATABASE_ERROR);
@@ -137,7 +146,7 @@ public class MyStoreService {
 
         }
     }
-
+    //매장 이미지 바꾸기
     public AdminStoreImgRequestDto updateStoreImg(Integer storeNo, MultipartFile newFile) throws IOException {
         Store store = storeRepository.findByStoreNo(storeNo);
         if (store == null) {

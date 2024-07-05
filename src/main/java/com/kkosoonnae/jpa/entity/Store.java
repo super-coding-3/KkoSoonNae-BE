@@ -1,15 +1,14 @@
 package com.kkosoonnae.jpa.entity;
 
-import com.kkosoonnae.president.mystore.dto.AdminStoreRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
+
 
 import java.time.LocalTime;
 import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -87,4 +86,18 @@ public class Store {
         this.roadAddress = address;
         this.phone = phone;
     }
+
+
+    public void updateStore(String storeName, String content, String phone, Double lat, Double lon, String roadAddress, LocalTime openingTime, LocalTime closingTime) {
+        this.storeName = storeName;
+        this.content = content;
+        this.phone = phone;
+        this.lat = lat;
+        this.lon = lon;
+        this.roadAddress = roadAddress;
+        this.openingTime = openingTime;
+        this.closingTime = closingTime;
+    }
 }
+
+
