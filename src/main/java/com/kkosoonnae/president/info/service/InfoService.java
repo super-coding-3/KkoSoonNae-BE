@@ -12,10 +12,8 @@ import com.kkosoonnae.jpa.entity.TermsAgreeTxn;
 import com.kkosoonnae.jpa.repository.CustomerBasRepository;
 import com.kkosoonnae.jpa.repository.CustomerDtlRepository;
 import com.kkosoonnae.jpa.repository.TermsAgreeTxnRepository;
-import com.kkosoonnae.president.info.dto.LoginRq;
-import com.kkosoonnae.president.info.dto.LoginRs;
-import com.kkosoonnae.president.info.dto.SignUpDto;
-import com.kkosoonnae.president.info.dto.TermRq;
+import com.kkosoonnae.president.info.dto.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * packageName    : com.kkosoonnae.president.info.service
@@ -145,5 +144,49 @@ public class InfoService {
         loginRs.setToken(prefixedToken);
 
         return loginRs;
+    }
+
+    @Transactional
+    public InfoUpdateRs updateInfo(Integer cstmrNo,InfoUpdateRq rq){
+        Optional<CustomerBas> customerBas = customerBasRepository.findById(cstmrNo);
+
+        if(customerBas.isEmpty()){
+            throw new CustomException(ErrorCode.USER_NOT_LOGIN);
+        }
+        CustomerBas bas = customerBas.get();
+        bas.updateEmail(rq);
+        bas.getCustomerDtl().updateInfo(rq);
+
+        // 반환할 InfoUpdateRs 생성
+        InfoUpdateRs rs = new InfoUpdateRs();
+        rs.setLoginId(bas.getLoginId()); // 기존 로그인 아이디 유지
+        rs.setName(rq.getName()); // 닉네임을 설정
+        rs.setEmail(rq.getEmail());
+        rs.setPhone(rq.getPhone());
+
+
+        return rs;
+    }
+
+
+    public void updatePas(Integer cstmrNo,PwRq rq){
+
+        // 1. DB의 유저 정보 조회
+        CustomerBas bas = customerBasRepository.findById(cstmrNo)
+                .orElseThrow(()-> new IllegalArgumentException("회원 정보를 찾을 수 없습니다."));
+
+        // 2. 새로운 비밀번호 검증
+        if(!rq.getNewPassword().equals(rq.getCheckPas())){
+            throw new CustomException(ErrorCode.NOT_MATCH_PASSWORD);
+        }
+
+        // 3. 새로운 비밀번호 암호화
+        String encodeNewPassword = passwordEncoder.encode(rq.getNewPassword());;
+
+        // 4. 엔티티에 암호화된 비밀번호 설정
+        bas.updatePassword(encodeNewPassword);
+
+        // 5. 변경 정보 DB 저장
+        customerBasRepository.save(bas);
     }
 }

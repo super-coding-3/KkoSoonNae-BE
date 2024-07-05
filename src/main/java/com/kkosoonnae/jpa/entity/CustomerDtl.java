@@ -1,5 +1,6 @@
 package com.kkosoonnae.jpa.entity;
 
+import com.kkosoonnae.president.info.dto.InfoUpdateRq;
 import com.kkosoonnae.user.customer.dto.InfoDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -53,5 +54,10 @@ public class CustomerDtl {
         this.zipCode = infoDto.getZipCode();
         this.address = infoDto.getAddress();
         this.addressDtl = infoDto.getAddressDtl();
+    }
+
+    public void updateInfo(InfoUpdateRq rq){
+        this.nickName = rq.getName();
+        this.phone = rq.getPhone();
     }
 }
