@@ -58,8 +58,8 @@ public class MyStoreController {
     @PutMapping("/updateImg/{storeNo}")
     @Operation(summary = "어드민 매장이미지 수정")
     public ResponseEntity<?> updateStoreImgInfo(@PathVariable Integer storeNo,@RequestPart(name = "newFile") MultipartFile newFile) throws IOException {
-        AdminStoreImgRequestDto imgRequestDto = myStoreService.updateStoreImg(storeNo,newFile);
-        return ResponseEntity.ok().body(imgRequestDto);
+         myStoreService.updateStoreImg(storeNo,newFile);
+        return ResponseEntity.noContent().build();
     }
     @DeleteMapping("/delete-store/{storeNo}")
     @Operation(summary = "매장삭제")

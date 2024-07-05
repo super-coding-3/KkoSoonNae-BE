@@ -1,9 +1,7 @@
 package com.kkosoonnae.jpa.repository;
 
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
-
 import java.text.DecimalFormat;
 
 
@@ -17,12 +15,13 @@ public class RedisScopeRepository {
     }
 
     public void addScope(Integer cstmrNo,Integer storeNo, double scope) {
-        redisTemplate.executePipelined((RedisCallback<Object>) connection ->  {
-            connection.hIncrBy(generateScopeKey(storeNo).getBytes(),"totalScope".getBytes(),(long) scope);
-            connection.hIncrBy(generateScopeKey(storeNo).getBytes(),"scopeCount".getBytes(),1);
-            return null;
-        });
-    }
+        redisTemplate.opsForHash()
+                .increment(generateScopeKey(storeNo),"totalScope", scope);
+        redisTemplate.opsForHash()
+                .increment(generateScopeKey(storeNo), "scopeCount" , 1);
+
+        }
+
     public double getAverageScope(Integer storeNo) {
         try {
             Object totalScopeObj = redisTemplate

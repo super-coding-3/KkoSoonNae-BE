@@ -4,6 +4,9 @@ import com.kkosoonnae.president.mystore.dto.AdminStoreRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,7 +37,6 @@ public class StoreImg {
     public StoreImg(String url) {
 
     }
-
     public void setImg(String img) {
         this.img = img;
     }
@@ -42,4 +44,15 @@ public class StoreImg {
     public void updateImageUrl(String newImageUrl) {
         this.img = newImageUrl;
     }
+
+    public String extractFileNameFromUrl() {
+        try {
+            URL parsedUrl = new URL(this.img); // this.img 사용
+            String path = parsedUrl.getPath();
+            return path.substring(path.indexOf("store/"));
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("Invalid URL: " + this.img, e); // this.img 사용
+        }
+    }
 }
+

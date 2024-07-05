@@ -1,5 +1,6 @@
 package com.kkosoonnae.president.mystore.service;
 
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.kkosoonnae.common.exception.CustomException;
 import com.kkosoonnae.common.exception.ErrorCode;
 import com.kkosoonnae.config.s3.S3Uploader;
@@ -18,6 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -146,22 +151,41 @@ public class MyStoreService {
 
         }
     }
+
     //매장 이미지 바꾸기
-    public AdminStoreImgRequestDto updateStoreImg(Integer storeNo, MultipartFile newFile) throws IOException {
+    public void updateStoreImg(Integer storeNo, MultipartFile file) throws IOException {
         Store store = storeRepository.findByStoreNo(storeNo);
         if (store == null) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
         }
-        String s3updateImg = s3Uploader.updateFile(newFile, "", "");
+        if (file != null && !file.isEmpty()) {
+            try {
+                List<StoreImg> storeImgList = store.getStoreImg();
+                if (storeImgList != null && !storeImgList.isEmpty()) {
+                    for (StoreImg img : storeImgList) {
+                        String oldFileName = img.extractFileNameFromUrl();
+                        s3Uploader.updateFile(file, oldFileName, "store");
+                    }
+                } else {
+                    //매장이미지가 없을경우 새이미지 업로드
+                    String newImageUrl = s3Uploader.upload(file, "store");
+                    StoreImg storeImg = new StoreImg();
+                    storeImg.setImg(newImageUrl);
 
-        StoreImg storeImg = new StoreImg();
-        storeImg.setImg(s3updateImg);
+                    if (storeImgList == null) {
+                        storeImgList = new ArrayList<>();
+                    }
+                    storeImgList.add(storeImg);
+                    store.setStoreImages(storeImgList);
 
-        AdminStoreImgRequestDto adminStoreImgRequestDto = new AdminStoreImgRequestDto();
-        adminStoreImgRequestDto.updateImgEntity(storeImg);
+                    storeRepository.save(store);
+                }
+            } catch (IOException e) {
+                throw new AmazonS3Exception("file = " + file.getOriginalFilename());
+            }
 
-        return adminStoreImgRequestDto;
 
+        }
     }
 }
 
