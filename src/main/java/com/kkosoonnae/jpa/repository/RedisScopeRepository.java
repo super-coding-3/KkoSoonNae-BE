@@ -1,5 +1,6 @@
 package com.kkosoonnae.jpa.repository;
 
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,12 +17,11 @@ public class RedisScopeRepository {
     }
 
     public void addScope(Integer cstmrNo,Integer storeNo, double scope) {
-        redisTemplate
-                .opsForHash()
-                .increment(generateScopeKey(storeNo), "totalScope", scope);
-        redisTemplate
-                .opsForHash()
-                .increment(generateScopeKey(storeNo), "scopeCount", 1);
+        redisTemplate.executePipelined((RedisCallback<Object>) connection ->  {
+            connection.hIncrBy(generateScopeKey(storeNo).getBytes(),"totalScope".getBytes(),(long) scope);
+            connection.hIncrBy(generateScopeKey(storeNo).getBytes(),"scopeCount".getBytes(),1);
+            return null;
+        });
     }
     public double getAverageScope(Integer storeNo) {
         try {
