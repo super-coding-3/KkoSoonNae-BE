@@ -1,8 +1,6 @@
 package com.kkosoonnae.president.mystore.controller;
 
-import com.kkosoonnae.president.mystore.dto.AdminStoreImgRequestDto;
-import com.kkosoonnae.president.mystore.dto.AdminStoreRequestDto;
-import com.kkosoonnae.president.mystore.dto.AdminStoreResponseDto;
+import com.kkosoonnae.president.mystore.dto.*;
 import com.kkosoonnae.president.mystore.service.MyStoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -55,10 +53,10 @@ public class MyStoreController {
         return ResponseEntity.ok().body(responseDto);
 
     }
-    @PutMapping("/updateImg/{storeNo}")
+    @PutMapping("/updateImg/{storeNo}/img/{imgId}")
     @Operation(summary = "어드민 매장이미지 수정")
-    public ResponseEntity<?> updateStoreImgInfo(@PathVariable Integer storeNo,@RequestPart(name = "newFile") MultipartFile newFile) throws IOException {
-         myStoreService.updateStoreImg(storeNo,newFile);
+    public ResponseEntity<?> updateStoreImgInfo(@PathVariable Integer storeNo,@PathVariable Integer imgId, @RequestPart(name = "newFile") MultipartFile newFile) throws IOException {
+         myStoreService.updateStoreImg(storeNo,imgId,newFile);
         return ResponseEntity.noContent().build();
     }
     @DeleteMapping("/delete-store/{storeNo}")
@@ -68,8 +66,15 @@ public class MyStoreController {
         return ResponseEntity.noContent().build();
 
     }
+    @PostMapping("{storeNo}/register-style")
+    @Operation(summary = "어드민 펫스타일 등록")
+    public ResponseEntity<?> adminCreatePetStyle(@PathVariable Integer storeNo, @RequestPart(name = "data") AdminPetStyleRequestDto adminPetStyleRequestDto,@RequestPart(name = "multipartFile") MultipartFile multipartFile) throws IOException {
+         AdminPetStyleResponseDto responseDto =  myStoreService.createPetStyle(storeNo,adminPetStyleRequestDto,multipartFile);
+          return ResponseEntity.ok().body(responseDto);
 
-}
+        }
+    }
+
 
 
 

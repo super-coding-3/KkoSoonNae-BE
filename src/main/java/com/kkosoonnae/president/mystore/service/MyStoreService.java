@@ -6,11 +6,11 @@ import com.kkosoonnae.common.exception.ErrorCode;
 import com.kkosoonnae.config.s3.S3Uploader;
 import com.kkosoonnae.jpa.entity.Store;
 import com.kkosoonnae.jpa.entity.StoreImg;
+import com.kkosoonnae.jpa.entity.Style;
 import com.kkosoonnae.jpa.repository.StoreImgRepository;
 import com.kkosoonnae.jpa.repository.StoreRepository;
-import com.kkosoonnae.president.mystore.dto.AdminStoreImgRequestDto;
-import com.kkosoonnae.president.mystore.dto.AdminStoreRequestDto;
-import com.kkosoonnae.president.mystore.dto.AdminStoreResponseDto;
+import com.kkosoonnae.jpa.repository.StyleRepository;
+import com.kkosoonnae.president.mystore.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.CharConversionException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -43,6 +44,8 @@ public class MyStoreService {
     private final StoreRepository storeRepository;
 
     private final StoreImgRepository storeImgRepository;
+
+    private final StyleRepository styleRepository;
 
     private final S3Uploader s3Uploader;
 
@@ -78,7 +81,7 @@ public class MyStoreService {
                 throw new CustomException(ErrorCode.STORE_NOT_FOUND);
             }
 
-            s3UploadedImgUrl = s3Uploader.upload(multipartFile, "imgUrl");
+            s3UploadedImgUrl = s3Uploader.upload(multipartFile, "store");
 
             StoreImg storeImg = StoreImg.builder()
                     .store(store)
@@ -141,7 +144,7 @@ public class MyStoreService {
 
         try {
             storeImgRepository.deleteStoreImgByStore(store);
-
+            // s3Uploader.deleteFile(store.getStoreImg());
             storeRepository.delete(store);
         } catch (DataAccessException dae) {
             throw new CustomException(ErrorCode.DATABASE_ERROR);
@@ -153,7 +156,7 @@ public class MyStoreService {
     }
 
     //매장 이미지 바꾸기
-    public void updateStoreImg(Integer storeNo, MultipartFile file) throws IOException {
+    public void updateStoreImg(Integer storeNo, Integer imgId, MultipartFile file) throws IOException {
         Store store = storeRepository.findByStoreNo(storeNo);
         if (store == null) {
             throw new CustomException(ErrorCode.STORE_NOT_FOUND);
@@ -162,10 +165,12 @@ public class MyStoreService {
             try {
                 List<StoreImg> storeImgList = store.getStoreImg();
                 if (storeImgList != null && !storeImgList.isEmpty()) {
-                    for (StoreImg img : storeImgList) {
-                        String oldFileName = img.extractFileNameFromUrl();
-                        s3Uploader.updateFile(file, oldFileName, "store");
-                    }
+                    StoreImg targetImg = storeImgList.stream()
+                            .filter(img -> img.getImg().equals(imgId))
+                            .findFirst()
+                            .orElseThrow(() -> new CustomException(ErrorCode.STORE_IMG_NOT_FOUND));
+                    String oldFileName = targetImg.extractFileNameFromUrl();
+                    s3Uploader.updateFile(file, oldFileName, "store");
                 } else {
                     //매장이미지가 없을경우 새이미지 업로드
                     String newImageUrl = s3Uploader.upload(file, "store");
@@ -177,15 +182,48 @@ public class MyStoreService {
                     }
                     storeImgList.add(storeImg);
                     store.setStoreImages(storeImgList);
-
-                    storeRepository.save(store);
                 }
             } catch (IOException e) {
-                throw new AmazonS3Exception("file = " + file.getOriginalFilename());
+                throw new AmazonS3Exception("Error S3 uploading file:" + file.getOriginalFilename(), e);
+            }
+            storeRepository.save(store);
+        }
+    }
+
+    private String extractFileNameFromUrl(String url) {
+        try {
+            URL parsedUrl = new URL(url); // this.img 사용
+            String path = parsedUrl.getPath();
+            return path.substring(path.indexOf("store/"));
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("Invalid URL: " + url, e); // this.img 사용
+        }
+    }
+
+    public AdminPetStyleResponseDto createPetStyle(Integer storeNo, AdminPetStyleRequestDto adminPetStyleRequestDto, MultipartFile multipartFile) throws IOException {
+            Store store = storeRepository.findByStoreNo(storeNo);
+            if (store == null) {
+                throw new CustomException(ErrorCode.STORE_NOT_FOUND);
+            }
+            Style styleSave;
+            try {
+            String imgUrl = s3Uploader.upload(multipartFile, "style");
+
+            Style style = adminPetStyleRequestDto.styleToEntity(store, imgUrl);
+
+            styleSave = styleRepository.save(style);
+
+        }catch (IOException ie) {
+            throw new CustomException(ErrorCode.FILE_UPLOAD_ERROR);
+        }catch (DataAccessException dae) {
+                throw new CustomException(ErrorCode.DATABASE_ERROR);
             }
 
+            AdminPetStyleResponseDto adminPetStyleResponseDto = new AdminPetStyleResponseDto();
+            return adminPetStyleResponseDto.petStyleToDto(styleSave);
 
         }
     }
-}
+
+
 

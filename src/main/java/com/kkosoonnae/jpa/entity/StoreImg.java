@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -27,16 +28,16 @@ public class StoreImg {
     private String img;
 
 
-
-    public StoreImg(Store store, String imageUrl){
-        this.store=store;
-        this.img=imageUrl;
+    public StoreImg(Store store, String imageUrl) {
+        this.store = store;
+        this.img = imageUrl;
     }
 
 
     public StoreImg(String url) {
 
     }
+
     public void setImg(String img) {
         this.img = img;
     }
@@ -51,7 +52,7 @@ public class StoreImg {
             String path = parsedUrl.getPath();
             return path.substring(path.indexOf("store/"));
         } catch (MalformedURLException e) {
-            throw new IllegalArgumentException("Invalid URL: " + this.img, e); // this.img 사용
+            throw new IllegalArgumentException("Invalid URL: " + img, e); // this.img 사용
         }
     }
 }
