@@ -39,9 +39,9 @@ public class MyStoreController {
 
     }
 
-    @PostMapping("/register-img")
+    @PostMapping("{storeNo}/register-img")
     @Operation(summary = "어드민 매장이미지 등록 ")
-    public ResponseEntity<?> uploadStoreImg(@RequestPart(name = "storeNo")Integer storeNo, @RequestPart(name = "multipartFile") MultipartFile multipartFile) throws IOException {
+    public ResponseEntity<?> uploadStoreImg(@PathVariable Integer storeNo, @RequestPart(name = "multipartFile") MultipartFile multipartFile) throws IOException {
         AdminStoreImgRequestDto imgRequestDto = myStoreService.uploadImg(storeNo,multipartFile);
         return ResponseEntity.ok().body(imgRequestDto);
     }
