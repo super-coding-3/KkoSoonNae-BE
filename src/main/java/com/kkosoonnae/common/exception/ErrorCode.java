@@ -25,7 +25,7 @@ public enum ErrorCode {
 
     STORE_IMG_MISMATCH("해당 매장 이미지가 없습니다.",HttpStatus.NOT_FOUND),
     STORE_IMG_NOT_FOUND("해당 매장에 id값에 해당하는 이미지가 없습니다.",HttpStatus.NOT_FOUND),
-    USER_NOT_LOGIN("로그인 하지 않았습니다.",HttpStatus.UNAUTHORIZED),
+    USER_NOT_LOGIN("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED),
     INVALID_SEARCH_KEYWORD("키워드를 제대로 입력하세요",HttpStatus.NOT_FOUND),
     DATABASE_ERROR("데이터베이스 접근 중 오류",HttpStatus.INTERNAL_SERVER_ERROR),
     FILE_UPLOAD_ERROR("S3 파일업로드 오류",HttpStatus.INTERNAL_SERVER_ERROR),
@@ -34,7 +34,26 @@ public enum ErrorCode {
 
     NOT_MATCH_PASSWORD("비밀번호가 일치하지 않습니다.",HttpStatus.UNAUTHORIZED),
 
-    NOT_MATCH_OLD_PASSWORD("기존 비밀번호가 일치하지 않습니다.",HttpStatus.UNAUTHORIZED);
+    UNABLE_DATE_RESERVATION("해당 날짜는 예약이 불가합니다.", HttpStatus.BAD_REQUEST),
+
+    UNABLE_TIME_RESERVATION("해당 시간은 예약이 불가합니다.", HttpStatus.BAD_REQUEST),
+
+    UNABLE_NOW_TIME_RESERVATION("2시간 전에는 미리 예약해야 합니다.", HttpStatus.BAD_REQUEST),
+
+    PET_NOT_FOUND("해당 펫을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+
+    UNABLE_RESERVATION("해당 날짜와 시간에는 이미 예약이 있습니다.", HttpStatus.CONFLICT),
+
+    STORE_STYLE_NOT_FOUND("해당 매장의 스타일을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+
+    USER_PET_NOT_FOUND("등록된 펫 정보가 없습니다.", HttpStatus.NOT_FOUND),
+
+    RESERVATION_NOT_FOUND("해당 예약을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+
+    PET_NOT_REGIST_RESERVATION("해당 펫은 예약에 등록되지 않았습니다.", HttpStatus.NOT_FOUND),
+
+    NOT_MATCH_STORE_INFO("해당 매장 일련번호의 매장 이름이 아닙니다.", HttpStatus.NOT_FOUND);
+
     private final String message;
 
     private final HttpStatus status;

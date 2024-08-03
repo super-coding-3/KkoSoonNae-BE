@@ -62,33 +62,14 @@ public class StoreService {
     //매장상세조회
     public StoreDetailWithImageResponseDto findStoreDetailWithImage(Integer storeNo) {
         try {
-            Optional<StoreDetailViewProjection> storeDetailViewProjectionOpt = storeRepository.findStoreByStoreNo(storeNo);
-            if (storeDetailViewProjectionOpt.isEmpty()) {
+            StoreDetailWithImageResponseDto responseDto = storeQueryRepository.findStoreDetail(storeNo);
+            if (responseDto == null) {
                 throw new CustomException(ErrorCode.STORE_NOT_FOUND);
             }
+            double averageScope = redisScopeRepository.getAverageScope(storeNo);
+            Long totalLike = redisLikeStoreRepository.getTotalLikeStoreCount(storeNo);
 
-            StoreDetailViewProjection storeDetailViewProjection = storeDetailViewProjectionOpt.get();
-
-            List<String> imgUrls = storeImgRepository.findImgUrlsByStoreNo(storeNo);
-            if (imgUrls.isEmpty()) {
-                throw new CustomException(ErrorCode.STORE_IMAGE_NOT_FOUND);
-            }
-            double averageScope = reviewService.getAverageReviewScore(storeNo);
-
-            StoreDetailViewProjection projectionWithImages = new StoreDetailViewProjection(
-                    storeDetailViewProjection.storeNo(),
-                    storeDetailViewProjection.storeName(),
-                    storeDetailViewProjection.content(),
-                    storeDetailViewProjection.phone(),
-                    storeDetailViewProjection.roadAddress(),
-                    storeDetailViewProjection.openingTime(),
-                    storeDetailViewProjection.closingTime(),
-                    imgUrls,
-                    averageScope,
-                    storeDetailViewProjection.totalLikeStore()
-            );
-
-            return new StoreDetailWithImageResponseDto(projectionWithImages);
+            return responseDto.DetailStoreToDto(averageScope,totalLike);
         } catch (DataAccessException e) {
             throw new CustomException(ErrorCode.DATABASE_ERROR);
         }
@@ -125,9 +106,11 @@ public class StoreService {
                 .store(store)
                 .createDt(LocalDateTime.now())
                 .build();
+
         LikeStore saveLikeStore = likeStoreRepository.save(likeStore);
 
         redisLikeStoreRepository.LikeStoreCount(cstmrNo,storeNo);
+
 
         return LikeStoreDto.mapToListStoreDto(saveLikeStore);
     }

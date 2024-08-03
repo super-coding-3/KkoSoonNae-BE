@@ -54,7 +54,7 @@ public class StoreListViewResponseDto {
                 .totalLikeStore(totalLikeStore)
                 .build();
     }
-
+    //쿼리 dsl 생성자
     public StoreListViewResponseDto(Integer storeNo, String storeName, String roadAddress, List<StoreImgDto> img) {
         this.storeNo = storeNo;
         this.storeName = storeName;
