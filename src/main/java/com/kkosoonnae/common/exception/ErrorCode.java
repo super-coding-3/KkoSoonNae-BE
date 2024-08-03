@@ -32,7 +32,9 @@ public enum ErrorCode {
 
     INTERNAL_SERVER_ERROR("서버에서 요청을 처리하는중에 오류가 발생했습니다. 개발자에게 문의해주세요",HttpStatus.INTERNAL_SERVER_ERROR),
 
-    NOT_MATCH_PASSWORD("비밀번호가 일치하지 않습니다.",HttpStatus.UNAUTHORIZED);
+    NOT_MATCH_PASSWORD("비밀번호가 일치하지 않습니다.",HttpStatus.UNAUTHORIZED),
+
+    NOT_MATCH_OLD_PASSWORD("기존 비밀번호가 일치하지 않습니다.",HttpStatus.UNAUTHORIZED);
     private final String message;
 
     private final HttpStatus status;
