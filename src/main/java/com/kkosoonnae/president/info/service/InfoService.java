@@ -173,20 +173,25 @@ public class InfoService {
 
         // 1. DB의 유저 정보 조회
         CustomerBas bas = customerBasRepository.findById(cstmrNo)
-                .orElseThrow(()-> new IllegalArgumentException("회원 정보를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("회원 정보를 찾을 수 없습니다."));
 
-        // 2. 새로운 비밀번호 검증
-        if(!rq.getNewPassword().equals(rq.getCheckPas())){
+        // 2. 기존 비밀번호 검증
+        if (!passwordEncoder.matches(rq.getPassword(), bas.getPassword())) {
+            throw new CustomException(ErrorCode.NOT_MATCH_OLD_PASSWORD);
+        }
+
+        // 3. 새로운 비밀번호 검증
+        if (!rq.getNewPassword().equals(rq.getCheckPas())) {
             throw new CustomException(ErrorCode.NOT_MATCH_PASSWORD);
         }
 
-        // 3. 새로운 비밀번호 암호화
-        String encodeNewPassword = passwordEncoder.encode(rq.getNewPassword());;
+        // 4. 새로운 비밀번호 암호화
+        String encodeNewPassword = passwordEncoder.encode(rq.getNewPassword());
 
-        // 4. 엔티티에 암호화된 비밀번호 설정
+        // 5. 엔티티에 암호화된 비밀번호 설정
         bas.updatePassword(encodeNewPassword);
 
-        // 5. 변경 정보 DB 저장
+        // 6. 변경 정보 DB 저장
         customerBasRepository.save(bas);
     }
 }

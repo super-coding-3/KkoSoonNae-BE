@@ -52,7 +52,8 @@ public enum ErrorCode {
 
     PET_NOT_REGIST_RESERVATION("해당 펫은 예약에 등록되지 않았습니다.", HttpStatus.NOT_FOUND),
 
-    NOT_MATCH_STORE_INFO("해당 매장 일련번호의 매장 이름이 아닙니다.", HttpStatus.NOT_FOUND);
+    NOT_MATCH_STORE_INFO("해당 매장 일련번호의 매장 이름이 아닙니다.", HttpStatus.NOT_FOUND),
+    NOT_MATCH_OLD_PASSWORD("기존 비밀번호가 일치하지 않습니다.",HttpStatus.UNAUTHORIZED);
 
     private final String message;
 

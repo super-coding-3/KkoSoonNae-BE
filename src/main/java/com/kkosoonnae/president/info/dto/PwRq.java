@@ -29,6 +29,6 @@ public class PwRq {
     @Schema(description = "새로운 비밀번호")
     private String newPassword;
 
-    @Schema(description = "새로운 비밀번호 확인")
+    @Schema(description = "비밀번호 확인")
     private String checkPas;
 }
